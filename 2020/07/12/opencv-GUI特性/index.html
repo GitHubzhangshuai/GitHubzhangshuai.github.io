@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="opencv,图像," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="张帅的Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="1.图像入门 2.视频入门 3.绘图 4.鼠标作为画笔 5.轨迹栏作为调色板  图像入门目标 在这里，你将学习如何读取图像，如何显示图像以及如何将其保存回去 你将学习以下功能：cv.imread()，cv.imshow()，cv.imwrite() (可选)你将学习如何使用Matplotlib显示图像">
+<meta property="og:type" content="article">
+<meta property="og:title" content="opencv-GUI特性">
+<meta property="og:url" content="http://yoursite.com/2020/07/12/opencv-GUI%E7%89%B9%E6%80%A7/index.html">
+<meta property="og:site_name" content="张帅的Blog">
+<meta property="og:description" content="1.图像入门 2.视频入门 3.绘图 4.鼠标作为画笔 5.轨迹栏作为调色板  图像入门目标 在这里，你将学习如何读取图像，如何显示图像以及如何将其保存回去 你将学习以下功能：cv.imread()，cv.imshow()，cv.imwrite() (可选)你将学习如何使用Matplotlib显示图像">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/07/12/opencv-GUI%E7%89%B9%E6%80%A7/output_13_0.png">
+<meta property="article:published_time" content="2020-07-12T03:20:35.000Z">
+<meta property="article:modified_time" content="2020-07-12T03:31:53.462Z">
+<meta property="article:author" content="Zhangshuai">
+<meta property="article:tag" content="opencv">
+<meta property="article:tag" content="图像">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/12/opencv-GUI%E7%89%B9%E6%80%A7/output_13_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/12/opencv-GUI特性/"/>
+
+
+
+
+
+  <title>opencv-GUI特性 | 张帅的Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">张帅的Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">用hexo搭建的简易博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            Schedule
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/12/opencv-GUI%E7%89%B9%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhangshuai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张帅的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">opencv-GUI特性</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-12T11:20:35+08:00">
+                2020-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/opencv/" itemprop="url" rel="index">
+                    <span itemprop="name">opencv</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>1.<a href="#header1">图像入门</a></li>
+<li>2.<a href="#header2">视频入门</a></li>
+<li>3.<a href="#header3">绘图</a></li>
+<li>4.<a href="#header4">鼠标作为画笔</a></li>
+<li>5.<a href="#header5">轨迹栏作为调色板</a></li>
+</ul>
+<h1 id="图像入门"><a href="#图像入门" class="headerlink" title="图像入门"></a><span id="header1">图像入门</span></h1><h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ul>
+<li>在这里，你将学习如何读取图像，如何显示图像以及如何将其保存回去</li>
+<li>你将学习以下功能：cv.imread()，cv.imshow()，cv.imwrite()</li>
+<li>(可选)你将学习如何使用Matplotlib显示图像<a id="more"></a>
+
+
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+
+<h2 id="读取图像"><a href="#读取图像" class="headerlink" title="读取图像"></a>读取图像</h2><ul>
+<li>使用<strong>cv.imread</strong>()函数读取图像。</li>
+<li>图像应该在工作目录或图像的完整路径应给出。<br>第二个参数是一个标志，它指定了读取图像的方式。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cv.IMREAD_COLOR： 加载彩色图像。任何图像的透明度都会被忽视。它是默认标志。</span><br><span class="line">cv.IMREAD_GRAYSCALE：以灰度模式加载图像</span><br><span class="line">cv.IMREAD_UNCHANGED：加载图像，包括alpha通道</span><br></pre></td></tr></table></figure>
+注意 除了这三个标志，你可以分别简单地传递整数1、0或-1。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img=cv.imread(<span class="string">'1.jpg'</span>,<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>array([[181, 247, 251, ..., 203, 177, 170],
+       [217, 255, 250, ..., 211, 178, 167],
+       [247, 255, 245, ..., 218, 180, 164],
+       ...,
+       [ 13,  13,  12, ...,   0,  16,   0],
+       [ 11,  10,  10, ...,   0,   0,   0],
+       [ 17,  17,  16, ...,   0,   4,   0]], dtype=uint8)</code></pre><h2 id="显示图像"><a href="#显示图像" class="headerlink" title="显示图像"></a>显示图像</h2><ul>
+<li>使用函数<strong>cv.imshow()</strong>在窗口中显示图像。窗口自动适合图像尺寸。</li>
+<li>第一个参数是窗口名称，它是一个字符串。</li>
+<li>第二个参数是我们的对象。你可以根据需要创建任意多个窗口，但可以使用不同的窗口名称。</li>
+</ul>
+<p>cv.waitKey()是一个键盘绑定函数。其参数是以毫秒为单位的时间。</p>
+<p>该函数等待任何键盘事件指定的毫秒。如果您在这段时间内按下任何键，程序将继续运行。</p>
+<p>如果<strong>0</strong>被传递，它将无限期地等待一次敲击键。</p>
+<p>它也可以设置为检测特定的按键，例如，如果按下键 a 等</p>
+<p>cv.destroyAllWindows()只会破坏我们创建的所有窗口。</p>
+<p>如果要销毁任何特定的窗口，请使用函数 cv.destroyWindow()在其中传递确切的窗口名称作为参数。</p>
+<p>在特殊情况下，你可以创建一个空窗口，然后再将图像加载到该窗口。在这种情况下，你可以指定窗口是否可调整大小。</p>
+<p>这是通过功能<strong>cv.namedWindow</strong>()完成的。默认情况下，该标志为<strong>cv.WINDOW_AUTOSIZE</strong>。</p>
+<p>但是，如果将标志指定为<strong>cv.WINDOW_NORMAL</strong>，则可以调整窗口大小。当图像尺寸过大以及向窗口添加跟踪栏时，这将很有帮助。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cv.namedWindow(<span class="string">'image'</span>,cv.WINDOW_NORMAL)</span><br><span class="line">cv.imshow(<span class="string">'image'</span>,img)</span><br><span class="line">cv.waitKey(<span class="number">0</span>)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h2 id="写入图像"><a href="#写入图像" class="headerlink" title="写入图像"></a>写入图像</h2><p>使用函数<strong>cv.imwrite</strong>()保存图像。</p>
+<p>第一个参数是文件名，第二个参数是要保存的图像。</p>
+<p>cv.imwrite(‘messigray.png’，img)这会将图像以PNG格式保存在工作目录中。</p>
+<p>在下面的程序中，以灰度加载图像，显示图像，按s保存图像并退出，或者按ESC键直接退出而不保存。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line">img = cv.imread(<span class="string">'1.jpg'</span>,<span class="number">0</span>)</span><br><span class="line">cv.imshow(<span class="string">'img'</span>,img)</span><br><span class="line">k =cv.waitKey(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">if</span> k == <span class="number">27</span>: <span class="comment"># 按下esc时</span></span><br><span class="line">    cv.destroyAllWindows()</span><br><span class="line"><span class="keyword">elif</span> k == ord(<span class="string">'s'</span>): <span class="comment"># 按下s时</span></span><br><span class="line">    cv.imwrite(<span class="string">'copy1.jpg'</span>,img)</span><br><span class="line">    cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line">img = cv.imread(<span class="string">'1.jpg'</span>,<span class="number">0</span>)</span><br><span class="line">plt.imshow(img, interpolation = <span class="string">'bicubic'</span>)</span><br><span class="line"><span class="comment"># plt.imshow(img)</span></span><br><span class="line">plt.xticks([])</span><br><span class="line">plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="/2020/07/12/opencv-GUI%E7%89%B9%E6%80%A7/output_13_0.png" alt="png"></p>
+<h1 id="视频入门"><a href="#视频入门" class="headerlink" title="视频入门"></a><span id="header2">视频入门</span></h1><h2 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h2><ul>
+<li>学习读取视频，显示视频和保存视频。</li>
+<li>学习从相机捕捉并显示它。</li>
+<li>你将学习以下功能：cv.VideoCapture()，cv.VideoWriter()<!--more-->
+
+</li>
+</ul>
+<p>要捕获视频，你需要创建一个 VideoCapture 对象。</p>
+<p>它的参数可以是设备索引或视频文件的名称。设备索引就是指定哪个摄像头的数字。</p>
+<p>正常情况下，一个摄像头会被连接(就像我的情况一样)。所以我简单地传0(或-1)。你可以通过传递1来选择第二个相机，以此类推。</p>
+<p>在此之后，你可以逐帧捕获。但是在最后，不要忘记释放俘虏。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line">cap = cv.VideoCapture(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> cap.isOpened():</span><br><span class="line">    print(<span class="string">"Cannot open camera"</span>)</span><br><span class="line">    exit()</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="comment"># 逐帧捕获</span></span><br><span class="line">    ret, frame = cap.read()</span><br><span class="line">    <span class="comment"># 如果正确读取帧，ret为True</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> ret:</span><br><span class="line">        print(<span class="string">"Can't receive frame (stream end?). Exiting ..."</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="comment"># 我们在框架上的操作到这里</span></span><br><span class="line">    gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)</span><br><span class="line">    <span class="comment"># 显示结果帧e</span></span><br><span class="line">    cv.imshow(<span class="string">'frame'</span>, gray)</span><br><span class="line">    <span class="keyword">if</span> cv.waitKey(<span class="number">1</span>) == ord(<span class="string">'q'</span>):</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"><span class="comment"># 完成所有操作后，释放捕获器</span></span><br><span class="line">cap.release()</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<pre><code>Cannot open camera
+Can&apos;t receive frame (stream end?). Exiting ...</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line">cap = cv.VideoCapture(<span class="string">'video1.flv'</span>)</span><br><span class="line"><span class="keyword">while</span> cap.isOpened():</span><br><span class="line">    ret, frame = cap.read()</span><br><span class="line">    <span class="comment"># 如果正确读取帧，ret为True</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> ret:</span><br><span class="line">        print(<span class="string">"Can't receive frame (stream end?). Exiting ..."</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)</span><br><span class="line">    cv.imshow(<span class="string">'frame'</span>, gray)</span><br><span class="line">    <span class="keyword">if</span> cv.waitKey(<span class="number">1</span>) == ord(<span class="string">'q'</span>):</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">cap.release()</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line">cap = cv.VideoCapture(<span class="string">'video1.flv'</span>)</span><br><span class="line"><span class="comment"># 定义编解码器并创建VideoWriter对象</span></span><br><span class="line">fourcc = cv.VideoWriter_fourcc(*<span class="string">'DIVX'</span>)</span><br><span class="line">out = cv.VideoWriter(<span class="string">'output.flv'</span>, fourcc, <span class="number">20.0</span>, (<span class="number">640</span>,  <span class="number">480</span>))</span><br><span class="line"><span class="keyword">while</span> cap.isOpened():</span><br><span class="line">    ret, frame = cap.read()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> ret:</span><br><span class="line">        print(<span class="string">"Can't receive frame (stream end?). Exiting ..."</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    frame = cv.flip(frame, <span class="number">0</span>)</span><br><span class="line">    <span class="comment"># 写翻转的框架</span></span><br><span class="line">    out.write(frame)</span><br><span class="line">    cv.imshow(<span class="string">'frame'</span>, frame)</span><br><span class="line">    <span class="keyword">if</span> cv.waitKey(<span class="number">1</span>) == ord(<span class="string">'q'</span>):</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"><span class="comment"># 完成工作后释放所有内容</span></span><br><span class="line">cap.release()</span><br><span class="line">out.release()</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<pre><code>Can&apos;t receive frame (stream end?). Exiting ...</code></pre><h1 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a><span id="header3">绘图</span></h1><h2 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h2><ul>
+<li>学习使用OpenCV绘制不同的几何形状</li>
+<li>您将学习以下功能：cv.line()，cv.circle()，cv.rectangle()，cv.ellipse()，cv.putText()等。</li>
+<li>在上述所有功能中，您将看到一些常见的参数，如下所示：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">img：您要绘制形状的图像</span><br><span class="line">color：形状的颜色。对于BGR，将其作为元组传递，例如：(255,0,0)对于蓝色。对于灰度，只需传递标量值即可。</span><br><span class="line">厚度：线或圆等的粗细。如果对闭合图形（如圆）传递-1 ，它将填充形状。默认厚度&#x3D; 1</span><br><span class="line">lineType：线的类型，是否为8连接线，抗锯齿线等。默认情况下，为8连接线。**cv.LINE_AA**给出了抗锯齿的线条，看起来非常适合曲线。</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 要绘制一条线，您需要传递线的开始和结束坐标。我们将创建一个黑色图像，并从左上角到右下角在其上绘制一条蓝线。</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line"><span class="comment"># 创建黑色的图像</span></span><br><span class="line">img = np.zeros((<span class="number">512</span>,<span class="number">512</span>,<span class="number">3</span>), np.uint8)</span><br><span class="line"><span class="comment"># 绘制一条厚度为5的蓝色对角线</span></span><br><span class="line">cv.line(img,(<span class="number">0</span>,<span class="number">0</span>),(<span class="number">511</span>,<span class="number">511</span>),(<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>),<span class="number">5</span>)</span><br><span class="line">cv.imshow(<span class="string">'img'</span>,img)</span><br><span class="line">cv.waitKey(<span class="number">0</span>)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 要绘制矩形，您需要矩形的左上角和右下角。这次，我们将在图像的右上角绘制一个绿色矩形。</span></span><br><span class="line"><span class="comment"># 创建黑色的图像</span></span><br><span class="line">img = np.zeros((<span class="number">512</span>,<span class="number">512</span>,<span class="number">3</span>), np.uint8)</span><br><span class="line">cv.rectangle(img,(<span class="number">384</span>,<span class="number">0</span>),(<span class="number">510</span>,<span class="number">128</span>),(<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span>),<span class="number">3</span>)</span><br><span class="line">cv.imshow(<span class="string">'img'</span>,img)</span><br><span class="line">cv.waitKey(<span class="number">0</span>)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 要绘制一个圆，需要其中心坐标和半径。我们将在上面绘制的矩形内绘制一个圆。</span></span><br><span class="line"><span class="comment"># 创建黑色的图像</span></span><br><span class="line">img = np.zeros((<span class="number">512</span>,<span class="number">512</span>,<span class="number">3</span>), np.uint8)</span><br><span class="line">cv.circle(img,(<span class="number">447</span>,<span class="number">63</span>), <span class="number">63</span>, (<span class="number">0</span>,<span class="number">0</span>,<span class="number">255</span>), <span class="number">-1</span>)</span><br><span class="line">cv.imshow(<span class="string">'img'</span>,img)</span><br><span class="line">cv.waitKey(<span class="number">0</span>)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 要绘制椭圆，我们需要传递几个参数。一个参数是中心位置（x，y）。</span></span><br><span class="line"><span class="comment"># 下一个参数是轴长度（长轴长度，短轴长度）。</span></span><br><span class="line"><span class="comment"># angle是椭圆沿逆时针方向旋转的角度。</span></span><br><span class="line"><span class="comment"># startAngle和endAngle表示从主轴沿顺时针方向测量的椭圆弧的开始和结束。即给出0和360给出完整的椭圆</span></span><br><span class="line"><span class="comment"># 下面的示例在图像的中心绘制一个椭圆形。</span></span><br><span class="line"><span class="comment"># 创建黑色的图像</span></span><br><span class="line">img = np.zeros((<span class="number">512</span>,<span class="number">512</span>,<span class="number">3</span>), np.uint8)</span><br><span class="line">cv.ellipse(img,(<span class="number">256</span>,<span class="number">256</span>),(<span class="number">100</span>,<span class="number">50</span>),<span class="number">0</span>,<span class="number">0</span>,<span class="number">180</span>,<span class="number">255</span>,<span class="number">-1</span>)</span><br><span class="line">cv.imshow(<span class="string">'img'</span>,img)</span><br><span class="line">cv.waitKey(<span class="number">0</span>)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 要绘制多边形，首先需要顶点的坐标。将这些点组成形状为ROWSx1x2的数组，其中ROWS是顶点数，并且其类型应为int32。</span></span><br><span class="line"><span class="comment"># 在这里，我们绘制了一个带有四个顶点的黄色小多边形。</span></span><br><span class="line"><span class="comment"># 创建黑色的图像</span></span><br><span class="line">img = np.zeros((<span class="number">512</span>,<span class="number">512</span>,<span class="number">3</span>), np.uint8)</span><br><span class="line">pts = np.array([[<span class="number">10</span>,<span class="number">5</span>],[<span class="number">20</span>,<span class="number">30</span>],[<span class="number">270</span>,<span class="number">20</span>],[<span class="number">150</span>,<span class="number">5</span>]], np.int32)</span><br><span class="line">pts = pts.reshape((<span class="number">-1</span>,<span class="number">1</span>,<span class="number">2</span>))</span><br><span class="line">cv.polylines(img,[pts],<span class="literal">True</span>,(<span class="number">0</span>,<span class="number">255</span>,<span class="number">255</span>))</span><br><span class="line">cv.imshow(<span class="string">'img'</span>,img)</span><br><span class="line">cv.waitKey(<span class="number">0</span>)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果第三个参数为False，您将获得一条连接所有点的折线，而不是闭合形状。 </span></span><br><span class="line"><span class="comment"># cv.polylines()可用于绘制多条线。只需创建要绘制的所有线条的列表，然后将其传递给函数即可。</span></span><br><span class="line"><span class="comment"># 所有线条将单独绘制。与为每条线调用**cv.line**相比，绘制一组线是一种更好，更快的方法。</span></span><br><span class="line"><span class="comment"># 创建黑色的图像</span></span><br><span class="line">img = np.zeros((<span class="number">512</span>,<span class="number">512</span>,<span class="number">3</span>), np.uint8)</span><br><span class="line">pts = np.array([[<span class="number">10</span>,<span class="number">5</span>],[<span class="number">20</span>,<span class="number">30</span>],[<span class="number">270</span>,<span class="number">20</span>],[<span class="number">150</span>,<span class="number">5</span>]], np.int32)</span><br><span class="line">pts = pts.reshape((<span class="number">-1</span>,<span class="number">1</span>,<span class="number">2</span>))</span><br><span class="line">cv.polylines(img,[pts],<span class="literal">False</span>,(<span class="number">0</span>,<span class="number">255</span>,<span class="number">255</span>))</span><br><span class="line">cv.imshow(<span class="string">'img'</span>,img)</span><br><span class="line">cv.waitKey(<span class="number">0</span>)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 要将文本放入图像中，需要指定以下内容。 </span></span><br><span class="line"><span class="comment"># - 您要写入的文字数据 </span></span><br><span class="line"><span class="comment"># - 您要放置它的位置坐标（即数据开始的左下角）。 </span></span><br><span class="line"><span class="comment"># - 字体类型（检查**cv.putText**文档以获取受支持的字体）</span></span><br><span class="line"><span class="comment"># - 字体比例（指定字体大小） </span></span><br><span class="line"><span class="comment"># - 常规的内容，例如颜色，厚度，线条类型等。为了获得更好的外观，建议使用lineType = cv.LINE_AA。</span></span><br><span class="line">img = np.zeros((<span class="number">512</span>,<span class="number">512</span>,<span class="number">3</span>), np.uint8)</span><br><span class="line">font = cv.FONT_HERSHEY_SIMPLEX</span><br><span class="line">cv.putText(img,<span class="string">'OpenCV'</span>,(<span class="number">10</span>,<span class="number">500</span>), font, <span class="number">4</span>,(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>),<span class="number">2</span>,cv.LINE_AA)</span><br><span class="line">cv.imshow(<span class="string">'img'</span>,img)</span><br><span class="line">cv.waitKey(<span class="number">0</span>)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="鼠标作为画笔"><a href="#鼠标作为画笔" class="headerlink" title="鼠标作为画笔"></a><span id="header4">鼠标作为画笔</span></h1><h2 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h2><ul>
+<li>了解如何在OpenCV中处理鼠标事件</li>
+<li>您将学习以下功能：cv.setMouseCallback()</li>
+</ul>
+<p>简单演示<br>在这里，我们创建一个简单的应用程序，无论我们在哪里双击它，都可以在图像上绘制一个圆。</p>
+<p>首先，我们创建一个鼠标回调函数，该函数在发生鼠标事件时执行。</p>
+<p>鼠标事件可以是与鼠标相关的任何事物，例如左键按下，左键按下，左键双击等。</p>
+<p>它为我们提供了每个鼠标事件的坐标(x，y)。通过此活动和地点，我们可以做任何我们喜欢的事情。</p>
+<p>要列出所有可用的可用事件，请在Python终端中运行以下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line">events = [i <span class="keyword">for</span> i <span class="keyword">in</span> dir(cv) <span class="keyword">if</span> <span class="string">'EVENT'</span> <span class="keyword">in</span> i]</span><br><span class="line">print( events )</span><br></pre></td></tr></table></figure>
+
+<pre><code>[&apos;EVENT_FLAG_ALTKEY&apos;, &apos;EVENT_FLAG_CTRLKEY&apos;, &apos;EVENT_FLAG_LBUTTON&apos;, &apos;EVENT_FLAG_MBUTTON&apos;, &apos;EVENT_FLAG_RBUTTON&apos;, &apos;EVENT_FLAG_SHIFTKEY&apos;, &apos;EVENT_LBUTTONDBLCLK&apos;, &apos;EVENT_LBUTTONDOWN&apos;, &apos;EVENT_LBUTTONUP&apos;, &apos;EVENT_MBUTTONDBLCLK&apos;, &apos;EVENT_MBUTTONDOWN&apos;, &apos;EVENT_MBUTTONUP&apos;, &apos;EVENT_MOUSEHWHEEL&apos;, &apos;EVENT_MOUSEMOVE&apos;, &apos;EVENT_MOUSEWHEEL&apos;, &apos;EVENT_RBUTTONDBLCLK&apos;, &apos;EVENT_RBUTTONDOWN&apos;, &apos;EVENT_RBUTTONUP&apos;]</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在我们双击的地方绘制一个圆圈</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line"><span class="comment"># 鼠标回调函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw_circle</span><span class="params">(event,x,y,flags,param)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> event == cv.EVENT_LBUTTONDBLCLK:</span><br><span class="line">        cv.circle(img,(x,y),<span class="number">100</span>,(<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>),<span class="number">-1</span>)</span><br><span class="line"><span class="comment"># 创建一个黑色的图像，一个窗口，并绑定到窗口的功能</span></span><br><span class="line">img = np.zeros((<span class="number">512</span>,<span class="number">512</span>,<span class="number">3</span>), np.uint8)</span><br><span class="line">cv.namedWindow(<span class="string">'image'</span>)</span><br><span class="line">cv.setMouseCallback(<span class="string">'image'</span>,draw_circle)</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">    cv.imshow(<span class="string">'image'</span>,img)</span><br><span class="line">    <span class="keyword">if</span> cv.waitKey(<span class="number">20</span>) &amp; <span class="number">0xFF</span> == <span class="number">27</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按m之前拖拽画青色矩形</span></span><br><span class="line"><span class="comment"># 按m之后拖拽画红色直线</span></span><br><span class="line"><span class="comment"># 按esc退出</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line">drawing = <span class="literal">False</span> <span class="comment"># 如果按下鼠标，则为真</span></span><br><span class="line">mode = <span class="literal">True</span> <span class="comment"># 如果为真，绘制矩形。按 m 键可以切换到曲线</span></span><br><span class="line">ix,iy = <span class="number">-1</span>,<span class="number">-1</span></span><br><span class="line"><span class="comment"># 鼠标回调函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw_circle</span><span class="params">(event,x,y,flags,param)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> ix,iy,drawing,mode</span><br><span class="line">    <span class="keyword">if</span> event == cv.EVENT_LBUTTONDOWN:</span><br><span class="line">        drawing = <span class="literal">True</span></span><br><span class="line">        ix,iy = x,y</span><br><span class="line">    <span class="keyword">elif</span> event == cv.EVENT_MOUSEMOVE:</span><br><span class="line">        <span class="keyword">if</span> drawing == <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">if</span> mode == <span class="literal">True</span>:</span><br><span class="line">                cv.rectangle(img,(ix,iy),(x,y),(<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span>),<span class="number">-1</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                cv.circle(img,(x,y),<span class="number">25</span>,(<span class="number">0</span>,<span class="number">0</span>,<span class="number">255</span>),<span class="number">-1</span>)</span><br><span class="line">    <span class="keyword">elif</span> event == cv.EVENT_LBUTTONUP:</span><br><span class="line">        drawing = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> mode == <span class="literal">True</span>:</span><br><span class="line">            cv.rectangle(img,(ix,iy),(x,y),(<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span>),<span class="number">-1</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            cv.circle(img,(x,y),<span class="number">25</span>,(<span class="number">0</span>,<span class="number">0</span>,<span class="number">255</span>),<span class="number">-1</span>)</span><br><span class="line">            </span><br><span class="line">img = np.zeros((<span class="number">512</span>,<span class="number">512</span>,<span class="number">3</span>), np.uint8)</span><br><span class="line">cv.namedWindow(<span class="string">'image'</span>)</span><br><span class="line">cv.setMouseCallback(<span class="string">'image'</span>,draw_circle)</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">    cv.imshow(<span class="string">'image'</span>,img)</span><br><span class="line">    <span class="keyword">if</span> cv.waitKey(<span class="number">20</span>) &amp; cv.waitKey(<span class="number">20</span>) == ord(<span class="string">'m'</span>):</span><br><span class="line">        mode = ~mode</span><br><span class="line">    <span class="keyword">if</span> cv.waitKey(<span class="number">20</span>) &amp; <span class="number">0xFF</span> == <span class="number">27</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<h1 id="轨迹栏作为调色板"><a href="#轨迹栏作为调色板" class="headerlink" title="轨迹栏作为调色板"></a><span id="header5">轨迹栏作为调色板</span></h1><h2 id="目标-4"><a href="#目标-4" class="headerlink" title="目标"></a>目标</h2><ul>
+<li>了解将轨迹栏固定到OpenCV窗口</li>
+<li>您将学习以下功能：cv.getTrackbarPos，<strong>cv.createTrackbar</strong>等。</li>
+</ul>
+<p>对于cv.getTrackbarPos()函数，</p>
+<p>第一个参数是轨迹栏名称，</p>
+<p>第二个参数是它附加到的窗口名称，</p>
+<p>第三个参数是默认值，</p>
+<p>第四个参数是最大值，</p>
+<p>第五个是执行的回调函数每次跟踪栏值更改。</p>
+<p>回调函数始终具有默认参数，即轨迹栏位置。</p>
+<p>在我们的例子中，函数什么都不做，所以我们简单地通过。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在这里，我们将创建一个简单的应用程序，以显示您指定的颜色。</span></span><br><span class="line"><span class="comment"># 您有一个显示颜色的窗口，以及三个用于指定B、G、R颜色的跟踪栏。滑动轨迹栏，并相应地更改窗口颜色。</span></span><br><span class="line"><span class="comment"># 默认情况下，初始颜色将设置为黑色。只有在该开关为ON的情况下，该应用程序才能在其中运行，否则屏幕始终为黑色。</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nothing</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="comment"># 创建一个黑色的图像，一个窗口</span></span><br><span class="line">img = np.zeros((<span class="number">300</span>,<span class="number">512</span>,<span class="number">3</span>), np.uint8)</span><br><span class="line">cv.namedWindow(<span class="string">'image'</span>)</span><br><span class="line"><span class="comment"># 创建颜色变化的轨迹栏</span></span><br><span class="line">cv.createTrackbar(<span class="string">'R'</span>,<span class="string">'image'</span>,<span class="number">0</span>,<span class="number">255</span>,nothing)</span><br><span class="line">cv.createTrackbar(<span class="string">'G'</span>,<span class="string">'image'</span>,<span class="number">0</span>,<span class="number">255</span>,nothing)</span><br><span class="line">cv.createTrackbar(<span class="string">'B'</span>,<span class="string">'image'</span>,<span class="number">0</span>,<span class="number">255</span>,nothing)</span><br><span class="line"><span class="comment"># 为 ON/OFF 功能创建开关</span></span><br><span class="line">switch = <span class="string">'0 : OFF \n1 : ON'</span></span><br><span class="line">cv.createTrackbar(switch, <span class="string">'image'</span>,<span class="number">0</span>,<span class="number">1</span>,nothing)</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">    cv.imshow(<span class="string">'image'</span>,img)</span><br><span class="line">    k = cv.waitKey(<span class="number">1</span>) &amp; <span class="number">0xFF</span></span><br><span class="line">    <span class="keyword">if</span> k == <span class="number">27</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="comment"># 得到四条轨迹的当前位置</span></span><br><span class="line">    r = cv.getTrackbarPos(<span class="string">'R'</span>,<span class="string">'image'</span>)</span><br><span class="line">    g = cv.getTrackbarPos(<span class="string">'G'</span>,<span class="string">'image'</span>)</span><br><span class="line">    b = cv.getTrackbarPos(<span class="string">'B'</span>,<span class="string">'image'</span>)</span><br><span class="line">    s = cv.getTrackbarPos(switch,<span class="string">'image'</span>)</span><br><span class="line">    <span class="keyword">if</span> s == <span class="number">0</span>:</span><br><span class="line">        img[:] = <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        img[:] = [b,g,r]</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin.png" alt="Zhangshuai WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/zhifubao.jpg" alt="Zhangshuai Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/opencv/" rel="tag"># opencv</a>
+          
+            <a href="/tags/%E5%9B%BE%E5%83%8F/" rel="tag"># 图像</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/11/%E5%B2%AD%E5%9B%9E%E5%BD%92/" rel="next" title="岭回归">
+                <i class="fa fa-chevron-left"></i> 岭回归
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/12/opencv%E5%9B%BE%E5%83%8F%E6%A0%B8%E5%BF%83%E6%93%8D%E4%BD%9C/" rel="prev" title="opencv图像核心操作">
+                opencv图像核心操作 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar2.jpg"
+                alt="Zhangshuai" />
+            
+              <p class="site-author-name" itemprop="name">Zhangshuai</p>
+              <p class="site-description motion-element" itemprop="description">你刚才说了JOJO对吧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=486194129&auto=1&height=66"></iframe>
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/GitHubzhangshuai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1802528291@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ying-ying-ying-vue" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://music.163.com/#/user/home?id=377737250" target="_blank" title="网易云音乐">
+                      
+                        <i class="fa fa-fw fa-globe"></i>网易云音乐</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图像入门"><span class="nav-number">1.</span> <span class="nav-text">图像入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标"><span class="nav-number">1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取图像"><span class="nav-number">1.2.</span> <span class="nav-text">读取图像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示图像"><span class="nav-number">1.3.</span> <span class="nav-text">显示图像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写入图像"><span class="nav-number">1.4.</span> <span class="nav-text">写入图像</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视频入门"><span class="nav-number">2.</span> <span class="nav-text">视频入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标-1"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#绘图"><span class="nav-number">3.</span> <span class="nav-text">绘图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标-2"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#鼠标作为画笔"><span class="nav-number">4.</span> <span class="nav-text">鼠标作为画笔</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标-3"><span class="nav-number">4.1.</span> <span class="nav-text">目标</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#轨迹栏作为调色板"><span class="nav-number">5.</span> <span class="nav-text">轨迹栏作为调色板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标-4"><span class="nav-number">5.1.</span> <span class="nav-text">目标</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script type="text/javascript" src="/js/src/busuanzi.js"></script>
+
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-[object Object]"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张帅</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+
+
+
+
+
+
+  <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  <span class="post-meta-divider">|</span>
+  <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+
+<script>
+setTimeout(function(){
+document.getElementById('busuanzi_container_site_pv').style.display='inline-block'
+document.getElementById('busuanzi_container_site_uv').style.display='inline-block'
+},1000)
+</script>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="opencv,图像," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="张帅的Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="9.1.轮廓入门 9.2.轮廓特征 9.3.轮廓属性 9.4.轮廓更多属性 9.5.轮廓分层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="opencv中的图像处理3-轮廓">
+<meta property="og:url" content="http://yoursite.com/2020/07/13/opencv%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%863-%E8%BD%AE%E5%BB%93/index.html">
+<meta property="og:site_name" content="张帅的Blog">
+<meta property="og:description" content="9.1.轮廓入门 9.2.轮廓特征 9.3.轮廓属性 9.4.轮廓更多属性 9.5.轮廓分层">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://qiniu.aihubs.net/none.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/approx.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/convexitydefects.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/boundingrect.png">
+<meta property="og:image" content="http://qiniu.aihubs.net/defects.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/matchshapes.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/hierarchy.png">
+<meta property="og:image" content="http://qiniu.aihubs.net/ccomp_hierarchy.png">
+<meta property="og:image" content="http://qiniu.aihubs.net/tree_hierarchy.png">
+<meta property="article:published_time" content="2020-07-13T08:31:05.000Z">
+<meta property="article:modified_time" content="2020-07-13T08:35:09.501Z">
+<meta property="article:author" content="Zhangshuai">
+<meta property="article:tag" content="opencv">
+<meta property="article:tag" content="图像">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://qiniu.aihubs.net/none.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/13/opencv中的图像处理3-轮廓/"/>
+
+
+
+
+
+  <title>opencv中的图像处理3-轮廓 | 张帅的Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">张帅的Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">用hexo搭建的简易博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            Schedule
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/13/opencv%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%863-%E8%BD%AE%E5%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhangshuai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张帅的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">opencv中的图像处理3-轮廓</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-13T16:31:05+08:00">
+                2020-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/opencv/" itemprop="url" rel="index">
+                    <span itemprop="name">opencv</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>9.1.<a href="#header1">轮廓入门</a></li>
+<li>9.2.<a href="#header2">轮廓特征</a></li>
+<li>9.3.<a href="#header3">轮廓属性</a></li>
+<li>9.4.<a href="#header4">轮廓更多属性</a></li>
+<li>9.5.<a href="#header5">轮廓分层</a><a id="more"></a>
+
+</li>
+</ul>
+<h1 id="轮廓：入门"><a href="#轮廓：入门" class="headerlink" title="轮廓：入门"></a><span id="header1">轮廓：入门</span></h1><p>##目标<br>了解轮廓是什么。</p>
+<p>学习查找轮廓，绘制轮廓等。</p>
+<p>你将看到以下功能：cv.findContours()，cv.drawContours()</p>
+<h2 id="什么是轮廓"><a href="#什么是轮廓" class="headerlink" title="什么是轮廓?"></a>什么是轮廓?</h2><p>轮廓可以简单地解释为连接具有相同颜色或强度的所有连续点（沿边界）的曲线。</p>
+<p>轮廓是用于形状分析以及对象检测和识别的有用工具。</p>
+<p>为了获得更高的准确性，请使用二进制图像。因此，在找到轮廓之前，请应用阈值或canny边缘检测。</p>
+<p>从OpenCV 3.2开始，findContours()不再修改源图像。</p>
+<p>在OpenCV中，找到轮廓就像从黑色背景中找到白色物体。因此请记住，要找到的对象应该是白色，背景应该是黑色。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line">img = cv.imread(<span class="string">'avatar1.jpg'</span>)</span><br><span class="line">imgray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)</span><br><span class="line">ret, thresh = cv.threshold(imgray, <span class="number">127</span>, <span class="number">255</span>, <span class="number">0</span>)</span><br><span class="line">unknown,contours, hierarchy = cv.findContours(thresh, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)</span><br></pre></td></tr></table></figure>
+
+<p>findcontour()函数中有三个参数，</p>
+<p>第一个是源图像，</p>
+<p>第二个是轮廓检索模式，</p>
+<p>第三个是轮廓逼近方法。</p>
+<p>输出未知量,等高线和层次结构。</p>
+<p>轮廓是图像中所有轮廓的Python列表。</p>
+<p>每个单独的轮廓是一个(x,y)坐标的Numpy数组的边界点的对象。</p>
+<p>注意 稍后我们将详细讨论第二和第三个参数以及有关层次结构。</p>
+<p>在此之前，代码示例中赋予它们的值将适用于所有图像。</p>
+<h2 id="如何绘制轮廓"><a href="#如何绘制轮廓" class="headerlink" title="如何绘制轮廓?"></a>如何绘制轮廓?</h2><p>要绘制轮廓，请使用<strong>cv.drawContours</strong>函数。只要有边界点，它也可以用来绘制任何形状。</p>
+<p>它的第一个参数是源图像，</p>
+<p>第二个参数是应该作为Python列表传递的轮廓，</p>
+<p>第三个参数是轮廓的索引（在绘制单个轮廓时有用。要绘制所有轮廓，请传递-1），其余参数是颜色，厚度等等</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在图像中绘制所有轮廓：</span></span><br><span class="line">cv.drawContours(img, contours, <span class="number">-1</span>, (<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span>), <span class="number">3</span>)</span><br><span class="line">cv.imshow(<span class="string">'img'</span>,img)</span><br><span class="line">cv.waitKey(<span class="number">0</span>)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 绘制单个轮廓，如第四个轮廓：</span></span><br><span class="line">cnt = contours[<span class="number">4</span>]</span><br><span class="line">cv.drawContours(img, [cnt], <span class="number">0</span>, (<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span>), <span class="number">3</span>)</span><br><span class="line">cv.imshow(<span class="string">'img'</span>,img)</span><br><span class="line">cv.waitKey(<span class="number">0</span>)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 但是在大多数情况下，以下方法会很有用：</span></span><br><span class="line">cnt = contours[<span class="number">4</span>]</span><br><span class="line">cv.drawContours(img, [cnt], <span class="number">0</span>, (<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span>), <span class="number">3</span>)</span><br><span class="line">cv.imshow(<span class="string">'img'</span>,img)</span><br><span class="line">cv.waitKey(<span class="number">0</span>)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<p>轮廓近似方法<br>这是<strong>cv.findContours</strong>函数中的第三个参数。它实际上表示什么？</p>
+<p>上面我们告诉我们轮廓是强度相同的形状的边界。</p>
+<p>它存储形状边界的(x,y)坐标。但是它存储所有坐标吗？这是通过这种轮廓近似方法指定的。</p>
+<p>如果传递<strong>cv.CHAIN_APPROX_NONE</strong>，则将存储所有边界点。</p>
+<p>但是实际上我们需要所有这些要点吗？</p>
+<p>例如，您找到了一条直线的轮廓。您是否需要线上的所有点来代表该线？</p>
+<p>不，我们只需要该线的两个端点即可。</p>
+<p>这就是<strong>cv.CHAIN_APPROX_SIMPLE</strong>所做的。它删除所有冗余点并压缩轮廓，从而节省内存。</p>
+<p>下面的矩形图像演示了此技术。</p>
+<p>只需在轮廓数组中的所有坐标上绘制一个圆（以蓝色绘制）。</p>
+<p>第一幅图像显示了我用<strong>cv.CHAIN_APPROX_NONE</strong>获得的积分（734个点），</p>
+<p>第二幅图像显示了我用<strong>cv.CHAIN_APPROX_SIMPLE</strong>获得的效果（只有4个点）。</p>
+<p>看，它可以节省多少内存！！！</p>
+<p><img src="http://qiniu.aihubs.net/none.jpg" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="轮廓特征"><a href="#轮廓特征" class="headerlink" title="轮廓特征"></a><span id="header2">轮廓特征</span></h1><h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>在本文中，我们将学习 - 如何找到轮廓的不同特征，</p>
+<p>例如面积，周长，质心，边界框等。 - 您将看到大量与轮廓有关的功能。</p>
+<h2 id="1-特征矩"><a href="#1-特征矩" class="headerlink" title="1. 特征矩"></a>1. 特征矩</h2><p>特征矩可以帮助您计算一些特征，例如物体的质心，物体的面积等。</p>
+<p>请查看特征矩上的维基百科页面。</p>
+<p>函数<strong>cv.moments</strong>()提供了所有计算出的矩值的字典。见下文：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line">img = cv.imread(<span class="string">'avatar1.jpg'</span>,<span class="number">0</span>)</span><br><span class="line">ret,thresh = cv.threshold(img,<span class="number">127</span>,<span class="number">255</span>,<span class="number">0</span>)</span><br><span class="line">unknown,contours,hierarchy = cv.findContours(thresh, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">cnt = contours[<span class="number">0</span>]</span><br><span class="line">M = cv.moments(cnt)</span><br><span class="line">print( M )</span><br></pre></td></tr></table></figure>
+
+<pre><code>{&apos;m00&apos;: 2.0, &apos;m10&apos;: 536.0, &apos;m01&apos;: 1272.0, &apos;m20&apos;: 143648.3333333333, &apos;m11&apos;: 340896.0, &apos;m02&apos;: 808992.3333333333, &apos;m30&apos;: 38497932.0, &apos;m21&apos;: 91360340.0, &apos;m12&apos;: 216809945.33333334, &apos;m03&apos;: 514519548.0, &apos;mu20&apos;: 0.3333333333139308, &apos;mu11&apos;: 0.0, &apos;mu02&apos;: 0.3333333332557231, &apos;mu30&apos;: 1.4901161193847656e-08, &apos;mu21&apos;: 1.234002411365509e-08, &apos;mu12&apos;: 3.073364496231079e-08, &apos;mu03&apos;: 1.1920928955078125e-07, &apos;nu20&apos;: 0.0833333333284827, &apos;nu11&apos;: 0.0, &apos;nu02&apos;: 0.08333333331393078, &apos;nu30&apos;: 2.634178031930877e-09, &apos;nu21&apos;: 2.1814286826927578e-09, &apos;nu12&apos;: 5.432992190857434e-09, &apos;nu03&apos;: 2.1073424255447017e-08}</code></pre><p>从这一刻起，您可以提取有用的数据，<br>例如面积，质心等。质心由关系给出，$C_x\frac{M_{10}}{M_{00}}$ 和 $C_y\frac{M_{01}}{M_{00}}$。可以按照以下步骤进行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cx = int(M[<span class="string">'m10'</span>]/M[<span class="string">'m00'</span>])</span><br><span class="line">cy = int(M[<span class="string">'m01'</span>]/M[<span class="string">'m00'</span>])</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-轮廓面积"><a href="#2-轮廓面积" class="headerlink" title="2. 轮廓面积"></a>2. 轮廓面积</h2><p>轮廓区域由函数<strong>cv.contourArea</strong>()或从矩M[‘m00’]中给出。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">area = cv.contourArea(cnt) </span><br><span class="line">print(area)</span><br><span class="line">print(M[<span class="string">'m00'</span>])</span><br></pre></td></tr></table></figure>
+
+<pre><code>2.0
+2.0</code></pre><h2 id="3-轮廓周长"><a href="#3-轮廓周长" class="headerlink" title="3. 轮廓周长"></a>3. 轮廓周长</h2><p>也称为弧长。可以使用<strong>cv.arcLength</strong>()函数找到它。第二个参数指定形状是闭合轮廓(True)还是曲线。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">perimeter = cv.arcLength(cnt,<span class="literal">True</span>)</span><br><span class="line">perimeter</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>5.656854152679443</code></pre><h2 id="4-轮廓近似"><a href="#4-轮廓近似" class="headerlink" title="4. 轮廓近似"></a>4. 轮廓近似</h2><p>根据我们指定的精度，它可以将轮廓形状近似为顶点数量较少的其他形状。</p>
+<p>它是Douglas-Peucker算法的实现。检查维基百科页面上的算法和演示。</p>
+<p>为了理解这一点，假设您试图在图像中找到一个正方形，但是由于图像中的某些问题，您没有得到一个完美的正方形，而是一个“坏形状”（如下图所示）。</p>
+<p>现在，您可以使用此功能来近似形状。在这种情况下，第二个参数称为epsilon，它是从轮廓到近似轮廓的最大距离。</p>
+<p>它是一个精度参数。需要正确选择epsilon才能获得正确的输出。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">epsilon = <span class="number">0.1</span>*cv.arcLength(cnt,<span class="literal">True</span>) </span><br><span class="line">approx = cv.approxPolyDP(cnt,epsilon,<span class="literal">True</span>)</span><br><span class="line">print(epsilon)</span><br><span class="line">print(approx)</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.5656854152679444
+[[[267 636]]
+
+ [[268 635]]
+
+ [[269 636]]
+
+ [[268 637]]]</code></pre><p>下面，在第二张图片中，绿线显示了ε=弧长的10％时的近似曲线。第三幅图显示了ε=弧长度的1％时的情况。第三个参数指定曲线是否闭合。<br><img src="http://qiniu.aihubs.net/approx.jpg" alt></p>
+<h2 id="5-轮廓凸包"><a href="#5-轮廓凸包" class="headerlink" title="5. 轮廓凸包"></a>5. 轮廓凸包</h2><p>凸包外观看起来与轮廓逼近相似，但不相似（在某些情况下两者可能提供相同的结果）。</p>
+<p>在这里，cv.convexHull()函数检查曲线是否存在凸凹缺陷并对其进行校正。</p>
+<p>一般而言，凸曲线是始终凸出或至少平坦的曲线。如果在内部凸出，则称为凸度缺陷。</p>
+<p>例如，检查下面的手的图像。红线显示手的凸包。双向箭头标记显示凸度缺陷，这是凸包与轮廓线之间的局部最大偏差。</p>
+<p><img src="http://qiniu.aihubs.net/convexitydefects.jpg" alt></p>
+<p>关于它的语法，有一些需要讨论：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hull &#x3D; cv.convexHull(points[, hull[, clockwise[, returnPoints]]</span><br></pre></td></tr></table></figure>
+<p>参数详细信息： </p>
+<ul>
+<li>点**是我们传递到的轮廓。 </li>
+<li><strong>凸包</strong>是输出，通常我们忽略它。 </li>
+<li>**顺时针方向：方向标记。如果为True，则输出凸包为顺时针方向。否则，其方向为逆时针方向。 </li>
+<li>returnPoints：默认情况下为True。然后返回凸包的坐标。如果为False，则返回与凸包点相对应的轮廓点的索引。</li>
+</ul>
+<p>因此，要获得如上图所示的凸包，以下内容就足够了：<br>``<br>hull = cv.convexHull(cnt) </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">但是，如果要查找凸度缺陷，则需要传递returnPoints &#x3D; False。</span><br><span class="line"></span><br><span class="line">为了理解它，我们将拍摄上面的矩形图像。</span><br><span class="line"></span><br><span class="line">首先，我发现它的轮廓为cnt。现在，我发现它的带有returnPoints &#x3D; True的凸包，</span><br><span class="line"></span><br><span class="line">得到以下值：[[[234 202]]，[[51 202]]，[[51 79]]，[[234 79]]]，它们是四个角 矩形的点。</span><br><span class="line"></span><br><span class="line">现在，如果对returnPoints &#x3D; False执行相同的操作，</span><br><span class="line"></span><br><span class="line">则会得到以下结果：[[129]，[67]，[0]，[142]]。这些是轮廓中相应点的索引。</span><br><span class="line"></span><br><span class="line">例如，检查第一个值：cnt [129] &#x3D; [[234，202]]与第一个结果相同（对于其他结果依此类推）。</span><br><span class="line"></span><br><span class="line">当我们讨论凸度缺</span><br><span class="line"></span><br><span class="line">## 6. 检查凸度</span><br><span class="line">cv.isContourConvex()具有检查曲线是否凸出的功能。它只是返回True还是False。没什么大不了的。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line">k &#x3D; cv.isContourConvex(cnt) </span><br><span class="line">k</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>True</code></pre><h2 id="7-边界矩形"><a href="#7-边界矩形" class="headerlink" title="7. 边界矩形"></a>7. 边界矩形</h2><p>有两种类型的边界矩形。</p>
+<h3 id="7-a-直角矩形"><a href="#7-a-直角矩形" class="headerlink" title="7.a.直角矩形"></a>7.a.直角矩形</h3><p>它是一个矩形，不考虑物体的旋转。所以边界矩形的面积不是最小的。</p>
+<p>它是由函数<strong>cv.boundingRect</strong>()找到的。</p>
+<p>令(x，y)为矩形的左上角坐标，而(w，h)为矩形的宽度和高度。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x,y,w,h &#x3D; cv.boundingRect(cnt)</span><br><span class="line">cv.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)</span><br></pre></td></tr></table></figure>
+<h3 id="7-b-旋转矩形"><a href="#7-b-旋转矩形" class="headerlink" title="7.b. 旋转矩形"></a>7.b. 旋转矩形</h3><p>这里，边界矩形是用最小面积绘制的，所以它也考虑了旋转。</p>
+<p>使用的函数是<strong>cv.minAreaRect</strong>()。</p>
+<p>它返回一个Box2D结构，其中包含以下细节 -(中心(x,y)，(宽度，高度)，旋转角度)。</p>
+<p>但要画出这个矩形，我们需要矩形的四个角。</p>
+<p>它由函数<strong>cv.boxPoints</strong>()获得</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rect &#x3D; cv.minAreaRect(cnt)</span><br><span class="line">box &#x3D; cv.boxPoints(rect)</span><br><span class="line">box &#x3D; np.int0(box)</span><br><span class="line">cv.drawContours(img,[box],0,(0,0,255),2)</span><br></pre></td></tr></table></figure>
+<p>两个矩形都显示在一张单独的图像中。绿色矩形显示正常的边界矩形。红色矩形是旋转后的矩形。</p>
+<p><img src="http://qiniu.aihubs.net/boundingrect.png" alt></p>
+<h2 id="8-最小闭合圈"><a href="#8-最小闭合圈" class="headerlink" title="8. 最小闭合圈"></a>8. 最小闭合圈</h2><p>接下来，使用函数<em>*cv.minEnclosingCircle(</em>()查找对象的圆周。它是一个以最小面积完全覆盖物体的圆。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(x,y),radius &#x3D; cv.minEnclosingCircle(cnt)</span><br><span class="line">center &#x3D; (int(x),int(y))</span><br><span class="line">radius &#x3D; int(radius)</span><br><span class="line">cv.circle(img,center,radius,(0,255,0),2)</span><br><span class="line">&#96;&#96;&#96;                            </span><br><span class="line">![](http:&#x2F;&#x2F;qiniu.aihubs.net&#x2F;circumcircle.png)</span><br><span class="line"></span><br><span class="line">## 9. 拟合一个椭圆</span><br><span class="line">下一个是把一个椭圆拟合到一个物体上。它返回内接椭圆的旋转矩形。</span><br></pre></td></tr></table></figure>
+<p>ellipse = cv.fitEllipse(cnt)<br>cv.ellipse(img,ellipse,(0,255,0),2)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">![](http:&#x2F;&#x2F;qiniu.aihubs.net&#x2F;fitellipse.png)</span><br><span class="line"></span><br><span class="line">## 10. 拟合直线</span><br><span class="line">同样，我们可以将一条直线拟合到一组点。下图包含一组白点。我们可以近似一条直线。</span><br></pre></td></tr></table></figure>
+<p>rows,cols = img.shape[:2]<br>[vx,vy,x,y] = cv.fitLine(cnt, cv.DIST_L2,0,0.01,0.01)<br>lefty = int((-x<em>vy/vx) + y)<br>righty = int(((cols-x)</em>vy/vx)+y)<br>cv.line(img,(cols-1,righty),(0,lefty),(0,255,0),2)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># &lt;span id&#x3D;&quot;header3&quot;&gt;轮廓属性&lt;&#x2F;span&gt;</span><br><span class="line">在这里，我们将学习提取一些常用的物体属性，</span><br><span class="line"></span><br><span class="line">如坚实度，等效直径，掩模图像，平均强度等。更多的功能可以在Matlab regionprops文档中找到。</span><br><span class="line"></span><br><span class="line">(注:质心、面积、周长等也属于这一类，但我们在上一章已经见过)</span><br><span class="line"></span><br><span class="line">## 1. 长宽比</span><br><span class="line">它是对象边界矩形的宽度与高度的比值。</span><br><span class="line"></span><br><span class="line">Aspect Ratio&#x3D;$\frac&#123;Width&#125;&#123;Height&#125;$</span><br></pre></td></tr></table></figure>
+<p>x,y,w,h = cv.boundingRect(cnt)<br>aspect_ratio = float(w)/h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 2. 范围</span><br><span class="line">范围是轮廓区域与边界矩形区域的比值。</span><br><span class="line"></span><br><span class="line">Extent&#x3D;$\frac&#123;Object Area&#125;&#123;Bounding Rectangle Area&#125;$</span><br></pre></td></tr></table></figure>
+<p>area = cv.contourArea(cnt)<br>x,y,w,h = cv.boundingRect(cnt)<br>rect_area = w*h<br>extent = float(area)/rect_area</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 3. 坚实度</span><br><span class="line">坚实度是等高线面积与其凸包面积之比。</span><br><span class="line"></span><br><span class="line">Solidity&#x3D;$\frac&#123;Contour Area&#125;&#123;ConvexHull Area&#125;$</span><br></pre></td></tr></table></figure>
+<p>area = cv.contourArea(cnt)<br>hull = cv.convexHull(cnt)<br>hull_area = cv.contourArea(hull)<br>solidity = float(area)/hull_area</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 4. 等效直径</span><br><span class="line">等效直径是面积与轮廓面积相同的圆的直径。</span><br><span class="line"></span><br><span class="line">EquivalentDiameter&#x3D;$\sqrt&#123;\frac&#123;4×ContourArea&#125;&#123;\Pi&#125;&#125;$</span><br></pre></td></tr></table></figure>
+<p>area = cv.contourArea(cnt)<br>equi_diameter = np.sqrt(4*area/np.pi)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 5. 取向</span><br><span class="line">取向是物体指向的角度。以下方法还给出了主轴和副轴的长度。</span><br></pre></td></tr></table></figure>
+<p>(x,y),(MA,ma),angle = cv.fitEllipse(cnt)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 6. 掩码和像素点</span><br><span class="line">在某些情况下，我们可能需要构成该对象的所有点。可以按照以下步骤完成：</span><br></pre></td></tr></table></figure>
+<p>mask = np.zeros(imgray.shape,np.uint8)<br>cv.drawContours(mask,[cnt],0,255,-1)<br>pixelpoints = np.transpose(np.nonzero(mask))<br>#pixelpoints = cv.findNonZero(mask)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">这里提供了两个方法，一个使用Numpy函数，另一个使用OpenCV函数(最后的注释行)。结果也是一样的，只是略有不同。</span><br><span class="line"></span><br><span class="line">Numpy给出的坐标是(行、列)格式，</span><br><span class="line"></span><br><span class="line">而OpenCV给出的坐标是(x,y)格式。所以基本上答案是可以互换的。注意，row &#x3D; x, column &#x3D; y。</span><br><span class="line"></span><br><span class="line">## 7. 最大值，最小值和它们的位置</span><br><span class="line">我们可以使用掩码图像找到这些参数。</span><br></pre></td></tr></table></figure>
+<p>min_val, max_val, min_loc, max_loc = cv.minMaxLoc(imgray,mask = mask)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 8. 平均颜色或平均强度</span><br><span class="line">在这里，我们可以找到对象的平均颜色。或者可以是灰度模式下物体的平均强度。我们再次使用相同的掩码进行此操作。</span><br></pre></td></tr></table></figure>
+<p>mean_val = cv.mean(im,mask = mask)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 9. 极端点</span><br><span class="line">极点是指对象的最顶部，最底部，最右侧和最左侧的点。</span><br></pre></td></tr></table></figure>
+<p>leftmost = tuple(cnt[cnt[:,:,0].argmin()][0])<br>rightmost = tuple(cnt[cnt[:,:,0].argmax()][0])<br>topmost = tuple(cnt[cnt[:,:,1].argmin()][0])<br>bottommost = tuple(cnt[cnt[:,:,1].argmax()][0])</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">例如，如果我将其应用于印度地图，则会得到以下结果：</span><br><span class="line">![](http:&#x2F;&#x2F;qiniu.aihubs.net&#x2F;extremepoints.jpg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="轮廓：更多属性"><a href="#轮廓：更多属性" class="headerlink" title="轮廓：更多属性"></a><span id="header4">轮廓：更多属性</span></h1><h2 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h2><p>在本章中，我们将学习 - 凸性缺陷以及如何找到它们 - 查找点到多边形的最短距离 - 匹配不同的形状</p>
+<h2 id="理论和代码"><a href="#理论和代码" class="headerlink" title="理论和代码"></a>理论和代码</h2><h3 id="1-凸性缺陷"><a href="#1-凸性缺陷" class="headerlink" title="1. 凸性缺陷"></a>1. 凸性缺陷</h3><p>我们看到了关于轮廓的第二章的凸包。从这个凸包上的任何偏差都可以被认为是凸性缺陷。 OpenCV有一个函数来找到这个,cv.convexityDefects()。一个基本的函数调用如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hull &#x3D; cv.convexHull(cnt,returnPoints &#x3D; False)</span><br><span class="line">defects &#x3D; cv.convexityDefects(cnt,hull)</span><br></pre></td></tr></table></figure>
+<p>注意 记住,我们必须在发现凸包时,传递returnPoints= False,以找到凸性缺陷。</p>
+<p>它返回一个数组，其中每行包含这些值—[起点、终点、最远点、到最远点的近似距离]。我们可以用图像把它形象化。我们画一条连接起点和终点的线，然后在最远处画一个圆。记住，返回的前三个值是cnt的索引。所以我们必须从cnt中获取这些值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">img &#x3D; cv.imread(&#39;star.jpg&#39;)</span><br><span class="line">img_gray &#x3D; cv.cvtColor(img,cv.COLOR_BGR2GRAY)</span><br><span class="line">ret,thresh &#x3D; cv.threshold(img_gray, 127, 255,0)</span><br><span class="line">contours,hierarchy &#x3D; cv.findContours(thresh,2,1)</span><br><span class="line">cnt &#x3D; contours[0]</span><br><span class="line">hull &#x3D; cv.convexHull(cnt,returnPoints &#x3D; False)</span><br><span class="line">defects &#x3D; cv.convexityDefects(cnt,hull)</span><br><span class="line">for i in range(defects.shape[0]):</span><br><span class="line">    s,e,f,d &#x3D; defects[i,0]</span><br><span class="line">    start &#x3D; tuple(cnt[s][0])</span><br><span class="line">    end &#x3D; tuple(cnt[e][0])</span><br><span class="line">    far &#x3D; tuple(cnt[f][0])</span><br><span class="line">    cv.line(img,start,end,[0,255,0],2)</span><br><span class="line">    cv.circle(img,far,5,[0,0,255],-1)</span><br><span class="line">cv.imshow(&#39;img&#39;,img)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+<p>查看结果：<br><img src="http://qiniu.aihubs.net/defects.jpg" alt></p>
+<h3 id="2-点多边形测试"><a href="#2-点多边形测试" class="headerlink" title="2. 点多边形测试"></a>2. 点多边形测试</h3><p>这个函数找出图像中一点到轮廓线的最短距离。它返回的距离，点在轮廓线外时为负，点在轮廓线内时为正，点在轮廓线上时为零。</p>
+<p>例如，我们可以检查点(50,50)如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dist &#x3D; cv.pointPolygonTest(cnt,(50,50),True)</span><br></pre></td></tr></table></figure>
+<p>在函数中，第三个参数是measureDist。如果它是真的，它会找到有符号的距离。如果为假，则查找该点是在轮廓线内部还是外部(分别返回+1、-1和0)。</p>
+<p>注意 如果您不想找到距离，请确保第三个参数为False，因为这是一个耗时的过程。因此，将其设置为False可使速度提高2-3倍。</p>
+<h3 id="3-形状匹配"><a href="#3-形状匹配" class="headerlink" title="3. 形状匹配"></a>3. 形状匹配</h3><p>OpenCV附带一个函数<strong>cv.matchShapes</strong>()，该函数使我们能够比较两个形状或两个轮廓，并返回一个显示相似性的度量。结果越低，匹配越好。它是根据矩值计算出来的。不同的测量方法在文档中有解释。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">img1 &#x3D; cv.imread(&#39;star.jpg&#39;,0)</span><br><span class="line">img2 &#x3D; cv.imread(&#39;star2.jpg&#39;,0)</span><br><span class="line">ret, thresh &#x3D; cv.threshold(img1, 127, 255,0)</span><br><span class="line">ret, thresh2 &#x3D; cv.threshold(img2, 127, 255,0)</span><br><span class="line">contours,hierarchy &#x3D; cv.findContours(thresh,2,1)</span><br><span class="line">cnt1 &#x3D; contours[0]</span><br><span class="line">contours,hierarchy &#x3D; cv.findContours(thresh2,2,1)</span><br><span class="line">cnt2 &#x3D; contours[0]</span><br><span class="line">ret &#x3D; cv.matchShapes(cnt1,cnt2,1,0.0)</span><br><span class="line">print( ret )</span><br></pre></td></tr></table></figure>
+<p>我尝试过匹配下面给出的不同形状的形状：<br><img src="http://qiniu.aihubs.net/matchshapes.jpg" alt></p>
+<p>我得到以下结果: - 匹配的图像A与本身= 0.0 - 匹配图像A与图像B = 0.001946 - 匹配图像A与图像C = 0.326911</p>
+<p>看,即使是图像旋转也不会对这个比较产生很大的影响。</p>
+<p>参考 Hu矩是平移、旋转和比例不变的七个矩。第七个是无偏斜量。这些值可以使用<strong>cpu.HuMoments</strong>()函数找到。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="轮廓分层"><a href="#轮廓分层" class="headerlink" title="轮廓分层"></a><span id="header5">轮廓分层</span></h1><h2 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h2><p>这次我们学习轮廓的层次，即轮廓中的父子关系。</p>
+<h2 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h2><p>在前几篇关于轮廓的文章中，我们已经讨论了与OpenCV提供的轮廓相关的几个函数。</p>
+<p>但是当我们使用<strong>cv.findcontour</strong>()函数在图像中找到轮廓时，我们已经传递了一个参数，轮廓检索模式。</p>
+<p>我们通常通过了<strong>cv.RETR_LIST</strong>或<strong>cv.RETR_TREE</strong>，效果很好。但这到底意味着什么呢?</p>
+<p>另外，在输出中，我们得到了三个数组，第一个是图像，第二个是轮廓，还有一个我们命名为<strong>hierarchy</strong>的输出(请检查前面文章中的代码)。</p>
+<p>但我们从未在任何地方使用过这种层次结构。那么这个层级是什么?它是用来做什么的?它与前面提到的函数参数有什么关系?</p>
+<p>这就是我们在本文中要讨论的内容。</p>
+<h2 id="层次结构是什么？"><a href="#层次结构是什么？" class="headerlink" title="层次结构是什么？"></a>层次结构是什么？</h2><p>通常我们使用<strong>cv.findcontour</strong>()函数来检测图像中的对象，对吧？</p>
+<p>有时对象在不同的位置。但在某些情况下，某些形状在其他形状中。</p>
+<p>就像嵌套的图形一样。在这种情况下，我们把外部的称为<strong>父类</strong>，把内部的称为<strong>子类</strong>。</p>
+<p>这样，图像中的轮廓就有了一定的相互关系。</p>
+<p>我们可以指定一个轮廓是如何相互连接的，比如，它是另一个轮廓的子轮廓，还是父轮廓等等。这种关系的表示称为<strong>层次结构</strong>。</p>
+<p><img src="http://qiniu.aihubs.net/hierarchy.png" alt><br>在这张图中，有一些形状我已经从<strong>0-5</strong>开始编号。<em>2</em>和<em>2a</em>表示最外层盒子的外部和内部轮廓。</p>
+<p>这里，等高线0,1,2在<strong>外部或最外面</strong>。我们可以说，它们在<strong>层级-0</strong>中，或者简单地说，它们在<strong>同一个层级</strong>中。</p>
+<p>其次是<strong>contour-2a</strong>。它可以被认为是<strong>contour-2的子级</strong>(或者反过来，contour-2是contour-2a的父级)。</p>
+<p>假设它在<strong>层级-1</strong>中。类似地，contour-3是contour-2的子级，它位于下一个层次结构中。</p>
+<p>最后，轮廓4,5是contour-3a的子级，他们在最后一个层级。</p>
+<p>从对方框的编号来看，我认为contour-4是contour-3a的第一个子级(它也可以是contour-5)。</p>
+<p>我提到这些是为了理解一些术语，比如<strong>相同层级</strong>，外部轮廓，子轮廓，父轮廓，<strong>第一个子轮廓</strong>等等。现在让我们进入OpenCV。</p>
+<h2 id="OpenCV中的分级表示"><a href="#OpenCV中的分级表示" class="headerlink" title="OpenCV中的分级表示"></a>OpenCV中的分级表示</h2><p>所以每个轮廓都有它自己的信息关于它是什么层次，谁是它的孩子，谁是它的父母等等。</p>
+<p>OpenCV将它表示为一个包含四个值的数组:[Next, Previous, First_Child, Parent]</p>
+<p>“Next表示同一层次的下一个轮廓。”</p>
+<p>例如，在我们的图片中取contour-0。谁是下一个同级别的等高线?这是contour-1。</p>
+<p>简单地令Next = 1。类似地，Contour-1也是contour-2。所以Next = 2。 contour-2呢?同一水平线上没有下一条等高线。</p>
+<p>简单地，让Next = -1。contour-4呢?它与contour-5处于同一级别。它的下一条等高线是contour-5，所以next = 5。</p>
+<p>“Previous表示同一层次上的先前轮廓。”</p>
+<p>和上面一样。contour-1之前的等值线为同级别的contour-0。</p>
+<p>类似地，contour-2也是contour-1。对于contour-0，没有前项，所以设为-1。</p>
+<p>“First_Child表示它的第一个子轮廓。”</p>
+<p>没有必要作任何解释。对于contour-2, child是contour-2a。从而得到contour-2a对应的指标值。</p>
+<p>contour-3a呢?它有两个孩子。但我们只关注第一个孩子。它是contour-4。那么First_Child = 4 对contour-3a而言。</p>
+<p>“Parent表示其父轮廓的索引。”</p>
+<p>它与<strong>First_Child</strong>相反。对于轮廓线-4和轮廓线-5，父轮廓线都是轮廓线-3a。对于轮廓3a，它是轮廓-3，以此类推。</p>
+<p>注意 如果没有子元素或父元素，则该字段被视为-1</p>
+<p>现在我们已经了解了OpenCV中使用的层次样式，我们可以借助上面给出的相同图像来检查OpenCV中的轮廓检索模式。</p>
+<p>一些标志如 cv.RETR_LIST, cv.RETR_TREE,cv.RETR_CCOMP, <strong>cv.RETR_EXTERNAL</strong>等等的含义。</p>
+<h2 id="轮廓检索模式"><a href="#轮廓检索模式" class="headerlink" title="轮廓检索模式"></a>轮廓检索模式</h2><h3 id="1-RETR-LIST"><a href="#1-RETR-LIST" class="headerlink" title="1. RETR_LIST"></a>1. RETR_LIST</h3><p>这是四个标志中最简单的一个(从解释的角度来看)。它只是检索所有的轮廓，但不创建任何亲子关系。</p>
+<p>在这个规则下，父轮廓和子轮廓是平等的，他们只是轮廓。他们都属于同一层级。</p>
+<p>这里，第3和第4项总是-1。但是很明显，下一项和上一项都有对应的值。你自己检查一下就可以了。</p>
+<p>下面是我得到的结果，每一行是对应轮廓的层次细节。例如，第一行对应于轮廓0。下一条轮廓是轮廓1。所以Next = 1。</p>
+<p>没有先前的轮廓，所以Previous=-1。剩下的两个，如前所述，是-1。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; hierarchy</span><br><span class="line">array([[[ 1, -1, -1, -1],</span><br><span class="line">        [ 2,  0, -1, -1],</span><br><span class="line">        [ 3,  1, -1, -1],</span><br><span class="line">        [ 4,  2, -1, -1],</span><br><span class="line">        [ 5,  3, -1, -1],</span><br><span class="line">        [ 6,  4, -1, -1],</span><br><span class="line">        [ 7,  5, -1, -1],</span><br><span class="line">        [-1,  6, -1, -1]]])</span><br></pre></td></tr></table></figure>
+<p>如果您没有使用任何层次结构特性，那么这是在您的代码中使用的最佳选择。</p>
+<h3 id="2-RETR-EXTERNAL"><a href="#2-RETR-EXTERNAL" class="headerlink" title="2. RETR_EXTERNAL"></a>2. RETR_EXTERNAL</h3><p>如果使用此标志，它只返回极端外部标志。所有孩子的轮廓都被留下了。</p>
+<p>我们可以说，根据这项规则，每个家庭只有长子得到关注。它不关心家庭的其他成员:)。</p>
+<p>所以在我们的图像中，有多少个极端的外轮廓?在等级0级?有3个，即等值线是0 1 2，对吧?</p>
+<p>现在试着用这个标志找出等高线。这里，给每个元素的值与上面相同。并与上述结果进行了比较。以下是我得到的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; hierarchy</span><br><span class="line">array([[[ 1, -1, -1, -1],</span><br><span class="line">        [ 2,  0, -1, -1],</span><br><span class="line">        [-1,  1, -1, -1]]])</span><br></pre></td></tr></table></figure>
+<p>如果只想提取外部轮廓，可以使用此标志。它在某些情况下可能有用。</p>
+<h3 id="3-RETR-CCOMP"><a href="#3-RETR-CCOMP" class="headerlink" title="3. RETR_CCOMP"></a>3. RETR_CCOMP</h3><p>此标志检索所有轮廓并将其排列为2级层次结构。物体的外部轮廓(即物体的边界)放在层次结构-1中。</p>
+<p>对象内部孔洞的轮廓(如果有)放在层次结构-2中。如果其中有任何对象，则其轮廓仅在层次结构1中重新放置。以及它在层级2中的漏洞等等。</p>
+<p>只需考虑在黑色背景上的“白色的零”图像。零的外圆属于第一级，零的内圆属于第二级。</p>
+<p>我们可以用一个简单的图像来解释它。这里我用红色标注了等高线的顺序和它们所属的层次，用绿色标注(1或2)，顺序与OpenCV检测等高线的顺序相同。<br><img src="http://qiniu.aihubs.net/ccomp_hierarchy.png" alt><br>考虑第一个轮廓，即contour-0。这是hierarchy-1。它有两个孔，分别是等高线1和2，属于第二级。</p>
+<p>因此，对于轮廓-0，在同一层次的下一个轮廓是轮廓-3。previous也没有。在hierarchy-2中，它的第一个子结点是contour-1。</p>
+<p>它没有父类，因为它在hierarchy-1中。所以它的层次数组是[3，-1,1，-1]</p>
+<p>现在contour-1。它在层级-2中。相同层次结构中的下一个(在contour-1的父母关系下)是contour-2。</p>
+<p>没有previous。没有child，但是parent是contour-0。所以数组是[2，-1，-1,0]</p>
+<p>类似的contour-2:它在hierarchy-2中。在contour-0下，同一层次结构中没有下一个轮廓。</p>
+<p>所以没有Next。previous是contour-1。没有child，parent是contour0。所以数组是[-1,1，-1,0]</p>
+<p>contour-3:层次-1的下一个是轮廓-5。以前是contour-0。child是contour4，没有parent。所以数组是[5,0,4，-1]</p>
+<p>contour-4:它在contour-3下的层次结构2中，它没有兄弟姐妹。没有next，没有previous，没有child，parent是contour-3。</p>
+<p>所以数组是[-1，-1，-1,3]</p>
+<p>剩下的你可以补充。这是我得到的最终答案:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; hierarchy</span><br><span class="line">array([[[ 3, -1,  1, -1],</span><br><span class="line">        [ 2, -1, -1,  0],</span><br><span class="line">        [-1,  1, -1,  0],</span><br><span class="line">        [ 5,  0,  4, -1],</span><br><span class="line">        [-1, -1, -1,  3],</span><br><span class="line">        [ 7,  3,  6, -1],</span><br><span class="line">        [-1, -1, -1,  5],</span><br><span class="line">        [ 8,  5, -1, -1],</span><br><span class="line">        [-1,  7, -1, -1]]])</span><br></pre></td></tr></table></figure>
+<h3 id="4-RETR-TREE"><a href="#4-RETR-TREE" class="headerlink" title="4. RETR_TREE"></a>4. RETR_TREE</h3><p>这是最后一个家伙，完美先生。它检索所有的轮廓并创建一个完整的家族层次结构列表。它甚至告诉，谁是爷爷，父亲，儿子，孙子，甚至更多…:)。</p>
+<p>例如，我拿上面的图片，重写了cv的代码。RETR_TREE，根据OpenCV给出的结果重新排序等高线并进行分析。</p>
+<p>同样，红色的字母表示轮廓数，绿色的字母表示层次顺序。<br><img src="http://qiniu.aihubs.net/tree_hierarchy.png" alt><br>取contour-0:它在hierarchy-0中。同一层次结构的next轮廓是轮廓-7。没有previous的轮廓。child是contour-1，没有parent。所以数组是[7，-1,1，-1]</p>
+<p>以contour-2为例:它在hierarchy-1中。没有轮廓在同一水平。没有previous。child是contour-3。父母是contour-1。所以数组是[-1，-1,3,1]</p>
+<p>剩下的，你自己试试。以下是完整答案:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; hierarchy</span><br><span class="line">array([[[ 7, -1,  1, -1],</span><br><span class="line">        [-1, -1,  2,  0],</span><br><span class="line">        [-1, -1,  3,  1],</span><br><span class="line">        [-1, -1,  4,  2],</span><br><span class="line">        [-1, -1,  5,  3],</span><br><span class="line">        [ 6, -1, -1,  4],</span><br><span class="line">        [-1,  5, -1,  4],</span><br><span class="line">        [ 8,  0, -1, -1],</span><br><span class="line">        [-1,  7, -1, -1]]])</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin.png" alt="Zhangshuai WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/zhifubao.jpg" alt="Zhangshuai Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/opencv/" rel="tag"># opencv</a>
+          
+            <a href="/tags/%E5%9B%BE%E5%83%8F/" rel="tag"># 图像</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/13/opencv%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%862/" rel="next" title="opencv中的图像处理2">
+                <i class="fa fa-chevron-left"></i> opencv中的图像处理2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar2.jpg"
+                alt="Zhangshuai" />
+            
+              <p class="site-author-name" itemprop="name">Zhangshuai</p>
+              <p class="site-description motion-element" itemprop="description">你刚才说了JOJO对吧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=486194129&auto=1&height=66"></iframe>
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/GitHubzhangshuai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1802528291@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ying-ying-ying-vue" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://music.163.com/#/user/home?id=377737250" target="_blank" title="网易云音乐">
+                      
+                        <i class="fa fa-fw fa-globe"></i>网易云音乐</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#轮廓：入门"><span class="nav-number">1.</span> <span class="nav-text">轮廓：入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是轮廓"><span class="nav-number">1.1.</span> <span class="nav-text">什么是轮廓?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何绘制轮廓"><span class="nav-number">1.2.</span> <span class="nav-text">如何绘制轮廓?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#轮廓特征"><span class="nav-number">2.</span> <span class="nav-text">轮廓特征</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-特征矩"><span class="nav-number">2.2.</span> <span class="nav-text">1. 特征矩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-轮廓面积"><span class="nav-number">2.3.</span> <span class="nav-text">2. 轮廓面积</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-轮廓周长"><span class="nav-number">2.4.</span> <span class="nav-text">3. 轮廓周长</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-轮廓近似"><span class="nav-number">2.5.</span> <span class="nav-text">4. 轮廓近似</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-轮廓凸包"><span class="nav-number">2.6.</span> <span class="nav-text">5. 轮廓凸包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-边界矩形"><span class="nav-number">2.7.</span> <span class="nav-text">7. 边界矩形</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-a-直角矩形"><span class="nav-number">2.7.1.</span> <span class="nav-text">7.a.直角矩形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-b-旋转矩形"><span class="nav-number">2.7.2.</span> <span class="nav-text">7.b. 旋转矩形</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-最小闭合圈"><span class="nav-number">2.8.</span> <span class="nav-text">8. 最小闭合圈</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#轮廓：更多属性"><span class="nav-number">3.</span> <span class="nav-text">轮廓：更多属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标-1"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理论和代码"><span class="nav-number">3.2.</span> <span class="nav-text">理论和代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-凸性缺陷"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. 凸性缺陷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-点多边形测试"><span class="nav-number">3.2.2.</span> <span class="nav-text">2. 点多边形测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-形状匹配"><span class="nav-number">3.2.3.</span> <span class="nav-text">3. 形状匹配</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#轮廓分层"><span class="nav-number">4.</span> <span class="nav-text">轮廓分层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标-2"><span class="nav-number">4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理论"><span class="nav-number">4.2.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#层次结构是什么？"><span class="nav-number">4.3.</span> <span class="nav-text">层次结构是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenCV中的分级表示"><span class="nav-number">4.4.</span> <span class="nav-text">OpenCV中的分级表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#轮廓检索模式"><span class="nav-number">4.5.</span> <span class="nav-text">轮廓检索模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-RETR-LIST"><span class="nav-number">4.5.1.</span> <span class="nav-text">1. RETR_LIST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-RETR-EXTERNAL"><span class="nav-number">4.5.2.</span> <span class="nav-text">2. RETR_EXTERNAL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-RETR-CCOMP"><span class="nav-number">4.5.3.</span> <span class="nav-text">3. RETR_CCOMP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-RETR-TREE"><span class="nav-number">4.5.4.</span> <span class="nav-text">4. RETR_TREE</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script type="text/javascript" src="/js/src/busuanzi.js"></script>
+
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-[object Object]"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张帅</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+
+
+
+
+
+
+  <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  <span class="post-meta-divider">|</span>
+  <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+
+<script>
+setTimeout(function(){
+document.getElementById('busuanzi_container_site_pv').style.display='inline-block'
+document.getElementById('busuanzi_container_site_uv').style.display='inline-block'
+},1000)
+</script>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>
