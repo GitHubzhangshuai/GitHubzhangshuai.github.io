@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="opencv,图像," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="张帅的Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="11.傅里叶变换 12.模板匹配 13.霍夫线变换 14.霍夫圈变换 15.图像分割与Watershed算法 16.交互式前景提取使用GrabCut算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="opencv中的图像处理5">
+<meta property="og:url" content="http://yoursite.com/2020/07/14/opencv%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%865/index.html">
+<meta property="og:site_name" content="张帅的Blog">
+<meta property="og:description" content="11.傅里叶变换 12.模板匹配 13.霍夫线变换 14.霍夫圈变换 15.图像分割与Watershed算法 16.交互式前景提取使用GrabCut算法">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://qiniu.aihubs.net/fft1.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/fft2.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/fft4.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/fft5.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/messi_face.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/template_ccoeff_1.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/template_ccoeffn_2.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/template_ccorr_3.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/template_ccorrn_4.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/template_sqdiff_5.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/template_sqdiffn_6.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/res_mario.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/1.png">
+<meta property="og:image" content="http://qiniu.aihubs.net/houghlinesdemo.gif">
+<meta property="og:image" content="http://qiniu.aihubs.net/houghlines2.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/houghlines3.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/houghlines4.png">
+<meta property="og:image" content="http://qiniu.aihubs.net/houghlines5.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/houghcircles2.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/water_coins.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/water_thresh.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/water_fgbg.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/water_dt.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/water_marker.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/water_result.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/grabcut_output1.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/grabcut_scheme.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/grabcut_rect.jpg">
+<meta property="og:image" content="http://qiniu.aihubs.net/grabcut_mask.jpg">
+<meta property="article:published_time" content="2020-07-14T04:03:19.000Z">
+<meta property="article:modified_time" content="2020-07-14T04:09:17.202Z">
+<meta property="article:author" content="Zhangshuai">
+<meta property="article:tag" content="opencv">
+<meta property="article:tag" content="图像">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://qiniu.aihubs.net/fft1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/14/opencv中的图像处理5/"/>
+
+
+
+
+
+  <title>opencv中的图像处理5 | 张帅的Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">张帅的Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">用hexo搭建的简易博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            Schedule
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/14/opencv%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%865/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhangshuai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张帅的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">opencv中的图像处理5</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-14T12:03:19+08:00">
+                2020-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/opencv/" itemprop="url" rel="index">
+                    <span itemprop="name">opencv</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>11.<a href="#header1">傅里叶变换</a></li>
+<li>12.<a href="#header2">模板匹配</a></li>
+<li>13.<a href="#header3">霍夫线变换</a></li>
+<li>14.<a href="#header4">霍夫圈变换</a></li>
+<li>15.<a href="#header5">图像分割与Watershed算法</a></li>
+<li>16.<a href="#header6">交互式前景提取使用GrabCut算法</a><a id="more"></a>
+
+</li>
+</ul>
+<h1 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a><span id="header1">傅里叶变换</span></h1><h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>在本节中，我们将学习 </p>
+<ul>
+<li>使用OpenCV查找图像的傅立叶变换 </li>
+<li>利用Numpy中可用的FFT函数 </li>
+<li>傅立叶变换的某些应用程序 </li>
+<li>我们将看到以下函数：cv.dft()，cv.idft()等</li>
+</ul>
+<h2 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h2><p>傅立叶变换用于分析各种滤波器的频率特性。</p>
+<p>对于图像，使用<strong>2D离散傅里叶变换</strong>(DFT)查找频域。</p>
+<p>一种称为<strong>快速傅立叶变换</strong>(FFT)的快速算法用于DFT的计算。</p>
+<p>关于这些的详细信息可以在任何图像处理或信号处理教科书中找到。请参阅其他资源部分。</p>
+<p>对于正弦信号x(t)=Asin(2πft)，我们可以说f是信号的频率，如果采用其频域，则可以看到f的尖峰。</p>
+<p>如果对信号进行采样以形成离散信号，我们将获得相同的频域，但是在[−π，π]或[0,2π]范围内（对于N点DFT为[0，N]）是周期性的。</p>
+<p>您可以将图像视为在两个方向上采样的信号。因此，在X和Y方向都进行傅立叶变换，可以得到图像的频率表示。</p>
+<p>更直观地说，对于正弦信号，如果幅度在短时间内变化如此之快，则可以说它是高频信号。</p>
+<p>如果变化缓慢，则为低频信号。您可以将相同的想法扩展到图像。</p>
+<p>图像中的振幅在哪里急剧变化？在边缘点或噪声。因此，可以说边缘和噪声是图像中的高频内容。</p>
+<p>如果幅度没有太大变化，则它是低频分量。（一些链接已添加到“其他资源”，其中通过示例直观地说明了频率变换）。</p>
+<p>现在，我们将看到如何找到傅立叶变换。</p>
+<h2 id="Numpy中的傅里叶变换"><a href="#Numpy中的傅里叶变换" class="headerlink" title="Numpy中的傅里叶变换"></a>Numpy中的傅里叶变换</h2><p>首先，我们将看到如何使用Numpy查找傅立叶变换。</p>
+<p>Numpy具有FFT软件包来执行此操作。np.fft.fft2()为我们提供了频率转换，它将是一个复杂的数组。</p>
+<ul>
+<li>它的第一个参数是输入图像，即灰度图像。</li>
+<li>第二个参数是可选的，它决定输出数组的大小。如果它大于输入图像的大小，则在计算FFT之前用零填充输入图像。如果小于输入图像，将裁切输入图像。如果未传递任何参数，则输出数组的大小将与输入的大小相同。</li>
+</ul>
+<p>现在，一旦获得结果，零频率分量（DC分量）将位于左上角。</p>
+<p>如果要使其居中，则需要在两个方向上将结果都移动N2。</p>
+<p>只需通过函数<strong>np.fft.fftshift</strong>()即可完成。（它更容易分析）。找到频率变换后，就可以找到幅度谱。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">from matplotlib import pyplot as plt</span><br><span class="line">img &#x3D; cv.imread(&#39;messi5.jpg&#39;,0)</span><br><span class="line">f &#x3D; np.fft.fft2(img)</span><br><span class="line">fshift &#x3D; np.fft.fftshift(f)</span><br><span class="line">magnitude_spectrum &#x3D; 20*np.log(np.abs(fshift))</span><br><span class="line">plt.subplot(121),plt.imshow(img, cmap &#x3D; &#39;gray&#39;)</span><br><span class="line">plt.title(&#39;Input Image&#39;), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(122),plt.imshow(magnitude_spectrum, cmap &#x3D; &#39;gray&#39;)</span><br><span class="line">plt.title(&#39;Magnitude Spectrum&#39;), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>Result look like below:<br>结果看起来像下面这样:<br><img src="http://qiniu.aihubs.net/fft1.jpg" alt></p>
+<p>看，您可以在中心看到更多白色区域，这表明低频内容更多。</p>
+<p>因此，您发现了频率变换现在，您可以在频域中进行一些操作，例如高通滤波和重建图像，即找到逆DFT。</p>
+<p>为此，您只需用尺寸为60x60的矩形窗口遮罩即可消除低频。</p>
+<p>然后，使用<strong>np.fft.ifftshift</strong>()应用反向移位，以使DC分量再次出现在左上角。</p>
+<p>然后使用<strong>np.ifft2</strong>()函数找到逆FFT。同样，结果将是一个复数。您可以采用其绝对值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">rows, cols &#x3D; img.shape</span><br><span class="line">crow,ccol &#x3D; rows&#x2F;&#x2F;2 , cols&#x2F;&#x2F;2</span><br><span class="line">fshift[crow-30:crow+31, ccol-30:ccol+31] &#x3D; 0</span><br><span class="line">f_ishift &#x3D; np.fft.ifftshift(fshift)</span><br><span class="line">img_back &#x3D; np.fft.ifft2(f_ishift)</span><br><span class="line">img_back &#x3D; np.real(img_back)</span><br><span class="line">plt.subplot(131),plt.imshow(img, cmap &#x3D; &#39;gray&#39;)</span><br><span class="line">plt.title(&#39;Input Image&#39;), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(132),plt.imshow(img_back, cmap &#x3D; &#39;gray&#39;)</span><br><span class="line">plt.title(&#39;Image after HPF&#39;), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(133),plt.imshow(img_back)</span><br><span class="line">plt.title(&#39;Result in JET&#39;), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>结果看起来像下面这样：<br><img src="http://qiniu.aihubs.net/fft2.jpg" alt></p>
+<p>结果表明高通滤波是边缘检测操作。</p>
+<p>这就是我们在“图像渐变”一章中看到的。</p>
+<p>这也表明大多数图像数据都存在于频谱的低频区域。</p>
+<p>无论如何，我们已经看到了如何在Numpy中找到DFT，IDFT等。</p>
+<p>现在，让我们看看如何在OpenCV中进行操作。 </p>
+<p>如果您仔细观察结果，尤其是最后一张JET颜色的图像，您会看到一些伪像（我用红色箭头标记的一个实例）。</p>
+<p>它在那里显示出一些波纹状结构，称为<strong>振铃效应</strong>。</p>
+<p>这是由我们用于遮罩的矩形窗口引起的。此掩码转换为正弦形状，从而导致此问题。</p>
+<p>因此，矩形窗口不用于过滤。更好的选择是高斯窗口。</p>
+<h2 id="OpenCV中的傅里叶变换"><a href="#OpenCV中的傅里叶变换" class="headerlink" title="OpenCV中的傅里叶变换"></a>OpenCV中的傅里叶变换</h2><p>OpenCV为此提供了<strong>cv.dft</strong>()和<strong>cv.idft</strong>()函数。它返回与前一个相同的结果，但是有两个通道。</p>
+<p>第一个通道是结果的实部，第二个通道是结果的虚部。输入图像首先应转换为np.float32。我们来看看怎么做。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import cv2 as cv</span><br><span class="line">from matplotlib import pyplot as plt</span><br><span class="line">img &#x3D; cv.imread(&#39;messi5.jpg&#39;,0)</span><br><span class="line">dft &#x3D; cv.dft(np.float32(img),flags &#x3D; cv.DFT_COMPLEX_OUTPUT)</span><br><span class="line">dft_shift &#x3D; np.fft.fftshift(dft)</span><br><span class="line">magnitude_spectrum &#x3D; 20*np.log(cv.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))</span><br><span class="line">plt.subplot(121),plt.imshow(img, cmap &#x3D; &#39;gray&#39;)</span><br><span class="line">plt.title(&#39;Input Image&#39;), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(122),plt.imshow(magnitude_spectrum, cmap &#x3D; &#39;gray&#39;)</span><br><span class="line">plt.title(&#39;Magnitude Spectrum&#39;), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>注意 您还可以使用<strong>cv.cartToPolar</strong>()，它在单个镜头中同时返回幅值和相位</p>
+<p>现在我们要做DFT的逆变换。在上一节中，我们创建了一个HPF，这次我们将看到如何删除图像中的高频内容，即我们将LPF应用到图像中。</p>
+<p>它实际上模糊了图像。为此，我们首先创建一个高值(1)在低频部分，即我们过滤低频内容，0在高频区。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">rows, cols &#x3D; img.shape</span><br><span class="line">crow,ccol &#x3D; rows&#x2F;2 , cols&#x2F;2</span><br><span class="line"># 首先创建一个掩码，中心正方形为1，其余全为零</span><br><span class="line">mask &#x3D; np.zeros((rows,cols,2),np.uint8)</span><br><span class="line">mask[crow-30:crow+30, ccol-30:ccol+30] &#x3D; 1</span><br><span class="line"># 应用掩码和逆DFT</span><br><span class="line">fshift &#x3D; dft_shift*mask</span><br><span class="line">f_ishift &#x3D; np.fft.ifftshift(fshift)</span><br><span class="line">img_back &#x3D; cv.idft(f_ishift)</span><br><span class="line">img_back &#x3D; cv.magnitude(img_back[:,:,0],img_back[:,:,1])</span><br><span class="line">plt.subplot(121),plt.imshow(img, cmap &#x3D; &#39;gray&#39;)</span><br><span class="line">plt.title(&#39;Input Image&#39;), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(122),plt.imshow(img_back, cmap &#x3D; &#39;gray&#39;)</span><br><span class="line">plt.title(&#39;Magnitude Spectrum&#39;), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="http://qiniu.aihubs.net/fft4.jpg" alt></p>
+<p>注意 通常，OpenCV函数<strong>cv.dft</strong>()和<strong>cv.idft</strong>()比Numpy函数更快。但是Numpy函数更容易使用。有关性能问题的更多细节，请参见下面的部分。</p>
+<h2 id="DFT的性能优化"><a href="#DFT的性能优化" class="headerlink" title="DFT的性能优化"></a>DFT的性能优化</h2><p>对于某些数组尺寸，DFT的计算性能较好。当数组大小为2的幂时，速度最快。</p>
+<p>对于大小为2、3和5的乘积的数组，也可以非常有效地进行处理。</p>
+<p>因此，如果您担心代码的性能，可以在找到DFT之前将数组的大小修改为任何最佳大小(通过填充零)。对</p>
+<p>于OpenCV，您必须手动填充零。但是对于Numpy，您指定FFT计算的新大小，它将自动为您填充零。</p>
+<p>那么如何找到最优的大小呢?OpenCV为此提供了一个函数，cv.getOptimalDFTSize()。它同时适用于<strong>cv.dft</strong>()和<strong>np.fft.fft2</strong>()。让我们使用IPython魔术命令timeit来检查它们的性能。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">In [16]: img &#x3D; cv.imread(&#39;messi5.jpg&#39;,0)</span><br><span class="line">In [17]: rows,cols &#x3D; img.shape</span><br><span class="line">In [18]: print(&quot;&#123;&#125; &#123;&#125;&quot;.format(rows,cols))</span><br><span class="line">342 548</span><br><span class="line">In [19]: nrows &#x3D; cv.getOptimalDFTSize(rows)</span><br><span class="line">In [20]: ncols &#x3D; cv.getOptimalDFTSize(cols)</span><br><span class="line">In [21]: print(&quot;&#123;&#125; &#123;&#125;&quot;.format(nrows,ncols))</span><br><span class="line">360 576</span><br></pre></td></tr></table></figure>
+<p>参见，将大小(342,548)修改为(360，576)。现在让我们用零填充（对于OpenCV），并找到其DFT计算性能。您可以通过创建一个新的零数组并将数据复制到其中来完成此操作，或者使用<strong>cv.copyMakeBorder</strong>()。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nimg &#x3D; np.zeros((nrows,ncols))</span><br><span class="line">nimg[:rows,:cols] &#x3D; img</span><br></pre></td></tr></table></figure>
+<p>或者:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">right &#x3D; ncols - cols</span><br><span class="line">bottom &#x3D; nrows - rows</span><br><span class="line">bordertype &#x3D; cv.BORDER_CONSTANT ＃只是为了避免PDF文件中的行中断</span><br><span class="line">nimg &#x3D; cv.copyMakeBorder(img,0,bottom,0,right,bordertype, value &#x3D; 0)</span><br></pre></td></tr></table></figure>
+<p>现在，我们计算Numpy函数的DFT性能比较：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [22]: %timeit fft1 &#x3D; np.fft.fft2(img)</span><br><span class="line">10 loops, best of 3: 40.9 ms per loop</span><br><span class="line">In [23]: %timeit fft2 &#x3D; np.fft.fft2(img,[nrows,ncols])</span><br><span class="line">100 loops, best of 3: 10.4 ms per loop</span><br></pre></td></tr></table></figure>
+<p>它显示了4倍的加速。现在，我们将尝试使用OpenCV函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [24]: %timeit dft1&#x3D; cv.dft(np.float32(img),flags&#x3D;cv.DFT_COMPLEX_OUTPUT)</span><br><span class="line">100 loops, best of 3: 13.5 ms per loop</span><br><span class="line">In [27]: %timeit dft2&#x3D; cv.dft(np.float32(nimg),flags&#x3D;cv.DFT_COMPLEX_OUTPUT)</span><br><span class="line">100 loops, best of 3: 3.11 ms per loop</span><br></pre></td></tr></table></figure>
+<p>它还显示了4倍的加速。您还可以看到OpenCV函数比Numpy函数快3倍左右。也可以对逆FFT进行测试，这留给您练习。</p>
+<h2 id="为什么拉普拉斯算子是高通滤波器？"><a href="#为什么拉普拉斯算子是高通滤波器？" class="headerlink" title="为什么拉普拉斯算子是高通滤波器？"></a>为什么拉普拉斯算子是高通滤波器？</h2><p>在一个论坛上也有人提出了类似的问题。问题是，为什么拉普拉斯变换是高通滤波器?</p>
+<p>为什么Sobel是HPF?等。第一个答案是关于傅里叶变换的。对于更大的FFT只需要拉普拉斯变换。分析下面的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">from matplotlib import pyplot as plt</span><br><span class="line"># 没有缩放参数的简单均值滤波器</span><br><span class="line">mean_filter &#x3D; np.ones((3,3))</span><br><span class="line"># 创建高斯滤波器</span><br><span class="line">x &#x3D; cv.getGaussianKernel(5,10)</span><br><span class="line">gaussian &#x3D; x*x.T</span><br><span class="line"># 不同的边缘检测滤波器</span><br><span class="line"># x方向上的scharr</span><br><span class="line">scharr &#x3D; np.array([[-3, 0, 3],</span><br><span class="line">                   [-10,0,10],</span><br><span class="line">                   [-3, 0, 3]])</span><br><span class="line"># x方向上的sobel</span><br><span class="line">sobel_x&#x3D; np.array([[-1, 0, 1],</span><br><span class="line">                   [-2, 0, 2],</span><br><span class="line">                   [-1, 0, 1]])</span><br><span class="line"># y方向上的sobel</span><br><span class="line">sobel_y&#x3D; np.array([[-1,-2,-1],</span><br><span class="line">                   [0, 0, 0],</span><br><span class="line">                   [1, 2, 1]])</span><br><span class="line"># 拉普拉斯变换</span><br><span class="line">laplacian&#x3D;np.array([[0, 1, 0],</span><br><span class="line">                    [1,-4, 1],</span><br><span class="line">                    [0, 1, 0]])</span><br><span class="line">filters &#x3D; [mean_filter, gaussian, laplacian, sobel_x, sobel_y, scharr]</span><br><span class="line">filter_name &#x3D; [&#39;mean_filter&#39;, &#39;gaussian&#39;,&#39;laplacian&#39;, &#39;sobel_x&#39;, \</span><br><span class="line">                &#39;sobel_y&#39;, &#39;scharr_x&#39;]</span><br><span class="line">fft_filters &#x3D; [np.fft.fft2(x) for x in filters]</span><br><span class="line">fft_shift &#x3D; [np.fft.fftshift(y) for y in fft_filters]</span><br><span class="line">mag_spectrum &#x3D; [np.log(np.abs(z)+1) for z in fft_shift]</span><br><span class="line">for i in range(6):</span><br><span class="line">    plt.subplot(2,3,i+1),plt.imshow(mag_spectrum[i],cmap &#x3D; &#39;gray&#39;)</span><br><span class="line">    plt.title(filter_name[i]), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>看看结果：<br><img src="http://qiniu.aihubs.net/fft5.jpg" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="模板匹配"><a href="#模板匹配" class="headerlink" title="模板匹配"></a><span id="header2">模板匹配</span></h1><h2 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h2><p>在本章中，您将学习 - 使用模板匹配在图像中查找对象 - 你将看到以下功能：cv.matchTemplate()，cv.minMaxLoc()</p>
+<h2 id="理论-1"><a href="#理论-1" class="headerlink" title="理论"></a>理论</h2><p>模板匹配是一种用于在较大图像中搜索和查找模板图像位置的方法。</p>
+<p>为此，OpenCV带有一个函数<strong>cv.matchTemplate</strong>()。 </p>
+<p>它只是将模板图​​像滑动到输入图像上（就像在2D卷积中一样），然后在模板图像下比较模板和输入图像的拼图。 </p>
+<p>OpenCV中实现了几种比较方法。（您可以检查文档以了解更多详细信息）。它返回一个灰度图像，其中每个像素表示该像素的邻域与模板匹配的程度。</p>
+<p>如果输入图像的大小为(WxH)，而模板图像的大小为(wxh)，则输出图像的大小将为(W-w + 1，H-h + 1)。得到结果后，可以使用<strong>cv.minMaxLoc</strong>()函数查找最大/最小值在哪。将其作为矩形的左上角，并以(w，h)作为矩形的宽度和高度。该矩形是您模板的区域。</p>
+<p>注意 如果使用<strong>cv.TM_SQDIFF</strong>作为比较方法，则最小值提供最佳匹配。</p>
+<h2 id="OpenCV中的模板匹配"><a href="#OpenCV中的模板匹配" class="headerlink" title="OpenCV中的模板匹配"></a>OpenCV中的模板匹配</h2><p>作为示例，我们将在梅西的照片中搜索他的脸。所以我创建了一个模板，如下所示： <img src="http://qiniu.aihubs.net/messi_face.jpg" alt> 我们将尝试所有比较方法，以便我们可以看到它们的结果如何：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">from matplotlib import pyplot as plt</span><br><span class="line">img &#x3D; cv.imread(&#39;messi5.jpg&#39;,0)</span><br><span class="line">img2 &#x3D; img.copy()</span><br><span class="line">template &#x3D; cv.imread(&#39;template.jpg&#39;,0)</span><br><span class="line">w, h &#x3D; template.shape[::-1]</span><br><span class="line"># 列表中所有的6种比较方法</span><br><span class="line">methods &#x3D; [&#39;cv.TM_CCOEFF&#39;, &#39;cv.TM_CCOEFF_NORMED&#39;, &#39;cv.TM_CCORR&#39;,</span><br><span class="line">            &#39;cv.TM_CCORR_NORMED&#39;, &#39;cv.TM_SQDIFF&#39;, &#39;cv.TM_SQDIFF_NORMED&#39;]</span><br><span class="line">for meth in methods:</span><br><span class="line">    img &#x3D; img2.copy()</span><br><span class="line">    method &#x3D; eval(meth)</span><br><span class="line">    # 应用模板匹配</span><br><span class="line">    res &#x3D; cv.matchTemplate(img,template,method)</span><br><span class="line">    min_val, max_val, min_loc, max_loc &#x3D; cv.minMaxLoc(res)</span><br><span class="line">    # 如果方法是TM_SQDIFF或TM_SQDIFF_NORMED，则取最小值</span><br><span class="line">    if method in [cv.TM_SQDIFF, cv.TM_SQDIFF_NORMED]:</span><br><span class="line">        top_left &#x3D; min_loc</span><br><span class="line">    else:</span><br><span class="line">        top_left &#x3D; max_loc</span><br><span class="line">    bottom_right &#x3D; (top_left[0] + w, top_left[1] + h)</span><br><span class="line">    cv.rectangle(img,top_left, bottom_right, 255, 2)</span><br><span class="line">    plt.subplot(121),plt.imshow(res,cmap &#x3D; &#39;gray&#39;)</span><br><span class="line">    plt.title(&#39;Matching Result&#39;), plt.xticks([]), plt.yticks([])</span><br><span class="line">    plt.subplot(122),plt.imshow(img,cmap &#x3D; &#39;gray&#39;)</span><br><span class="line">    plt.title(&#39;Detected Point&#39;), plt.xticks([]), plt.yticks([])</span><br><span class="line">    plt.suptitle(meth)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p>查看以下结果：</p>
+<ul>
+<li>cv.TM_CCOEFF<img src="http://qiniu.aihubs.net/template_ccoeff_1.jpg" alt></li>
+<li>cv.TM_CCOEFF_NORMED<img src="http://qiniu.aihubs.net/template_ccoeffn_2.jpg" alt></li>
+<li>cv.TM_CCORR<img src="http://qiniu.aihubs.net/template_ccorr_3.jpg" alt></li>
+<li>cv.TM_CCORR_NORMED<img src="http://qiniu.aihubs.net/template_ccorrn_4.jpg" alt></li>
+<li>cv.TM_SQDIFF<img src="http://qiniu.aihubs.net/template_sqdiff_5.jpg" alt></li>
+<li>cv.TM_SQDIFF_NORMED<img src="http://qiniu.aihubs.net/template_sqdiffn_6.jpg" alt><br>使用<strong>cv.TM_CCORR</strong>的结果并不理想。</li>
+</ul>
+<h2 id="多对象的模板匹配"><a href="#多对象的模板匹配" class="headerlink" title="多对象的模板匹配"></a>多对象的模板匹配</h2><p>在上一节中，我们在图像中搜索了梅西的脸，该脸在图像中仅出现一次。</p>
+<p>假设您正在搜索具有多次出现的对象，则<strong>cv.minMaxLoc</strong>()不会为您提供所有位置。</p>
+<p>在这种情况下，我们将使用阈值化。因此，在此示例中，我们将使用著名游戏<strong>Mario</strong>的屏幕截图，并在其中找到硬币。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">from matplotlib import pyplot as plt</span><br><span class="line">img_rgb &#x3D; cv.imread(&#39;mario.png&#39;)</span><br><span class="line">img_gray &#x3D; cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)</span><br><span class="line">template &#x3D; cv.imread(&#39;mario_coin.png&#39;,0)</span><br><span class="line">w, h &#x3D; template.shape[::-1]</span><br><span class="line">res &#x3D; cv.matchTemplate(img_gray,template,cv.TM_CCOEFF_NORMED)</span><br><span class="line">threshold &#x3D; 0.8</span><br><span class="line">loc &#x3D; np.where( res &gt;&#x3D; threshold)</span><br><span class="line">for pt in zip(*loc[::-1]):</span><br><span class="line">    cv.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (0,0,255), 2)</span><br><span class="line">cv.imwrite(&#39;res.png&#39;,img_rgb)</span><br></pre></td></tr></table></figure>
+<p>结果:<br><img src="http://qiniu.aihubs.net/res_mario.jpg" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="霍夫线变换"><a href="#霍夫线变换" class="headerlink" title="霍夫线变换"></a><span id="header3">霍夫线变换</span></h1><h2 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h2><p>在这一章当中， </p>
+<ul>
+<li>我们将了解霍夫变换的概念。 </li>
+<li>我们将看到如何使用它来检测图像中的线条。 </li>
+<li>我们将看到以下函数：cv.HoughLines()，cv.HoughLinesP()</li>
+</ul>
+<h2 id="理论-2"><a href="#理论-2" class="headerlink" title="理论"></a>理论</h2><p>如果可以用数学形式表示形状，则霍夫变换是一种检测任何形状的流行技术。</p>
+<p>即使形状有些破损或变形，也可以检测出形状。我们将看到它如何作用于一条线。</p>
+<p>一条线可以表示为y=mx+c或以参数形式表示为ρ=xcosθ+ysinθ，</p>
+<p>其中ρ是从原点到该线的垂直距离，</p>
+<p>而θ是由该垂直线和水平轴形成的角度以逆时针方向测量（该方向随您如何表示坐标系而变化。此表示形式在OpenCV中使用）。</p>
+<p>查看下面的图片：<br><img src="http://qiniu.aihubs.net/1.png" alt></p>
+<p>因此，如果线在原点下方通过，则它将具有正的ρ且角度小于180。如果线在原点上方，则将角度取为小于180，而不是大于180的角度。</p>
+<p>ρ取负值。任何垂直线将具有0度，水平线将具有90度。</p>
+<p>现在，让我们看一下霍夫变换如何处理线条。任何一条线都可以用(ρ，θ)这两个术语表示。</p>
+<p>因此，首先创建2D数组或累加器（以保存两个参数的值），并将其初始设置为0。</p>
+<p>让行表示ρ，列表示θ。阵列的大小取决于所需的精度。假设您希望角度的精度为1度，则需要180列。</p>
+<p>对于ρ，最大距离可能是图像的对角线长度。因此，以一个像素精度为准，行数可以是图像的对角线长度。</p>
+<p>考虑一个100x100的图像，中间有一条水平线。</p>
+<p>取直线的第一点。您知道它的(x，y)值。</p>
+<p>现在在线性方程式中，将值θ= 0,1,2，….. 180放进去，然后检查得到ρ。</p>
+<p>对于每对(ρ，θ)，在累加器中对应的(ρ，θ)单元格将值增加1。所以现在在累加器中，单元格(50,90)= 1以及其他一些单元格。</p>
+<p>现在，对行的第二个点。执行与上述相同的操作。递增(ρ，θ)对应的单元格中的值。</p>
+<p>这次，单元格(50,90)=2。实际上，您正在对(ρ，θ)值进行投票。</p>
+<p>您对线路上的每个点都继续执行此过程。</p>
+<p>在每个点上，单元格(50,90)都会增加或投票，而其他单元格可能会或可能不会投票。</p>
+<p>这样一来，最后，单元格(50,90)的投票数将最高。</p>
+<p>因此，如果您在累加器中搜索最大票数，则将获得(50,90)值，该值表示该图像中的一条线与原点的距离为50，角度为90度。</p>
+<p>在下面的动画中很好地显示了该图片(图片提供：Amos Storkey)<br><img src="http://qiniu.aihubs.net/houghlinesdemo.gif" alt></p>
+<p>这就是霍夫变换对线条的工作方式。它很简单，也许您可​​以自己使用Numpy来实现它。</p>
+<p>下图显示了累加器。某些位置的亮点表示它们是图像中可能的线条的参数。</p>
+<p><img src="http://qiniu.aihubs.net/houghlines2.jpg" alt></p>
+<h2 id="OpenCV中的霍夫曼变换"><a href="#OpenCV中的霍夫曼变换" class="headerlink" title="OpenCV中的霍夫曼变换"></a>OpenCV中的霍夫曼变换</h2><p>上面说明的所有内容都封装在OpenCV函数<strong>cv.HoughLines</strong>()中。</p>
+<p>它只是返回一个：math:(rho，theta)值的数组。ρ以像素为单位，θ以弧度为单位。</p>
+<p>第一个参数，输入图像应该是二进制图像，因此在应用霍夫变换之前，请应用阈值或使用Canny边缘检测。</p>
+<p>第二和第三参数分别是ρ和θ精度。</p>
+<p>第四个参数是阈值，这意味着应该将其视为行的最低投票。</p>
+<p>请记住，票数取决于线上的点数。因此，它表示应检测到的最小线长。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">img &#x3D; cv.imread(cv.samples.findFile(&#39;sudoku.png&#39;))</span><br><span class="line">gray &#x3D; cv.cvtColor(img,cv.COLOR_BGR2GRAY)</span><br><span class="line">edges &#x3D; cv.Canny(gray,50,150,apertureSize &#x3D; 3)</span><br><span class="line">lines &#x3D; cv.HoughLines(edges,1,np.pi&#x2F;180,200)</span><br><span class="line">for line in lines:</span><br><span class="line">    rho,theta &#x3D; line[0]</span><br><span class="line">    a &#x3D; np.cos(theta)</span><br><span class="line">    b &#x3D; np.sin(theta)</span><br><span class="line">    x0 &#x3D; a*rho</span><br><span class="line">    y0 &#x3D; b*rho</span><br><span class="line">    x1 &#x3D; int(x0 + 1000*(-b))</span><br><span class="line">    y1 &#x3D; int(y0 + 1000*(a))</span><br><span class="line">    x2 &#x3D; int(x0 - 1000*(-b))</span><br><span class="line">    y2 &#x3D; int(y0 - 1000*(a))</span><br><span class="line">    cv.line(img,(x1,y1),(x2,y2),(0,0,255),2)</span><br><span class="line">cv.imwrite(&#39;houghlines3.jpg&#39;,img)</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://qiniu.aihubs.net/houghlines3.jpg" alt></p>
+<h2 id="概率霍夫变换"><a href="#概率霍夫变换" class="headerlink" title="概率霍夫变换"></a>概率霍夫变换</h2><p>在霍夫变换中，您可以看到，即使对于带有两个参数的行，也需要大量计算。</p>
+<p>概率霍夫变换是我们看到的霍夫变换的优化。它没有考虑所有要点。</p>
+<p>取而代之的是，它仅采用随机的点子集，足以进行线检测。</p>
+<p>只是我们必须降低阈值。参见下图，比较了霍夫空间中的霍夫变换和概率霍夫变换。<br><img src="http://qiniu.aihubs.net/houghlines4.png" alt></p>
+<p>OpenCV的实现基于Matas,J.和Galambos,C.和Kittler, J.V.使用渐进概率霍夫变换对行进行的稳健检测[145]。</p>
+<p>使用的函数是<strong>cv.HoughLinesP</strong>()。它有两个新的论点。 </p>
+<ul>
+<li>minLineLength - 最小行长。小于此长度的线段将被拒绝。 </li>
+<li>maxLineGap - 线段之间允许将它们视为一条线的最大间隙。</li>
+</ul>
+<p>最好的是，它直接返回行的两个端点。在以前的情况下，您仅获得线的参数，并且必须找到所有点。在这里，一切都是直接而简单的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import cv2 as cv</span><br><span class="line">import numpy as np</span><br><span class="line">img &#x3D; cv.imread(cv.samples.findFile(&#39;sudoku.png&#39;))</span><br><span class="line">gray &#x3D; cv.cvtColor(img,cv.COLOR_BGR2GRAY)</span><br><span class="line">edges &#x3D; cv.Canny(gray,50,150,apertureSize &#x3D; 3)</span><br><span class="line">lines &#x3D; cv.HoughLinesP(edges,1,np.pi&#x2F;180,100,minLineLength&#x3D;100,maxLineGap&#x3D;10)</span><br><span class="line">for line in lines:</span><br><span class="line">    x1,y1,x2,y2 &#x3D; line[0]</span><br><span class="line">    cv.line(img,(x1,y1),(x2,y2),(0,255,0),2)</span><br><span class="line">cv.imwrite(&#39;houghlines5.jpg&#39;,img)</span><br></pre></td></tr></table></figure>
+<p>看到如下结果：<br><img src="http://qiniu.aihubs.net/houghlines5.jpg" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="霍夫圈变换"><a href="#霍夫圈变换" class="headerlink" title="霍夫圈变换"></a><span id="header4">霍夫圈变换</span></h1><h2 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h2><p>在本章中， </p>
+<ul>
+<li>我们将学习使用霍夫变换来查找图像中的圆。 </li>
+<li>我们将看到以下函数：cv.HoughCircles()</li>
+</ul>
+<p>理论<br>圆在数学上表示为$(x−x_{center})^2+(y−y_{center})^2=r^2$，其中$(x_{center},y_{center})$是圆的中心，r是圆的半径。从等式中，我们可以看到我们有3个参数，因此我们需要3D累加器进行霍夫变换，这将非常低效。因此，OpenCV使用更加技巧性的方法，即使用边缘的梯度信息的<strong>Hough梯度方法</strong>。</p>
+<p>我们在这里使用的函数是<strong>cv.HoughCircles</strong>()。它有很多参数，这些参数在文档中有很好的解释。因此，我们直接转到代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import cv2 as cv</span><br><span class="line">img &#x3D; cv.imread(&#39;opencv-logo-white.png&#39;,0)</span><br><span class="line">img &#x3D; cv.medianBlur(img,5)</span><br><span class="line">cimg &#x3D; cv.cvtColor(img,cv.COLOR_GRAY2BGR)</span><br><span class="line">circles &#x3D; cv.HoughCircles(img,cv.HOUGH_GRADIENT,1,20,</span><br><span class="line">                            param1&#x3D;50,param2&#x3D;30,minRadius&#x3D;0,maxRadius&#x3D;0)</span><br><span class="line">circles &#x3D; np.uint16(np.around(circles))</span><br><span class="line">for i in circles[0,:]:</span><br><span class="line">    # 绘制外圆</span><br><span class="line">    cv.circle(cimg,(i[0],i[1]),i[2],(0,255,0),2)</span><br><span class="line">    # 绘制圆心</span><br><span class="line">    cv.circle(cimg,(i[0],i[1]),2,(0,0,255),3)</span><br><span class="line">cv.imshow(&#39;detected circles&#39;,cimg)</span><br><span class="line">cv.waitKey(0)</span><br><span class="line">cv.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+<p><img src="http://qiniu.aihubs.net/houghcircles2.jpg" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="图像分割与Watershed算法"><a href="#图像分割与Watershed算法" class="headerlink" title="图像分割与Watershed算法"></a><span id="header5">图像分割与Watershed算法</span></h1><h2 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h2><p>在本章中， - 我们将学习使用分水岭算法实现基于标记的图像分割 - 我们将看到：cv.watershed()</p>
+<h2 id="理论-3"><a href="#理论-3" class="headerlink" title="理论"></a>理论</h2><p>任何灰度图像都可以看作是一个地形表面，其中高强度表示山峰，低强度表示山谷。</p>
+<p>你开始用不同颜色的水(标签)填充每个孤立的山谷(局部最小值)。</p>
+<p>随着水位的上升，根据附近的山峰(坡度)，来自不同山谷的水明显会开始合并，颜色也不同。</p>
+<p>为了避免这种情况，你要在水融合的地方建造屏障。你继续填满水，建造障碍，直到所有的山峰都在水下。</p>
+<p>然后你创建的屏障将返回你的分割结果。这就是Watershed背后的“思想”。</p>
+<p>你可以访问Watershed的CMM网页，了解它与一些动画的帮助。</p>
+<p>但是这种方法会由于图像中的噪声或其他不规则性而产生过度分割的结果。</p>
+<p>因此OpenCV实现了一个基于标记的分水岭算法，你可以指定哪些是要合并的山谷点，哪些不是。</p>
+<p>这是一个交互式的图像分割。我们所做的是给我们知道的对象赋予不同的标签。</p>
+<p>用一种颜色(或强度)标记我们确定为前景或对象的区域，用另一种颜色标记我们确定为背景或非对象的区域，最后用0标记我们不确定的区域。</p>
+<p>这是我们的标记。然后应用分水岭算法。然后我们的标记将使用我们给出的标签进行更新，对象的边界值将为-1。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>下面我们将看到一个有关如何使用距离变换和分水岭来分割相互接触的对象的示例。</p>
+<p>考虑下面的硬币图像，硬币彼此接触。即使你设置阈值，它也会彼此接触。<br><img src="http://qiniu.aihubs.net/water_coins.jpg" alt></p>
+<p>我们先从寻找硬币的近似估计开始。因此，我们可以使用Otsu的二值化。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import cv2 as cv</span><br><span class="line">from matplotlib import pyplot as plt</span><br><span class="line">img &#x3D; cv.imread(&#39;coins.png&#39;)</span><br><span class="line">gray &#x3D; cv.cvtColor(img,cv.COLOR_BGR2GRAY)</span><br><span class="line">ret, thresh &#x3D; cv.threshold(gray,0,255,cv.THRESH_BINARY_INV+cv.THRESH_OTSU)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qiniu.aihubs.net/water_thresh.jpg" alt></p>
+<p>现在我们需要去除图像中的任何白点噪声。为此，我们可以使用形态学扩张。</p>
+<p>要去除对象中的任何小孔，我们可以使用形态学侵蚀。因此，现在我们可以确定，靠近对象中心的区域是前景，而离对象中心很远的区域是背景。</p>
+<p>我们不确定的唯一区域是硬币的边界区域。</p>
+<p>因此，我们需要提取我们可确定为硬币的区域。侵蚀会去除边界像素。</p>
+<p>因此，无论剩余多少，我们都可以肯定它是硬币。如果物体彼此不接触，那将起作用。</p>
+<p>但是，由于它们彼此接触，因此另一个好选择是找到距离变换并应用适当的阈值。</p>
+<p>接下来，我们需要找到我们确定它们不是硬币的区域。</p>
+<p>为此，我们扩张了结果。膨胀将对象边界增加到背景。</p>
+<p>这样，由于边界区域已删除，因此我们可以确保结果中背景中的任何区域实际上都是背景。参见下图。<br><img src="http://qiniu.aihubs.net/water_fgbg.jpg" alt></p>
+<p>剩下的区域是我们不知道的区域，无论是硬币还是背景。分水岭算法应该找到它。</p>
+<p>这些区域通常位于前景和背景相遇（甚至两个不同的硬币相遇）的硬币边界附近。我们称之为边界。可以通过从sure_bg区域中减去sure_fg区域来获得。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 噪声去除</span><br><span class="line">kernel &#x3D; np.ones((3,3),np.uint8)</span><br><span class="line">opening &#x3D; cv.morphologyEx(thresh,cv.MORPH_OPEN,kernel, iterations &#x3D; 2)</span><br><span class="line"># 确定背景区域</span><br><span class="line">sure_bg &#x3D; cv.dilate(opening,kernel,iterations&#x3D;3)</span><br><span class="line"># 寻找前景区域</span><br><span class="line">dist_transform &#x3D; cv.distanceTransform(opening,cv.DIST_L2,5)</span><br><span class="line">ret, sure_fg &#x3D; cv.threshold(dist_transform,0.7*dist_transform.max(),255,0)</span><br><span class="line"># 找到未知区域</span><br><span class="line">sure_fg &#x3D; np.uint8(sure_fg)</span><br><span class="line">unknown &#x3D; cv.subtract(sure_bg,sure_fg)</span><br></pre></td></tr></table></figure>
+<p>查看结果。在阈值图像中，我们得到了一些硬币区域，我们确定它们是硬币，并且现在已分离它们。（在某些情况下，你可能只对前景分割感兴趣，而不对分离相互接触的对象感兴趣。在那种情况下，你无需使用距离变换，只需侵蚀就足够了。侵蚀只是提取确定前景区域的另一种方法。）</p>
+<p><img src="http://qiniu.aihubs.net/water_dt.jpg" alt></p>
+<p>现在我们可以确定哪些是硬币的区域，哪些是背景。</p>
+<p>因此，我们创建了标记（它的大小与原始图像的大小相同，但具有int32数据类型），并标记其中的区域。</p>
+<p>我们肯定知道的区域（无论是前景还是背景）都标有任何正整数，但是带有不同的整数，而我们不确定的区域则保留为零。</p>
+<p>为此，我们使用<strong>cv.connectedComponents</strong>()。它用0标记图像的背景，然后其他对象用从1开始的整数标记。</p>
+<p>但是我们知道，如果背景标记为0，则分水岭会将其视为未知区域。所以我们想用不同的整数来标记它。相反，我们将未知定义的未知区域标记为0。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 类别标记</span><br><span class="line">ret, markers &#x3D; cv.connectedComponents(sure_fg)</span><br><span class="line"># 为所有的标记加1，保证背景是0而不是1</span><br><span class="line">markers &#x3D; markers+1</span><br><span class="line"># 现在让所有的未知区域为0</span><br><span class="line">markers[unknown&#x3D;&#x3D;255] &#x3D; 0</span><br></pre></td></tr></table></figure>
+<p>参见JET colormap中显示的结果。深蓝色区域显示未知区域。当然,硬币的颜色不同。剩下,肯定为背景的区域显示在较浅的蓝色，跟未知区域相比。<br><img src="http://qiniu.aihubs.net/water_marker.jpg" alt></p>
+<p>现在我们的标记已准备就绪。现在是最后一步的时候了，使用分水岭算法。然后标记图像将被修改。边界区域将标记为-1。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">markers &#x3D; cv.watershed(img,markers) </span><br><span class="line">img[markers &#x3D;&#x3D; -1] &#x3D; [255,0,0]</span><br></pre></td></tr></table></figure>
+<p>请参阅下面的结果。对某些硬币，它们接触的区域被正确地分割，而对于某些硬币，却不是。</p>
+<p><img src="http://qiniu.aihubs.net/water_result.jpg" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="交互式前景提取使用GrabCut算法"><a href="#交互式前景提取使用GrabCut算法" class="headerlink" title="交互式前景提取使用GrabCut算法"></a><span id="header6">交互式前景提取使用GrabCut算法</span></h1><h2 id="目标-4"><a href="#目标-4" class="headerlink" title="目标"></a>目标</h2><p>在本章中， - 我们将看到GrabCut算法来提取图像中的前景 - 我们将为此创建一个交互式应用程序。</p>
+<h2 id="理论-4"><a href="#理论-4" class="headerlink" title="理论"></a>理论</h2><p>GrabCut算法由英国微软研究院的Carsten Rother，Vladimir Kolmogorov和Andrew Blake设计。</p>
+<p>在他们的论文“GrabCut”中：使用迭代图割的交互式前景提取。需要用最少的用户交互进行前景提取的算法，结果是GrabCut。</p>
+<p>从用户角度来看，它是如何工作的？</p>
+<p>最初，用户在前景区域周围绘制一个矩形（前景区域应完全位于矩形内部）。</p>
+<p>然后，算法会对其进行迭代分割，以获得最佳结果。</p>
+<p>做完了但在某些情况下，分割可能不会很好，例如，可能已将某些前景区域标记为背景，反之亦然。在这种情况下，需要用户进行精修。</p>
+<p>只需在图像错误分割区域上画些笔画。笔画基本上说 “嘿，该区域应该是前景，你将其标记为背景，在下一次迭代中对其进行校正”或与背景相反。</p>
+<p>然后在下一次迭代中，你将获得更好的结果。</p>
+<p>参见下图。</p>
+<p>第一名球员和橄榄球被封闭在一个蓝色矩形中。然后用白色笔划（表示前景）和黑色笔划（表示背景）进行最后的修饰。而且我们得到了不错的结果。</p>
+<p><img src="http://qiniu.aihubs.net/grabcut_output1.jpg" alt></p>
+<p>那么背景发生了什么呢？ </p>
+<ul>
+<li>用户输入矩形。此矩形外部的所有内容都将作为背景（这是在矩形应包含所有对象之前提到的原因）。矩形内的所有内容都是未知的。同样，任何指定前景和背景的用户输入都被视为硬标签，这意味着它们在此过程中不会更改。 </li>
+<li>计算机根据我们提供的数据进行初始标记。它标记前景和背景像素（或对其进行硬标记），现在使用高斯混合模型(GMM)对前景和背景进行建模。 </li>
+<li>根据我们提供的数据，GMM可以学习并创建新的像素分布。也就是说，未知像素根据颜色统计上与其他硬标记像素的关系而被标记为可能的前景或可能的背景（就像聚类一样）。 </li>
+<li>根据此像素分布构建图形。图中的节点为像素。添加了另外两个节点，即“源”节点和“接收器”节点。每个前景像素都连接到源节点，每个背景像素都连接到接收器节点。 </li>
+<li>通过像素是前景/背景的概率来定义将像素连接到源节点/末端节点的边缘的权重。像素之间的权重由边缘信息或像素相似度定义。如果像素颜色差异很大，则它们之间的边缘将变低。 </li>
+<li>然后使用mincut算法对图进行分割。它将图切成具有最小成本函数的两个分离的源节点和宿节点。成本函数是被切割边缘的所有权重的总和。剪切后，连接到“源”节点的所有像素都变为前景，而连接到“接收器”节点的像素都变为背景。 </li>
+<li>继续该过程，直到分类收敛为止。</li>
+</ul>
+<p>如下图所示（图片提供：<a href="http://www.cs.ru.ac.za/research/g02m1682/）" target="_blank" rel="noopener">http://www.cs.ru.ac.za/research/g02m1682/）</a><br><img src="http://qiniu.aihubs.net/grabcut_scheme.jpg" alt></p>
+<p>示例<br>现在我们使用OpenCV进行抓取算法。OpenCV为此具有功能<strong>cv.grabCut</strong>()，我们将首先看到其参数： </p>
+<ul>
+<li>img - 输入图像 </li>
+<li>mask - 这是一个掩码图像，在其中我们指定哪些区域是背景，前景或可能的背景/前景等。这是通过以下标志完成的：cv.GC_BGD,cv.GC_FGD, cv.GC_PR_BGD,cv.GC_PR_FGD，或直接将0,1,2,3传递给图像。 </li>
+<li>rect - 它是矩形的坐标，其中包括前景对象，格式为(x,y,w,h) - bdgModel, fgdModel - 这些是算法内部使用的数组。你只需创建两个大小为(1,65)的np.float64类型零数组。 </li>
+<li>iterCount - 算法应运行的迭代次数。 </li>
+<li>model - 应该是<strong>cv.GC_INIT_WITH_RECT</strong>或<strong>cv.GC_INIT_WITH_MASK</strong>或两者结合，决定我们要绘制矩形还是最终的修饰笔触。</li>
+</ul>
+<p>首先让我们看看矩形模式。我们加载图像，创建类似的mask图像。 </p>
+<p>我们创建<em>fgdModel</em>和<em>bgdModel</em>。我们给出矩形参数。一切都是直截了当的。</p>
+<p>让算法运行5次迭代。模式应为<strong>cv.GC_INIT_WITH_RECT</strong>, 因为我们使用的是矩形。 </p>
+<p>然后运行grabcut。修改mask图像。在新的mask图像中，像素将被标记有四个标记，分别表示上面指定的背景/前景。</p>
+<p>因此，我们修改mask，使所有0像素和2像素都置为0（即背景），而所有1像素和3像素均置为1（即前景像素）。</p>
+<p>现在，我们的最终mask已经准备就绪。只需将其与输入图像相乘即可得到分割的图像。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import cv2 as cv</span><br><span class="line">from matplotlib import pyplot as plt</span><br><span class="line">img &#x3D; cv.imread(&#39;messi5.jpg&#39;)</span><br><span class="line">mask &#x3D; np.zeros(img.shape[:2],np.uint8)</span><br><span class="line">bgdModel &#x3D; np.zeros((1,65),np.float64)</span><br><span class="line">fgdModel &#x3D; np.zeros((1,65),np.float64)</span><br><span class="line">rect &#x3D; (50,50,450,290)</span><br><span class="line">cv.grabCut(img,mask,rect,bgdModel,fgdModel,5,cv.GC_INIT_WITH_RECT)</span><br><span class="line">mask2 &#x3D; np.where((mask&#x3D;&#x3D;2)|(mask&#x3D;&#x3D;0),0,1).astype(&#39;uint8&#39;)</span><br><span class="line">img &#x3D; img*mask2[:,:,np.newaxis]</span><br><span class="line">plt.imshow(img),plt.colorbar(),plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="http://qiniu.aihubs.net/grabcut_rect.jpg" alt></p>
+<p>糟糕，梅西的头发不见了。谁会喜欢没有头发的梅西？我们需要把它找回来。</p>
+<p>因此，我们将使用1像素（确保前景）进行精细修饰。</p>
+<p>同时，一些不需要的地面也出现在图片里。我们需要删除它们。</p>
+<p>在那里，我们给出了一些0像素的修饰（确保背景）。</p>
+<p>因此，如现在所说，我们在以前的情况下修改生成的mask。</p>
+<p>我实际上所做的是，我在paint应用程序中打开了输入图像，并在图像中添加了另一层。</p>
+<p>使用画笔中的画笔工具，我在新图层上用白色标记了错过的前景（头发，鞋子，球等），而用白色标记了不需要的背景（例如logo，地面等）。</p>
+<p>然后用灰色填充剩余的背景。</p>
+<p>然后将该mask图像加载到OpenCV中，编辑我们在新添加的mask图像中具有相应值的原始mask图像。</p>
+<p>检查以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">＃newmask是我手动标记过的mask图像</span><br><span class="line">newmask &#x3D; cv.imread(&#39;newmask.png&#39;,0)</span><br><span class="line"># 标记为白色（确保前景）的地方，更改mask &#x3D; 1</span><br><span class="line"># 标记为黑色（确保背景）的地方，更改mask &#x3D; 0</span><br><span class="line">mask[newmask &#x3D;&#x3D; 0] &#x3D; 0</span><br><span class="line">mask[newmask &#x3D;&#x3D; 255] &#x3D; 1</span><br><span class="line">mask, bgdModel, fgdModel &#x3D; cv.grabCut(img,mask,None,bgdModel,fgdModel,5,cv.GC_INIT_WITH_MASK)</span><br><span class="line">mask &#x3D; np.where((mask&#x3D;&#x3D;2)|(mask&#x3D;&#x3D;0),0,1).astype(&#39;uint8&#39;)</span><br><span class="line">img &#x3D; img*mask[:,:,np.newaxis]</span><br><span class="line">plt.imshow(img),plt.colorbar(),plt.show()</span><br></pre></td></tr></table></figure>
+<p>就是这样了。在这里，你无需直接在rect模式下初始化，而可以直接进入mask模式。</p>
+<p>只需用2像素或3像素（可能的背景/前景）标记mask图像中的矩形区域。</p>
+<p>然后像在第二个示例中一样，将我们的sure_foreground标记为1像素。然后直接在mask模式下应用grabCut功能。<br><img src="http://qiniu.aihubs.net/grabcut_mask.jpg" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin.png" alt="Zhangshuai WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/zhifubao.jpg" alt="Zhangshuai Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/opencv/" rel="tag"># opencv</a>
+          
+            <a href="/tags/%E5%9B%BE%E5%83%8F/" rel="tag"># 图像</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/14/opencv%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%864-%E7%9B%B4%E6%96%B9%E5%9B%BE/" rel="next" title="opencv中的图像处理4-直方图">
+                <i class="fa fa-chevron-left"></i> opencv中的图像处理4-直方图
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar2.jpg"
+                alt="Zhangshuai" />
+            
+              <p class="site-author-name" itemprop="name">Zhangshuai</p>
+              <p class="site-description motion-element" itemprop="description">你刚才说了JOJO对吧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=486194129&auto=1&height=66"></iframe>
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/GitHubzhangshuai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1802528291@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ying-ying-ying-vue" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://music.163.com/#/user/home?id=377737250" target="_blank" title="网易云音乐">
+                      
+                        <i class="fa fa-fw fa-globe"></i>网易云音乐</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#傅里叶变换"><span class="nav-number">1.</span> <span class="nav-text">傅里叶变换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标"><span class="nav-number">1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理论"><span class="nav-number">1.2.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Numpy中的傅里叶变换"><span class="nav-number">1.3.</span> <span class="nav-text">Numpy中的傅里叶变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenCV中的傅里叶变换"><span class="nav-number">1.4.</span> <span class="nav-text">OpenCV中的傅里叶变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DFT的性能优化"><span class="nav-number">1.5.</span> <span class="nav-text">DFT的性能优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么拉普拉斯算子是高通滤波器？"><span class="nav-number">1.6.</span> <span class="nav-text">为什么拉普拉斯算子是高通滤波器？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模板匹配"><span class="nav-number">2.</span> <span class="nav-text">模板匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标-1"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理论-1"><span class="nav-number">2.2.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenCV中的模板匹配"><span class="nav-number">2.3.</span> <span class="nav-text">OpenCV中的模板匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多对象的模板匹配"><span class="nav-number">2.4.</span> <span class="nav-text">多对象的模板匹配</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#霍夫线变换"><span class="nav-number">3.</span> <span class="nav-text">霍夫线变换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标-2"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理论-2"><span class="nav-number">3.2.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenCV中的霍夫曼变换"><span class="nav-number">3.3.</span> <span class="nav-text">OpenCV中的霍夫曼变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概率霍夫变换"><span class="nav-number">3.4.</span> <span class="nav-text">概率霍夫变换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#霍夫圈变换"><span class="nav-number">4.</span> <span class="nav-text">霍夫圈变换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#学习目标"><span class="nav-number">4.1.</span> <span class="nav-text">学习目标</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像分割与Watershed算法"><span class="nav-number">5.</span> <span class="nav-text">图像分割与Watershed算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标-3"><span class="nav-number">5.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理论-3"><span class="nav-number">5.2.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">5.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#交互式前景提取使用GrabCut算法"><span class="nav-number">6.</span> <span class="nav-text">交互式前景提取使用GrabCut算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标-4"><span class="nav-number">6.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理论-4"><span class="nav-number">6.2.</span> <span class="nav-text">理论</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script type="text/javascript" src="/js/src/busuanzi.js"></script>
+
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-[object Object]"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张帅</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+
+
+
+
+
+
+  <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  <span class="post-meta-divider">|</span>
+  <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+
+<script>
+setTimeout(function(){
+document.getElementById('busuanzi_container_site_pv').style.display='inline-block'
+document.getElementById('busuanzi_container_site_uv').style.display='inline-block'
+},1000)
+</script>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>
