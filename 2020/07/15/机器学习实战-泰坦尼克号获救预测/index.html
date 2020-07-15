@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="机器学习,主成分分析," />
+  <meta name="keywords" content="机器学习,机器学习实战," />
 
 
 
@@ -81,33 +81,19 @@
 
 
 
-<meta name="description" content="PCA简单代码展示:">
+<meta name="description" content="数据集:titanic_train.csv">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PCA">
-<meta property="og:url" content="http://yoursite.com/2020/07/11/PCA/index.html">
+<meta property="og:title" content="机器学习实战-泰坦尼克号获救预测">
+<meta property="og:url" content="http://yoursite.com/2020/07/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98-%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%8F%B7%E8%8E%B7%E6%95%91%E9%A2%84%E6%B5%8B/index.html">
 <meta property="og:site_name" content="张帅的Blog">
-<meta property="og:description" content="PCA简单代码展示:">
+<meta property="og:description" content="数据集:titanic_train.csv">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA1.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA2.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA3.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA4.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA5.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA6.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA7.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA8.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA9.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA10.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/11/PCA/output_8_0.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/11/PCA/output_10_0.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/11/PCA/output_12_0.png">
-<meta property="article:published_time" content="2020-07-11T07:21:40.000Z">
-<meta property="article:modified_time" content="2020-07-11T07:22:57.828Z">
+<meta property="article:published_time" content="2020-07-15T02:43:32.000Z">
+<meta property="article:modified_time" content="2020-07-15T02:46:47.711Z">
 <meta property="article:author" content="Zhangshuai">
 <meta property="article:tag" content="机器学习">
-<meta property="article:tag" content="主成分分析">
+<meta property="article:tag" content="机器学习实战">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA1.png">
 
 
 
@@ -137,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/07/11/PCA/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/07/15/机器学习实战-泰坦尼克号获救预测/"/>
 
 
 
 
 
-  <title>PCA | 张帅的Blog</title>
+  <title>机器学习实战-泰坦尼克号获救预测 | 张帅的Blog</title>
   
 
 
@@ -344,7 +330,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/11/PCA/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98-%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%8F%B7%E8%8E%B7%E6%95%91%E9%A2%84%E6%B5%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhangshuai">
@@ -361,7 +347,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PCA</h1>
+          <h1 class="post-title" itemprop="name headline">机器学习实战-泰坦尼克号获救预测</h1>
         
 
         <div class="post-meta">
@@ -373,8 +359,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-11T15:21:40+08:00">
-                2020-07-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-15T10:43:32+08:00">
+                2020-07-15
               </time>
             
 
@@ -434,63 +420,550 @@
       
 
       
-        <p>PCA简单代码展示:</p>
+        <p>数据集:<a href="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/data/titanic_train.csv" target="_blank" rel="noopener">titanic_train.csv</a></p>
 <a id="more"></a>
 
-<p><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA1.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA2.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA3.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA4.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA5.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA6.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA7.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA8.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA9.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/PCA10.png" alt></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.neural_network <span class="keyword">import</span> MLPClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_digits</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report,confusion_matrix</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">digits = load_digits()</span><br><span class="line">x_data = digits.data</span><br><span class="line">y_data = digits.target</span><br><span class="line">x_train,x_test,y_train,y_test = train_test_split(x_data,y_data)</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x_data.shape</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas</span><br><span class="line">titianic = pandas.read_csv(<span class="string">'../data/titanic_train.csv'</span>)</span><br><span class="line">titianic[:<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
 
 
 
 
-<pre><code>(1797, 64)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mlp = MLPClassifier(hidden_layer_sizes=(<span class="number">100</span>,<span class="number">50</span>), max_iter=<span class="number">500</span>)</span><br><span class="line">mlp.fit(x_train,y_train)</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
 
 
-<pre><code>MLPClassifier(activation=&apos;relu&apos;, alpha=0.0001, batch_size=&apos;auto&apos;, beta_1=0.9,
-              beta_2=0.999, early_stopping=False, epsilon=1e-08,
-              hidden_layer_sizes=(100, 50), learning_rate=&apos;constant&apos;,
-              learning_rate_init=0.001, max_fun=15000, max_iter=500,
-              momentum=0.9, n_iter_no_change=10, nesterovs_momentum=True,
-              power_t=0.5, random_state=None, shuffle=True, solver=&apos;adam&apos;,
-              tol=0.0001, validation_fraction=0.1, verbose=False,
-              warm_start=False)</code></pre><p>协方差代码形式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">函数原型：def cov(m, y&#x3D;None, rowvar&#x3D;True, bias&#x3D;False, ddof&#x3D;None, fweights&#x3D;None,aweights&#x3D;None)</span><br><span class="line">m:一维或则二维的数组，默认情况下每一行代表一个变量（属性），每一列代表一个观测</span><br><span class="line">y:与m具有一样的形式的一组数据</span><br><span class="line">rowvar:默认为True,此时每一行代表一个变量（属性），每一列代表一个观测；为False时，则反之</span><br><span class="line">bias:默认为False,此时标准化时除以n-1；反之为n。其中n为观测数</span><br><span class="line">ddof:类型是int，当其值非None时，bias参数作用将失效。当ddof&#x3D;1时，将会返回无偏估计（除以n-1），即使指定了fweights和aweights参数；当ddof&#x3D;0时，则返回简单平均值。</span><br><span class="line">frequency weights:一维数组，代表每个观测要重复的次数（相当于给观测赋予权重）</span><br><span class="line">analytic weights:一维数组，代表观测矢量权重。对于被认为“重要”的观察,这些相对权重通常很大,而对于被认为不太重要的观察,这些相对权重较小。如果ddof &#x3D; 0,则可以使用权重数组将概率分配给观测向量。</span><br></pre></td></tr></table></figure>
-<p>代码示例<br>基本使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"># 计算协方差的时候，一行代表一个特征</span><br><span class="line"># 下面计算cov(T, S, M)</span><br><span class="line">T &#x3D; np.array([9, 15, 25, 14, 10, 18, 0, 16, 5, 19, 16, 20])</span><br><span class="line">S &#x3D; np.array([39, 56, 93, 61, 50, 75, 32, 85, 42, 70, 66, 80])</span><br><span class="line">M &#x3D; np.asarray([38, 56, 90, 63, 56, 77, 30, 80, 41, 79, 64, 88])</span><br><span class="line">X &#x3D; np.vstack((T, S, M))</span><br><span class="line"># X每行代表一个属性</span><br><span class="line">#  每列代表一个示例，或者说观测</span><br><span class="line">print(np.cov(X))</span><br><span class="line"></span><br><span class="line"># [[ 47.71969697 122.9469697  129.59090909]</span><br><span class="line">#  [122.9469697  370.08333333 374.59090909]</span><br><span class="line">#  [129.59090909 374.59090909 399.        ]]</span><br></pre></td></tr></table></figure>
-<p>重点：协方差矩阵计算的是不同维度之间的协方差，而不是不同样本之间。拿到一个样本矩阵，首先要明确的就是行代表什么，列代表什么。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">zeroMean</span><span class="params">(dataMat)</span>:</span></span><br><span class="line">    meanVal = np.mean(dataMat, axis=<span class="number">0</span>)</span><br><span class="line">    newData = dataMat - meanVal</span><br><span class="line">    <span class="keyword">return</span> newData, meanVal</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pca</span><span class="params">(dataMat,top)</span>:</span></span><br><span class="line">    newData, meanVal = zeroMean(dataMat)</span><br><span class="line">    covMat = np.cov(newData,rowvar=<span class="number">0</span>) <span class="comment"># 求样本的协方差矩阵。</span></span><br><span class="line">    eigVals,eigVects = np.linalg.eig(np.mat(covMat)) <span class="comment"># 对协方差1m 𝑋𝑋𝑇矩阵做特征值分解。</span></span><br><span class="line">    eigValIndice = np.argsort(eigVals)</span><br><span class="line">    n_eigValIndice = eigValIndice[<span class="number">-1</span>:-(top+<span class="number">1</span>):<span class="number">-1</span>] <span class="comment"># 选出最大的k个特征值对应的k个特征向量。</span></span><br><span class="line">    n_eigVect = eigVects[:,n_eigValIndice]</span><br><span class="line">    lowDDataMat = newData*n_eigVect <span class="comment"># 将原始数据投影到选取的特征向量上。</span></span><br><span class="line">    reconMat = (lowDDataMat*n_eigVect.T)+meanVal</span><br><span class="line">    <span class="keyword">return</span> lowDDataMat,reconMat</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">titianic[<span class="string">'Age'</span>]=titianic[<span class="string">'Age'</span>].fillna(titianic[<span class="string">'Age'</span>].median())</span><br><span class="line">print(titianic.describe())</span><br></pre></td></tr></table></figure>
+
+<pre><code>       PassengerId    Survived      Pclass         Age       SibSp  \
+count   891.000000  891.000000  891.000000  891.000000  891.000000   
+mean    446.000000    0.383838    2.308642   29.361582    0.523008   
+std     257.353842    0.486592    0.836071   13.019697    1.102743   
+min       1.000000    0.000000    1.000000    0.420000    0.000000   
+25%     223.500000    0.000000    2.000000   22.000000    0.000000   
+50%     446.000000    0.000000    3.000000   28.000000    0.000000   
+75%     668.500000    1.000000    3.000000   35.000000    1.000000   
+max     891.000000    1.000000    3.000000   80.000000    8.000000   
+
+            Parch        Fare  
+count  891.000000  891.000000  
+mean     0.381594   32.204208  
+std      0.806057   49.693429  
+min      0.000000    0.000000  
+25%      0.000000    7.910400  
+50%      0.000000   14.454200  
+75%      0.000000   31.000000  
+max      6.000000  512.329200  </code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">titianic[:<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
 
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lowDDataMat,reconMat = pca(x_data,<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = np.array(lowDDataMat)[:,<span class="number">0</span>]</span><br><span class="line">y = np.array(lowDDataMat)[:,<span class="number">1</span>]</span><br><span class="line">plt.scatter(x,y,c=<span class="string">'r'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
-<p><img src="/2020/07/11/PCA/output_8_0.png" alt="png"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">predictions = mlp.predict(x_data)</span><br></pre></td></tr></table></figure>
 
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = np.array(lowDDataMat)[:,<span class="number">0</span>]</span><br><span class="line">y = np.array(lowDDataMat)[:,<span class="number">1</span>]</span><br><span class="line">plt.scatter(x,y,c=y_data)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">print(titianic[<span class="string">'Sex'</span>].unique())</span><br><span class="line">titianic[<span class="string">'Sex'</span>] = titianic[<span class="string">'Sex'</span>].map(&#123;<span class="string">'male'</span>:<span class="number">0</span>,<span class="string">'female'</span>:<span class="number">1</span>&#125;)</span><br><span class="line"><span class="comment"># 把male变成0，把female变成1</span></span><br><span class="line"><span class="comment"># titanic.loc[titanic["Sex"] == "male", "Sex"] = 0</span></span><br><span class="line"><span class="comment"># titanic.loc[titanic["Sex"] == "female", "Sex"] = 1</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>[&apos;male&apos; &apos;female&apos;]</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">titianic[:<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
 
 
-<p><img src="/2020/07/11/PCA/output_10_0.png" alt="png"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lowDDataMat,reconMat = pca(x_data,<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
 
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d <span class="keyword">import</span> Axes3D</span><br><span class="line">x = np.array(lowDDataMat)[:,<span class="number">0</span>]</span><br><span class="line">y = np.array(lowDDataMat)[:,<span class="number">1</span>]</span><br><span class="line">z = np.array(lowDDataMat)[:,<span class="number">2</span>]</span><br><span class="line">ax = plt.figure().add_subplot(<span class="number">111</span>,projection=<span class="string">'3d'</span>)</span><br><span class="line">ax.scatter(x,y,z,c=y_data,s=<span class="number">10</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>0</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>1</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>1</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>1</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>0</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
-<p><img src="/2020/07/11/PCA/output_12_0.png" alt="png"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(titianic[<span class="string">'Embarked'</span>].unique())</span><br><span class="line">titianic[<span class="string">'Embarked'</span>]=titianic[<span class="string">'Embarked'</span>].fillna(<span class="string">'S'</span>)</span><br><span class="line">titianic[<span class="string">'Embarked'</span>]=titianic[<span class="string">'Embarked'</span>].map(&#123;<span class="string">'S'</span>:<span class="number">0</span>,<span class="string">'C'</span>:<span class="number">1</span>,<span class="string">'Q'</span>:<span class="number">2</span>&#125;)</span><br><span class="line">titianic[:<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+
+<pre><code>[&apos;S&apos; &apos;C&apos; &apos;Q&apos; nan]</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>0</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>1</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>1</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>1</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>0</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line">predictors = [<span class="string">'Pclass'</span>,<span class="string">'Sex'</span>,<span class="string">'Age'</span>,<span class="string">'SibSp'</span>,<span class="string">'Parch'</span>,<span class="string">'Fare'</span>,<span class="string">'Embarked'</span>]</span><br><span class="line">x_data = titianic[predictors]</span><br><span class="line">y_data = titianic[<span class="string">'Survived'</span>]</span><br><span class="line">scaler = StandardScaler()</span><br><span class="line">x_data = scaler.fit_transform(x_data)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> model_selection</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line">LR = LogisticRegression()</span><br><span class="line">scores = model_selection.cross_val_score(LR,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.7901234567901234</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.neural_network <span class="keyword">import</span> MLPClassifier</span><br><span class="line">mlp = MLPClassifier(hidden_layer_sizes=(<span class="number">20</span>,<span class="number">10</span>),max_iter=<span class="number">1000</span>)</span><br><span class="line">scores = model_selection.cross_val_score(mlp,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+
+
+0.8002244668911335</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> neighbors</span><br><span class="line">knn = neighbors.KNeighborsClassifier(<span class="number">21</span>)</span><br><span class="line">scores=model_selection.cross_val_score(knn,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.8125701459034792</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> tree</span><br><span class="line">dtree = tree.DecisionTreeClassifier(max_depth=<span class="number">5</span>,min_samples_split=<span class="number">4</span>)</span><br><span class="line">scores = model_selection.cross_val_score(dtree,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.8080808080808081</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</span><br><span class="line">RF1 = RandomForestClassifier(random_state=<span class="number">1</span>,n_estimators=<span class="number">10</span>,min_samples_split=<span class="number">2</span>)</span><br><span class="line">scores = model_selection.cross_val_score(RF1,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.7991021324354657</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RF2 = RandomForestClassifier(n_estimators=<span class="number">100</span>,min_samples_split=<span class="number">4</span>)</span><br><span class="line">scores = model_selection.cross_val_score(RF2,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.8125701459034792</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> BaggingClassifier</span><br><span class="line">bagging_clf = BaggingClassifier(RF2,n_estimators=<span class="number">20</span>)</span><br><span class="line">scores=model_selection.cross_val_score(bagging_clf,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.819304152637486</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> AdaBoostClassifier</span><br><span class="line">adaboost = AdaBoostClassifier(bagging_clf,n_estimators=<span class="number">10</span>)</span><br><span class="line">scores=model_selection.cross_val_score(adaboost,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.8181818181818182</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> VotingClassifier</span><br><span class="line"><span class="keyword">from</span> mlxtend.classifier <span class="keyword">import</span> StackingClassifier</span><br><span class="line">sclf = StackingClassifier(classifiers=[bagging_clf,mlp,LR],</span><br><span class="line">                         meta_classifier=LogisticRegression())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">scores = model_selection.cross_val_score(sclf,x_data,y_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+
+
+0.819304152637486</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sclf2 = VotingClassifier([(<span class="string">'adaboost'</span>,adaboost),(<span class="string">'mlp'</span>,mlp),(<span class="string">'LR'</span>,LR),(<span class="string">'knn'</span>,knn),(<span class="string">'dtree'</span>,dtree)])</span><br><span class="line"></span><br><span class="line">scores = model_selection.cross_val_score(sclf2,x_data,y_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+
+
+0.8159371492704826</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -539,7 +1012,7 @@
           
             <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
           
-            <a href="/tags/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/" rel="tag"># 主成分分析</a>
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98/" rel="tag"># 机器学习实战</a>
           
         </div>
       
@@ -552,8 +1025,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/07/11/%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%8D%95%E8%AF%8D%E6%8B%BC%E5%86%99%E5%99%A8/" rel="next" title="贝叶斯单词拼写器">
-                <i class="fa fa-chevron-left"></i> 贝叶斯单词拼写器
+              <a href="/2020/07/14/opencv%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%865/" rel="next" title="opencv中的图像处理5">
+                <i class="fa fa-chevron-left"></i> opencv中的图像处理5
               </a>
             
           </div>
@@ -561,10 +1034,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/07/11/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0stacking/" rel="prev" title="集成学习stacking">
-                集成学习stacking <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

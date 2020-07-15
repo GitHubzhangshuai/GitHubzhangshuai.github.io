@@ -4115,4 +4115,560 @@ weighted avg       0.85      0.85      0.85       118</code></pre><figure class=
         <tag>图像</tag>
       </tags>
   </entry>
+  <entry>
+    <title>机器学习实战-泰坦尼克号获救预测</title>
+    <url>/2020/07/15/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98-%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%8F%B7%E8%8E%B7%E6%95%91%E9%A2%84%E6%B5%8B/</url>
+    <content><![CDATA[<p>数据集:<a href="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/data/titanic_train.csv" target="_blank" rel="noopener">titanic_train.csv</a></p>
+<a id="more"></a>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas</span><br><span class="line">titianic = pandas.read_csv(<span class="string">'../data/titanic_train.csv'</span>)</span><br><span class="line">titianic[:<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">titianic[<span class="string">'Age'</span>]=titianic[<span class="string">'Age'</span>].fillna(titianic[<span class="string">'Age'</span>].median())</span><br><span class="line">print(titianic.describe())</span><br></pre></td></tr></table></figure>
+
+<pre><code>       PassengerId    Survived      Pclass         Age       SibSp  \
+count   891.000000  891.000000  891.000000  891.000000  891.000000   
+mean    446.000000    0.383838    2.308642   29.361582    0.523008   
+std     257.353842    0.486592    0.836071   13.019697    1.102743   
+min       1.000000    0.000000    1.000000    0.420000    0.000000   
+25%     223.500000    0.000000    2.000000   22.000000    0.000000   
+50%     446.000000    0.000000    3.000000   28.000000    0.000000   
+75%     668.500000    1.000000    3.000000   35.000000    1.000000   
+max     891.000000    1.000000    3.000000   80.000000    8.000000   
+
+            Parch        Fare  
+count  891.000000  891.000000  
+mean     0.381594   32.204208  
+std      0.806057   49.693429  
+min      0.000000    0.000000  
+25%      0.000000    7.910400  
+50%      0.000000   14.454200  
+75%      0.000000   31.000000  
+max      6.000000  512.329200  </code></pre><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">titianic[:<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(titianic[<span class="string">'Sex'</span>].unique())</span><br><span class="line">titianic[<span class="string">'Sex'</span>] = titianic[<span class="string">'Sex'</span>].map(&#123;<span class="string">'male'</span>:<span class="number">0</span>,<span class="string">'female'</span>:<span class="number">1</span>&#125;)</span><br><span class="line"><span class="comment"># 把male变成0，把female变成1</span></span><br><span class="line"><span class="comment"># titanic.loc[titanic["Sex"] == "male", "Sex"] = 0</span></span><br><span class="line"><span class="comment"># titanic.loc[titanic["Sex"] == "female", "Sex"] = 1</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>[&apos;male&apos; &apos;female&apos;]</code></pre><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">titianic[:<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>0</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>1</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>1</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>1</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>0</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(titianic[<span class="string">'Embarked'</span>].unique())</span><br><span class="line">titianic[<span class="string">'Embarked'</span>]=titianic[<span class="string">'Embarked'</span>].fillna(<span class="string">'S'</span>)</span><br><span class="line">titianic[<span class="string">'Embarked'</span>]=titianic[<span class="string">'Embarked'</span>].map(&#123;<span class="string">'S'</span>:<span class="number">0</span>,<span class="string">'C'</span>:<span class="number">1</span>,<span class="string">'Q'</span>:<span class="number">2</span>&#125;)</span><br><span class="line">titianic[:<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+
+<pre><code>[&apos;S&apos; &apos;C&apos; &apos;Q&apos; nan]</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>0</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>1</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>1</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>1</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>0</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line">predictors = [<span class="string">'Pclass'</span>,<span class="string">'Sex'</span>,<span class="string">'Age'</span>,<span class="string">'SibSp'</span>,<span class="string">'Parch'</span>,<span class="string">'Fare'</span>,<span class="string">'Embarked'</span>]</span><br><span class="line">x_data = titianic[predictors]</span><br><span class="line">y_data = titianic[<span class="string">'Survived'</span>]</span><br><span class="line">scaler = StandardScaler()</span><br><span class="line">x_data = scaler.fit_transform(x_data)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> model_selection</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line">LR = LogisticRegression()</span><br><span class="line">scores = model_selection.cross_val_score(LR,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.7901234567901234</code></pre><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.neural_network <span class="keyword">import</span> MLPClassifier</span><br><span class="line">mlp = MLPClassifier(hidden_layer_sizes=(<span class="number">20</span>,<span class="number">10</span>),max_iter=<span class="number">1000</span>)</span><br><span class="line">scores = model_selection.cross_val_score(mlp,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+
+
+0.8002244668911335</code></pre><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> neighbors</span><br><span class="line">knn = neighbors.KNeighborsClassifier(<span class="number">21</span>)</span><br><span class="line">scores=model_selection.cross_val_score(knn,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.8125701459034792</code></pre><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> tree</span><br><span class="line">dtree = tree.DecisionTreeClassifier(max_depth=<span class="number">5</span>,min_samples_split=<span class="number">4</span>)</span><br><span class="line">scores = model_selection.cross_val_score(dtree,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.8080808080808081</code></pre><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</span><br><span class="line">RF1 = RandomForestClassifier(random_state=<span class="number">1</span>,n_estimators=<span class="number">10</span>,min_samples_split=<span class="number">2</span>)</span><br><span class="line">scores = model_selection.cross_val_score(RF1,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.7991021324354657</code></pre><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">RF2 = RandomForestClassifier(n_estimators=<span class="number">100</span>,min_samples_split=<span class="number">4</span>)</span><br><span class="line">scores = model_selection.cross_val_score(RF2,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.8125701459034792</code></pre><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> BaggingClassifier</span><br><span class="line">bagging_clf = BaggingClassifier(RF2,n_estimators=<span class="number">20</span>)</span><br><span class="line">scores=model_selection.cross_val_score(bagging_clf,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.819304152637486</code></pre><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> AdaBoostClassifier</span><br><span class="line">adaboost = AdaBoostClassifier(bagging_clf,n_estimators=<span class="number">10</span>)</span><br><span class="line">scores=model_selection.cross_val_score(adaboost,x_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.8181818181818182</code></pre><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> VotingClassifier</span><br><span class="line"><span class="keyword">from</span> mlxtend.classifier <span class="keyword">import</span> StackingClassifier</span><br><span class="line">sclf = StackingClassifier(classifiers=[bagging_clf,mlp,LR],</span><br><span class="line">                         meta_classifier=LogisticRegression())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">scores = model_selection.cross_val_score(sclf,x_data,y_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+
+
+0.819304152637486</code></pre><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">sclf2 = VotingClassifier([(<span class="string">'adaboost'</span>,adaboost),(<span class="string">'mlp'</span>,mlp),(<span class="string">'LR'</span>,LR),(<span class="string">'knn'</span>,knn),(<span class="string">'dtree'</span>,dtree)])</span><br><span class="line"></span><br><span class="line">scores = model_selection.cross_val_score(sclf2,x_data,y_data,y_data,cv=<span class="number">3</span>)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
+
+<pre><code>c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\neural_network\_multilayer_perceptron.py:571: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn&apos;t converged yet.
+  % self.max_iter, ConvergenceWarning)
+
+
+0.8159371492704826</code></pre><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>机器学习实战</tag>
+      </tags>
+  </entry>
 </search>
