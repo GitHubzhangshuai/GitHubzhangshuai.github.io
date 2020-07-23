@@ -4674,7 +4674,8 @@ c:\users\18025\appdata\local\programs\python\python37\lib\site-packages\sklearn\
   <entry>
     <title>Pytorch-Learning-cifar10tutorial-visualizing</title>
     <url>/2020/07/23/Pytorch-Learning-cifar10tutorial-visualizing/</url>
-    <content><![CDATA[<a id="more"></a>
+    <content><![CDATA[<p>Pytorch-Learning-cifar10tutorial-visualizing</p>
+<a id="more"></a>
 
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
 
@@ -4918,18 +4919,19 @@ Done!</code></pre><figure class="highlight python"><table><tr><td class="code"><
   <entry>
     <title>Pytorch-Learning-examples</title>
     <url>/2020/07/23/Pytorch-Learning-examples/</url>
-    <content><![CDATA[<a id="more"></a>
+    <content><![CDATA[<p>Pytorch-Learning-examples</p>
+<a id="more"></a>
 
 <ul>
-<li>1.warm-up:numpy[#header1]</li>
-<li>2.pytorch:tensors[#header2]</li>
-<li>3.pytorch:tensors and autograd[#header3]</li>
-<li>4.pytorch:defining new autograd functions[#header4]</li>
-<li>5.tensorflow1.x:static graphs[#header5]</li>
-<li>6.pytorch:nn[#header6]</li>
-<li>7.pytorch:optim[#header7]</li>
-<li>8.pytorch:custom nn modules[#header8]</li>
-<li>9.pytorch:control flow+weight sharing[#header9]</li>
+<li>1.<a href="#header1">warm-up:numpy</a></li>
+<li>2.<a href="#header2">pytorch:tensors</a></li>
+<li>3.<a href="#header3">pytorch:tensors and autograd</a></li>
+<li>4.<a href="#header4">pytorch:defining new autograd functions</a></li>
+<li>5.<a href="#header5">tensorflow1.x:static graphs</a></li>
+<li>6.<a href="#header6">pytorch:nn</a></li>
+<li>7.<a href="#header7">pytorch:optim</a></li>
+<li>8.<a href="#header8">pytorch:custom nn modules</a></li>
+<li>9.<a href="#header9">pytorch:control flow+weight sharing</a></li>
 </ul>
 <h1 id="warm-up-numpy"><a href="#warm-up-numpy" class="headerlink" title="warm-up:numpy"></a><span id="header1">warm-up:numpy</span></h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
 
@@ -5821,7 +5823,8 @@ tensor([2., 2., 2., 2., 2.], dtype=torch.float64)</code></pre><p>All the Tensors
   <entry>
     <title>Pytorch-Learning-torch.nn</title>
     <url>/2020/07/23/Pytorch-Learning-torch-nn/</url>
-    <content><![CDATA[<a id="more"></a>
+    <content><![CDATA[<p>Pytorch-Learning-torch.nn</p>
+<a id="more"></a>
 
 
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
