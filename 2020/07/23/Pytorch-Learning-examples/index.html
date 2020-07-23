@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="pytorch1.51官网教程,pytorch,深度学习," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="张帅的Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="1.warm-up:numpy[#header1] 2.pytorch:tensors[#header2] 3.pytorch:tensors and autograd[#header3] 4.pytorch:defining new autograd functions[#header4] 5.tensorflow1.x:static graphs[#header5] 6.pytorch:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch-Learning-examples">
+<meta property="og:url" content="http://yoursite.com/2020/07/23/Pytorch-Learning-examples/index.html">
+<meta property="og:site_name" content="张帅的Blog">
+<meta property="og:description" content="1.warm-up:numpy[#header1] 2.pytorch:tensors[#header2] 3.pytorch:tensors and autograd[#header3] 4.pytorch:defining new autograd functions[#header4] 5.tensorflow1.x:static graphs[#header5] 6.pytorch:">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-23T09:25:32.000Z">
+<meta property="article:modified_time" content="2020-07-23T09:53:24.870Z">
+<meta property="article:author" content="Zhangshuai">
+<meta property="article:tag" content="pytorch1.51官网教程">
+<meta property="article:tag" content="pytorch">
+<meta property="article:tag" content="深度学习">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/23/Pytorch-Learning-examples/"/>
+
+
+
+
+
+  <title>Pytorch-Learning-examples | 张帅的Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">张帅的Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">用hexo搭建的简易博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            Schedule
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/23/Pytorch-Learning-examples/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhangshuai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张帅的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Pytorch-Learning-examples</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-23T17:25:32+08:00">
+                2020-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pytorch/" itemprop="url" rel="index">
+                    <span itemprop="name">pytorch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+
+<ul>
+<li>1.warm-up:numpy[#header1]</li>
+<li>2.pytorch:tensors[#header2]</li>
+<li>3.pytorch:tensors and autograd[#header3]</li>
+<li>4.pytorch:defining new autograd functions[#header4]</li>
+<li>5.tensorflow1.x:static graphs[#header5]</li>
+<li>6.pytorch:nn[#header6]</li>
+<li>7.pytorch:optim[#header7]</li>
+<li>8.pytorch:custom nn modules[#header8]</li>
+<li>9.pytorch:control flow+weight sharing[#header9]</li>
+</ul>
+<h1 id="warm-up-numpy"><a href="#warm-up-numpy" class="headerlink" title="warm-up:numpy"></a><span id="header1">warm-up:numpy</span></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Warm-up-numpy"><a href="#Warm-up-numpy" class="headerlink" title="Warm-up: numpy"></a>Warm-up: numpy</h2><p>A fully-connected ReLU network with one hidden layer and no biases, trained to<br>predict y from x using Euclidean error.</p>
+<p>This implementation uses numpy to manually compute the forward pass, loss, and<br>backward pass.</p>
+<p>A numpy array is a generic n-dimensional array; it does not know anything about<br>deep learning or gradients or computational graphs, and is just a way to perform<br>generic numeric computations.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># N is batch size; D_in is input dimension;</span></span><br><span class="line"><span class="comment"># H is hidden dimension; D_out is output dimension.</span></span><br><span class="line">N, D_in, H, D_out = <span class="number">64</span>, <span class="number">1000</span>, <span class="number">100</span>, <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create random input and output data</span></span><br><span class="line">x = np.random.randn(N, D_in)</span><br><span class="line">y = np.random.randn(N, D_out)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Randomly initialize weights</span></span><br><span class="line">w1 = np.random.randn(D_in, H)</span><br><span class="line">w2 = np.random.randn(H, D_out)</span><br><span class="line"></span><br><span class="line">learning_rate = <span class="number">1e-6</span></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">    <span class="comment"># Forward pass: compute predicted y</span></span><br><span class="line">    h = x.dot(w1)</span><br><span class="line">    h_relu = np.maximum(h, <span class="number">0</span>)</span><br><span class="line">    y_pred = h_relu.dot(w2)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Compute and print loss</span></span><br><span class="line">    loss = np.square(y_pred - y).sum()</span><br><span class="line">    print(t, loss)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Backprop to compute gradients of w1 and w2 with respect to loss</span></span><br><span class="line">    grad_y_pred = <span class="number">2.0</span> * (y_pred - y)</span><br><span class="line">    grad_w2 = h_relu.T.dot(grad_y_pred)</span><br><span class="line">    grad_h_relu = grad_y_pred.dot(w2.T)</span><br><span class="line">    grad_h = grad_h_relu.copy()</span><br><span class="line">    grad_h[h &lt; <span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">    grad_w1 = x.T.dot(grad_h)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Update weights</span></span><br><span class="line">    w1 -= learning_rate * grad_w1</span><br><span class="line">    w2 -= learning_rate * grad_w2</span><br></pre></td></tr></table></figure>
+
+<pre><code>0 38502658.12178467
+1 39021030.505150035
+2 43783005.35946928
+3 43513345.95754772
+4 33130647.574302156
+5 18494184.582708906
+6 8309147.312092974
+7 3709728.9004302337
+8 1973222.0064019447
+9 1292160.3020421679
+10 969207.6696523366
+11 777313.2166244711
+12 642885.4458057204
+13 539862.0964943856
+14 457706.36910393136
+15 390776.99980368273
+16 335541.3660443882
+17 289534.9698406697
+18 250999.0891175047
+19 218440.8922160021
+20 190801.03505385082
+21 167229.41111619392
+22 147030.14995170798
+23 129644.55669752343
+24 114634.85573944401
+25 101654.50910880938
+26 90379.66910158034
+27 80547.50420605141
+28 71942.30234259031
+29 64389.53897462465
+30 57755.011608667795
+31 51903.61478445082
+32 46747.37821866218
+33 42180.36670548356
+34 38120.10143244453
+35 34504.8367862085
+36 31283.625825762603
+37 28409.554826229883
+38 25832.84410659271
+39 23520.944901953713
+40 21443.92872486158
+41 19573.49619579054
+42 17887.52961185431
+43 16364.901917158142
+44 14986.999074876061
+45 13739.21782497934
+46 12607.392910105698
+47 11579.322653387639
+48 10644.061828317645
+49 9792.956168204091
+50 9016.956906200578
+51 8309.619387713636
+52 7664.013985165039
+53 7073.449800791166
+54 6532.833920817042
+55 6037.538464055722
+56 5583.274822316345
+57 5166.3150372957025
+58 4783.438966887356
+59 4431.265118218456
+60 4107.306250671735
+61 3809.173244284424
+62 3534.3065526324035
+63 3281.382487196609
+64 3048.2720327779725
+65 2832.9613638905826
+66 2634.0552486543734
+67 2450.1208680788013
+68 2280.0038612106828
+69 2122.5020348125718
+70 1976.6140763769765
+71 1841.480282193922
+72 1716.1436144355846
+73 1599.8498210515127
+74 1491.925103606006
+75 1391.74788163408
+76 1298.700821661702
+77 1212.212450782299
+78 1131.7942696970626
+79 1057.0430043302988
+80 987.4925199287406
+81 922.7460298895005
+82 862.4637455820518
+83 806.335290707932
+84 754.0347890268129
+85 705.3032590197868
+86 659.8640583682109
+87 617.4715043492135
+88 577.9369320777199
+89 541.0382711590596
+90 506.62139688224494
+91 474.46146460235906
+92 444.4289850228761
+93 416.3831714509241
+94 390.1781262414818
+95 365.68416156867966
+96 342.7828243058609
+97 321.37451033250693
+98 301.34344345528007
+99 282.6049616675032
+100 265.0769405906856
+101 248.66706624922423
+102 233.31182982470165
+103 218.93579583019107
+104 205.47399586723316
+105 192.8673639685237
+106 181.05784775853311
+107 169.9914161272534
+108 159.62205201703807
+109 149.90414548125696
+110 140.7986893389537
+111 132.2586907147042
+112 124.25279696970381
+113 116.74222194734885
+114 109.70210950592357
+115 103.09497001058955
+116 96.89525543441061
+117 91.07884065063246
+118 85.6198765958778
+119 80.49732520749234
+120 75.6882961733577
+121 71.1722154368565
+122 66.93235677110607
+123 62.95241596773887
+124 59.21332801738676
+125 55.70220136122839
+126 52.40276978766286
+127 49.30324491666052
+128 46.39219465065453
+129 43.6561631420701
+130 41.08445097890545
+131 38.66705716574056
+132 36.39569090451589
+133 34.2596896820596
+134 32.25129366141559
+135 30.36277332849072
+136 28.58840749936592
+137 26.91886404849481
+138 25.348295684128104
+139 23.871887568407733
+140 22.482392230639924
+141 21.1752612429013
+142 19.94540814626695
+143 18.78848359075504
+144 17.699455611505552
+145 16.674867891142245
+146 15.710568962031482
+147 14.802825886952098
+148 13.94842074029503
+149 13.144227723348116
+150 12.387131550628439
+151 11.674026481428772
+152 11.002689146006661
+153 10.370609949309603
+154 9.775509369377593
+155 9.215072226656517
+156 8.687075426828947
+157 8.189767782525552
+158 7.7214576865624025
+159 7.280233710481657
+160 6.864642688917494
+161 6.473008103216368
+162 6.104105173833666
+163 5.7564916113754085
+164 5.428879681554832
+165 5.120147993533515
+166 4.829259142691539
+167 4.555145740046442
+168 4.29672213329475
+169 4.053143156190888
+170 3.8235214202376655
+171 3.607138244094545
+172 3.4031196927940224
+173 3.210757574413539
+174 3.0293765387034064
+175 2.858454621478234
+176 2.697234384156207
+177 2.545177266862872
+178 2.4017939117722404
+179 2.2665997813870664
+180 2.1391195167593566
+181 2.0188693271562754
+182 1.9054496369340477
+183 1.7984763417415828
+184 1.6975705115269373
+185 1.6023729047397333
+186 1.512573512380922
+187 1.4278650471502181
+188 1.347969970837449
+189 1.272567002922919
+190 1.2014204465432794
+191 1.1342855863955332
+192 1.0709568915888343
+193 1.0111820179227746
+194 0.9547746744541861
+195 0.9015532749111042
+196 0.8513302278674784
+197 0.803922014568537
+198 0.7591740066091374
+199 0.7169375303267338
+200 0.6770877114086349
+201 0.6394607979618921
+202 0.6039480138637082
+203 0.5704178896870162
+204 0.5387711941311117
+205 0.5088920505641997
+206 0.4806800135074349
+207 0.45404935956164216
+208 0.4289117734184146
+209 0.40517486327826213
+210 0.38275697069924214
+211 0.36158944936278636
+212 0.3416070794747825
+213 0.3227344916114124
+214 0.3049141167911339
+215 0.28808300182326085
+216 0.27219060149023244
+217 0.2571773488343734
+218 0.24299758077475503
+219 0.22960605968706874
+220 0.21696181922245522
+221 0.20501866875786806
+222 0.19373590402638502
+223 0.1830764093023291
+224 0.17300985254584955
+225 0.1635004063397864
+226 0.15451596252804456
+227 0.14602859536330753
+228 0.13801270444499963
+229 0.1304395543791902
+230 0.12328307118542486
+231 0.1165215280650118
+232 0.11013498048221826
+233 0.10409915585381448
+234 0.09839683048227854
+235 0.09300849009893092
+236 0.08791893479291592
+237 0.08310796594355277
+238 0.07856156604359649
+239 0.07426508307950577
+240 0.07020565731703925
+241 0.06636946700613897
+242 0.0627437660794708
+243 0.059317781060088316
+244 0.05608034093448906
+245 0.05301955241121613
+246 0.050126674069563906
+247 0.04739256213401111
+248 0.04480928906259292
+249 0.04236691748155608
+250 0.04005879599601969
+251 0.03787661761938381
+252 0.03581475257492655
+253 0.033864928740949526
+254 0.032021804201541854
+255 0.030279858100986354
+256 0.02863334928312954
+257 0.02707658789186648
+258 0.025604569332906155
+259 0.024213249395320283
+260 0.022897970661672578
+261 0.02165425187746097
+262 0.020478737432682297
+263 0.01936719332160696
+264 0.018316430865928372
+265 0.017322619307502316
+266 0.016383050617920083
+267 0.015494734481326376
+268 0.014655032299327592
+269 0.013860819190983916
+270 0.013109809002567857
+271 0.0123997755042141
+272 0.011728358290906498
+273 0.011093355906296416
+274 0.01049298268330884
+275 0.009925290535664889
+276 0.009388360895355642
+277 0.008880549450207519
+278 0.008400420664047465
+279 0.007946325800609208
+280 0.00751686776061394
+281 0.007110688095051999
+282 0.006726592064373132
+283 0.00636331544306615
+284 0.006019761179348237
+285 0.005694800059913335
+286 0.005387424438387055
+287 0.005096730276146309
+288 0.004821747870498604
+289 0.004561741644547909
+290 0.004315728687198646
+291 0.004083088241466739
+292 0.0038630342216639736
+293 0.0036548280743543514
+294 0.003457908894412565
+295 0.0032716544897889873
+296 0.003095480430783593
+297 0.0029287903501173454
+298 0.0027711283850350016
+299 0.002622002726801867
+300 0.0024808885834647024
+301 0.0023473968087844807
+302 0.00222113284310873
+303 0.00210170542574699
+304 0.0019887074497667136
+305 0.0018817802500325769
+306 0.00178065116010868
+307 0.0016849552143364992
+308 0.0015944091801416442
+309 0.001508753706017779
+310 0.0014277397746070208
+311 0.0013510695821452332
+312 0.0012785229777043136
+313 0.0012098928983483854
+314 0.0011449625641886667
+315 0.0010835156717760649
+316 0.001025377588941091
+317 0.0009703758384736077
+318 0.0009183361752611588
+319 0.0008690850720838991
+320 0.0008224940700348837
+321 0.0007784029943592372
+322 0.0007366791771033156
+323 0.0006971989990605096
+324 0.0006598426281655082
+325 0.000624495741732001
+326 0.0005910439292796761
+327 0.0005593973773407745
+328 0.0005294403512899198
+329 0.0005010976939705757
+330 0.00047427317778801455
+331 0.0004488877470686361
+332 0.0004248669939759654
+333 0.0004021385047171281
+334 0.0003806279081745162
+335 0.0003602664168058468
+336 0.00034099755680728995
+337 0.0003227653070463328
+338 0.00030550707403562225
+339 0.0002891754204576711
+340 0.000273721587865668
+341 0.00025909406293294767
+342 0.0002452471530517434
+343 0.0002321429824444712
+344 0.00021974540966147302
+345 0.00020800723976222412
+346 0.00019689755859322988
+347 0.00018638458674544666
+348 0.00017643522452308918
+349 0.00016701530053816744
+350 0.0001581003279303452
+351 0.00014966407110653316
+352 0.00014167707307891997
+353 0.00013411790417482185
+354 0.00012696356477874673
+355 0.00012019230146127977
+356 0.00011378157083006711
+357 0.00010771346551538498
+358 0.0001019705019676451
+359 9.653404961343065e-05
+360 9.138760257508527e-05
+361 8.651709721760377e-05
+362 8.19070094203869e-05
+363 7.754226881202036e-05
+364 7.341041687150536e-05
+365 6.94995078743375e-05
+366 6.579726835351665e-05
+367 6.229309750532338e-05
+368 5.897611236256165e-05
+369 5.583565153701364e-05
+370 5.286297313654044e-05
+371 5.004834708849745e-05
+372 4.738444170826265e-05
+373 4.486241750382573e-05
+374 4.2474866618345255e-05
+375 4.0215019660048885e-05
+376 3.807518640145299e-05
+377 3.604963907599714e-05
+378 3.4131911558009186e-05
+379 3.231655671510322e-05
+380 3.059770246224207e-05
+381 2.8970757618958097e-05
+382 2.743057310133526e-05
+383 2.5972006538400987e-05
+384 2.459140169431031e-05
+385 2.3284245013094282e-05
+386 2.2046767101248254e-05
+387 2.0874974705148337e-05
+388 1.976572632623195e-05
+389 1.8715764940418173e-05
+390 1.7721415862570632e-05
+391 1.6779971953419194e-05
+392 1.588871637152896e-05
+393 1.5044836588187851e-05
+394 1.4245828226986497e-05
+395 1.3489410778399332e-05
+396 1.2773364399028685e-05
+397 1.2095139789484804e-05
+398 1.145299443496586e-05
+399 1.0845077903682161e-05
+400 1.0269508212283454e-05
+401 9.724527789368986e-06
+402 9.208527492374383e-06
+403 8.720045436070135e-06
+404 8.2573575243078e-06
+405 7.819257808270196e-06
+406 7.404463436549593e-06
+407 7.011821523303816e-06
+408 6.639943046336263e-06
+409 6.2878326555936834e-06
+410 5.954457206733875e-06
+411 5.638725815406013e-06
+412 5.339791165439266e-06
+413 5.056690012109548e-06
+414 4.7886913275527965e-06
+415 4.5348871524205895e-06
+416 4.294550962428522e-06
+417 4.0669989344986414e-06
+418 3.851507524029607e-06
+419 3.6474147842461815e-06
+420 3.4541567135768535e-06
+421 3.2712066098541254e-06
+422 3.0979501309951946e-06
+423 2.9338623570734417e-06
+424 2.778486859288849e-06
+425 2.6313579995304816e-06
+426 2.492005877958706e-06
+427 2.3600400344687442e-06
+428 2.235117848833567e-06
+429 2.1168180481419086e-06
+430 2.0047497870126444e-06
+431 1.8986381787503396e-06
+432 1.7981531121369732e-06
+433 1.7029874912083225e-06
+434 1.6128687459205246e-06
+435 1.5275476848984372e-06
+436 1.4467329944515942e-06
+437 1.3701865914534269e-06
+438 1.2977020898043846e-06
+439 1.2290629088171652e-06
+440 1.164051733130194e-06
+441 1.1024831847468408e-06
+442 1.0441903271914875e-06
+443 9.889751182032595e-07
+444 9.366772125412096e-07
+445 8.871553290035977e-07
+446 8.402520019677647e-07
+447 7.958308104042071e-07
+448 7.53763518098307e-07
+449 7.139244346971557e-07
+450 6.761960655207478e-07
+451 6.404595540956439e-07
+452 6.066124906303541e-07
+453 5.74556854302957e-07
+454 5.442030621013854e-07
+455 5.154497792919255e-07
+456 4.882203577154002e-07
+457 4.6243074105866146e-07
+458 4.380049551012981e-07
+459 4.1486836737937236e-07
+460 3.929552794591328e-07
+461 3.722082406282778e-07
+462 3.525512434892848e-07
+463 3.339350935587304e-07
+464 3.163035075274776e-07
+465 2.9960560558970377e-07
+466 2.8378833766961356e-07
+467 2.688083814724989e-07
+468 2.5461985965457267e-07
+469 2.4117912639785815e-07
+470 2.2845076123088963e-07
+471 2.1639404311547854e-07
+472 2.049768154586423e-07
+473 1.9416035947365062e-07
+474 1.8391578287894605e-07
+475 1.742122640542393e-07
+476 1.6502075323866398e-07
+477 1.5631602307949188e-07
+478 1.4807025488750153e-07
+479 1.4026124873333745e-07
+480 1.3286339655833968e-07
+481 1.2585529347481789e-07
+482 1.1921849306789818e-07
+483 1.1293151084301514e-07
+484 1.069766166825837e-07
+485 1.0133619692710931e-07
+486 9.599472852904284e-08
+487 9.093341825332011e-08
+488 8.613939196599216e-08
+489 8.159862515209676e-08
+490 7.729751975546753e-08
+491 7.322345528572764e-08
+492 6.936479915203619e-08
+493 6.57099781685289e-08
+494 6.224692745752194e-08
+495 5.896657665795129e-08
+496 5.585950062511546e-08
+497 5.291656163586972e-08
+498 5.012926872369238e-08
+499 4.748859133659835e-08</code></pre><h1 id="pytorch-tensors"><a href="#pytorch-tensors" class="headerlink" title="pytorch:tensors"></a><span id="header2">pytorch:tensors</span></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="PyTorch-Tensors"><a href="#PyTorch-Tensors" class="headerlink" title="PyTorch: Tensors"></a>PyTorch: Tensors</h2><p>A fully-connected ReLU network with one hidden layer and no biases, trained to<br>predict y from x by minimizing squared Euclidean distance.</p>
+<p>This implementation uses PyTorch tensors to manually compute the forward pass,<br>loss, and backward pass.</p>
+<p>A PyTorch Tensor is basically the same as a numpy array: it does not know<br>anything about deep learning or computational graphs or gradients, and is just<br>a generic n-dimensional array to be used for arbitrary numeric computation.</p>
+<p>The biggest difference between a numpy array and a PyTorch Tensor is that<br>a PyTorch Tensor can run on either CPU or GPU. To run operations on the GPU,<br>just cast the Tensor to a cuda datatype.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dtype = torch.float</span><br><span class="line">device = torch.device(<span class="string">"cpu"</span>)</span><br><span class="line"><span class="comment"># device = torch.device("cuda:0") # Uncomment this to run on GPU</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># N is batch size; D_in is input dimension;</span></span><br><span class="line"><span class="comment"># H is hidden dimension; D_out is output dimension.</span></span><br><span class="line">N, D_in, H, D_out = <span class="number">64</span>, <span class="number">1000</span>, <span class="number">100</span>, <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create random input and output data</span></span><br><span class="line">x = torch.randn(N, D_in, device=device, dtype=dtype)</span><br><span class="line">y = torch.randn(N, D_out, device=device, dtype=dtype)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Randomly initialize weights</span></span><br><span class="line">w1 = torch.randn(D_in, H, device=device, dtype=dtype)</span><br><span class="line">w2 = torch.randn(H, D_out, device=device, dtype=dtype)</span><br><span class="line"></span><br><span class="line">learning_rate = <span class="number">1e-6</span></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">    <span class="comment"># Forward pass: compute predicted y</span></span><br><span class="line">    h = x.mm(w1)</span><br><span class="line">    h_relu = h.clamp(min=<span class="number">0</span>)</span><br><span class="line">    y_pred = h_relu.mm(w2)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Compute and print loss</span></span><br><span class="line">    loss = (y_pred - y).pow(<span class="number">2</span>).sum().item()</span><br><span class="line">    <span class="keyword">if</span> t % <span class="number">100</span> == <span class="number">99</span>:</span><br><span class="line">        print(t, loss)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Backprop to compute gradients of w1 and w2 with respect to loss</span></span><br><span class="line">    grad_y_pred = <span class="number">2.0</span> * (y_pred - y)</span><br><span class="line">    grad_w2 = h_relu.t().mm(grad_y_pred)</span><br><span class="line">    grad_h_relu = grad_y_pred.mm(w2.t())</span><br><span class="line">    grad_h = grad_h_relu.clone()</span><br><span class="line">    grad_h[h &lt; <span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">    grad_w1 = x.t().mm(grad_h)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Update weights using gradient descent</span></span><br><span class="line">    w1 -= learning_rate * grad_w1</span><br><span class="line">    w2 -= learning_rate * grad_w2</span><br></pre></td></tr></table></figure>
+
+<pre><code>99 784.6785888671875
+199 5.850834846496582
+299 0.07988587021827698
+399 0.0017072007758542895
+499 0.00015852594515308738</code></pre><h1 id="pytorch-tensors-and-autograd"><a href="#pytorch-tensors-and-autograd" class="headerlink" title="pytorch:tensors and autograd"></a><span id="header3">pytorch:tensors and autograd</span></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="PyTorch-Tensors-and-autograd"><a href="#PyTorch-Tensors-and-autograd" class="headerlink" title="PyTorch: Tensors and autograd"></a>PyTorch: Tensors and autograd</h2><p>A fully-connected ReLU network with one hidden layer and no biases, trained to<br>predict y from x by minimizing squared Euclidean distance.</p>
+<p>This implementation computes the forward pass using operations on PyTorch<br>Tensors, and uses PyTorch autograd to compute gradients.</p>
+<p>A PyTorch Tensor represents a node in a computational graph. If <code>x</code> is a<br>Tensor that has <code>x.requires_grad=True</code> then <code>x.grad</code> is another Tensor<br>holding the gradient of <code>x</code> with respect to some scalar value.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line">dtype = torch.float</span><br><span class="line">device = torch.device(<span class="string">"cpu"</span>)</span><br><span class="line"><span class="comment"># device = torch.device("cuda:0") # Uncomment this to run on GPU</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># N is batch size; D_in is input dimension;</span></span><br><span class="line"><span class="comment"># H is hidden dimension; D_out is output dimension.</span></span><br><span class="line">N, D_in, H, D_out = <span class="number">64</span>, <span class="number">1000</span>, <span class="number">100</span>, <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create random Tensors to hold input and outputs.</span></span><br><span class="line"><span class="comment"># Setting requires_grad=False indicates that we do not need to compute gradients</span></span><br><span class="line"><span class="comment"># with respect to these Tensors during the backward pass.</span></span><br><span class="line">x = torch.randn(N, D_in, device=device, dtype=dtype)</span><br><span class="line">y = torch.randn(N, D_out, device=device, dtype=dtype)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create random Tensors for weights.</span></span><br><span class="line"><span class="comment"># Setting requires_grad=True indicates that we want to compute gradients with</span></span><br><span class="line"><span class="comment"># respect to these Tensors during the backward pass.</span></span><br><span class="line">w1 = torch.randn(D_in, H, device=device, dtype=dtype, requires_grad=<span class="literal">True</span>)</span><br><span class="line">w2 = torch.randn(H, D_out, device=device, dtype=dtype, requires_grad=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">learning_rate = <span class="number">1e-6</span></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">    <span class="comment"># Forward pass: compute predicted y using operations on Tensors; these</span></span><br><span class="line">    <span class="comment"># are exactly the same operations we used to compute the forward pass using</span></span><br><span class="line">    <span class="comment"># Tensors, but we do not need to keep references to intermediate values since</span></span><br><span class="line">    <span class="comment"># we are not implementing the backward pass by hand.</span></span><br><span class="line">    y_pred = x.mm(w1).clamp(min=<span class="number">0</span>).mm(w2)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Compute and print loss using operations on Tensors.</span></span><br><span class="line">    <span class="comment"># Now loss is a Tensor of shape (1,)</span></span><br><span class="line">    <span class="comment"># loss.item() gets the scalar value held in the loss.</span></span><br><span class="line">    loss = (y_pred - y).pow(<span class="number">2</span>).sum()</span><br><span class="line">    <span class="keyword">if</span> t % <span class="number">100</span> == <span class="number">99</span>:</span><br><span class="line">        print(t, loss.item())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Use autograd to compute the backward pass. This call will compute the</span></span><br><span class="line">    <span class="comment"># gradient of loss with respect to all Tensors with requires_grad=True.</span></span><br><span class="line">    <span class="comment"># After this call w1.grad and w2.grad will be Tensors holding the gradient</span></span><br><span class="line">    <span class="comment"># of the loss with respect to w1 and w2 respectively.</span></span><br><span class="line">    loss.backward()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Manually update weights using gradient descent. Wrap in torch.no_grad()</span></span><br><span class="line">    <span class="comment"># because weights have requires_grad=True, but we don't need to track this</span></span><br><span class="line">    <span class="comment"># in autograd.</span></span><br><span class="line">    <span class="comment"># An alternative way is to operate on weight.data and weight.grad.data.</span></span><br><span class="line">    <span class="comment"># Recall that tensor.data gives a tensor that shares the storage with</span></span><br><span class="line">    <span class="comment"># tensor, but doesn't track history.</span></span><br><span class="line">    <span class="comment"># You can also use torch.optim.SGD to achieve this.</span></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        w1 -= learning_rate * w1.grad</span><br><span class="line">        w2 -= learning_rate * w2.grad</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Manually zero the gradients after updating weights</span></span><br><span class="line">        w1.grad.zero_()</span><br><span class="line">        w2.grad.zero_()</span><br></pre></td></tr></table></figure>
+
+<pre><code>99 850.6499633789062
+199 5.497010231018066
+299 0.0542689710855484
+399 0.0009686618577688932
+499 0.000102342150057666</code></pre><h1 id="pytorch-defining-new-autograd-functions"><a href="#pytorch-defining-new-autograd-functions" class="headerlink" title="pytorch:defining new autograd functions"></a><span id="header4">pytorch:defining new autograd functions</span></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="PyTorch-Defining-New-autograd-Functions"><a href="#PyTorch-Defining-New-autograd-Functions" class="headerlink" title="PyTorch: Defining New autograd Functions"></a>PyTorch: Defining New autograd Functions</h2><p>A fully-connected ReLU network with one hidden layer and no biases, trained to<br>predict y from x by minimizing squared Euclidean distance.</p>
+<p>This implementation computes the forward pass using operations on PyTorch<br>Variables, and uses PyTorch autograd to compute gradients.</p>
+<p>In this implementation we implement our own custom autograd function to perform<br>the ReLU function.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyReLU</span><span class="params">(torch.autograd.Function)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    We can implement our own custom autograd Functions by subclassing</span></span><br><span class="line"><span class="string">    torch.autograd.Function and implementing the forward and backward passes</span></span><br><span class="line"><span class="string">    which operate on Tensors.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(ctx, input)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        In the forward pass we receive a Tensor containing the input and return</span></span><br><span class="line"><span class="string">        a Tensor containing the output. ctx is a context object that can be used</span></span><br><span class="line"><span class="string">        to stash information for backward computation. You can cache arbitrary</span></span><br><span class="line"><span class="string">        objects for use in the backward pass using the ctx.save_for_backward method.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        ctx.save_for_backward(input)</span><br><span class="line">        <span class="keyword">return</span> input.clamp(min=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">backward</span><span class="params">(ctx, grad_output)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        In the backward pass we receive a Tensor containing the gradient of the loss</span></span><br><span class="line"><span class="string">        with respect to the output, and we need to compute the gradient of the loss</span></span><br><span class="line"><span class="string">        with respect to the input.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        input, = ctx.saved_tensors</span><br><span class="line">        grad_input = grad_output.clone()</span><br><span class="line">        grad_input[input &lt; <span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">        <span class="keyword">return</span> grad_input</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dtype = torch.float</span><br><span class="line">device = torch.device(<span class="string">"cpu"</span>)</span><br><span class="line"><span class="comment"># device = torch.device("cuda:0") # Uncomment this to run on GPU</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># N is batch size; D_in is input dimension;</span></span><br><span class="line"><span class="comment"># H is hidden dimension; D_out is output dimension.</span></span><br><span class="line">N, D_in, H, D_out = <span class="number">64</span>, <span class="number">1000</span>, <span class="number">100</span>, <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create random Tensors to hold input and outputs.</span></span><br><span class="line">x = torch.randn(N, D_in, device=device, dtype=dtype)</span><br><span class="line">y = torch.randn(N, D_out, device=device, dtype=dtype)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create random Tensors for weights.</span></span><br><span class="line">w1 = torch.randn(D_in, H, device=device, dtype=dtype, requires_grad=<span class="literal">True</span>)</span><br><span class="line">w2 = torch.randn(H, D_out, device=device, dtype=dtype, requires_grad=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">learning_rate = <span class="number">1e-6</span></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">    <span class="comment"># To apply our Function, we use Function.apply method. We alias this as 'relu'.</span></span><br><span class="line">    relu = MyReLU.apply</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Forward pass: compute predicted y using operations; we compute</span></span><br><span class="line">    <span class="comment"># ReLU using our custom autograd operation.</span></span><br><span class="line">    y_pred = relu(x.mm(w1)).mm(w2)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Compute and print loss</span></span><br><span class="line">    loss = (y_pred - y).pow(<span class="number">2</span>).sum()</span><br><span class="line">    <span class="keyword">if</span> t % <span class="number">100</span> == <span class="number">99</span>:</span><br><span class="line">        print(t, loss.item())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Use autograd to compute the backward pass.</span></span><br><span class="line">    loss.backward()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Update weights using gradient descent</span></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        w1 -= learning_rate * w1.grad</span><br><span class="line">        w2 -= learning_rate * w2.grad</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Manually zero the gradients after updating weights</span></span><br><span class="line">        w1.grad.zero_()</span><br><span class="line">        w2.grad.zero_()</span><br></pre></td></tr></table></figure>
+
+<pre><code>99 173.57586669921875
+199 0.16617316007614136
+299 0.0004797253059223294
+399 3.693650069180876e-05
+499 1.2812281056540087e-05</code></pre><h1 id="pytorch-static-graphs"><a href="#pytorch-static-graphs" class="headerlink" title="pytorch:static graphs"></a><span id="header5">pytorch:static graphs</span></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="PyTorch-Tensors-1"><a href="#PyTorch-Tensors-1" class="headerlink" title="PyTorch: Tensors"></a>PyTorch: Tensors</h2><p>A fully-connected ReLU network with one hidden layer and no biases, trained to<br>predict y from x by minimizing squared Euclidean distance.</p>
+<p>This implementation uses PyTorch tensors to manually compute the forward pass,<br>loss, and backward pass.</p>
+<p>A PyTorch Tensor is basically the same as a numpy array: it does not know<br>anything about deep learning or computational graphs or gradients, and is just<br>a generic n-dimensional array to be used for arbitrary numeric computation.</p>
+<p>The biggest difference between a numpy array and a PyTorch Tensor is that<br>a PyTorch Tensor can run on either CPU or GPU. To run operations on the GPU,<br>just cast the Tensor to a cuda datatype.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dtype = torch.float</span><br><span class="line">device = torch.device(<span class="string">"cpu"</span>)</span><br><span class="line"><span class="comment"># device = torch.device("cuda:0") # Uncomment this to run on GPU</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># N is batch size; D_in is input dimension;</span></span><br><span class="line"><span class="comment"># H is hidden dimension; D_out is output dimension.</span></span><br><span class="line">N, D_in, H, D_out = <span class="number">64</span>, <span class="number">1000</span>, <span class="number">100</span>, <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create random input and output data</span></span><br><span class="line">x = torch.randn(N, D_in, device=device, dtype=dtype)</span><br><span class="line">y = torch.randn(N, D_out, device=device, dtype=dtype)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Randomly initialize weights</span></span><br><span class="line">w1 = torch.randn(D_in, H, device=device, dtype=dtype)</span><br><span class="line">w2 = torch.randn(H, D_out, device=device, dtype=dtype)</span><br><span class="line"></span><br><span class="line">learning_rate = <span class="number">1e-6</span></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">    <span class="comment"># Forward pass: compute predicted y</span></span><br><span class="line">    h = x.mm(w1)</span><br><span class="line">    h_relu = h.clamp(min=<span class="number">0</span>)</span><br><span class="line">    y_pred = h_relu.mm(w2)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Compute and print loss</span></span><br><span class="line">    loss = (y_pred - y).pow(<span class="number">2</span>).sum().item()</span><br><span class="line">    <span class="keyword">if</span> t % <span class="number">100</span> == <span class="number">99</span>:</span><br><span class="line">        print(t, loss)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Backprop to compute gradients of w1 and w2 with respect to loss</span></span><br><span class="line">    grad_y_pred = <span class="number">2.0</span> * (y_pred - y)</span><br><span class="line">    grad_w2 = h_relu.t().mm(grad_y_pred)</span><br><span class="line">    grad_h_relu = grad_y_pred.mm(w2.t())</span><br><span class="line">    grad_h = grad_h_relu.clone()</span><br><span class="line">    grad_h[h &lt; <span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">    grad_w1 = x.t().mm(grad_h)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Update weights using gradient descent</span></span><br><span class="line">    w1 -= learning_rate * grad_w1</span><br><span class="line">    w2 -= learning_rate * grad_w2</span><br></pre></td></tr></table></figure>
+
+<pre><code>99 784.6785888671875
+199 5.850834846496582
+299 0.07988587021827698
+399 0.0017072007758542895
+499 0.00015852594515308738</code></pre><h1 id="pytorch-nn"><a href="#pytorch-nn" class="headerlink" title="pytorch:nn"></a><span id="header6">pytorch:nn</span></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="PyTorch-nn"><a href="#PyTorch-nn" class="headerlink" title="PyTorch: nn"></a>PyTorch: nn</h2><p>A fully-connected ReLU network with one hidden layer, trained to predict y from x<br>by minimizing squared Euclidean distance.</p>
+<p>This implementation uses the nn package from PyTorch to build the network.<br>PyTorch autograd makes it easy to define computational graphs and take gradients,<br>but raw autograd can be a bit too low-level for defining complex neural networks;<br>this is where the nn package can help. The nn package defines a set of Modules,<br>which you can think of as a neural network layer that has produces output from<br>input and may have some trainable weights.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="comment"># N is batch size; D_in is input dimension;</span></span><br><span class="line"><span class="comment"># H is hidden dimension; D_out is output dimension.</span></span><br><span class="line">N, D_in, H, D_out = <span class="number">64</span>, <span class="number">1000</span>, <span class="number">100</span>, <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create random Tensors to hold inputs and outputs</span></span><br><span class="line">x = torch.randn(N, D_in)</span><br><span class="line">y = torch.randn(N, D_out)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Use the nn package to define our model as a sequence of layers. nn.Sequential</span></span><br><span class="line"><span class="comment"># is a Module which contains other Modules, and applies them in sequence to</span></span><br><span class="line"><span class="comment"># produce its output. Each Linear Module computes output from input using a</span></span><br><span class="line"><span class="comment"># linear function, and holds internal Tensors for its weight and bias.</span></span><br><span class="line">model = torch.nn.Sequential(</span><br><span class="line">    torch.nn.Linear(D_in, H),</span><br><span class="line">    torch.nn.ReLU(),</span><br><span class="line">    torch.nn.Linear(H, D_out),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># The nn package also contains definitions of popular loss functions; in this</span></span><br><span class="line"><span class="comment"># case we will use Mean Squared Error (MSE) as our loss function.</span></span><br><span class="line">loss_fn = torch.nn.MSELoss(reduction=<span class="string">'sum'</span>)</span><br><span class="line"></span><br><span class="line">learning_rate = <span class="number">1e-4</span></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">    <span class="comment"># Forward pass: compute predicted y by passing x to the model. Module objects</span></span><br><span class="line">    <span class="comment"># override the __call__ operator so you can call them like functions. When</span></span><br><span class="line">    <span class="comment"># doing so you pass a Tensor of input data to the Module and it produces</span></span><br><span class="line">    <span class="comment"># a Tensor of output data.</span></span><br><span class="line">    y_pred = model(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Compute and print loss. We pass Tensors containing the predicted and true</span></span><br><span class="line">    <span class="comment"># values of y, and the loss function returns a Tensor containing the</span></span><br><span class="line">    <span class="comment"># loss.</span></span><br><span class="line">    loss = loss_fn(y_pred, y)</span><br><span class="line">    <span class="keyword">if</span> t % <span class="number">100</span> == <span class="number">99</span>:</span><br><span class="line">        print(t, loss.item())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Zero the gradients before running the backward pass.</span></span><br><span class="line">    model.zero_grad()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Backward pass: compute gradient of the loss with respect to all the learnable</span></span><br><span class="line">    <span class="comment"># parameters of the model. Internally, the parameters of each Module are stored</span></span><br><span class="line">    <span class="comment"># in Tensors with requires_grad=True, so this call will compute gradients for</span></span><br><span class="line">    <span class="comment"># all learnable parameters in the model.</span></span><br><span class="line">    loss.backward()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Update the weights using gradient descent. Each parameter is a Tensor, so</span></span><br><span class="line">    <span class="comment"># we can access its gradients like we did before.</span></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        <span class="keyword">for</span> param <span class="keyword">in</span> model.parameters():</span><br><span class="line">            param -= learning_rate * param.grad</span><br></pre></td></tr></table></figure>
+
+<pre><code>99 2.456005573272705
+199 0.04037925601005554
+299 0.001298694172874093
+399 5.4667791118845344e-05
+499 2.6507393613428576e-06</code></pre><h1 id="pytorch-optim"><a href="#pytorch-optim" class="headerlink" title="pytorch:optim"></a><span id="header7">pytorch:optim</span></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="PyTorch-optim"><a href="#PyTorch-optim" class="headerlink" title="PyTorch: optim"></a>PyTorch: optim</h2><p>A fully-connected ReLU network with one hidden layer, trained to predict y from x<br>by minimizing squared Euclidean distance.</p>
+<p>This implementation uses the nn package from PyTorch to build the network.</p>
+<p>Rather than manually updating the weights of the model as we have been doing,<br>we use the optim package to define an Optimizer that will update the weights<br>for us. The optim package defines many optimization algorithms that are commonly<br>used for deep learning, including SGD+momentum, RMSProp, Adam, etc.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="comment"># N is batch size; D_in is input dimension;</span></span><br><span class="line"><span class="comment"># H is hidden dimension; D_out is output dimension.</span></span><br><span class="line">N, D_in, H, D_out = <span class="number">64</span>, <span class="number">1000</span>, <span class="number">100</span>, <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create random Tensors to hold inputs and outputs</span></span><br><span class="line">x = torch.randn(N, D_in)</span><br><span class="line">y = torch.randn(N, D_out)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Use the nn package to define our model and loss function.</span></span><br><span class="line">model = torch.nn.Sequential(</span><br><span class="line">    torch.nn.Linear(D_in, H),</span><br><span class="line">    torch.nn.ReLU(),</span><br><span class="line">    torch.nn.Linear(H, D_out),</span><br><span class="line">)</span><br><span class="line">loss_fn = torch.nn.MSELoss(reduction=<span class="string">'sum'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Use the optim package to define an Optimizer that will update the weights of</span></span><br><span class="line"><span class="comment"># the model for us. Here we will use Adam; the optim package contains many other</span></span><br><span class="line"><span class="comment"># optimization algorithms. The first argument to the Adam constructor tells the</span></span><br><span class="line"><span class="comment"># optimizer which Tensors it should update.</span></span><br><span class="line">learning_rate = <span class="number">1e-4</span></span><br><span class="line">optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">    <span class="comment"># Forward pass: compute predicted y by passing x to the model.</span></span><br><span class="line">    y_pred = model(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Compute and print loss.</span></span><br><span class="line">    loss = loss_fn(y_pred, y)</span><br><span class="line">    <span class="keyword">if</span> t % <span class="number">100</span> == <span class="number">99</span>:</span><br><span class="line">        print(t, loss.item())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Before the backward pass, use the optimizer object to zero all of the</span></span><br><span class="line">    <span class="comment"># gradients for the variables it will update (which are the learnable</span></span><br><span class="line">    <span class="comment"># weights of the model). This is because by default, gradients are</span></span><br><span class="line">    <span class="comment"># accumulated in buffers( i.e, not overwritten) whenever .backward()</span></span><br><span class="line">    <span class="comment"># is called. Checkout docs of torch.autograd.backward for more details.</span></span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Backward pass: compute gradient of the loss with respect to model</span></span><br><span class="line">    <span class="comment"># parameters</span></span><br><span class="line">    loss.backward()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Calling the step function on an Optimizer makes an update to its</span></span><br><span class="line">    <span class="comment"># parameters</span></span><br><span class="line">    optimizer.step()</span><br></pre></td></tr></table></figure>
+
+<pre><code>99 40.16399383544922
+199 0.3977137506008148
+299 0.001604456570930779
+399 1.6438591046608053e-05
+499 8.815557350771996e-08</code></pre><h1 id="pytorch-custom-nn-modules"><a href="#pytorch-custom-nn-modules" class="headerlink" title="pytorch:custom nn modules"></a><span id="header8">pytorch:custom nn modules</span></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="PyTorch-Custom-nn-Modules"><a href="#PyTorch-Custom-nn-Modules" class="headerlink" title="PyTorch: Custom nn Modules"></a>PyTorch: Custom nn Modules</h2><p>A fully-connected ReLU network with one hidden layer, trained to predict y from x<br>by minimizing squared Euclidean distance.</p>
+<p>This implementation defines the model as a custom Module subclass. Whenever you<br>want a model more complex than a simple sequence of existing Modules you will<br>need to define your model this way.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TwoLayerNet</span><span class="params">(torch.nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, D_in, H, D_out)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        In the constructor we instantiate two nn.Linear modules and assign them as</span></span><br><span class="line"><span class="string">        member variables.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        super(TwoLayerNet, self).__init__()</span><br><span class="line">        self.linear1 = torch.nn.Linear(D_in, H)</span><br><span class="line">        self.linear2 = torch.nn.Linear(H, D_out)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        In the forward function we accept a Tensor of input data and we must return</span></span><br><span class="line"><span class="string">        a Tensor of output data. We can use Modules defined in the constructor as</span></span><br><span class="line"><span class="string">        well as arbitrary operators on Tensors.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        h_relu = self.linear1(x).clamp(min=<span class="number">0</span>)</span><br><span class="line">        y_pred = self.linear2(h_relu)</span><br><span class="line">        <span class="keyword">return</span> y_pred</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># N is batch size; D_in is input dimension;</span></span><br><span class="line"><span class="comment"># H is hidden dimension; D_out is output dimension.</span></span><br><span class="line">N, D_in, H, D_out = <span class="number">64</span>, <span class="number">1000</span>, <span class="number">100</span>, <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create random Tensors to hold inputs and outputs</span></span><br><span class="line">x = torch.randn(N, D_in)</span><br><span class="line">y = torch.randn(N, D_out)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Construct our model by instantiating the class defined above</span></span><br><span class="line">model = TwoLayerNet(D_in, H, D_out)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Construct our loss function and an Optimizer. The call to model.parameters()</span></span><br><span class="line"><span class="comment"># in the SGD constructor will contain the learnable parameters of the two</span></span><br><span class="line"><span class="comment"># nn.Linear modules which are members of the model.</span></span><br><span class="line">criterion = torch.nn.MSELoss(reduction=<span class="string">'sum'</span>)</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=<span class="number">1e-4</span>)</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">    <span class="comment"># Forward pass: Compute predicted y by passing x to the model</span></span><br><span class="line">    y_pred = model(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Compute and print loss</span></span><br><span class="line">    loss = criterion(y_pred, y)</span><br><span class="line">    <span class="keyword">if</span> t % <span class="number">100</span> == <span class="number">99</span>:</span><br><span class="line">        print(t, loss.item())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Zero gradients, perform a backward pass, and update the weights.</span></span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="pytorch-control-flow-weight-sharing"><a href="#pytorch-control-flow-weight-sharing" class="headerlink" title="pytorch:control flow+weight sharing"></a><span id="header9">pytorch:control flow+weight sharing</span></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="PyTorch-Control-Flow-Weight-Sharing"><a href="#PyTorch-Control-Flow-Weight-Sharing" class="headerlink" title="PyTorch: Control Flow + Weight Sharing"></a>PyTorch: Control Flow + Weight Sharing</h2><p>To showcase the power of PyTorch dynamic graphs, we will implement a very strange<br>model: a fully-connected ReLU network that on each forward pass randomly chooses<br>a number between 1 and 4 and has that many hidden layers, reusing the same<br>weights multiple times to compute the innermost hidden layers.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DynamicNet</span><span class="params">(torch.nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, D_in, H, D_out)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        In the constructor we construct three nn.Linear instances that we will use</span></span><br><span class="line"><span class="string">        in the forward pass.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        super(DynamicNet, self).__init__()</span><br><span class="line">        self.input_linear = torch.nn.Linear(D_in, H)</span><br><span class="line">        self.middle_linear = torch.nn.Linear(H, H)</span><br><span class="line">        self.output_linear = torch.nn.Linear(H, D_out)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        For the forward pass of the model, we randomly choose either 0, 1, 2, or 3</span></span><br><span class="line"><span class="string">        and reuse the middle_linear Module that many times to compute hidden layer</span></span><br><span class="line"><span class="string">        representations.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Since each forward pass builds a dynamic computation graph, we can use normal</span></span><br><span class="line"><span class="string">        Python control-flow operators like loops or conditional statements when</span></span><br><span class="line"><span class="string">        defining the forward pass of the model.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Here we also see that it is perfectly safe to reuse the same Module many</span></span><br><span class="line"><span class="string">        times when defining a computational graph. This is a big improvement from Lua</span></span><br><span class="line"><span class="string">        Torch, where each Module could be used only once.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        h_relu = self.input_linear(x).clamp(min=<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(random.randint(<span class="number">0</span>, <span class="number">3</span>)):</span><br><span class="line">            h_relu = self.middle_linear(h_relu).clamp(min=<span class="number">0</span>)</span><br><span class="line">        y_pred = self.output_linear(h_relu)</span><br><span class="line">        <span class="keyword">return</span> y_pred</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># N is batch size; D_in is input dimension;</span></span><br><span class="line"><span class="comment"># H is hidden dimension; D_out is output dimension.</span></span><br><span class="line">N, D_in, H, D_out = <span class="number">64</span>, <span class="number">1000</span>, <span class="number">100</span>, <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create random Tensors to hold inputs and outputs</span></span><br><span class="line">x = torch.randn(N, D_in)</span><br><span class="line">y = torch.randn(N, D_out)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Construct our model by instantiating the class defined above</span></span><br><span class="line">model = DynamicNet(D_in, H, D_out)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Construct our loss function and an Optimizer. Training this strange model with</span></span><br><span class="line"><span class="comment"># vanilla stochastic gradient descent is tough, so we use momentum</span></span><br><span class="line">criterion = torch.nn.MSELoss(reduction=<span class="string">'sum'</span>)</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=<span class="number">1e-4</span>, momentum=<span class="number">0.9</span>)</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">    <span class="comment"># Forward pass: Compute predicted y by passing x to the model</span></span><br><span class="line">    y_pred = model(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Compute and print loss</span></span><br><span class="line">    loss = criterion(y_pred, y)</span><br><span class="line">    <span class="keyword">if</span> t % <span class="number">100</span> == <span class="number">99</span>:</span><br><span class="line">        print(t, loss.item())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Zero gradients, perform a backward pass, and update the weights.</span></span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br></pre></td></tr></table></figure>
+
+<pre><code>99 18.901199340820312
+199 7.5054731369018555
+299 1.1003623008728027
+399 0.8731748461723328
+499 2.003668785095215</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin.png" alt="Zhangshuai WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/zhifubao.jpg" alt="Zhangshuai Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pytorch1-51%E5%AE%98%E7%BD%91%E6%95%99%E7%A8%8B/" rel="tag"># pytorch1.51官网教程</a>
+          
+            <a href="/tags/pytorch/" rel="tag"># pytorch</a>
+          
+            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"># 深度学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/23/Pytorch-Learning-neural-newworks/" rel="next" title="Pytorch-Learning-neural_newworks">
+                <i class="fa fa-chevron-left"></i> Pytorch-Learning-neural_newworks
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/23/Pytorch-Learning-torch-nn/" rel="prev" title="Pytorch-Learning-torch.nn">
+                Pytorch-Learning-torch.nn <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar2.jpg"
+                alt="Zhangshuai" />
+            
+              <p class="site-author-name" itemprop="name">Zhangshuai</p>
+              <p class="site-description motion-element" itemprop="description">你刚才说了JOJO对吧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=486194129&auto=1&height=66"></iframe>
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/GitHubzhangshuai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1802528291@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ying-ying-ying-vue" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://music.163.com/#/user/home?id=377737250" target="_blank" title="网易云音乐">
+                      
+                        <i class="fa fa-fw fa-globe"></i>网易云音乐</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#warm-up-numpy"><span class="nav-number">1.</span> <span class="nav-text">warm-up:numpy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Warm-up-numpy"><span class="nav-number">1.1.</span> <span class="nav-text">Warm-up: numpy</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pytorch-tensors"><span class="nav-number">2.</span> <span class="nav-text">pytorch:tensors</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PyTorch-Tensors"><span class="nav-number">2.1.</span> <span class="nav-text">PyTorch: Tensors</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pytorch-tensors-and-autograd"><span class="nav-number">3.</span> <span class="nav-text">pytorch:tensors and autograd</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PyTorch-Tensors-and-autograd"><span class="nav-number">3.1.</span> <span class="nav-text">PyTorch: Tensors and autograd</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pytorch-defining-new-autograd-functions"><span class="nav-number">4.</span> <span class="nav-text">pytorch:defining new autograd functions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PyTorch-Defining-New-autograd-Functions"><span class="nav-number">4.1.</span> <span class="nav-text">PyTorch: Defining New autograd Functions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pytorch-static-graphs"><span class="nav-number">5.</span> <span class="nav-text">pytorch:static graphs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PyTorch-Tensors-1"><span class="nav-number">5.1.</span> <span class="nav-text">PyTorch: Tensors</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pytorch-nn"><span class="nav-number">6.</span> <span class="nav-text">pytorch:nn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PyTorch-nn"><span class="nav-number">6.1.</span> <span class="nav-text">PyTorch: nn</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pytorch-optim"><span class="nav-number">7.</span> <span class="nav-text">pytorch:optim</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PyTorch-optim"><span class="nav-number">7.1.</span> <span class="nav-text">PyTorch: optim</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pytorch-custom-nn-modules"><span class="nav-number">8.</span> <span class="nav-text">pytorch:custom nn modules</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PyTorch-Custom-nn-Modules"><span class="nav-number">8.1.</span> <span class="nav-text">PyTorch: Custom nn Modules</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pytorch-control-flow-weight-sharing"><span class="nav-number">9.</span> <span class="nav-text">pytorch:control flow+weight sharing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PyTorch-Control-Flow-Weight-Sharing"><span class="nav-number">9.1.</span> <span class="nav-text">PyTorch: Control Flow + Weight Sharing</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script type="text/javascript" src="/js/src/busuanzi.js"></script>
+
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-[object Object]"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张帅</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+
+
+
+
+
+
+  <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  <span class="post-meta-divider">|</span>
+  <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+
+<script>
+setTimeout(function(){
+document.getElementById('busuanzi_container_site_pv').style.display='inline-block'
+document.getElementById('busuanzi_container_site_uv').style.display='inline-block'
+},1000)
+</script>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>
