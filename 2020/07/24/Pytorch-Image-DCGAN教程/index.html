@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="pytorch,深度学习,pytorch1.5.1官网教程,Pytorch1.5.1官网教程-Image," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="张帅的Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Pytorch-Image-DCGAN教程:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch-Image-DCGAN教程">
+<meta property="og:url" content="http://yoursite.com/2020/07/24/Pytorch-Image-DCGAN%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="张帅的Blog">
+<meta property="og:description" content="Pytorch-Image-DCGAN教程:">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-24T06:47:58.000Z">
+<meta property="article:modified_time" content="2020-07-24T07:56:05.020Z">
+<meta property="article:author" content="Zhangshuai">
+<meta property="article:tag" content="pytorch">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="pytorch1.5.1官网教程">
+<meta property="article:tag" content="Pytorch1.5.1官网教程-Image">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/24/Pytorch-Image-DCGAN教程/"/>
+
+
+
+
+
+  <title>Pytorch-Image-DCGAN教程 | 张帅的Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">张帅的Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">用hexo搭建的简易博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            Schedule
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/24/Pytorch-Image-DCGAN%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhangshuai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张帅的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Pytorch-Image-DCGAN教程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-24T14:47:58+08:00">
+                2020-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pytorch/" itemprop="url" rel="index">
+                    <span itemprop="name">pytorch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Pytorch-Image-DCGAN教程:</p>
+<a id="more"></a>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="DCGAN-Tutorial"><a href="#DCGAN-Tutorial" class="headerlink" title="DCGAN Tutorial"></a>DCGAN Tutorial</h1><p><strong>Author</strong>: <code>Nathan Inkawhich &lt;https://github.com/inkawhich&gt;</code>__</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This tutorial will give an introduction to DCGANs through an example. We<br>will train a generative adversarial network (GAN) to generate new<br>celebrities after showing it pictures of many real celebrities. Most of<br>the code here is from the dcgan implementation in<br><code>pytorch/examples &lt;https://github.com/pytorch/examples&gt;</code>__, and this<br>document will give a thorough explanation of the implementation and shed<br>light on how and why this model works. But don’t worry, no prior<br>knowledge of GANs is required, but it may require a first-timer to spend<br>some time reasoning about what is actually happening under the hood.<br>Also, for the sake of time it will help to have a GPU, or two. Lets<br>start from the beginning.</p>
+<h2 id="Generative-Adversarial-Networks"><a href="#Generative-Adversarial-Networks" class="headerlink" title="Generative Adversarial Networks"></a>Generative Adversarial Networks</h2><p>What is a GAN?</p>
+<p>GANs are a framework for teaching a DL model to capture the training<br>data’s distribution so we can generate new data from that same<br>distribution. GANs were invented by Ian Goodfellow in 2014 and first<br>described in the paper <code>Generative Adversarial
+Nets &lt;https://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf&gt;</code>__.<br>They are made of two distinct models, a <em>generator</em> and a<br><em>discriminator</em>. The job of the generator is to spawn ‘fake’ images that<br>look like the training images. The job of the discriminator is to look<br>at an image and output whether or not it is a real training image or a<br>fake image from the generator. During training, the generator is<br>constantly trying to outsmart the discriminator by generating better and<br>better fakes, while the discriminator is working to become a better<br>detective and correctly classify the real and fake images. The<br>equilibrium of this game is when the generator is generating perfect<br>fakes that look as if they came directly from the training data, and the<br>discriminator is left to always guess at 50% confidence that the<br>generator output is real or fake.</p>
+<p>Now, lets define some notation to be used throughout tutorial starting<br>with the discriminator. Let $x$ be data representing an image.<br>$D(x)$ is the discriminator network which outputs the (scalar)<br>probability that $x$ came from training data rather than the<br>generator. Here, since we are dealing with images the input to<br>$D(x)$ is an image of CHW size 3x64x64. Intuitively, $D(x)$<br>should be HIGH when $x$ comes from training data and LOW when<br>$x$ comes from the generator. $D(x)$ can also be thought of<br>as a traditional binary classifier.</p>
+<p>For the generator’s notation, let $z$ be a latent space vector<br>sampled from a standard normal distribution. $G(z)$ represents the<br>generator function which maps the latent vector $z$ to data-space.<br>The goal of $G$ is to estimate the distribution that the training<br>data comes from ($p_{data}$) so it can generate fake samples from<br>that estimated distribution ($p_g$).</p>
+<p>So, $D(G(z))$ is the probability (scalar) that the output of the<br>generator $G$ is a real image. As described in <code>Goodfellow’s
+paper &lt;https://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf&gt;</code>__,<br>$D$ and $G$ play a minimax game in which $D$ tries to<br>maximize the probability it correctly classifies reals and fakes<br>($logD(x)$), and $G$ tries to minimize the probability that<br>$D$ will predict its outputs are fake ($log(1-D(G(x)))$).<br>From the paper, the GAN loss function is</p>
+<p>$\begin{align}\underset{G}{\text{min}} \underset{D}{\text{max}}V(D,G) = \mathbb{E}<em>{x\sim p</em>{data}(x)}\big[logD(x)\big] + \mathbb{E}<em>{z\sim p</em>{z}(z)}\big[log(1-D(G(z)))\big]\end{align}$</p>
+<p>In theory, the solution to this minimax game is where<br>$p_g = p_{data}$, and the discriminator guesses randomly if the<br>inputs are real or fake. However, the convergence theory of GANs is<br>still being actively researched and in reality models do not always<br>train to this point.</p>
+<p>What is a DCGAN?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">A DCGAN is a direct extension of the GAN described above, except that it</span><br><span class="line">explicitly uses convolutional and convolutional-transpose layers in the</span><br><span class="line">discriminator and generator, respectively. It was first described by</span><br><span class="line">Radford et. al. in the paper &#96;Unsupervised Representation Learning With</span><br><span class="line">Deep Convolutional Generative Adversarial</span><br><span class="line">Networks &lt;https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;1511.06434.pdf&gt;&#96;. The discriminator</span><br><span class="line">is made up of strided</span><br><span class="line">&#96;convolution &lt;https:&#x2F;&#x2F;pytorch.org&#x2F;docs&#x2F;stable&#x2F;nn.html#torch.nn.Conv2d&gt;&#96;</span><br><span class="line">layers, &#96;batch</span><br><span class="line">norm &lt;https:&#x2F;&#x2F;pytorch.org&#x2F;docs&#x2F;stable&#x2F;nn.html#torch.nn.BatchNorm2d&gt;&#96;</span><br><span class="line">layers, and</span><br><span class="line">&#96;LeakyReLU &lt;https:&#x2F;&#x2F;pytorch.org&#x2F;docs&#x2F;stable&#x2F;nn.html#torch.nn.LeakyReLU&gt;&#96;</span><br><span class="line">activations. The input is a 3x64x64 input image and the output is a</span><br><span class="line">scalar probability that the input is from the real data distribution.</span><br><span class="line">The generator is comprised of</span><br><span class="line">&#96;convolutional-transpose &lt;https:&#x2F;&#x2F;pytorch.org&#x2F;docs&#x2F;stable&#x2F;nn.html#torch.nn.ConvTranspose2d&gt;&#96;</span><br><span class="line">layers, batch norm layers, and</span><br><span class="line">&#96;ReLU &lt;https:&#x2F;&#x2F;pytorch.org&#x2F;docs&#x2F;stable&#x2F;nn.html#relu&gt;&#96;__ activations. The</span><br><span class="line">input is a latent vector, $z$, that is drawn from a standard</span><br><span class="line">normal distribution and the output is a 3x64x64 RGB image. The strided</span><br><span class="line">conv-transpose layers allow the latent vector to be transformed into a</span><br><span class="line">volume with the same shape as an image. In the paper, the authors also</span><br><span class="line">give some tips about how to setup the optimizers, how to calculate the</span><br><span class="line">loss functions, and how to initialize the model weights, all of which</span><br><span class="line">will be explained in the coming sections.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line">from __future__ import print_function</span><br><span class="line">#%matplotlib inline</span><br><span class="line">import argparse</span><br><span class="line">import os</span><br><span class="line">import random</span><br><span class="line">import torch</span><br><span class="line">import torch.nn as nn</span><br><span class="line">import torch.nn.parallel</span><br><span class="line">import torch.backends.cudnn as cudnn</span><br><span class="line">import torch.optim as optim</span><br><span class="line">import torch.utils.data</span><br><span class="line">import torchvision.datasets as dset</span><br><span class="line">import torchvision.transforms as transforms</span><br><span class="line">import torchvision.utils as vutils</span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import matplotlib.animation as animation</span><br><span class="line">from IPython.display import HTML</span><br><span class="line"></span><br><span class="line"># Set random seed for reproducibility</span><br><span class="line">manualSeed &#x3D; 999</span><br><span class="line">#manualSeed &#x3D; random.randint(1, 10000) # use if you want new results</span><br><span class="line">print(&quot;Random Seed: &quot;, manualSeed)</span><br><span class="line">random.seed(manualSeed)</span><br><span class="line">torch.manual_seed(manualSeed)</span><br><span class="line">&#96;&#96;&#96;</span><br><span class="line"></span><br><span class="line">    Random Seed:  999</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;torch._C.Generator at 0x268c24f1e50&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Inputs</span><br><span class="line">------</span><br><span class="line"></span><br><span class="line">Let’s define some inputs for the run:</span><br><span class="line"></span><br><span class="line">-  **dataroot** - the path to the root of the dataset folder. We will</span><br><span class="line">   talk more about the dataset in the next section</span><br><span class="line">-  **workers** - the number of worker threads for loading the data with</span><br><span class="line">   the DataLoader</span><br><span class="line">-  **batch_size** - the batch size used in training. The DCGAN paper</span><br><span class="line">   uses a batch size of 128</span><br><span class="line">-  **image_size** - the spatial size of the images used for training.</span><br><span class="line">   This implementation defaults to 64x64. If another size is desired,</span><br><span class="line">   the structures of D and G must be changed. See</span><br><span class="line">   &#96;here &lt;https:&#x2F;&#x2F;github.com&#x2F;pytorch&#x2F;examples&#x2F;issues&#x2F;70&gt;&#96;__ for more</span><br><span class="line">   details</span><br><span class="line">-  **nc** - number of color channels in the input images. For color</span><br><span class="line">   images this is 3</span><br><span class="line">-  **nz** - length of latent vector</span><br><span class="line">-  **ngf** - relates to the depth of feature maps carried through the</span><br><span class="line">   generator</span><br><span class="line">-  **ndf** - sets the depth of feature maps propagated through the</span><br><span class="line">   discriminator</span><br><span class="line">-  **num_epochs** - number of training epochs to run. Training for</span><br><span class="line">   longer will probably lead to better results but will also take much</span><br><span class="line">   longer</span><br><span class="line">-  **lr** - learning rate for training. As described in the DCGAN paper,</span><br><span class="line">   this number should be 0.0002</span><br><span class="line">-  **beta1** - beta1 hyperparameter for Adam optimizers. As described in</span><br><span class="line">   paper, this number should be 0.5</span><br><span class="line">-  **ngpu** - number of GPUs available. If this is 0, code will run in</span><br><span class="line">   CPU mode. If this number is greater than 0 it will run on that number</span><br><span class="line">   of GPUs</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line"># Root directory for dataset</span><br><span class="line">dataroot &#x3D; &quot;data&#x2F;celeba&quot;</span><br><span class="line"></span><br><span class="line"># Number of workers for dataloader</span><br><span class="line">workers &#x3D; 2</span><br><span class="line"></span><br><span class="line"># Batch size during training</span><br><span class="line">batch_size &#x3D; 128</span><br><span class="line"></span><br><span class="line"># Spatial size of training images. All images will be resized to this</span><br><span class="line">#   size using a transformer.</span><br><span class="line">image_size &#x3D; 64</span><br><span class="line"></span><br><span class="line"># Number of channels in the training images. For color images this is 3</span><br><span class="line">nc &#x3D; 3</span><br><span class="line"></span><br><span class="line"># Size of z latent vector (i.e. size of generator input)</span><br><span class="line">nz &#x3D; 100</span><br><span class="line"></span><br><span class="line"># Size of feature maps in generator</span><br><span class="line">ngf &#x3D; 64</span><br><span class="line"></span><br><span class="line"># Size of feature maps in discriminator</span><br><span class="line">ndf &#x3D; 64</span><br><span class="line"></span><br><span class="line"># Number of training epochs</span><br><span class="line"># num_epochs &#x3D; 5</span><br><span class="line">num_epochs &#x3D; 2</span><br><span class="line"></span><br><span class="line"># Learning rate for optimizers</span><br><span class="line">lr &#x3D; 0.0002</span><br><span class="line"></span><br><span class="line"># Beta1 hyperparam for Adam optimizers</span><br><span class="line">beta1 &#x3D; 0.5</span><br><span class="line"></span><br><span class="line"># Number of GPUs available. Use 0 for CPU mode.</span><br><span class="line">ngpu &#x3D; 1</span><br><span class="line">&#96;&#96;&#96;</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">----</span><br><span class="line"></span><br><span class="line">In this tutorial we will use the &#96;Celeb-A Faces</span><br><span class="line">dataset &lt;http:&#x2F;&#x2F;mmlab.ie.cuhk.edu.hk&#x2F;projects&#x2F;CelebA.html&gt;&#96;__ which can</span><br><span class="line">be downloaded at the linked site, or in &#96;Google</span><br><span class="line">Drive &lt;https:&#x2F;&#x2F;drive.google.com&#x2F;drive&#x2F;folders&#x2F;0B7EVK8r0v71pTUZsaXdaSnZBZzg&gt;&#96;__.</span><br><span class="line">The dataset will download as a file named *img_align_celeba.zip*. Once</span><br><span class="line">downloaded, create a directory named *celeba* and extract the zip file</span><br><span class="line">into that directory. Then, set the *dataroot* input for this notebook to</span><br><span class="line">the *celeba* directory you just created. The resulting directory</span><br><span class="line">structure should be:</span><br><span class="line"></span><br><span class="line">::</span><br><span class="line"></span><br><span class="line">   &#x2F;path&#x2F;to&#x2F;celeba</span><br><span class="line">       -&gt; img_align_celeba  </span><br><span class="line">           -&gt; 188242.jpg</span><br><span class="line">           -&gt; 173822.jpg</span><br><span class="line">           -&gt; 284702.jpg</span><br><span class="line">           -&gt; 537394.jpg</span><br><span class="line">              ...</span><br><span class="line"></span><br><span class="line">This is an important step because we will be using the ImageFolder</span><br><span class="line">dataset class, which requires there to be subdirectories in the</span><br><span class="line">dataset’s root folder. Now, we can create the dataset, create the</span><br><span class="line">dataloader, set the device to run on, and finally visualize some of the</span><br><span class="line">training data.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line"># We can use an image folder dataset the way we have it setup.</span><br><span class="line"># Create the dataset</span><br><span class="line">dataset &#x3D; dset.ImageFolder(root&#x3D;dataroot,</span><br><span class="line">                           transform&#x3D;transforms.Compose([</span><br><span class="line">                               transforms.Resize(image_size),</span><br><span class="line">                               transforms.CenterCrop(image_size),</span><br><span class="line">                               transforms.ToTensor(),</span><br><span class="line">                               transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),</span><br><span class="line">                           ]))</span><br><span class="line"># Create the dataloader</span><br><span class="line">dataloader &#x3D; torch.utils.data.DataLoader(dataset, batch_size&#x3D;batch_size,</span><br><span class="line">                                         shuffle&#x3D;True, num_workers&#x3D;workers)</span><br><span class="line"></span><br><span class="line"># Decide which device we want to run on</span><br><span class="line">device &#x3D; torch.device(&quot;cuda:0&quot; if (torch.cuda.is_available() and ngpu &gt; 0) else &quot;cpu&quot;)</span><br><span class="line"></span><br><span class="line"># Plot some training images</span><br><span class="line">real_batch &#x3D; next(iter(dataloader))</span><br><span class="line">plt.figure(figsize&#x3D;(8,8))</span><br><span class="line">plt.axis(&quot;off&quot;)</span><br><span class="line">plt.title(&quot;Training Images&quot;)</span><br><span class="line">plt.imshow(np.transpose(vutils.make_grid(real_batch[0].to(device)[:64], padding&#x3D;2, normalize&#x3D;True).cpu(),(1,2,0)))</span><br><span class="line">&#96;&#96;&#96;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;matplotlib.image.AxesImage at 0x268c49247f0&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![png](output_7_1.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Implementation</span><br><span class="line">--------------</span><br><span class="line"></span><br><span class="line">With our input parameters set and the dataset prepared, we can now get</span><br><span class="line">into the implementation. We will start with the weigth initialization</span><br><span class="line">strategy, then talk about the generator, discriminator, loss functions,</span><br><span class="line">and training loop in detail.</span><br><span class="line"></span><br><span class="line">Weight Initialization</span><br><span class="line">~~~~~</span><br></pre></td></tr></table></figure>
+
+<p>From the DCGAN paper, the authors specify that all model weights shall<br>be randomly initialized from a Normal distribution with mean=0,<br>stdev=0.02. The <code>weights_init</code> function takes an initialized model as<br>input and reinitializes all convolutional, convolutional-transpose, and<br>batch normalization layers to meet this criteria. This function is<br>applied to the models immediately after initialization.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># custom weights initialization called on netG and netD</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">weights_init</span><span class="params">(m)</span>:</span></span><br><span class="line">    classname = m.__class__.__name__</span><br><span class="line">    <span class="keyword">if</span> classname.find(<span class="string">'Conv'</span>) != <span class="number">-1</span>:</span><br><span class="line">        nn.init.normal_(m.weight.data, <span class="number">0.0</span>, <span class="number">0.02</span>)</span><br><span class="line">    <span class="keyword">elif</span> classname.find(<span class="string">'BatchNorm'</span>) != <span class="number">-1</span>:</span><br><span class="line">        nn.init.normal_(m.weight.data, <span class="number">1.0</span>, <span class="number">0.02</span>)</span><br><span class="line">        nn.init.constant_(m.bias.data, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Generator</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">The generator, $G$, is designed to map the latent space vector</span><br><span class="line">($z$) to data-space. Since our data are images, converting</span><br><span class="line">$z$ to data-space means ultimately creating a RGB image with the</span><br><span class="line">same size as the training images (i.e. 3x64x64). In practice, this is</span><br><span class="line">accomplished through a series of strided two dimensional convolutional</span><br><span class="line">transpose layers, each paired with a 2d batch norm layer and a relu</span><br><span class="line">activation. The output of the generator is fed through a tanh function</span><br><span class="line">to return it to the input data range of $[-1,1]$. It is worth</span><br><span class="line">noting the existence of the batch norm functions after the</span><br><span class="line">conv-transpose layers, as this is a critical contribution of the DCGAN</span><br><span class="line">paper. These layers help with the flow of gradients during training. An</span><br><span class="line">image of the generator from the DCGAN paper is shown below.</span><br><span class="line"></span><br><span class="line">.. figure:: &#x2F;_static&#x2F;img&#x2F;dcgan_generator.png</span><br><span class="line">   :alt: dcgan_generator</span><br><span class="line"></span><br><span class="line">Notice, the how the inputs we set in the input section (*nz*, *ngf*, and</span><br><span class="line">*nc*) influence the generator architecture in code. *nz* is the length</span><br><span class="line">of the z input vector, *ngf* relates to the size of the feature maps</span><br><span class="line">that are propagated through the generator, and *nc* is the number of</span><br><span class="line">channels in the output image (set to 3 for RGB images). Below is the</span><br><span class="line">code for the generator.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line"># Generator Code</span><br><span class="line"></span><br><span class="line">class Generator(nn.Module):</span><br><span class="line">    def __init__(self, ngpu):</span><br><span class="line">        super(Generator, self).__init__()</span><br><span class="line">        self.ngpu &#x3D; ngpu</span><br><span class="line">        self.main &#x3D; nn.Sequential(</span><br><span class="line">            # input is Z, going into a convolution</span><br><span class="line">            nn.ConvTranspose2d( nz, ngf * 8, 4, 1, 0, bias&#x3D;False),</span><br><span class="line">            nn.BatchNorm2d(ngf * 8),</span><br><span class="line">            nn.ReLU(True),</span><br><span class="line">            # state size. (ngf*8) x 4 x 4</span><br><span class="line">            nn.ConvTranspose2d(ngf * 8, ngf * 4, 4, 2, 1, bias&#x3D;False),</span><br><span class="line">            nn.BatchNorm2d(ngf * 4),</span><br><span class="line">            nn.ReLU(True),</span><br><span class="line">            # state size. (ngf*4) x 8 x 8</span><br><span class="line">            nn.ConvTranspose2d( ngf * 4, ngf * 2, 4, 2, 1, bias&#x3D;False),</span><br><span class="line">            nn.BatchNorm2d(ngf * 2),</span><br><span class="line">            nn.ReLU(True),</span><br><span class="line">            # state size. (ngf*2) x 16 x 16</span><br><span class="line">            nn.ConvTranspose2d( ngf * 2, ngf, 4, 2, 1, bias&#x3D;False),</span><br><span class="line">            nn.BatchNorm2d(ngf),</span><br><span class="line">            nn.ReLU(True),</span><br><span class="line">            # state size. (ngf) x 32 x 32</span><br><span class="line">            nn.ConvTranspose2d( ngf, nc, 4, 2, 1, bias&#x3D;False),</span><br><span class="line">            nn.Tanh()</span><br><span class="line">            # state size. (nc) x 64 x 64</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    def forward(self, input):</span><br><span class="line">        return self.main(input)</span><br><span class="line">&#96;&#96;&#96;</span><br><span class="line"></span><br><span class="line">Now, we can instantiate the generator and apply the &#96;&#96;weights_init&#96;&#96;</span><br><span class="line">function. Check out the printed model to see how the generator object is</span><br><span class="line">structured.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line"># Create the generator</span><br><span class="line">netG &#x3D; Generator(ngpu).to(device)</span><br><span class="line"></span><br><span class="line"># Handle multi-gpu if desired</span><br><span class="line">if (device.type &#x3D;&#x3D; &#39;cuda&#39;) and (ngpu &gt; 1):</span><br><span class="line">    netG &#x3D; nn.DataParallel(netG, list(range(ngpu)))</span><br><span class="line"></span><br><span class="line"># Apply the weights_init function to randomly initialize all weights</span><br><span class="line">#  to mean&#x3D;0, stdev&#x3D;0.2.</span><br><span class="line">netG.apply(weights_init)</span><br><span class="line"></span><br><span class="line"># Print the model</span><br><span class="line">print(netG)</span><br><span class="line">&#96;&#96;&#96;</span><br><span class="line"></span><br><span class="line">    Generator(</span><br><span class="line">      (main): Sequential(</span><br><span class="line">        (0): ConvTranspose2d(100, 512, kernel_size&#x3D;(4, 4), stride&#x3D;(1, 1), bias&#x3D;False)</span><br><span class="line">        (1): BatchNorm2d(512, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)</span><br><span class="line">        (2): ReLU(inplace&#x3D;True)</span><br><span class="line">        (3): ConvTranspose2d(512, 256, kernel_size&#x3D;(4, 4), stride&#x3D;(2, 2), padding&#x3D;(1, 1), bias&#x3D;False)</span><br><span class="line">        (4): BatchNorm2d(256, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)</span><br><span class="line">        (5): ReLU(inplace&#x3D;True)</span><br><span class="line">        (6): ConvTranspose2d(256, 128, kernel_size&#x3D;(4, 4), stride&#x3D;(2, 2), padding&#x3D;(1, 1), bias&#x3D;False)</span><br><span class="line">        (7): BatchNorm2d(128, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)</span><br><span class="line">        (8): ReLU(inplace&#x3D;True)</span><br><span class="line">        (9): ConvTranspose2d(128, 64, kernel_size&#x3D;(4, 4), stride&#x3D;(2, 2), padding&#x3D;(1, 1), bias&#x3D;False)</span><br><span class="line">        (10): BatchNorm2d(64, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)</span><br><span class="line">        (11): ReLU(inplace&#x3D;True)</span><br><span class="line">        (12): ConvTranspose2d(64, 3, kernel_size&#x3D;(4, 4), stride&#x3D;(2, 2), padding&#x3D;(1, 1), bias&#x3D;False)</span><br><span class="line">        (13): Tanh()</span><br><span class="line">      )</span><br><span class="line">    )</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">Discriminator</span><br><span class="line">~~~~</span><br></pre></td></tr></table></figure>
+
+<p>As mentioned, the discriminator, $D$, is a binary classification<br>network that takes an image as input and outputs a scalar probability<br>that the input image is real (as opposed to fake). Here, $D$ takes<br>a 3x64x64 input image, processes it through a series of Conv2d,<br>BatchNorm2d, and LeakyReLU layers, and outputs the final probability<br>through a Sigmoid activation function. This architecture can be extended<br>with more layers if necessary for the problem, but there is significance<br>to the use of the strided convolution, BatchNorm, and LeakyReLUs. The<br>DCGAN paper mentions it is a good practice to use strided convolution<br>rather than pooling to downsample because it lets the network learn its<br>own pooling function. Also batch norm and leaky relu functions promote<br>healthy gradient flow which is critical for the learning process of both<br>$G$ and $D$.</p>
+<p>Discriminator Code</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Discriminator</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, ngpu)</span>:</span></span><br><span class="line">        super(Discriminator, self).__init__()</span><br><span class="line">        self.ngpu = ngpu</span><br><span class="line">        self.main = nn.Sequential(</span><br><span class="line">            <span class="comment"># input is (nc) x 64 x 64</span></span><br><span class="line">            nn.Conv2d(nc, ndf, <span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>, bias=<span class="literal">False</span>),</span><br><span class="line">            nn.LeakyReLU(<span class="number">0.2</span>, inplace=<span class="literal">True</span>),</span><br><span class="line">            <span class="comment"># state size. (ndf) x 32 x 32</span></span><br><span class="line">            nn.Conv2d(ndf, ndf * <span class="number">2</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>, bias=<span class="literal">False</span>),</span><br><span class="line">            nn.BatchNorm2d(ndf * <span class="number">2</span>),</span><br><span class="line">            nn.LeakyReLU(<span class="number">0.2</span>, inplace=<span class="literal">True</span>),</span><br><span class="line">            <span class="comment"># state size. (ndf*2) x 16 x 16</span></span><br><span class="line">            nn.Conv2d(ndf * <span class="number">2</span>, ndf * <span class="number">4</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>, bias=<span class="literal">False</span>),</span><br><span class="line">            nn.BatchNorm2d(ndf * <span class="number">4</span>),</span><br><span class="line">            nn.LeakyReLU(<span class="number">0.2</span>, inplace=<span class="literal">True</span>),</span><br><span class="line">            <span class="comment"># state size. (ndf*4) x 8 x 8</span></span><br><span class="line">            nn.Conv2d(ndf * <span class="number">4</span>, ndf * <span class="number">8</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>, bias=<span class="literal">False</span>),</span><br><span class="line">            nn.BatchNorm2d(ndf * <span class="number">8</span>),</span><br><span class="line">            nn.LeakyReLU(<span class="number">0.2</span>, inplace=<span class="literal">True</span>),</span><br><span class="line">            <span class="comment"># state size. (ndf*8) x 4 x 4</span></span><br><span class="line">            nn.Conv2d(ndf * <span class="number">8</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">0</span>, bias=<span class="literal">False</span>),</span><br><span class="line">            nn.Sigmoid()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, input)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.main(input)</span><br></pre></td></tr></table></figure>
+
+<p>Now, as with the generator, we can create the discriminator, apply the<br><code>weights_init</code> function, and print the model’s structure.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create the Discriminator</span></span><br><span class="line">netD = Discriminator(ngpu).to(device)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Handle multi-gpu if desired</span></span><br><span class="line"><span class="keyword">if</span> (device.type == <span class="string">'cuda'</span>) <span class="keyword">and</span> (ngpu &gt; <span class="number">1</span>):</span><br><span class="line">    netD = nn.DataParallel(netD, list(range(ngpu)))</span><br><span class="line">    </span><br><span class="line"><span class="comment"># Apply the weights_init function to randomly initialize all weights</span></span><br><span class="line"><span class="comment">#  to mean=0, stdev=0.2.</span></span><br><span class="line">netD.apply(weights_init)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print the model</span></span><br><span class="line">print(netD)</span><br></pre></td></tr></table></figure>
+
+<pre><code>Discriminator(
+  (main): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (1): LeakyReLU(negative_slope=0.2, inplace=True)
+    (2): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (3): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (4): LeakyReLU(negative_slope=0.2, inplace=True)
+    (5): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (6): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (7): LeakyReLU(negative_slope=0.2, inplace=True)
+    (8): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (9): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (10): LeakyReLU(negative_slope=0.2, inplace=True)
+    (11): Conv2d(512, 1, kernel_size=(4, 4), stride=(1, 1), bias=False)
+    (12): Sigmoid()
+  )
+)</code></pre><p>Loss Functions and Optimizers</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">With $D$ and $G$ setup, we can specify how they learn</span><br><span class="line">through the loss functions and optimizers. We will use the Binary Cross</span><br><span class="line">Entropy loss</span><br><span class="line">(&#96;BCELoss &lt;https:&#x2F;&#x2F;pytorch.org&#x2F;docs&#x2F;stable&#x2F;nn.html#torch.nn.BCELoss&gt;&#96;__)</span><br><span class="line">function which is defined in PyTorch as:</span><br><span class="line"></span><br><span class="line">\begin&#123;align&#125;\ell(x, y) &#x3D; L &#x3D; \&#123;l_1,\dots,l_N\&#125;^\top, \quad l_n &#x3D; - \left[ y_n \cdot \log x_n + (1 - y_n) \cdot \log (1 - x_n) \right]\end&#123;align&#125;</span><br><span class="line"></span><br><span class="line">Notice how this function provides the calculation of both log components</span><br><span class="line">in the objective function (i.e. $log(D(x))$ and</span><br><span class="line">$log(1-D(G(z)))$). We can specify what part of the BCE equation to</span><br><span class="line">use with the $y$ input. This is accomplished in the training loop</span><br><span class="line">which is coming up soon, but it is important to understand how we can</span><br><span class="line">choose which component we wish to calculate just by changing $y$</span><br><span class="line">(i.e. GT labels).</span><br><span class="line"></span><br><span class="line">Next, we define our real label as 1 and the fake label as 0. These</span><br><span class="line">labels will be used when calculating the losses of $D$ and</span><br><span class="line">$G$, and this is also the convention used in the original GAN</span><br><span class="line">paper. Finally, we set up two separate optimizers, one for $D$ and</span><br><span class="line">one for $G$. As specified in the DCGAN paper, both are Adam</span><br><span class="line">optimizers with learning rate 0.0002 and Beta1 &#x3D; 0.5. For keeping track</span><br><span class="line">of the generator’s learning progression, we will generate a fixed batch</span><br><span class="line">of latent vectors that are drawn from a Gaussian distribution</span><br><span class="line">(i.e. fixed_noise) . In the training loop, we will periodically input</span><br><span class="line">this fixed_noise into $G$, and over the iterations we will see</span><br><span class="line">images form out of the noise.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line"># Initialize BCELoss function</span><br><span class="line">criterion &#x3D; nn.BCELoss()</span><br><span class="line"></span><br><span class="line"># Create batch of latent vectors that we will use to visualize</span><br><span class="line">#  the progression of the generator</span><br><span class="line">fixed_noise &#x3D; torch.randn(64, nz, 1, 1, device&#x3D;device)</span><br><span class="line"></span><br><span class="line"># Establish convention for real and fake labels during training</span><br><span class="line">real_label &#x3D; 1</span><br><span class="line">fake_label &#x3D; 0</span><br><span class="line"></span><br><span class="line"># Setup Adam optimizers for both G and D</span><br><span class="line">optimizerD &#x3D; optim.Adam(netD.parameters(), lr&#x3D;lr, betas&#x3D;(beta1, 0.999))</span><br><span class="line">optimizerG &#x3D; optim.Adam(netG.parameters(), lr&#x3D;lr, betas&#x3D;(beta1, 0.999))</span><br><span class="line">&#96;&#96;&#96;</span><br><span class="line"></span><br><span class="line">Training</span><br></pre></td></tr></table></figure>
+
+<p>Finally, now that we have all of the parts of the GAN framework defined,<br>we can train it. Be mindful that training GANs is somewhat of an art<br>form, as incorrect hyperparameter settings lead to mode collapse with<br>little explanation of what went wrong. Here, we will closely follow<br>Algorithm 1 from Goodfellow’s paper, while abiding by some of the best<br>practices shown in <code>ganhacks &lt;https://github.com/soumith/ganhacks&gt;</code>__.<br>Namely, we will “construct different mini-batches for real and fake”<br>images, and also adjust G’s objective function to maximize<br>$logD(G(z))$. Training is split up into two main parts. Part 1<br>updates the Discriminator and Part 2 updates the Generator.</p>
+<p><strong>Part 1 - Train the Discriminator</strong></p>
+<p>Recall, the goal of training the discriminator is to maximize the<br>probability of correctly classifying a given input as real or fake. In<br>terms of Goodfellow, we wish to “update the discriminator by ascending<br>its stochastic gradient”. Practically, we want to maximize<br>$log(D(x)) + log(1-D(G(z)))$. Due to the separate mini-batch<br>suggestion from ganhacks, we will calculate this in two steps. First, we<br>will construct a batch of real samples from the training set, forward<br>pass through $D$, calculate the loss ($log(D(x))$), then<br>calculate the gradients in a backward pass. Secondly, we will construct<br>a batch of fake samples with the current generator, forward pass this<br>batch through $D$, calculate the loss ($log(1-D(G(z)))$),<br>and <em>accumulate</em> the gradients with a backward pass. Now, with the<br>gradients accumulated from both the all-real and all-fake batches, we<br>call a step of the Discriminator’s optimizer.</p>
+<p><strong>Part 2 - Train the Generator</strong></p>
+<p>As stated in the original paper, we want to train the Generator by<br>minimizing $log(1-D(G(z)))$ in an effort to generate better fakes.<br>As mentioned, this was shown by Goodfellow to not provide sufficient<br>gradients, especially early in the learning process. As a fix, we<br>instead wish to maximize $log(D(G(z)))$. In the code we accomplish<br>this by: classifying the Generator output from Part 1 with the<br>Discriminator, computing G’s loss <em>using real labels as GT</em>, computing<br>G’s gradients in a backward pass, and finally updating G’s parameters<br>with an optimizer step. It may seem counter-intuitive to use the real<br>labels as GT labels for the loss function, but this allows us to use the<br>$log(x)$ part of the BCELoss (rather than the $log(1-x)$<br>part) which is exactly what we want.</p>
+<p>Finally, we will do some statistic reporting and at the end of each<br>epoch we will push our fixed_noise batch through the generator to<br>visually track the progress of G’s training. The training statistics<br>reported are:</p>
+<ul>
+<li><strong>Loss_D</strong> - discriminator loss calculated as the sum of losses for<br>the all real and all fake batches ($log(D(x)) + log(D(G(z)))$).</li>
+<li><strong>Loss_G</strong> - generator loss calculated as $log(D(G(z)))$</li>
+<li><strong>D(x)</strong> - the average output (across the batch) of the discriminator<br>for the all real batch. This should start close to 1 then<br>theoretically converge to 0.5 when G gets better. Think about why<br>this is.</li>
+<li><strong>D(G(z))</strong> - average discriminator outputs for the all fake batch.<br>The first number is before D is updated and the second number is<br>after D is updated. These numbers should start near 0 and converge to<br>0.5 as G gets better. Think about why this is.</li>
+</ul>
+<p><strong>Note:</strong> This step might take a while, depending on how many epochs you<br>run and if you removed some data from the dataset.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Training Loop</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Lists to keep track of progress</span></span><br><span class="line">img_list = []</span><br><span class="line">G_losses = []</span><br><span class="line">D_losses = []</span><br><span class="line">iters = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">"Starting Training Loop..."</span>)</span><br><span class="line"><span class="comment"># For each epoch</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(num_epochs):</span><br><span class="line">    <span class="comment"># For each batch in the dataloader</span></span><br><span class="line">    <span class="keyword">for</span> i, data <span class="keyword">in</span> enumerate(dataloader, <span class="number">0</span>):</span><br><span class="line">        </span><br><span class="line">        <span class="comment">############################</span></span><br><span class="line">        <span class="comment"># (1) Update D network: maximize log(D(x)) + log(1 - D(G(z)))</span></span><br><span class="line">        <span class="comment">###########################</span></span><br><span class="line">        <span class="comment">## Train with all-real batch</span></span><br><span class="line">        netD.zero_grad()</span><br><span class="line">        <span class="comment"># Format batch</span></span><br><span class="line">        real_cpu = data[<span class="number">0</span>].to(device)</span><br><span class="line">        b_size = real_cpu.size(<span class="number">0</span>)</span><br><span class="line">        label = torch.full((b_size,), real_label, device=device)</span><br><span class="line">        <span class="comment"># Forward pass real batch through D</span></span><br><span class="line">        output = netD(real_cpu).view(<span class="number">-1</span>)</span><br><span class="line">        <span class="comment"># Calculate loss on all-real batch</span></span><br><span class="line">        errD_real = criterion(output, label)</span><br><span class="line">        <span class="comment"># Calculate gradients for D in backward pass</span></span><br><span class="line">        errD_real.backward()</span><br><span class="line">        D_x = output.mean().item()</span><br><span class="line"></span><br><span class="line">        <span class="comment">## Train with all-fake batch</span></span><br><span class="line">        <span class="comment"># Generate batch of latent vectors</span></span><br><span class="line">        noise = torch.randn(b_size, nz, <span class="number">1</span>, <span class="number">1</span>, device=device)</span><br><span class="line">        <span class="comment"># Generate fake image batch with G</span></span><br><span class="line">        fake = netG(noise)</span><br><span class="line">        label.fill_(fake_label)</span><br><span class="line">        <span class="comment"># Classify all fake batch with D</span></span><br><span class="line">        output = netD(fake.detach()).view(<span class="number">-1</span>)</span><br><span class="line">        <span class="comment"># Calculate D's loss on the all-fake batch</span></span><br><span class="line">        errD_fake = criterion(output, label)</span><br><span class="line">        <span class="comment"># Calculate the gradients for this batch</span></span><br><span class="line">        errD_fake.backward()</span><br><span class="line">        D_G_z1 = output.mean().item()</span><br><span class="line">        <span class="comment"># Add the gradients from the all-real and all-fake batches</span></span><br><span class="line">        errD = errD_real + errD_fake</span><br><span class="line">        <span class="comment"># Update D</span></span><br><span class="line">        optimizerD.step()</span><br><span class="line"></span><br><span class="line">        <span class="comment">############################</span></span><br><span class="line">        <span class="comment"># (2) Update G network: maximize log(D(G(z)))</span></span><br><span class="line">        <span class="comment">###########################</span></span><br><span class="line">        netG.zero_grad()</span><br><span class="line">        label.fill_(real_label)  <span class="comment"># fake labels are real for generator cost</span></span><br><span class="line">        <span class="comment"># Since we just updated D, perform another forward pass of all-fake batch through D</span></span><br><span class="line">        output = netD(fake).view(<span class="number">-1</span>)</span><br><span class="line">        <span class="comment"># Calculate G's loss based on this output</span></span><br><span class="line">        errG = criterion(output, label)</span><br><span class="line">        <span class="comment"># Calculate gradients for G</span></span><br><span class="line">        errG.backward()</span><br><span class="line">        D_G_z2 = output.mean().item()</span><br><span class="line">        <span class="comment"># Update G</span></span><br><span class="line">        optimizerG.step()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Output training stats</span></span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">50</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">'[%d/%d][%d/%d]\tLoss_D: %.4f\tLoss_G: %.4f\tD(x): %.4f\tD(G(z)): %.4f / %.4f'</span></span><br><span class="line">                  % (epoch, num_epochs, i, len(dataloader),</span><br><span class="line">                     errD.item(), errG.item(), D_x, D_G_z1, D_G_z2))</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Save Losses for plotting later</span></span><br><span class="line">        G_losses.append(errG.item())</span><br><span class="line">        D_losses.append(errD.item())</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Check how the generator is doing by saving G's output on fixed_noise</span></span><br><span class="line">        <span class="keyword">if</span> (iters % <span class="number">500</span> == <span class="number">0</span>) <span class="keyword">or</span> ((epoch == num_epochs<span class="number">-1</span>) <span class="keyword">and</span> (i == len(dataloader)<span class="number">-1</span>)):</span><br><span class="line">            <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">                fake = netG(fixed_noise).detach().cpu()</span><br><span class="line">            img_list.append(vutils.make_grid(fake, padding=<span class="number">2</span>, normalize=<span class="literal">True</span>))</span><br><span class="line">            </span><br><span class="line">        iters += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>Starting Training Loop...
+
+
+..\aten\src\ATen\native\TensorFactories.cpp:361: UserWarning: Deprecation warning: In a future PyTorch release torch.full will no longer return tensors of floating dtype by default. Instead, a bool fill_value will return a tensor of torch.bool dtype, and an integral fill_value will return a tensor of torch.long dtype. Set the optional `dtype` or `out` arguments to suppress this warning.
+
+
+[0/2][0/1583]    Loss_D: 1.8664    Loss_G: 4.9949    D(x): 0.5050    D(G(z)): 0.5928 / 0.0106
+[0/2][50/1583]    Loss_D: 0.1046    Loss_G: 7.1177    D(x): 0.9758    D(G(z)): 0.0124 / 0.0086
+[0/2][100/1583]    Loss_D: 1.0915    Loss_G: 12.3498    D(x): 0.9553    D(G(z)): 0.4722 / 0.0000
+[0/2][150/1583]    Loss_D: 1.7593    Loss_G: 5.9544    D(x): 0.3933    D(G(z)): 0.0053 / 0.0070
+[0/2][200/1583]    Loss_D: 0.8020    Loss_G: 5.9020    D(x): 0.6117    D(G(z)): 0.0295 / 0.0069
+[0/2][250/1583]    Loss_D: 0.6124    Loss_G: 4.1050    D(x): 0.7546    D(G(z)): 0.1926 / 0.0268
+[0/2][300/1583]    Loss_D: 0.9607    Loss_G: 1.8866    D(x): 0.5101    D(G(z)): 0.0519 / 0.2133
+[0/2][350/1583]    Loss_D: 0.5478    Loss_G: 3.3292    D(x): 0.7691    D(G(z)): 0.1973 / 0.0492
+[0/2][400/1583]    Loss_D: 1.2509    Loss_G: 1.3775    D(x): 0.4456    D(G(z)): 0.1254 / 0.2993
+[0/2][450/1583]    Loss_D: 0.4384    Loss_G: 5.5121    D(x): 0.7491    D(G(z)): 0.0298 / 0.0068
+[0/2][500/1583]    Loss_D: 0.4170    Loss_G: 3.6389    D(x): 0.7676    D(G(z)): 0.0610 / 0.0396
+[0/2][550/1583]    Loss_D: 0.5595    Loss_G: 4.2165    D(x): 0.8009    D(G(z)): 0.1784 / 0.0296
+[0/2][600/1583]    Loss_D: 1.2295    Loss_G: 3.3066    D(x): 0.5244    D(G(z)): 0.0907 / 0.0752
+[0/2][650/1583]    Loss_D: 0.5091    Loss_G: 4.7135    D(x): 0.7118    D(G(z)): 0.0292 / 0.0203
+[0/2][700/1583]    Loss_D: 0.3912    Loss_G: 2.7194    D(x): 0.8198    D(G(z)): 0.1221 / 0.1098
+[0/2][750/1583]    Loss_D: 0.7578    Loss_G: 7.3482    D(x): 0.9471    D(G(z)): 0.4270 / 0.0015
+[0/2][800/1583]    Loss_D: 0.7080    Loss_G: 5.8282    D(x): 0.9395    D(G(z)): 0.4118 / 0.0053
+[0/2][850/1583]    Loss_D: 0.5755    Loss_G: 3.2657    D(x): 0.6967    D(G(z)): 0.0784 / 0.0637
+[0/2][900/1583]    Loss_D: 1.0720    Loss_G: 6.0690    D(x): 0.8734    D(G(z)): 0.5405 / 0.0047
+[0/2][950/1583]    Loss_D: 0.6901    Loss_G: 5.7612    D(x): 0.9313    D(G(z)): 0.3993 / 0.0064
+[0/2][1000/1583]    Loss_D: 0.2473    Loss_G: 5.5474    D(x): 0.8535    D(G(z)): 0.0574 / 0.0123
+[0/2][1050/1583]    Loss_D: 0.6581    Loss_G: 5.6885    D(x): 0.9537    D(G(z)): 0.4081 / 0.0069
+[0/2][1100/1583]    Loss_D: 0.5447    Loss_G: 2.8289    D(x): 0.7523    D(G(z)): 0.1252 / 0.0966
+[0/2][1150/1583]    Loss_D: 0.3936    Loss_G: 3.4201    D(x): 0.8383    D(G(z)): 0.1639 / 0.0528
+[0/2][1200/1583]    Loss_D: 0.7676    Loss_G: 5.3321    D(x): 0.8581    D(G(z)): 0.3643 / 0.0112
+[0/2][1250/1583]    Loss_D: 0.4362    Loss_G: 3.9937    D(x): 0.8223    D(G(z)): 0.1671 / 0.0321
+[0/2][1300/1583]    Loss_D: 0.6602    Loss_G: 5.5204    D(x): 0.9106    D(G(z)): 0.3806 / 0.0072
+[0/2][1350/1583]    Loss_D: 0.6352    Loss_G: 3.2255    D(x): 0.7404    D(G(z)): 0.1788 / 0.0708
+[0/2][1400/1583]    Loss_D: 0.7936    Loss_G: 3.5125    D(x): 0.7248    D(G(z)): 0.2855 / 0.0474
+[0/2][1450/1583]    Loss_D: 1.0550    Loss_G: 1.2678    D(x): 0.7036    D(G(z)): 0.3793 / 0.3957
+[0/2][1500/1583]    Loss_D: 0.4235    Loss_G: 2.8506    D(x): 0.7756    D(G(z)): 0.1001 / 0.0801
+[0/2][1550/1583]    Loss_D: 0.4839    Loss_G: 4.1835    D(x): 0.8839    D(G(z)): 0.2465 / 0.0254
+[1/2][0/1583]    Loss_D: 0.7391    Loss_G: 3.9735    D(x): 0.8016    D(G(z)): 0.3263 / 0.0284
+[1/2][50/1583]    Loss_D: 0.5051    Loss_G: 3.8654    D(x): 0.7839    D(G(z)): 0.1756 / 0.0337
+[1/2][100/1583]    Loss_D: 0.4857    Loss_G: 4.5489    D(x): 0.8677    D(G(z)): 0.2420 / 0.0209
+[1/2][150/1583]    Loss_D: 0.6025    Loss_G: 4.4404    D(x): 0.8519    D(G(z)): 0.2920 / 0.0212
+[1/2][200/1583]    Loss_D: 0.4301    Loss_G: 4.4767    D(x): 0.8909    D(G(z)): 0.2399 / 0.0190
+[1/2][250/1583]    Loss_D: 1.2600    Loss_G: 7.6782    D(x): 0.9744    D(G(z)): 0.6415 / 0.0013
+[1/2][300/1583]    Loss_D: 0.5044    Loss_G: 3.7002    D(x): 0.8408    D(G(z)): 0.2446 / 0.0375
+[1/2][350/1583]    Loss_D: 0.4184    Loss_G: 3.2221    D(x): 0.7736    D(G(z)): 0.0924 / 0.0649
+[1/2][400/1583]    Loss_D: 0.5320    Loss_G: 4.6695    D(x): 0.9051    D(G(z)): 0.3072 / 0.0150
+[1/2][450/1583]    Loss_D: 0.3804    Loss_G: 3.3363    D(x): 0.7888    D(G(z)): 0.0978 / 0.0636
+[1/2][500/1583]    Loss_D: 0.4293    Loss_G: 4.2911    D(x): 0.9014    D(G(z)): 0.2399 / 0.0226
+[1/2][550/1583]    Loss_D: 0.3940    Loss_G: 2.7648    D(x): 0.7634    D(G(z)): 0.0777 / 0.0929
+[1/2][600/1583]    Loss_D: 0.4044    Loss_G: 3.3666    D(x): 0.8438    D(G(z)): 0.1664 / 0.0598
+[1/2][650/1583]    Loss_D: 0.3879    Loss_G: 3.4838    D(x): 0.8517    D(G(z)): 0.1754 / 0.0455
+[1/2][700/1583]    Loss_D: 0.4487    Loss_G: 3.6364    D(x): 0.8773    D(G(z)): 0.2434 / 0.0370
+[1/2][750/1583]    Loss_D: 0.7588    Loss_G: 2.0882    D(x): 0.6144    D(G(z)): 0.1150 / 0.1773
+[1/2][800/1583]    Loss_D: 0.6134    Loss_G: 4.0046    D(x): 0.9100    D(G(z)): 0.3546 / 0.0278
+[1/2][850/1583]    Loss_D: 0.5061    Loss_G: 2.2267    D(x): 0.7046    D(G(z)): 0.0860 / 0.1488
+[1/2][900/1583]    Loss_D: 0.6032    Loss_G: 1.8834    D(x): 0.6518    D(G(z)): 0.0847 / 0.2023
+[1/2][950/1583]    Loss_D: 1.1199    Loss_G: 2.2135    D(x): 0.4166    D(G(z)): 0.0332 / 0.1791
+[1/2][1000/1583]    Loss_D: 0.8061    Loss_G: 2.2557    D(x): 0.5479    D(G(z)): 0.0442 / 0.1506
+[1/2][1050/1583]    Loss_D: 0.7723    Loss_G: 2.7941    D(x): 0.5652    D(G(z)): 0.0532 / 0.0968
+[1/2][1100/1583]    Loss_D: 0.6160    Loss_G: 1.4266    D(x): 0.6152    D(G(z)): 0.0460 / 0.2874
+[1/2][1150/1583]    Loss_D: 1.1706    Loss_G: 5.4761    D(x): 0.9509    D(G(z)): 0.6143 / 0.0088
+[1/2][1200/1583]    Loss_D: 0.5637    Loss_G: 2.2863    D(x): 0.7523    D(G(z)): 0.1901 / 0.1335
+[1/2][1250/1583]    Loss_D: 0.4913    Loss_G: 2.1290    D(x): 0.7336    D(G(z)): 0.1155 / 0.1592
+[1/2][1300/1583]    Loss_D: 0.4753    Loss_G: 2.9672    D(x): 0.8157    D(G(z)): 0.1986 / 0.0763
+[1/2][1350/1583]    Loss_D: 0.6133    Loss_G: 2.9954    D(x): 0.8253    D(G(z)): 0.2826 / 0.0687
+[1/2][1400/1583]    Loss_D: 0.4921    Loss_G: 3.1019    D(x): 0.8035    D(G(z)): 0.1985 / 0.0676</code></pre><h2 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h2><p>Finally, lets check out how we did. Here, we will look at three<br>different results. First, we will see how D and G’s losses changed<br>during training. Second, we will visualize G’s output on the fixed_noise<br>batch for every epoch. And third, we will look at a batch of real data<br>next to a batch of fake data from G.</p>
+<p><strong>Loss versus training iteration</strong></p>
+<p>Below is a plot of D &amp; G’s losses versus training iterations.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">10</span>,<span class="number">5</span>))</span><br><span class="line">plt.title(<span class="string">"Generator and Discriminator Loss During Training"</span>)</span><br><span class="line">plt.plot(G_losses,label=<span class="string">"G"</span>)</span><br><span class="line">plt.plot(D_losses,label=<span class="string">"D"</span>)</span><br><span class="line">plt.xlabel(<span class="string">"iterations"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"Loss"</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><strong>Visualization of G’s progression</strong></p>
+<p>Remember how we saved the generator’s output on the fixed_noise batch<br>after every epoch of training. Now, we can visualize the training<br>progression of G with an animation. Press the play button to start the<br>animation.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#%%capture</span></span><br><span class="line">fig = plt.figure(figsize=(<span class="number">8</span>,<span class="number">8</span>))</span><br><span class="line">plt.axis(<span class="string">"off"</span>)</span><br><span class="line">ims = [[plt.imshow(np.transpose(i,(<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>)), animated=<span class="literal">True</span>)] <span class="keyword">for</span> i <span class="keyword">in</span> img_list]</span><br><span class="line">ani = animation.ArtistAnimation(fig, ims, interval=<span class="number">1000</span>, repeat_delay=<span class="number">1000</span>, blit=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">HTML(ani.to_jshtml())</span><br></pre></td></tr></table></figure>
+
+<p><strong>Real Images vs. Fake Images</strong></p>
+<p>Finally, lets take a look at some real images and fake images side by<br>side.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Grab a batch of real images from the dataloader</span></span><br><span class="line">real_batch = next(iter(dataloader))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot the real images</span></span><br><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">15</span>))</span><br><span class="line">plt.subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>)</span><br><span class="line">plt.axis(<span class="string">"off"</span>)</span><br><span class="line">plt.title(<span class="string">"Real Images"</span>)</span><br><span class="line">plt.imshow(np.transpose(vutils.make_grid(real_batch[<span class="number">0</span>].to(device)[:<span class="number">64</span>], padding=<span class="number">5</span>, normalize=<span class="literal">True</span>).cpu(),(<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot the fake images from the last epoch</span></span><br><span class="line">plt.subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">plt.axis(<span class="string">"off"</span>)</span><br><span class="line">plt.title(<span class="string">"Fake Images"</span>)</span><br><span class="line">plt.imshow(np.transpose(img_list[<span class="number">-1</span>],(<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>)))</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Where-to-Go-Next"><a href="#Where-to-Go-Next" class="headerlink" title="Where to Go Next"></a>Where to Go Next</h2><p>We have reached the end of our journey, but there are several places you<br>could go from here. You could:</p>
+<ul>
+<li>Train for longer to see how good the results get</li>
+<li>Modify this model to take a different dataset and possibly change the<br>size of the images and the model architecture</li>
+<li>Check out some other cool GAN projects<br><code>here &lt;https://github.com/nashory/gans-awesome-applications&gt;</code>__</li>
+<li>Create GANs that generate<br><code>music &lt;https://deepmind.com/blog/wavenet-generative-model-raw-audio/&gt;</code>__</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 我不认识的单词</span></span><br></pre></td></tr></table></figure>
+<p>Intuitively:直观地</p>
+<pre><code></code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin.png" alt="Zhangshuai WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/zhifubao.jpg" alt="Zhangshuai Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pytorch/" rel="tag"># pytorch</a>
+          
+            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/pytorch1-5-1%E5%AE%98%E7%BD%91%E6%95%99%E7%A8%8B/" rel="tag"># pytorch1.5.1官网教程</a>
+          
+            <a href="/tags/Pytorch1-5-1%E5%AE%98%E7%BD%91%E6%95%99%E7%A8%8B-Image/" rel="tag"># Pytorch1.5.1官网教程-Image</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/24/Pytorch-Image-%E5%AF%B9%E6%8A%97%E6%A0%B7%E6%9C%AC%E7%94%9F%E6%88%90/" rel="next" title="Pytorch-Image-对抗样本生成">
+                <i class="fa fa-chevron-left"></i> Pytorch-Image-对抗样本生成
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar2.jpg"
+                alt="Zhangshuai" />
+            
+              <p class="site-author-name" itemprop="name">Zhangshuai</p>
+              <p class="site-description motion-element" itemprop="description">你刚才说了JOJO对吧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=486194129&auto=1&height=66"></iframe>
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/GitHubzhangshuai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1802528291@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ying-ying-ying-vue" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://music.163.com/#/user/home?id=377737250" target="_blank" title="网易云音乐">
+                      
+                        <i class="fa fa-fw fa-globe"></i>网易云音乐</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DCGAN-Tutorial"><span class="nav-number">1.</span> <span class="nav-text">DCGAN Tutorial</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generative-Adversarial-Networks"><span class="nav-number">1.2.</span> <span class="nav-text">Generative Adversarial Networks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Results"><span class="nav-number">1.3.</span> <span class="nav-text">Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Where-to-Go-Next"><span class="nav-number">1.4.</span> <span class="nav-text">Where to Go Next</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script type="text/javascript" src="/js/src/busuanzi.js"></script>
+
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-[object Object]"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张帅</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+
+
+
+
+
+
+  <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  <span class="post-meta-divider">|</span>
+  <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+
+<script>
+setTimeout(function(){
+document.getElementById('busuanzi_container_site_pv').style.display='inline-block'
+document.getElementById('busuanzi_container_site_uv').style.display='inline-block'
+},1000)
+</script>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>
