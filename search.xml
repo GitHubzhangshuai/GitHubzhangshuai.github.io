@@ -7989,4 +7989,253 @@ IoU metric: segm
         <tag>Pytorch1.5.1官网教程-Image</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Pytorch-Audio-torchaudio</title>
+    <url>/2020/07/24/Pytorch-Audio-torchaudio/</url>
+    <content><![CDATA[<p>Pytorch-Audio-torchaudio:<br><a id="more"></a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">%%shell</span><br><span class="line">pip install torchaudio</span><br></pre></td></tr></table></figure>
+<pre><code>Collecting torchaudio
+[?25l  Downloading https://files.pythonhosted.org/packages/e9/0a/40e53c686c2af65b2a4e818d11d9b76fa79178440caf99f3ceb2a32c3b04/torchaudio-0.5.1-cp36-cp36m-manylinux1_x86_64.whl (3.2MB)
+[K     |████████████████████████████████| 3.2MB 2.8MB/s 
+[?25hRequirement already satisfied: torch==1.5.1 in /usr/local/lib/python3.6/dist-packages (from torchaudio) (1.5.1+cu101)
+Requirement already satisfied: future in /usr/local/lib/python3.6/dist-packages (from torch==1.5.1-&gt;torchaudio) (0.16.0)
+Requirement already satisfied: numpy in /usr/local/lib/python3.6/dist-packages (from torch==1.5.1-&gt;torchaudio) (1.18.5)
+Installing collected packages: torchaudio
+Successfully installed torchaudio-0.5.1
+</code></pre><h1 id="torchaudio-Tutorial"><a href="#torchaudio-Tutorial" class="headerlink" title="torchaudio Tutorial"></a>torchaudio Tutorial</h1><p>PyTorch is an open source deep learning platform that provides a<br>seamless path from research prototyping to production deployment with<br>GPU support.</p>
+<p>Significant effort in solving machine learning problems goes into data<br>preparation. <code>torchaudio</code> leverages PyTorch’s GPU support, and provides<br>many tools to make data loading easy and more readable. In this<br>tutorial, we will see how to load and preprocess data from a simple<br>dataset.</p>
+<p>For this tutorial, please make sure the <code>matplotlib</code> package is<br>installed for easier visualization.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchaudio</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+<h2 id="Opening-a-file"><a href="#Opening-a-file" class="headerlink" title="Opening a file"></a>Opening a file</h2><p><code>torchaudio</code> also supports loading sound files in the wav and mp3 format. We<br>call waveform the resulting raw audio signal.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">filename = <span class="string">"test.mp3"</span></span><br><span class="line">waveform, sample_rate = torchaudio.load(filename)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Shape of waveform: &#123;&#125;"</span>.format(waveform.size()))</span><br><span class="line">print(<span class="string">"Sample rate of waveform: &#123;&#125;"</span>.format(sample_rate))</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(waveform.t().numpy())</span><br></pre></td></tr></table></figure>
+<pre><code>Shape of waveform: torch.Size([2, 10857600])
+Sample rate of waveform: 44100
+
+
+
+
+
+[&lt;matplotlib.lines.Line2D at 0x7f91dd44a4a8&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7f91dd44a5c0&gt;]
+</code></pre><p><img src="/2020/07/24/Pytorch-Audio-torchaudio/output_5_2.png" alt="png"></p>
+<p>When you load a file in <code>torchaudio</code>, you can optionally specify the backend to use either<br><code>SoX &lt;https://pypi.org/project/sox/&gt;</code>_ or <code>SoundFile &lt;https://pypi.org/project/SoundFile/&gt;</code>_<br>via <code>torchaudio.set_audio_backend</code>. These backends are loaded lazily when needed.</p>
+<p><code>torchaudio</code> also makes JIT compilation optional for functions, and uses <code>nn.Module</code> where possible.</p>
+<h2 id="Transformations"><a href="#Transformations" class="headerlink" title="Transformations"></a>Transformations</h2><p><code>torchaudio</code> supports a growing list of<br><code>transformations &lt;https://pytorch.org/audio/transforms.html&gt;</code>_.</p>
+<ul>
+<li><strong>Resample</strong>: Resample waveform to a different sample rate.</li>
+<li><strong>Spectrogram</strong>: Create a spectrogram from a waveform.</li>
+<li><strong>GriffinLim</strong>: Compute waveform from a linear scale magnitude spectrogram using<br>the Griffin-Lim transformation.</li>
+<li><strong>ComputeDeltas</strong>: Compute delta coefficients of a tensor, usually a spectrogram.</li>
+<li><strong>ComplexNorm</strong>: Compute the norm of a complex tensor.</li>
+<li><strong>MelScale</strong>: This turns a normal STFT into a Mel-frequency STFT,<br>using a conversion matrix.</li>
+<li><strong>AmplitudeToDB</strong>: This turns a spectrogram from the<br>power/amplitude scale to the decibel scale.</li>
+<li><strong>MFCC</strong>: Create the Mel-frequency cepstrum coefficients from a<br>waveform.</li>
+<li><strong>MelSpectrogram</strong>: Create MEL Spectrograms from a waveform using the<br>STFT function in PyTorch.</li>
+<li><strong>MuLawEncoding</strong>: Encode waveform based on mu-law companding.</li>
+<li><strong>MuLawDecoding</strong>: Decode mu-law encoded waveform.</li>
+<li><strong>TimeStretch</strong>: Stretch a spectrogram in time without modifying pitch for a given rate.</li>
+<li><strong>FrequencyMasking</strong>: Apply masking to a spectrogram in the frequency domain.</li>
+<li><strong>TimeMasking</strong>: Apply masking to a spectrogram in the time domain.</li>
+</ul>
+<p>Each transform supports batching: you can perform a transform on a single raw<br>audio signal or spectrogram, or many of the same shape.</p>
+<p>Since all transforms are <code>nn.Modules</code> or <code>jit.ScriptModules</code>, they can be<br>used as part of a neural network at any point.</p>
+<p>To start, we can look at the log of the spectrogram on a log scale.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">specgram = torchaudio.transforms.Spectrogram()(waveform)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Shape of spectrogram: &#123;&#125;"</span>.format(specgram.size()))</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.imshow(specgram.log2()[<span class="number">0</span>,:,:].numpy(), cmap=<span class="string">'gray'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Shape of spectrogram: torch.Size([2, 201, 54289])
+
+
+
+
+
+&lt;matplotlib.image.AxesImage at 0x7f91dcf1ec50&gt;
+</code></pre><p><img src="/2020/07/24/Pytorch-Audio-torchaudio/output_9_2.png" alt="png"></p>
+<p>Or we can look at the Mel Spectrogram on a log scale.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">specgram = torchaudio.transforms.MelSpectrogram()(waveform)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Shape of spectrogram: &#123;&#125;"</span>.format(specgram.size()))</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">p = plt.imshow(specgram.log2()[<span class="number">0</span>,:,:].detach().numpy(), cmap=<span class="string">'gray'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Shape of spectrogram: torch.Size([2, 128, 54289])
+</code></pre><p><img src="/2020/07/24/Pytorch-Audio-torchaudio/output_11_1.png" alt="png"></p>
+<p>We can resample the waveform, one channel at a time.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">new_sample_rate = sample_rate/<span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Since Resample applies to a single channel, we resample first channel here</span></span><br><span class="line">channel = <span class="number">0</span></span><br><span class="line">transformed = torchaudio.transforms.Resample(sample_rate, new_sample_rate)(waveform[channel,:].view(<span class="number">1</span>,<span class="number">-1</span>))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Shape of transformed waveform: &#123;&#125;"</span>.format(transformed.size()))</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(transformed[<span class="number">0</span>,:].numpy())</span><br></pre></td></tr></table></figure>
+<pre><code>Shape of transformed waveform: torch.Size([1, 1085760])
+
+
+
+
+
+[&lt;matplotlib.lines.Line2D at 0x7f91dce23240&gt;]
+</code></pre><p><img src="/2020/07/24/Pytorch-Audio-torchaudio/output_13_2.png" alt="png"></p>
+<p>As another example of transformations, we can encode the signal based on<br>Mu-Law enconding. But to do so, we need the signal to be between -1 and</p>
+<ol>
+<li>Since the tensor is just a regular PyTorch tensor, we can apply<br>standard operators on it.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Let's check if the tensor is in the interval [-1,1]</span></span><br><span class="line">print(<span class="string">"Min of waveform: &#123;&#125;\nMax of waveform: &#123;&#125;\nMean of waveform: &#123;&#125;"</span>.format(waveform.min(), waveform.max(), waveform.mean()))</span><br></pre></td></tr></table></figure>
+<pre><code>Min of waveform: -1.0
+Max of waveform: 1.0
+Mean of waveform: -4.018312756670639e-05
+</code></pre><p>Since the waveform is already between -1 and 1, we do not need to<br>normalize it.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalize</span><span class="params">(tensor)</span>:</span></span><br><span class="line">    <span class="comment"># Subtract the mean, and scale to the interval [-1,1]</span></span><br><span class="line">    tensor_minusmean = tensor - tensor.mean()</span><br><span class="line">    <span class="keyword">return</span> tensor_minusmean/tensor_minusmean.abs().max()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Let's normalize to the full interval [-1,1]</span></span><br><span class="line"><span class="comment"># waveform = normalize(waveform)</span></span><br></pre></td></tr></table></figure>
+<p>Let’s apply encode the waveform.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">transformed = torchaudio.transforms.MuLawEncoding()(waveform)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Shape of transformed waveform: &#123;&#125;"</span>.format(transformed.size()))</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(transformed[<span class="number">0</span>,:].numpy())</span><br></pre></td></tr></table></figure>
+<pre><code>Shape of transformed waveform: torch.Size([2, 10857600])
+
+
+
+
+
+[&lt;matplotlib.lines.Line2D at 0x7f91dce02b38&gt;]
+</code></pre><p><img src="/2020/07/24/Pytorch-Audio-torchaudio/output_19_2.png" alt="png"></p>
+<p>And now decode.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">reconstructed = torchaudio.transforms.MuLawDecoding()(transformed)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Shape of recovered waveform: &#123;&#125;"</span>.format(reconstructed.size()))</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(reconstructed[<span class="number">0</span>,:].numpy())</span><br></pre></td></tr></table></figure>
+<pre><code>Shape of recovered waveform: torch.Size([2, 10857600])
+
+
+
+
+
+[&lt;matplotlib.lines.Line2D at 0x7f91dcd62ef0&gt;]
+</code></pre><p><img src="/2020/07/24/Pytorch-Audio-torchaudio/output_21_2.png" alt="png"></p>
+<p>We can finally compare the original waveform with its reconstructed<br>version.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Compute median relative difference</span></span><br><span class="line">err = ((waveform-reconstructed).abs() / waveform.abs()).median()</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Median relative difference between original and MuLaw reconstucted signals: &#123;:.2%&#125;"</span>.format(err))</span><br></pre></td></tr></table></figure>
+<pre><code>Median relative difference between original and MuLaw reconstucted signals: 1.20%
+</code></pre><h2 id="Functional"><a href="#Functional" class="headerlink" title="Functional"></a>Functional</h2><p>The transformations seen above rely on lower level stateless functions for their computations.<br>These functions are available under <code>torchaudio.functional</code>. The complete list is available<br><code>here &lt;https://pytorch.org/audio/functional.html&gt;</code>_ and includes:</p>
+<ul>
+<li><strong>istft</strong>: Inverse short time Fourier Transform.</li>
+<li><strong>gain</strong>: Applies amplification or attenuation to the whole waveform.</li>
+<li><strong>dither</strong>: Increases the perceived dynamic range of audio stored at a<br>particular bit-depth.</li>
+<li><strong>compute_deltas</strong>: Compute delta coefficients of a tensor.</li>
+<li><strong>equalizer_biquad</strong>: Design biquad peaking equalizer filter and perform filtering.</li>
+<li><strong>lowpass_biquad</strong>: Design biquad lowpass filter and perform filtering.</li>
+<li><strong>highpass_biquad</strong>:Design biquad highpass filter and perform filtering.</li>
+</ul>
+<p>For example, let’s try the <code>mu_law_encoding</code> functional:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">mu_law_encoding_waveform = torchaudio.functional.mu_law_encoding(waveform, quantization_channels=<span class="number">256</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Shape of transformed waveform: &#123;&#125;"</span>.format(mu_law_encoding_waveform.size()))</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(mu_law_encoding_waveform[<span class="number">0</span>,:].numpy())</span><br></pre></td></tr></table></figure>
+<pre><code>Shape of transformed waveform: torch.Size([2, 10857600])
+
+
+
+
+
+[&lt;matplotlib.lines.Line2D at 0x7f91dcd545f8&gt;]
+</code></pre><p><img src="/2020/07/24/Pytorch-Audio-torchaudio/output_25_2.png" alt="png"></p>
+<p>You can see how the output fron <code>torchaudio.functional.mu_law_encoding</code> is the same as<br>the output from <code>torchaudio.transforms.MuLawEncoding</code>.</p>
+<p>Now let’s experiment with a few of the other functionals and visualize their output. Taking our<br>spectogram, we can compute it’s deltas:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">computed = torchaudio.functional.compute_deltas(specgram.contiguous(), win_length=<span class="number">3</span>)</span><br><span class="line">print(<span class="string">"Shape of computed deltas: &#123;&#125;"</span>.format(computed.shape))</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.imshow(computed.log2()[<span class="number">0</span>,:,:].detach().numpy(), cmap=<span class="string">'gray'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Shape of computed deltas: torch.Size([2, 128, 54289])
+
+
+
+
+
+&lt;matplotlib.image.AxesImage at 0x7f91dccb0b70&gt;
+</code></pre><p><img src="/2020/07/24/Pytorch-Audio-torchaudio/output_27_2.png" alt="png"></p>
+<p>We can take the original waveform and apply different effects to it.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">gain_waveform = torchaudio.functional.gain(waveform, gain_db=<span class="number">5.0</span>)</span><br><span class="line">print(<span class="string">"Min of gain_waveform: &#123;&#125;\nMax of gain_waveform: &#123;&#125;\nMean of gain_waveform: &#123;&#125;"</span>.format(gain_waveform.min(), gain_waveform.max(), gain_waveform.mean()))</span><br><span class="line"></span><br><span class="line">dither_waveform = torchaudio.functional.dither(waveform)</span><br><span class="line">print(<span class="string">"Min of dither_waveform: &#123;&#125;\nMax of dither_waveform: &#123;&#125;\nMean of dither_waveform: &#123;&#125;"</span>.format(dither_waveform.min(), dither_waveform.max(), dither_waveform.mean()))</span><br></pre></td></tr></table></figure>
+<pre><code>Min of gain_waveform: -1.778279423713684
+Max of gain_waveform: 1.778279423713684
+Mean of gain_waveform: -7.145693234633654e-05
+Min of dither_waveform: -0.99993896484375
+Max of dither_waveform: 0.999969482421875
+Mean of dither_waveform: -2.492486237315461e-05
+</code></pre><p>Another example of the capabilities in <code>torchaudio.functional</code> are applying filters to our<br>waveform. Applying the lowpass biquad filter to our waveform will output a new waveform with<br>the signal of the frequency modified.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lowpass_waveform = torchaudio.functional.lowpass_biquad(waveform, sample_rate, cutoff_freq=<span class="number">3000</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Min of lowpass_waveform: &#123;&#125;\nMax of lowpass_waveform: &#123;&#125;\nMean of lowpass_waveform: &#123;&#125;"</span>.format(lowpass_waveform.min(), lowpass_waveform.max(), lowpass_waveform.mean()))</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(lowpass_waveform.t().numpy())</span><br></pre></td></tr></table></figure>
+<pre><code>Min of lowpass_waveform: -1.0
+Max of lowpass_waveform: 1.0
+Mean of lowpass_waveform: -4.02079094783403e-05
+
+
+
+
+
+[&lt;matplotlib.lines.Line2D at 0x7f91dcb8e278&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7f91dcb8e390&gt;]
+</code></pre><p><img src="/2020/07/24/Pytorch-Audio-torchaudio/output_31_2.png" alt="png"></p>
+<p>We can also visualize a waveform with the highpass biquad filter.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">highpass_waveform = torchaudio.functional.highpass_biquad(waveform, sample_rate, cutoff_freq=<span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Min of highpass_waveform: &#123;&#125;\nMax of highpass_waveform: &#123;&#125;\nMean of highpass_waveform: &#123;&#125;"</span>.format(highpass_waveform.min(), highpass_waveform.max(), highpass_waveform.mean()))</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(highpass_waveform.t().numpy())</span><br></pre></td></tr></table></figure>
+<pre><code>Min of highpass_waveform: -0.8367071151733398
+Max of highpass_waveform: 0.7935813069343567
+Mean of highpass_waveform: -9.841002679422672e-09
+
+
+
+
+
+[&lt;matplotlib.lines.Line2D at 0x7f91dcaf3e48&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7f91dcaf3f60&gt;]
+</code></pre><p><img src="/2020/07/24/Pytorch-Audio-torchaudio/output_33_2.png" alt="png"></p>
+<h2 id="Migrating-to-torchaudio-from-Kaldi"><a href="#Migrating-to-torchaudio-from-Kaldi" class="headerlink" title="Migrating to torchaudio from Kaldi"></a>Migrating to torchaudio from Kaldi</h2><p>Users may be familiar with<br><code>Kaldi &lt;http://github.com/kaldi-asr/kaldi&gt;</code>_, a toolkit for speech<br>recognition. <code>torchaudio</code> offers compatibility with it in<br><code>torchaudio.kaldi_io</code>. It can indeed read from kaldi scp, or ark file<br>or streams with:</p>
+<ul>
+<li>read_vec_int_ark</li>
+<li>read_vec_flt_scp</li>
+<li>read_vec_flt_arkfile/stream</li>
+<li>read_mat_scp</li>
+<li>read_mat_ark</li>
+</ul>
+<p><code>torchaudio</code> provides Kaldi-compatible transforms for <code>spectrogram</code>,<br><code>fbank</code>, <code>mfcc</code>, and <code>`resample_waveform with the benefit of GPU support, see</code>here <compliance.kaldi.html>`__ for more information.</compliance.kaldi.html></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">n_fft = <span class="number">400.0</span></span><br><span class="line">frame_length = n_fft / sample_rate * <span class="number">1000.0</span></span><br><span class="line">frame_shift = frame_length / <span class="number">2.0</span></span><br><span class="line"></span><br><span class="line">params = &#123;</span><br><span class="line">    <span class="string">"channel"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"dither"</span>: <span class="number">0.0</span>,</span><br><span class="line">    <span class="string">"window_type"</span>: <span class="string">"hanning"</span>,</span><br><span class="line">    <span class="string">"frame_length"</span>: frame_length,</span><br><span class="line">    <span class="string">"frame_shift"</span>: frame_shift,</span><br><span class="line">    <span class="string">"remove_dc_offset"</span>: <span class="literal">False</span>,</span><br><span class="line">    <span class="string">"round_to_power_of_two"</span>: <span class="literal">False</span>,</span><br><span class="line">    <span class="string">"sample_frequency"</span>: sample_rate,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">specgram = torchaudio.compliance.kaldi.spectrogram(waveform, **params)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Shape of spectrogram: &#123;&#125;"</span>.format(specgram.size()))</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.imshow(specgram.t().numpy(), cmap=<span class="string">'gray'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Shape of spectrogram: torch.Size([54287, 201])
+
+
+
+
+
+&lt;matplotlib.image.AxesImage at 0x7f91dca6d240&gt;
+</code></pre><p><img src="/2020/07/24/Pytorch-Audio-torchaudio/output_35_2.png" alt="png"></p>
+<p>We also support computing the filterbank features from waveforms,<br>matching Kaldi’s implementation.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">fbank = torchaudio.compliance.kaldi.fbank(waveform, **params)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Shape of fbank: &#123;&#125;"</span>.format(fbank.size()))</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.imshow(fbank.t().numpy(), cmap=<span class="string">'gray'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Shape of fbank: torch.Size([54287, 23])
+
+
+
+
+
+&lt;matplotlib.image.AxesImage at 0x7f91dca440f0&gt;
+</code></pre><p><img src="/2020/07/24/Pytorch-Audio-torchaudio/output_37_2.png" alt="png"></p>
+<p>You can create mel frequency cepstral coefficients from a raw audio signal<br>This matches the input/output of Kaldi’s compute-mfcc-feats.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">mfcc = torchaudio.compliance.kaldi.mfcc(waveform, **params)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Shape of mfcc: &#123;&#125;"</span>.format(mfcc.size()))</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.imshow(mfcc.t().numpy(), cmap=<span class="string">'gray'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Shape of mfcc: torch.Size([54287, 13])
+
+
+
+
+
+&lt;matplotlib.image.AxesImage at 0x7f91dca16828&gt;
+</code></pre><p><img src="/2020/07/24/Pytorch-Audio-torchaudio/output_39_2.png" alt="png"></p>
+<h2 id="Available-Datasets"><a href="#Available-Datasets" class="headerlink" title="Available Datasets"></a>Available Datasets</h2><p>If you do not want to create your own dataset to train your model, <code>torchaudio</code> offers a<br>unified dataset interface. This interface supports lazy-loading of files to memory, download<br>and extract functions, and datasets to build models.</p>
+<p>The datasets <code>torchaudio</code> currently supports are:</p>
+<ul>
+<li><strong>VCTK</strong>: Speech data uttered by 109 native speakers of English with various accents<br>(<code>Read more here &lt;https://homepages.inf.ed.ac.uk/jyamagis/page3/page58/page58.html&gt;</code>_).</li>
+<li><strong>Yesno</strong>: Sixty recordings of one individual saying yes or no in Hebrew; each<br>recording is eight words long (<code>Read more here &lt;https://www.openslr.org/1/&gt;</code>_).</li>
+<li><strong>Common Voice</strong>: An open source, multi-language dataset of voices that anyone can use<br>to train speech-enabled applications (<code>Read more here &lt;https://voice.mozilla.org/en/datasets&gt;</code>_).</li>
+<li><strong>LibriSpeech</strong>: Large-scale (1000 hours) corpus of read English speech (<code>Read more here &lt;http://www.openslr.org/12&gt;</code>_).</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">yesno_data = torchaudio.datasets.YESNO(<span class="string">'./'</span>, download=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># A data point in Yesno is a tuple (waveform, sample_rate, labels) where labels is a list of integers with 1 for yes and 0 for no.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Pick data point number 3 to see an example of the the yesno_data:</span></span><br><span class="line">n = <span class="number">3</span></span><br><span class="line">waveform, sample_rate, labels = yesno_data[n]</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Waveform: &#123;&#125;\nSample rate: &#123;&#125;\nLabels: &#123;&#125;"</span>.format(waveform, sample_rate, labels))</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(waveform.t().numpy())</span><br></pre></td></tr></table></figure>
+<pre><code>HBox(children=(FloatProgress(value=0.0, max=4703754.0), HTML(value=&#39;&#39;)))
+
+
+
+Waveform: tensor([[ 3.0518e-05,  6.1035e-05,  3.0518e-05,  ..., -8.5449e-04,
+         -1.0986e-03, -8.8501e-04]])
+Sample rate: 8000
+Labels: [1, 0, 0, 0, 1, 0, 0, 1]
+
+
+
+
+
+[&lt;matplotlib.lines.Line2D at 0x7f91dbcfb1d0&gt;]
+</code></pre><p><img src="/2020/07/24/Pytorch-Audio-torchaudio/output_41_3.png" alt="png"></p>
+<p>Now, whenever you ask for a sound file from the dataset, it is loaded in memory only when you ask for it.<br>Meaning, the dataset only loads and keeps in memory the items that you want and use, saving on memory.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>We used an example raw audio signal, or waveform, to illustrate how to<br>open an audio file using <code>torchaudio</code>, and how to pre-process,<br>transform, and apply functions to such waveform. We also demonstrated how<br>to use familiar Kaldi functions, as well as utilize built-in datasets to<br>construct our models. Given that <code>torchaudio</code> is built on PyTorch,<br>these techniques can be used as building blocks for more advanced audio<br>applications, such as speech recognition, while leveraging GPUs.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>pytorch</category>
+      </categories>
+      <tags>
+        <tag>pytorch</tag>
+        <tag>深度学习</tag>
+        <tag>pytorch1.5.1官网教程</tag>
+        <tag>Pytorch1.5.1官网教程-Audio</tag>
+      </tags>
+  </entry>
 </search>
