@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="pytorch,深度学习,pytorch1.5.1官网教程,Pytorch1.5.1官网教程-Text," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="张帅的Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Pytorch-Text-使用字符级RNN对名称进行分类:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch-Text-使用字符级RNN对名称进行分类">
+<meta property="og:url" content="http://yoursite.com/2020/07/25/Pytorch-Text-%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E7%BA%A7RNN%E5%AF%B9%E5%90%8D%E7%A7%B0%E8%BF%9B%E8%A1%8C%E5%88%86%E7%B1%BB/index.html">
+<meta property="og:site_name" content="张帅的Blog">
+<meta property="og:description" content="Pytorch-Text-使用字符级RNN对名称进行分类:">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/Z2xbySO.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/25/Pytorch-Text-%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E7%BA%A7RNN%E5%AF%B9%E5%90%8D%E7%A7%B0%E8%BF%9B%E8%A1%8C%E5%88%86%E7%B1%BB/output_25_1.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/25/Pytorch-Text-%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E7%BA%A7RNN%E5%AF%B9%E5%90%8D%E7%A7%B0%E8%BF%9B%E8%A1%8C%E5%88%86%E7%B1%BB/output_27_1.png">
+<meta property="article:published_time" content="2020-07-25T01:01:47.000Z">
+<meta property="article:modified_time" content="2020-07-25T01:02:28.938Z">
+<meta property="article:author" content="Zhangshuai">
+<meta property="article:tag" content="pytorch">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="pytorch1.5.1官网教程">
+<meta property="article:tag" content="Pytorch1.5.1官网教程-Text">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/Z2xbySO.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/25/Pytorch-Text-使用字符级RNN对名称进行分类/"/>
+
+
+
+
+
+  <title>Pytorch-Text-使用字符级RNN对名称进行分类 | 张帅的Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">张帅的Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">用hexo搭建的简易博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            Schedule
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/25/Pytorch-Text-%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E7%BA%A7RNN%E5%AF%B9%E5%90%8D%E7%A7%B0%E8%BF%9B%E8%A1%8C%E5%88%86%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhangshuai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张帅的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Pytorch-Text-使用字符级RNN对名称进行分类</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-25T09:01:47+08:00">
+                2020-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pytorch/" itemprop="url" rel="index">
+                    <span itemprop="name">pytorch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Pytorch-Text-使用字符级RNN对名称进行分类:<br><a id="more"></a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+<p>NLP From Scratch: Classifying Names with a Character-Level RNN</p>
+<hr>
+<p><strong>Author</strong>: <code>Sean Robertson &lt;https://github.com/spro/practical-pytorch&gt;</code>_</p>
+<p>We will be building and training a basic character-level RNN to classify<br>words. This tutorial, along with the following two, show how to do<br>preprocess data for NLP modeling “from scratch”, in particular not using<br>many of the convenience functions of <code>torchtext</code>, so you can see how<br>preprocessing for NLP modeling works at a low level.</p>
+<p>A character-level RNN reads words as a series of characters -<br>outputting a prediction and “hidden state” at each step, feeding its<br>previous hidden state into each next step. We take the final prediction<br>to be the output, i.e. which class the word belongs to.</p>
+<p>Specifically, we’ll train on a few thousand surnames from 18 languages<br>of origin, and predict which language a name is from based on the<br>spelling:</p>
+<p>::</p>
+<pre><code>$ python predict.py Hinton
+(-0.47) Scottish
+(-1.52) English
+(-3.57) Irish
+
+$ python predict.py Schmidhuber
+(-0.19) German
+(-2.48) Czech
+(-2.68) Dutch
+</code></pre><p><strong>Recommended Reading:</strong></p>
+<p>I assume you have at least installed PyTorch, know Python, and<br>understand Tensors:</p>
+<ul>
+<li><a href="https://pytorch.org/" target="_blank" rel="noopener">https://pytorch.org/</a> For installation instructions</li>
+<li>:doc:<code>/beginner/deep_learning_60min_blitz</code> to get started with PyTorch in general</li>
+<li>:doc:<code>/beginner/pytorch_with_examples</code> for a wide and deep overview</li>
+<li>:doc:<code>/beginner/former_torchies_tutorial</code> if you are former Lua Torch user</li>
+</ul>
+<p>It would also be useful to know about RNNs and how they work:</p>
+<ul>
+<li><code>The Unreasonable Effectiveness of Recurrent Neural
+Networks &lt;https://karpathy.github.io/2015/05/21/rnn-effectiveness/&gt;</code>__<br>shows a bunch of real life examples</li>
+<li><code>Understanding LSTM
+Networks &lt;https://colah.github.io/posts/2015-08-Understanding-LSTMs/&gt;</code>__<br>is about LSTMs specifically but also informative about RNNs in<br>general</li>
+</ul>
+<h1 id="Preparing-the-Data"><a href="#Preparing-the-Data" class="headerlink" title="Preparing the Data"></a>Preparing the Data</h1><p>.. Note::<br>   Download the data from<br>   <code>here &lt;https://download.pytorch.org/tutorial/data.zip&gt;</code>_<br>   and extract it to the current directory.</p>
+<p>Included in the <code>data/names</code> directory are 18 text files named as<br>“[Language].txt”. Each file contains a bunch of names, one name per<br>line, mostly romanized (but we still need to convert from Unicode to<br>ASCII).</p>
+<p>We’ll end up with a dictionary of lists of names per language,<br><code>{language: [names ...]}</code>. The generic variables “category” and “line”<br>(for language and name in our case) are used for later extensibility.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals, print_function, division</span><br><span class="line"><span class="keyword">from</span> io <span class="keyword">import</span> open</span><br><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="comment"># glob.glob返回所有匹配的文件路径列表</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findFiles</span><span class="params">(path)</span>:</span> <span class="keyword">return</span> glob.glob(path)</span><br><span class="line"></span><br><span class="line">print(findFiles(<span class="string">'data/names/*.txt'</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> unicodedata</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line">all_letters = string.ascii_letters + <span class="string">" .,;'"</span></span><br><span class="line">n_letters = len(all_letters)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Turn a Unicode string to plain ASCII, thanks to https://stackoverflow.com/a/518232/2809427</span></span><br><span class="line"><span class="comment"># 在Unicode中，某些字符能够用多个合法的编码表示，在需要比较字符串的程序中使用字符的多种表示会产生问题。 </span></span><br><span class="line"><span class="comment"># 为了修正这个问题，你可以使用unicodedata模块先将文本标准化</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">unicodeToAscii</span><span class="params">(s)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">''</span>.join(</span><br><span class="line">        c <span class="keyword">for</span> c <span class="keyword">in</span> unicodedata.normalize(<span class="string">'NFD'</span>, s)</span><br><span class="line">        <span class="keyword">if</span> unicodedata.category(c) != <span class="string">'Mn'</span></span><br><span class="line">        <span class="keyword">and</span> c <span class="keyword">in</span> all_letters</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">print(unicodeToAscii(<span class="string">'Ślusàrski'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build the category_lines dictionary, a list of names per language</span></span><br><span class="line">category_lines = &#123;&#125;</span><br><span class="line">all_categories = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># Read a file and split into lines</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readLines</span><span class="params">(filename)</span>:</span></span><br><span class="line">    lines = open(filename, encoding=<span class="string">'utf-8'</span>).read().strip().split(<span class="string">'\n'</span>)</span><br><span class="line">    <span class="keyword">return</span> [unicodeToAscii(line) <span class="keyword">for</span> line <span class="keyword">in</span> lines]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> findFiles(<span class="string">'data/names/*.txt'</span>):</span><br><span class="line">    category = os.path.splitext(os.path.basename(filename))[<span class="number">0</span>]</span><br><span class="line">    all_categories.append(category)</span><br><span class="line">    lines = readLines(filename)</span><br><span class="line">    category_lines[category] = lines</span><br><span class="line"></span><br><span class="line">n_categories = len(all_categories)</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;data/names\\Arabic.txt&#39;, &#39;data/names\\Chinese.txt&#39;, &#39;data/names\\Czech.txt&#39;, &#39;data/names\\Dutch.txt&#39;, &#39;data/names\\English.txt&#39;, &#39;data/names\\French.txt&#39;, &#39;data/names\\German.txt&#39;, &#39;data/names\\Greek.txt&#39;, &#39;data/names\\Irish.txt&#39;, &#39;data/names\\Italian.txt&#39;, &#39;data/names\\Japanese.txt&#39;, &#39;data/names\\Korean.txt&#39;, &#39;data/names\\Polish.txt&#39;, &#39;data/names\\Portuguese.txt&#39;, &#39;data/names\\Russian.txt&#39;, &#39;data/names\\Scottish.txt&#39;, &#39;data/names\\Spanish.txt&#39;, &#39;data/names\\Vietnamese.txt&#39;]
+Slusarski
+</code></pre><p>Now we have <code>category_lines</code>, a dictionary mapping each category<br>(language) to a list of lines (names). We also kept track of<br><code>all_categories</code> (just a list of languages) and <code>n_categories</code> for<br>later reference.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(category_lines[<span class="string">'Italian'</span>][:<span class="number">5</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;Abandonato&#39;, &#39;Abatangelo&#39;, &#39;Abatantuono&#39;, &#39;Abate&#39;, &#39;Abategiovanni&#39;]
+</code></pre><h2 id="Turning-Names-into-Tensors"><a href="#Turning-Names-into-Tensors" class="headerlink" title="Turning Names into Tensors"></a>Turning Names into Tensors</h2><p>Now that we have all the names organized, we need to turn them into<br>Tensors to make any use of them.</p>
+<p>To represent a single letter, we use a “one-hot vector” of size<br><code>&lt;1 x n_letters&gt;</code>. A one-hot vector is filled with 0s except for a 1<br>at index of the current letter, e.g. <code>&quot;b&quot; = &lt;0 1 0 0 0 ...&gt;</code>.</p>
+<p>To make a word we join a bunch of those into a 2D matrix<br><code>&lt;line_length x 1 x n_letters&gt;</code>.</p>
+<p>That extra 1 dimension is because PyTorch assumes everything is in<br>batches - we’re just using a batch size of 1 here.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="comment"># Find letter index from all_letters, e.g. "a" = 0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">letterToIndex</span><span class="params">(letter)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> all_letters.find(letter)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Just for demonstration, turn a letter into a &lt;1 x n_letters&gt; Tensor</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">letterToTensor</span><span class="params">(letter)</span>:</span></span><br><span class="line">    tensor = torch.zeros(<span class="number">1</span>, n_letters)</span><br><span class="line">    tensor[<span class="number">0</span>][letterToIndex(letter)] = <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> tensor</span><br><span class="line"></span><br><span class="line"><span class="comment"># Turn a line into a &lt;line_length x 1 x n_letters&gt;,</span></span><br><span class="line"><span class="comment"># or an array of one-hot letter vectors</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lineToTensor</span><span class="params">(line)</span>:</span></span><br><span class="line">    tensor = torch.zeros(len(line), <span class="number">1</span>, n_letters)</span><br><span class="line">    <span class="keyword">for</span> li, letter <span class="keyword">in</span> enumerate(line):</span><br><span class="line">        tensor[li][<span class="number">0</span>][letterToIndex(letter)] = <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> tensor</span><br><span class="line"></span><br><span class="line">print(letterToTensor(<span class="string">'J'</span>))</span><br><span class="line"></span><br><span class="line">print(lineToTensor(<span class="string">'Jones'</span>).size())</span><br></pre></td></tr></table></figure>
+<pre><code>tensor([[0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+         0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.,
+         0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+         0., 0., 0.]])
+torch.Size([5, 1, 57])
+</code></pre><h1 id="Creating-the-Network"><a href="#Creating-the-Network" class="headerlink" title="Creating the Network"></a>Creating the Network</h1><p>Before autograd, creating a recurrent neural network in Torch involved<br>cloning the parameters of a layer over several timesteps. The layers<br>held hidden state and gradients which are now entirely handled by the<br>graph itself. This means you can implement a RNN in a very “pure” way,<br>as regular feed-forward layers.</p>
+<p>This RNN module (mostly copied from <code>the PyTorch for Torch users
+tutorial &lt;https://pytorch.org/tutorials/beginner/former_torchies/
+nn_tutorial.html#example-2-recurrent-net&gt;</code>__)<br>is just 2 linear layers which operate on an input and hidden state, with<br>a LogSoftmax layer after the output.<br><img src="https://i.imgur.com/Z2xbySO.png" alt></p>
+<h1 id="Torch-cat"><a href="#Torch-cat" class="headerlink" title="Torch.cat()"></a>Torch.cat()</h1><p>cat是concatnate的意思：拼接，联系在一起。</p>
+<p>先说cat( )的普通用法</p>
+<p>如果我们有两个tensor是A和B，想把他们拼接在一起，需要如下操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C &#x3D; torch.cat( (A,B),0 )  #按维数0拼接（竖着拼）</span><br><span class="line">C &#x3D; torch.cat( (A,B),1 )  #按维数1拼接（横着拼）</span><br></pre></td></tr></table></figure><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import torch</span><br><span class="line">&gt;&gt;&gt; A&#x3D;torch.ones(2,3)    #2x3的张量（矩阵）                                     </span><br><span class="line">&gt;&gt;&gt; A</span><br><span class="line">tensor([[ 1.,  1.,  1.],</span><br><span class="line">        [ 1.,  1.,  1.]])</span><br><span class="line">&gt;&gt;&gt; B&#x3D;2*torch.ones(4,3)  #4x3的张量（矩阵）                                    </span><br><span class="line">&gt;&gt;&gt; B</span><br><span class="line">tensor([[ 2.,  2.,  2.],</span><br><span class="line">        [ 2.,  2.,  2.],</span><br><span class="line">        [ 2.,  2.,  2.],</span><br><span class="line">        [ 2.,  2.,  2.]])</span><br><span class="line">&gt;&gt;&gt; C&#x3D;torch.cat((A,B),0)  #按维数0（行）拼接</span><br><span class="line">&gt;&gt;&gt; C</span><br><span class="line">tensor([[ 1.,  1.,  1.],</span><br><span class="line">         [ 1.,  1.,  1.],</span><br><span class="line">         [ 2.,  2.,  2.],</span><br><span class="line">         [ 2.,  2.,  2.],</span><br><span class="line">         [ 2.,  2.,  2.],</span><br><span class="line">         [ 2.,  2.,  2.]])</span><br><span class="line">&gt;&gt;&gt; C.size()</span><br><span class="line">torch.Size([6, 3])</span><br><span class="line">&gt;&gt;&gt; D&#x3D;2*torch.ones(2,4) #2x4的张量（矩阵）</span><br><span class="line">&gt;&gt;&gt; C&#x3D;torch.cat((A,D),1)#按维数1（列）拼接</span><br><span class="line">&gt;&gt;&gt; C</span><br><span class="line">tensor([[ 1.,  1.,  1.,  2.,  2.,  2.,  2.],</span><br><span class="line">        [ 1.,  1.,  1.,  2.,  2.,  2.,  2.]])</span><br><span class="line">&gt;&gt;&gt; C.size()</span><br><span class="line">torch.Size([2, 7])</span><br></pre></td></tr></table></figure><br>其次，cat还可以把list中的tensor拼接起来。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">x &#x3D; torch.Tensor([[1],[2],[3]])</span><br><span class="line">x1 &#x3D; [x*2 for i in range(1,4)]</span><br><span class="line"></span><br><span class="line">x.shape</span><br><span class="line">torch.Size([3,1])</span><br><span class="line"></span><br><span class="line">x &#x3D; torch.Tensor([[1],[2],[3]])</span><br><span class="line">x.shape</span><br><span class="line">torch.Size([3,1])</span><br><span class="line"></span><br><span class="line">x1 &#x3D; [x*2 for i in range(1,4)]</span><br><span class="line">len(x1)</span><br><span class="line">&gt;&gt;3</span><br><span class="line"></span><br><span class="line">x1</span><br><span class="line"></span><br><span class="line">&gt;&gt;</span><br><span class="line">[tensor([[2.],</span><br><span class="line">         [4.],</span><br><span class="line">         [6]]),tensor([[2.],[4.],[6.]]),tensor([[2.],[4.],[6.]])]</span><br><span class="line"></span><br><span class="line">x2 &#x3D; &#x3D; torch.cat((x1),1)</span><br><span class="line">x2</span><br><span class="line"></span><br><span class="line">&gt;&gt;tensor ([[2.,2.,2.],[4.,4.,4.],[6.,6.,6]])</span><br><span class="line"></span><br><span class="line">type(x1)</span><br><span class="line">&gt;&gt; list</span><br></pre></td></tr></table></figure><br>上面的代码可以合成一行来写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x2 &#x3D; torch.cat([x*2 for i in range(1,4)])</span><br><span class="line">x2</span><br><span class="line">&gt;&gt;</span><br><span class="line">tensor ([[2.,2.,2.],[4.,4.,4.],[6.,6.,6]])</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RNN</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, input_size, hidden_size, output_size)</span>:</span></span><br><span class="line">        super(RNN, self).__init__()</span><br><span class="line"></span><br><span class="line">        self.hidden_size = hidden_size</span><br><span class="line"></span><br><span class="line">        self.i2h = nn.Linear(input_size + hidden_size, hidden_size)</span><br><span class="line">        self.i2o = nn.Linear(input_size + hidden_size, output_size)</span><br><span class="line">        self.softmax = nn.LogSoftmax(dim=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, input, hidden)</span>:</span></span><br><span class="line">        combined = torch.cat((input, hidden), <span class="number">1</span>)</span><br><span class="line">        hidden = self.i2h(combined)</span><br><span class="line">        output = self.i2o(combined)</span><br><span class="line">        output = self.softmax(output)</span><br><span class="line">        <span class="keyword">return</span> output, hidden</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initHidden</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> torch.zeros(<span class="number">1</span>, self.hidden_size)</span><br><span class="line"></span><br><span class="line">n_hidden = <span class="number">128</span></span><br><span class="line">rnn = RNN(n_letters, n_hidden, n_categories)</span><br></pre></td></tr></table></figure>
+<p>To run a step of this network we need to pass an input (in our case, the<br>Tensor for the current letter) and a previous hidden state (which we<br>initialize as zeros at first). We’ll get back the output (probability of<br>each language) and a next hidden state (which we keep for the next<br>step).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">input = letterToTensor(<span class="string">'A'</span>)</span><br><span class="line">hidden =torch.zeros(<span class="number">1</span>, n_hidden)</span><br><span class="line"></span><br><span class="line">output, next_hidden = rnn(input, hidden)</span><br></pre></td></tr></table></figure>
+<p>For the sake of efficiency we don’t want to be creating a new Tensor for<br>every step, so we will use <code>lineToTensor</code> instead of<br><code>letterToTensor</code> and use slices. This could be further optimized by<br>pre-computing batches of Tensors.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">input = lineToTensor(<span class="string">'Albert'</span>)</span><br><span class="line">hidden = torch.zeros(<span class="number">1</span>, n_hidden)</span><br><span class="line"></span><br><span class="line">output, next_hidden = rnn(input[<span class="number">0</span>], hidden)</span><br><span class="line">print(output)</span><br></pre></td></tr></table></figure>
+<pre><code>tensor([[-2.8013, -3.0086, -2.8838, -2.8652, -2.8300, -2.7883, -2.8614, -2.9069,
+         -2.9787, -2.8336, -2.9085, -2.9029, -2.9565, -2.8683, -2.9269, -2.9332,
+         -2.9334, -2.8689]], grad_fn=&lt;LogSoftmaxBackward&gt;)
+</code></pre><p>As you can see the output is a <code>&lt;1 x n_categories&gt;</code> Tensor, where<br>every item is the likelihood of that category (higher is more likely).</p>
+<h1 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h1><h2 id="Preparing-for-Training"><a href="#Preparing-for-Training" class="headerlink" title="Preparing for Training"></a>Preparing for Training</h2><p>Before going into training we should make a few helper functions. The<br>first is to interpret the output of the network, which we know to be a<br>likelihood of each category. We can use <code>Tensor.topk</code> to get the index<br>of the greatest value:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">categoryFromOutput</span><span class="params">(output)</span>:</span></span><br><span class="line">    top_n, top_i = output.topk(<span class="number">1</span>)</span><br><span class="line">    category_i = top_i[<span class="number">0</span>].item()</span><br><span class="line">    <span class="keyword">return</span> all_categories[category_i], category_i</span><br><span class="line"></span><br><span class="line">print(categoryFromOutput(output))</span><br></pre></td></tr></table></figure>
+<pre><code>(&#39;French&#39;, 5)
+</code></pre><p>We will also want a quick way to get a training example (a name and its<br>language):</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">randomChoice</span><span class="params">(l)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> l[random.randint(<span class="number">0</span>, len(l) - <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">randomTrainingExample</span><span class="params">()</span>:</span></span><br><span class="line">    category = randomChoice(all_categories)</span><br><span class="line">    line = randomChoice(category_lines[category])</span><br><span class="line">    category_tensor = torch.tensor([all_categories.index(category)], dtype=torch.long)</span><br><span class="line">    line_tensor = lineToTensor(line)</span><br><span class="line">    <span class="keyword">return</span> category, line, category_tensor, line_tensor</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    category, line, category_tensor, line_tensor = randomTrainingExample()</span><br><span class="line">    print(<span class="string">'category ='</span>, category, <span class="string">'/ line ='</span>, line)</span><br></pre></td></tr></table></figure>
+<pre><code>category = German / line = Reiter
+category = Spanish / line = Roldan
+category = Vietnamese / line = Lieu
+category = Japanese / line = Maita
+category = Polish / line = Wojda
+category = Greek / line = Forakis
+category = Italian / line = Voltolini
+category = Scottish / line = Hill
+category = Portuguese / line = Nunes
+category = Scottish / line = Wilson
+</code></pre><h2 id="Training-the-Network"><a href="#Training-the-Network" class="headerlink" title="Training the Network"></a>Training the Network</h2><p>Now all it takes to train this network is show it a bunch of examples,<br>have it make guesses, and tell it if it’s wrong.</p>
+<p>For the loss function <code>nn.NLLLoss</code> is appropriate, since the last<br>layer of the RNN is <code>nn.LogSoftmax</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">criterion = nn.NLLLoss()</span><br></pre></td></tr></table></figure>
+<p>Each loop of training will:</p>
+<ul>
+<li>Create input and target tensors</li>
+<li>Create a zeroed initial hidden state</li>
+<li><p>Read each letter in and</p>
+<ul>
+<li>Keep hidden state for next letter</li>
+</ul>
+</li>
+<li><p>Compare final output to target</p>
+</li>
+<li>Back-propagate</li>
+<li>Return the output and loss</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">learning_rate = <span class="number">0.005</span> <span class="comment"># If you set this too high, it might explode. If too low, it might not learn</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(category_tensor, line_tensor)</span>:</span></span><br><span class="line">    hidden = rnn.initHidden()</span><br><span class="line"></span><br><span class="line">    rnn.zero_grad()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(line_tensor.size()[<span class="number">0</span>]):</span><br><span class="line">        output, hidden = rnn(line_tensor[i], hidden)</span><br><span class="line"></span><br><span class="line">    loss = criterion(output, category_tensor)</span><br><span class="line">    loss.backward()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Add parameters' gradients to their values, multiplied by learning rate</span></span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> rnn.parameters():</span><br><span class="line">        p.data.add_(p.grad.data, alpha=-learning_rate)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> output, loss.item()</span><br></pre></td></tr></table></figure>
+<p>Now we just have to run that with a bunch of examples. Since the<br><code>train</code> function returns both the output and loss we can print its<br>guesses and also keep track of loss for plotting. Since there are 1000s<br>of examples we print only every <code>print_every</code> examples, and take an<br>average of the loss.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line">n_iters = <span class="number">100000</span></span><br><span class="line">print_every = <span class="number">5000</span></span><br><span class="line">plot_every = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Keep track of losses for plotting</span></span><br><span class="line">current_loss = <span class="number">0</span></span><br><span class="line">all_losses = []</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">timeSince</span><span class="params">(since)</span>:</span></span><br><span class="line">    now = time.time()</span><br><span class="line">    s = now - since</span><br><span class="line">    m = math.floor(s / <span class="number">60</span>)</span><br><span class="line">    s -= m * <span class="number">60</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'%dm %ds'</span> % (m, s)</span><br><span class="line"></span><br><span class="line">start = time.time()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> iter <span class="keyword">in</span> range(<span class="number">1</span>, n_iters + <span class="number">1</span>):</span><br><span class="line">    category, line, category_tensor, line_tensor = randomTrainingExample()</span><br><span class="line">    output, loss = train(category_tensor, line_tensor)</span><br><span class="line">    current_loss += loss</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Print iter number, loss, name and guess</span></span><br><span class="line">    <span class="keyword">if</span> iter % print_every == <span class="number">0</span>:</span><br><span class="line">        guess, guess_i = categoryFromOutput(output)</span><br><span class="line">        correct = <span class="string">'✓'</span> <span class="keyword">if</span> guess == category <span class="keyword">else</span> <span class="string">'✗ (%s)'</span> % category</span><br><span class="line">        print(<span class="string">'%d %d%% (%s) %.4f %s / %s %s'</span> % (iter, iter / n_iters * <span class="number">100</span>, timeSince(start), loss, line, guess, correct))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Add current loss avg to list of losses</span></span><br><span class="line">    <span class="keyword">if</span> iter % plot_every == <span class="number">0</span>:</span><br><span class="line">        all_losses.append(current_loss / plot_every)</span><br><span class="line">        current_loss = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<pre><code>5000 5% (0m 26s) 2.2285 Tsen / Chinese ✓
+10000 10% (0m 45s) 1.7232 Ursler / Dutch ✗ (German)
+15000 15% (1m 2s) 3.3629 Power / German ✗ (Irish)
+20000 20% (1m 19s) 1.1055 Ferreiro / Portuguese ✓
+25000 25% (1m 37s) 1.1813 Do / Vietnamese ✓
+30000 30% (1m 53s) 1.9952 Pak / Chinese ✗ (Korean)
+35000 35% (2m 11s) 1.0685 Zientek / Czech ✗ (Polish)
+40000 40% (2m 34s) 0.3656 Arnoni / Italian ✓
+45000 45% (2m 56s) 2.5408 Schuchardt / Czech ✗ (German)
+50000 50% (3m 19s) 0.9137 Ellwood / English ✓
+55000 55% (3m 43s) 2.6915 Griffiths / Greek ✗ (English)
+60000 60% (4m 5s) 0.0363 Quach / Vietnamese ✓
+65000 65% (4m 27s) 0.1474 Rijnders / Dutch ✓
+70000 70% (4m 49s) 1.8646 Clements / Portuguese ✗ (English)
+75000 75% (5m 13s) 0.3696 Bobienski / Polish ✓
+80000 80% (5m 37s) 1.0411 Klerx / Dutch ✓
+85000 85% (5m 58s) 2.3457 Maria / Spanish ✗ (Portuguese)
+90000 90% (6m 24s) 0.5750 Echevarria / Spanish ✓
+95000 95% (6m 47s) 0.0762 Ohmiya / Japanese ✓
+100000 100% (7m 9s) 2.5785 Kock / Czech ✗ (German)
+</code></pre><h2 id="Plotting-the-Results"><a href="#Plotting-the-Results" class="headerlink" title="Plotting the Results"></a>Plotting the Results</h2><p>Plotting the historical loss from <code>all_losses</code> shows the network<br>learning:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> matplotlib.ticker <span class="keyword">as</span> ticker</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(all_losses)</span><br></pre></td></tr></table></figure>
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x18c353c04a8&gt;]
+</code></pre><p><img src="/2020/07/25/Pytorch-Text-%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E7%BA%A7RNN%E5%AF%B9%E5%90%8D%E7%A7%B0%E8%BF%9B%E8%A1%8C%E5%88%86%E7%B1%BB/output_25_1.png" alt="png"></p>
+<h1 id="Evaluating-the-Results"><a href="#Evaluating-the-Results" class="headerlink" title="Evaluating the Results"></a>Evaluating the Results</h1><p>To see how well the network performs on different categories, we will<br>create a confusion matrix, indicating for every actual language (rows)<br>which language the network guesses (columns). To calculate the confusion<br>matrix a bunch of samples are run through the network with<br><code>evaluate()</code>, which is the same as <code>train()</code> minus the backprop.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Keep track of correct guesses in a confusion matrix</span></span><br><span class="line">confusion = torch.zeros(n_categories, n_categories)</span><br><span class="line">n_confusion = <span class="number">10000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Just return an output given a line</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">evaluate</span><span class="params">(line_tensor)</span>:</span></span><br><span class="line">    hidden = rnn.initHidden()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(line_tensor.size()[<span class="number">0</span>]):</span><br><span class="line">        output, hidden = rnn(line_tensor[i], hidden)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> output</span><br><span class="line"></span><br><span class="line"><span class="comment"># Go through a bunch of examples and record which are correctly guessed</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n_confusion):</span><br><span class="line">    category, line, category_tensor, line_tensor = randomTrainingExample()</span><br><span class="line">    output = evaluate(line_tensor)</span><br><span class="line">    guess, guess_i = categoryFromOutput(output)</span><br><span class="line">    category_i = all_categories.index(category)</span><br><span class="line">    confusion[category_i][guess_i] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Normalize by dividing every row by its sum</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n_categories):</span><br><span class="line">    confusion[i] = confusion[i] / confusion[i].sum()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set up plot</span></span><br><span class="line">fig = plt.figure()</span><br><span class="line">ax = fig.add_subplot(<span class="number">111</span>)</span><br><span class="line">cax = ax.matshow(confusion.numpy())</span><br><span class="line">fig.colorbar(cax)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set up axes</span></span><br><span class="line">ax.set_xticklabels([<span class="string">''</span>] + all_categories, rotation=<span class="number">90</span>)</span><br><span class="line">ax.set_yticklabels([<span class="string">''</span>] + all_categories)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Force label at every tick</span></span><br><span class="line">ax.xaxis.set_major_locator(ticker.MultipleLocator(<span class="number">1</span>))</span><br><span class="line">ax.yaxis.set_major_locator(ticker.MultipleLocator(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># sphinx_gallery_thumbnail_number = 2</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<pre><code>C:\Users\18025\Anaconda3\envs\pytorch\lib\site-packages\ipykernel_launcher.py:33: UserWarning: FixedFormatter should only be used together with FixedLocator
+C:\Users\18025\Anaconda3\envs\pytorch\lib\site-packages\ipykernel_launcher.py:34: UserWarning: FixedFormatter should only be used together with FixedLocator
+</code></pre><p><img src="/2020/07/25/Pytorch-Text-%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E7%BA%A7RNN%E5%AF%B9%E5%90%8D%E7%A7%B0%E8%BF%9B%E8%A1%8C%E5%88%86%E7%B1%BB/output_27_1.png" alt="png"></p>
+<p>You can pick out bright spots off the main axis that show which<br>languages it guesses incorrectly, e.g. Chinese for Korean, and Spanish<br>for Italian. It seems to do very well with Greek, and very poorly with<br>English (perhaps because of overlap with other languages).</p>
+<h2 id="Running-on-User-Input"><a href="#Running-on-User-Input" class="headerlink" title="Running on User Input"></a>Running on User Input</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(input_line, n_predictions=<span class="number">3</span>)</span>:</span></span><br><span class="line">    print(<span class="string">'\n&gt; %s'</span> % input_line)</span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        output = evaluate(lineToTensor(input_line))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Get top N categories</span></span><br><span class="line">        topv, topi = output.topk(n_predictions, <span class="number">1</span>, <span class="literal">True</span>)</span><br><span class="line">        predictions = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n_predictions):</span><br><span class="line">            value = topv[<span class="number">0</span>][i].item()</span><br><span class="line">            category_index = topi[<span class="number">0</span>][i].item()</span><br><span class="line">            print(<span class="string">'(%.2f) %s'</span> % (value, all_categories[category_index]))</span><br><span class="line">            predictions.append([value, all_categories[category_index]])</span><br><span class="line"></span><br><span class="line">predict(<span class="string">'Dovesky'</span>)</span><br><span class="line">predict(<span class="string">'Jackson'</span>)</span><br><span class="line">predict(<span class="string">'Satoshi'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>&gt; Dovesky
+(-0.80) Russian
+(-1.53) Czech
+(-1.98) English
+
+&gt; Jackson
+(-0.33) Scottish
+(-1.99) English
+(-3.31) Russian
+
+&gt; Satoshi
+(-0.90) Italian
+(-1.65) Japanese
+(-2.18) Arabic
+</code></pre><p>The final versions of the scripts <code>in the Practical PyTorch
+repo &lt;https://github.com/spro/practical-pytorch/tree/master/char-rnn-classification&gt;</code>__<br>split the above code into a few files:</p>
+<ul>
+<li><code>data.py</code> (loads files)</li>
+<li><code>model.py</code> (defines the RNN)</li>
+<li><code>train.py</code> (runs training)</li>
+<li><code>predict.py</code> (runs <code>predict()</code> with command line arguments)</li>
+<li><code>server.py</code> (serve prediction as a JSON API with bottle.py)</li>
+</ul>
+<p>Run <code>train.py</code> to train and save the network.</p>
+<p>Run <code>predict.py</code> with a name to view predictions:</p>
+<p>::</p>
+<pre><code>$ python predict.py Hazaki
+(-0.42) Japanese
+(-1.39) Polish
+(-3.51) Czech
+</code></pre><p>Run <code>server.py</code> and visit <a href="http://localhost:5533/Yourname" target="_blank" rel="noopener">http://localhost:5533/Yourname</a> to get JSON<br>output of predictions.</p>
+<h1 id="Exercises"><a href="#Exercises" class="headerlink" title="Exercises"></a>Exercises</h1><ul>
+<li><p>Try with a different dataset of line -&gt; category, for example:</p>
+<ul>
+<li>Any word -&gt; language</li>
+<li>First name -&gt; gender</li>
+<li>Character name -&gt; writer</li>
+<li>Page title -&gt; blog or subreddit</li>
+</ul>
+</li>
+<li><p>Get better results with a bigger and/or better shaped network</p>
+<ul>
+<li>Add more linear layers</li>
+<li>Try the <code>nn.LSTM</code> and <code>nn.GRU</code> layers</li>
+<li>Combine multiple of these RNNs as a higher level network</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin.png" alt="Zhangshuai WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/zhifubao.jpg" alt="Zhangshuai Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pytorch/" rel="tag"># pytorch</a>
+          
+            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/pytorch1-5-1%E5%AE%98%E7%BD%91%E6%95%99%E7%A8%8B/" rel="tag"># pytorch1.5.1官网教程</a>
+          
+            <a href="/tags/Pytorch1-5-1%E5%AE%98%E7%BD%91%E6%95%99%E7%A8%8B-Text/" rel="tag"># Pytorch1.5.1官网教程-Text</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/25/Pytorch-Text-%E7%94%A8NN-TRANFORMER%E5%92%8CTORCHTEXT%E8%BF%9B%E8%A1%8C%E5%BA%8F%E5%88%97%E5%88%B0%E5%BA%8F%E5%88%97%E5%BB%BA%E6%A8%A1/" rel="next" title="Pytorch-Text-用NN.TRANFORMER和TORCHTEXT进行序列到序列建模">
+                <i class="fa fa-chevron-left"></i> Pytorch-Text-用NN.TRANFORMER和TORCHTEXT进行序列到序列建模
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/25/Pytorch-Text-%E7%94%A8%E5%AD%97%E7%AC%A6%E7%BA%A7RNN%E7%94%9F%E6%88%90%E5%90%8D%E7%A7%B0/" rel="prev" title="Pytorch-Text-用字符级RNN生成名称">
+                Pytorch-Text-用字符级RNN生成名称 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar2.jpg"
+                alt="Zhangshuai" />
+            
+              <p class="site-author-name" itemprop="name">Zhangshuai</p>
+              <p class="site-description motion-element" itemprop="description">你刚才说了JOJO对吧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=486194129&auto=1&height=66"></iframe>
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/GitHubzhangshuai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="1802528291@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ying-ying-ying-vue" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://music.163.com/#/user/home?id=377737250" target="_blank" title="网易云音乐">
+                      
+                        <i class="fa fa-fw fa-globe"></i>网易云音乐</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preparing-the-Data"><span class="nav-number">1.</span> <span class="nav-text">Preparing the Data</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Turning-Names-into-Tensors"><span class="nav-number">1.1.</span> <span class="nav-text">Turning Names into Tensors</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Creating-the-Network"><span class="nav-number">2.</span> <span class="nav-text">Creating the Network</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Torch-cat"><span class="nav-number">3.</span> <span class="nav-text">Torch.cat()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Training"><span class="nav-number">4.</span> <span class="nav-text">Training</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Preparing-for-Training"><span class="nav-number">4.1.</span> <span class="nav-text">Preparing for Training</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Training-the-Network"><span class="nav-number">4.2.</span> <span class="nav-text">Training the Network</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Plotting-the-Results"><span class="nav-number">4.3.</span> <span class="nav-text">Plotting the Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Evaluating-the-Results"><span class="nav-number">5.</span> <span class="nav-text">Evaluating the Results</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Running-on-User-Input"><span class="nav-number">5.1.</span> <span class="nav-text">Running on User Input</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exercises"><span class="nav-number">6.</span> <span class="nav-text">Exercises</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script type="text/javascript" src="/js/src/busuanzi.js"></script>
+
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-[object Object]"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张帅</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+
+
+
+
+
+
+  <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  <span class="post-meta-divider">|</span>
+  <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+
+<script>
+setTimeout(function(){
+document.getElementById('busuanzi_container_site_pv').style.display='inline-block'
+document.getElementById('busuanzi_container_site_uv').style.display='inline-block'
+},1000)
+</script>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>
