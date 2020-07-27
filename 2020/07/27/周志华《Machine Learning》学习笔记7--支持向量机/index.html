@@ -81,31 +81,54 @@
 
 
 
-<meta name="description" content="上篇主要介绍和讨论了支持向量机。从最初的分类函数，通过最大化分类间隔，max(1&#x2F;||w||)，min(1&#x2F;2||w||^2)，凸二次规划，朗格朗日函数，对偶问题，一直到最后的SMO算法求解，都为寻找一个最优解。接着引入核函数将低维空间映射到高维特征空间，解决了非线性可分的情形。最后介绍了软间隔支持向量机，解决了outlier挤歪超平面的问题。本篇将讨论一个经典的统计学习算法—贝叶斯分类器。">
+<meta name="description" content="上篇主要介绍了神经网络。首先从生物学神经元出发，引出了它的数学抽象模型—MP神经元以及由两层神经元组成的感知机模型，并基于梯度下降的方法描述了感知机模型的权值调整规则。由于简单的感知机不能处理线性不可分的情形，因此接着引入了含隐层的前馈型神经网络，BP神经网络则是其中最为成功的一种学习方法，它使用误差逆传播的方法来逐层调节连接权。最后简单介绍了局部&#x2F;全局最小以及目前十分火热的深度学习的概念。本篇围">
 <meta property="og:type" content="article">
-<meta property="og:title" content="周志华《Machine Learning》学习笔记(8)">
-<meta property="og:url" content="http://yoursite.com/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B08--%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/index.html">
+<meta property="og:title" content="周志华《Machine Learning》学习笔记(7)">
+<meta property="og:url" content="http://yoursite.com/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B07--%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/index.html">
 <meta property="og:site_name" content="张帅的Blog">
-<meta property="og:description" content="上篇主要介绍和讨论了支持向量机。从最初的分类函数，通过最大化分类间隔，max(1&#x2F;||w||)，min(1&#x2F;2||w||^2)，凸二次规划，朗格朗日函数，对偶问题，一直到最后的SMO算法求解，都为寻找一个最优解。接着引入核函数将低维空间映射到高维特征空间，解决了非线性可分的情形。最后介绍了软间隔支持向量机，解决了outlier挤歪超平面的问题。本篇将讨论一个经典的统计学习算法—贝叶斯分类器。">
+<meta property="og:description" content="上篇主要介绍了神经网络。首先从生物学神经元出发，引出了它的数学抽象模型—MP神经元以及由两层神经元组成的感知机模型，并基于梯度下降的方法描述了感知机模型的权值调整规则。由于简单的感知机不能处理线性不可分的情形，因此接着引入了含隐层的前馈型神经网络，BP神经网络则是其中最为成功的一种学习方法，它使用误差逆传播的方法来逐层调节连接权。最后简单介绍了局部&#x2F;全局最小以及目前十分火热的深度学习的概念。本篇围">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc83fd7a2575.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc83fd15db94.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc83fd308600.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc83fd37c502.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc83fd501ad3.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc83fd799610.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc83fd70fb73.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc83fd705729.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc83fd55e102.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc83fd6678cd.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc83fe54aaed.png">
-<meta property="article:published_time" content="2020-07-11T00:20:38.000Z">
-<meta property="article:modified_time" content="2020-07-27T11:02:35.898Z">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f6a2ec8a.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f6a06d5a.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f690a14b.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f690ac26.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f697d499.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f696fd10.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f69af163.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f697bb1d.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f6a838c4.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f6978cbb.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f9332be7.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f93321c5.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f9330967.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f9333e66.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f935ae21.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f9338a9d.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f93419ca.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f9353166.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f933c947.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f934303e.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730cc68b3b.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730cc1b673.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730cc49adc.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730cc173b2.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730cc05959.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730ccc468c.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730ccc541a.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730ccce68e.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730cc6c9fe.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730cc5e5a9.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc7317aa3411.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc7317a4c96e.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc7317a6dff2.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc7317ab6646.png">
+<meta property="article:published_time" content="2020-07-26T23:20:38.000Z">
+<meta property="article:modified_time" content="2020-07-27T11:05:45.960Z">
 <meta property="article:author" content="Zhangshuai">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="周志华《Machine Learning》学习笔记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2018/10/18/5bc83fd7a2575.png">
+<meta name="twitter:image" content="https://i.loli.net/2018/10/17/5bc72f6a2ec8a.png">
 
 
 
@@ -135,13 +158,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/07/11/周志华《Machine Learning》学习笔记8--贝叶斯分类器/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/07/27/周志华《Machine Learning》学习笔记7--支持向量机/"/>
 
 
 
 
 
-  <title>周志华《Machine Learning》学习笔记(8) | 张帅的Blog</title>
+  <title>周志华《Machine Learning》学习笔记(7) | 张帅的Blog</title>
   
 
 
@@ -342,7 +365,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B08--%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B07--%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhangshuai">
@@ -359,7 +382,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">周志华《Machine Learning》学习笔记(8)</h1>
+          <h1 class="post-title" itemprop="name headline">周志华《Machine Learning》学习笔记(7)</h1>
         
 
         <div class="post-meta">
@@ -371,8 +394,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-11T08:20:38+08:00">
-                2020-07-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-27T07:20:38+08:00">
+                2020-07-27
               </time>
             
 
@@ -432,7 +455,7 @@
       
 
       
-        <p>上篇主要介绍和讨论了支持向量机。从最初的分类函数，通过最大化分类间隔，max(1/||w||)，min(1/2||w||^2)，凸二次规划，朗格朗日函数，对偶问题，一直到最后的SMO算法求解，都为寻找一个最优解。接着引入核函数将低维空间映射到高维特征空间，解决了非线性可分的情形。最后介绍了软间隔支持向量机，解决了outlier挤歪超平面的问题。本篇将讨论一个经典的统计学习算法—<strong>贝叶斯分类器</strong>。<br><a id="more"></a></p>
+        <p>上篇主要介绍了神经网络。首先从生物学神经元出发，引出了它的数学抽象模型—MP神经元以及由两层神经元组成的感知机模型，并基于梯度下降的方法描述了感知机模型的权值调整规则。由于简单的感知机不能处理线性不可分的情形，因此接着引入了含隐层的前馈型神经网络，BP神经网络则是其中最为成功的一种学习方法，它使用误差逆传播的方法来逐层调节连接权。最后简单介绍了局部/全局最小以及目前十分火热的深度学习的概念。本篇围绕的核心则是曾经一度取代过神经网络的另一种监督学习算法—<strong>支持向量机</strong>（Support Vector Machine），简称<strong>SVM</strong>。<br><a id="more"></a></p>
 <p>参考<a href="https://github.com/Vay-keen/Machine-learning-learning-notes" target="_blank" rel="noopener">此项目</a></p>
 <div style="text-align:center;font-size:25px">目录</div>
 
@@ -455,43 +478,87 @@
 <li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B016--%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(16)—概率图模型</a></li>
 <li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B017--%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(17)—强化学习</a></li>
 </ul>
-<h1 id="7、贝叶斯分类器"><a href="#7、贝叶斯分类器" class="headerlink" title="7、贝叶斯分类器"></a><strong>7、贝叶斯分类器</strong></h1><p>贝叶斯分类器是一种概率框架下的统计学习分类器，对分类任务而言，假设在相关概率都已知的情况下，贝叶斯分类器考虑如何基于这些概率为样本判定最优的类标。在开始介绍贝叶斯决策论之前，我们首先来回顾下概率论委员会常委—贝叶斯公式。</p>
-<p><img src="https://i.loli.net/2018/10/18/5bc83fd7a2575.png" alt="1.png"></p>
-<h2 id="7-1-贝叶斯决策论"><a href="#7-1-贝叶斯决策论" class="headerlink" title="7.1 贝叶斯决策论"></a><strong>7.1 贝叶斯决策论</strong></h2><p>若将上述定义中样本空间的划分Bi看做为类标，A看做为一个新的样本，则很容易将条件概率理解为样本A是类别Bi的概率。在机器学习训练模型的过程中，往往我们都试图去优化一个风险函数，因此在概率框架下我们也可以为贝叶斯定义“<strong>条件风险</strong>”（conditional risk）。</p>
-<p><img src="https://i.loli.net/2018/10/18/5bc83fd15db94.png" alt="2.png"></p>
-<p>我们的任务就是寻找一个判定准则最小化所有样本的条件风险总和，因此就有了<strong>贝叶斯判定准则</strong>（Bayes decision rule）:为最小化总体风险，只需在每个样本上选择那个使得条件风险最小的类标。</p>
-<p><img src="https://i.loli.net/2018/10/18/5bc83fd308600.png" alt="3.png"></p>
-<p>若损失函数λ取0-1损失，则有：</p>
-<p><img src="https://i.loli.net/2018/10/18/5bc83fd37c502.png" alt="4.png"></p>
-<p>即对于每个样本x，选择其后验概率P（c | x）最大所对应的类标，能使得总体风险函数最小，从而将原问题转化为估计后验概率P（c | x）。一般这里有两种策略来对后验概率进行估计：</p>
-<pre><code>* 判别式模型：直接对 P（c | x）进行建模求解。例我们前面所介绍的决策树、神经网络、SVM都是属于判别式模型。
-* 生成式模型：通过先对联合分布P（x,c）建模，从而进一步求解 P（c | x）。
-</code></pre><p>贝叶斯分类器就属于生成式模型，基于贝叶斯公式对后验概率P（c | x） 进行一项神奇的变换，巴拉拉能量…. P（c | x）变身：</p>
-<p><img src="https://i.loli.net/2018/10/18/5bc83fd501ad3.png" alt="5.png"></p>
-<p>对于给定的样本x，P（x）与类标无关，P（c）称为类先验概率，p（x | c ）称为类条件概率。这时估计后验概率P（c | x）就变成为估计类先验概率和类条件概率的问题。对于先验概率和后验概率，在看这章之前也是模糊了我好久，这里普及一下它们的基本概念。</p>
-<pre><code>* 先验概率： 根据以往经验和分析得到的概率。
-* 后验概率：后验概率是基于新的信息，修正原来的先验概率后所获得的更接近实际情况的概率估计。
-</code></pre><p>实际上先验概率就是在没有任何结果出来的情况下估计的概率，而后验概率则是在有一定依据后的重新估计，直观意义上后验概率就是条件概率。下面直接上Wiki上的一个例子，简单粗暴快速完事…</p>
-<p><img src="https://i.loli.net/2018/10/18/5bc83fd799610.png" alt="6.png"></p>
-<p>回归正题，对于类先验概率P（c），p（c）就是样本空间中各类样本所占的比例，根据大数定理（当样本足够多时，频率趋于稳定等于其概率），这样当训练样本充足时，p(c)可以使用各类出现的频率来代替。因此只剩下类条件概率p（x | c ），它表达的意思是在类别c中出现x的概率，它涉及到属性的联合概率问题，若只有一个离散属性还好，当属性多时采用频率估计起来就十分困难，因此这里一般采用极大似然法进行估计。</p>
-<h2 id="7-2-极大似然法"><a href="#7-2-极大似然法" class="headerlink" title="7.2 极大似然法"></a><strong>7.2 极大似然法</strong></h2><p>极大似然估计（Maximum Likelihood Estimation，简称MLE），是一种根据数据采样来估计概率分布的经典方法。常用的策略是先假定总体具有某种确定的概率分布，再基于训练样本对概率分布的参数进行估计。运用到类条件概率p（x | c ）中，假设p（x | c ）服从一个参数为θ的分布，问题就变为根据已知的训练样本来估计θ。极大似然法的核心思想就是：估计出的参数使得已知样本出现的概率最大，即使得训练数据的似然最大。</p>
-<p><img src="https://i.loli.net/2018/10/18/5bc83fd70fb73.png" alt="7.png"></p>
-<p>所以，贝叶斯分类器的训练过程就是参数估计。总结最大似然法估计参数的过程，一般分为以下四个步骤：</p>
-<pre><code>* 1.写出似然函数；
-* 2.对似然函数取对数，并整理；
-* 3.求导数，令偏导数为0，得到似然方程组；
-* 4.解似然方程组，得到所有参数即为所求。
-</code></pre><p>例如：假设样本属性都是连续值，p（x | c ）服从一个多维高斯分布，则通过MLE计算出的参数刚好分别为：</p>
-<p><img src="https://i.loli.net/2018/10/18/5bc83fd705729.png" alt="8.png"></p>
-<p>上述结果看起来十分合乎实际，但是采用最大似然法估计参数的效果很大程度上依赖于作出的假设是否合理，是否符合潜在的真实数据分布。这就需要大量的经验知识，搞统计越来越值钱也是这个道理，大牛们掐指一算比我们搬砖几天更有效果。</p>
-<h2 id="7-3-朴素贝叶斯分类器"><a href="#7-3-朴素贝叶斯分类器" class="headerlink" title="7.3 朴素贝叶斯分类器"></a><strong>7.3 朴素贝叶斯分类器</strong></h2><p>不难看出：原始的贝叶斯分类器最大的问题在于联合概率密度函数的估计，首先需要根据经验来假设联合概率分布，其次当属性很多时，训练样本往往覆盖不够，参数的估计会出现很大的偏差。为了避免这个问题，朴素贝叶斯分类器（naive Bayes classifier）采用了“属性条件独立性假设”，即样本数据的所有属性之间相互独立。这样类条件概率p（x | c ）可以改写为：</p>
-<p><img src="https://i.loli.net/2018/10/18/5bc83fd55e102.png" alt="9.png"></p>
-<p>这样，为每个样本估计类条件概率变成为每个样本的每个属性估计类条件概率。</p>
-<p><img src="https://i.loli.net/2018/10/18/5bc83fd6678cd.png" alt="10.png"></p>
-<p>相比原始贝叶斯分类器，朴素贝叶斯分类器基于单个的属性计算类条件概率更加容易操作，需要注意的是：若某个属性值在训练集中和某个类别没有一起出现过，这样会抹掉其它的属性信息，因为该样本的类条件概率被计算为0。因此在估计概率值时，常常用进行平滑（smoothing）处理，拉普拉斯修正（Laplacian correction）就是其中的一种经典方法，具体计算方法如下：</p>
-<p><img src="https://i.loli.net/2018/10/18/5bc83fe54aaed.png" alt="11.png"></p>
-<p>当训练集越大时，拉普拉斯修正引入的影响越来越小。对于贝叶斯分类器，模型的训练就是参数估计，因此可以事先将所有的概率储存好，当有新样本需要判定时，直接查表计算即可。</p>
-<p>针对朴素贝叶斯，人们觉得它too sample，sometimes too naive！因此又提出了半朴素的贝叶斯分类器，具体有SPODE、TAN、贝叶斯网络等来刻画属性之间的依赖关系，此处不进行深入，等哪天和贝叶斯邂逅了再回来讨论。在此鼎鼎大名的贝叶斯介绍完毕，下一篇将介绍这一章剩下的内容—EM算法，朴素贝叶斯和EM算法同为数据挖掘的十大经典算法，想着还是单独介绍吧~</p>
+<h1 id="6、支持向量机"><a href="#6、支持向量机" class="headerlink" title="6、支持向量机"></a><strong>6、支持向量机</strong></h1><p>支持向量机是一种经典的二分类模型，基本模型定义为特征空间中最大间隔的线性分类器，其学习的优化目标便是间隔最大化，因此支持向量机本身可以转化为一个凸二次规划求解的问题。</p>
+<h2 id="6-1-函数间隔与几何间隔"><a href="#6-1-函数间隔与几何间隔" class="headerlink" title="6.1 函数间隔与几何间隔"></a><strong>6.1 函数间隔与几何间隔</strong></h2><p>对于二分类学习，假设现在的数据是线性可分的，这时分类学习最基本的想法就是找到一个合适的超平面，该超平面能够将不同类别的样本分开，类似二维平面使用ax+by+c=0来表示，超平面实际上表示的就是高维的平面，如下图所示：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f6a2ec8a.png" alt="1.png"></p>
+<p>对数据点进行划分时，易知：当超平面距离与它最近的数据点的间隔越大，分类的鲁棒性越好，即当新的数据点加入时，超平面对这些点的适应性最强，出错的可能性最小。因此需要让所选择的超平面能够最大化这个间隔Gap（如下图所示）， 常用的间隔定义有两种，一种称之为函数间隔，一种为几何间隔，下面将分别介绍这两种间隔，并对SVM为什么会选用几何间隔做了一些阐述。</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f6a06d5a.png" alt="2.png"></p>
+<h3 id="6-1-1-函数间隔"><a href="#6-1-1-函数间隔" class="headerlink" title="6.1.1 函数间隔"></a><strong>6.1.1 函数间隔</strong></h3><p>在超平面w’x+b=0确定的情况下，|w’x<em>+b|能够代表点x</em>距离超平面的远近，易知：当w’x<em>+b&gt;0时，表示x</em>在超平面的一侧（正类，类标为1），而当w’x<em>+b&lt;0时，则表示x</em>在超平面的另外一侧（负类，类别为-1），因此（w’x<em>+b）y</em> 的正负性恰能表示数据点x<em>是否被分类正确。于是便引出了<em>*函数间隔</em></em>的定义（functional margin）:</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f690a14b.png" alt="3.png"></p>
+<p>而超平面（w,b）关于所有样本点（Xi，Yi）的函数间隔最小值则为超平面在训练数据集T上的函数间隔：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f690ac26.png" alt="4.png"></p>
+<p>可以看出：这样定义的函数间隔在处理SVM上会有问题，当超平面的两个参数w和b同比例改变时，函数间隔也会跟着改变，但是实际上超平面还是原来的超平面，并没有变化。例如：w1x1+w2x2+w3x3+b=0其实等价于2w1x1+2w2x2+2w3x3+2b=0，但计算的函数间隔却翻了一倍。从而引出了能真正度量点到超平面距离的概念—几何间隔（geometrical margin）。</p>
+<h3 id="6-1-2-几何间隔"><a href="#6-1-2-几何间隔" class="headerlink" title="6.1.2 几何间隔"></a><strong>6.1.2 几何间隔</strong></h3><p><strong>几何间隔</strong>代表的则是数据点到超平面的真实距离，对于超平面w’x+b=0，w代表的是该超平面的法向量，设x<em>为超平面外一点x在法向量w方向上的投影点，x与超平面的距离为r，则有x</em>=x-r(w/||w||)，又x<em>在超平面上，即w’x</em>+b=0，代入即可得：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f697d499.png" alt="5.png"></p>
+<p>为了得到r的绝对值，令r呈上其对应的类别y，即可得到几何间隔的定义：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f696fd10.png" alt="6.png"></p>
+<p>从上述函数间隔与几何间隔的定义可以看出：实质上函数间隔就是|w’x+b|，而几何间隔就是点到超平面的距离。</p>
+<h2 id="6-2-最大间隔与支持向量"><a href="#6-2-最大间隔与支持向量" class="headerlink" title="6.2 最大间隔与支持向量"></a><strong>6.2 最大间隔与支持向量</strong></h2><p>通过前面的分析可知：函数间隔不适合用来最大化间隔，因此这里我们要找的最大间隔指的是几何间隔，于是最大间隔分类器的目标函数定义为：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f69af163.png" alt="7.png"></p>
+<p>一般地，我们令r^为1（这样做的目的是为了方便推导和目标函数的优化），从而上述目标函数转化为：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f697bb1d.png" alt="8.png"></p>
+<p>对于y(w’x+b)=1的数据点，即下图中位于w’x+b=1或w’x+b=-1上的数据点，我们称之为<strong>支持向量</strong>（support vector），易知：对于所有的支持向量，它们恰好满足y<em>(w’x</em>+b)=1，而所有不是支持向量的点，有y<em>(w’x</em>+b)&gt;1。</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f6a838c4.png" alt="9.png"></p>
+<h2 id="6-3-从原始优化问题到对偶问题"><a href="#6-3-从原始优化问题到对偶问题" class="headerlink" title="6.3 从原始优化问题到对偶问题"></a><strong>6.3 从原始优化问题到对偶问题</strong></h2><p>对于上述得到的目标函数，求1/||w||的最大值相当于求||w||^2的最小值，因此很容易将原来的目标函数转化为：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f6978cbb.png" alt="10.png"></p>
+<p>即变为了一个带约束的凸二次规划问题，按书上所说可以使用现成的优化计算包（QP优化包）求解，但由于SVM的特殊性，一般我们将原问题变换为它的<strong>对偶问题</strong>，接着再对其对偶问题进行求解。为什么通过对偶问题进行求解，有下面两个原因：</p>
+<pre><code>* 一是因为使用对偶问题更容易求解；
+* 二是因为通过对偶问题求解出现了向量内积的形式，从而能更加自然地引出核函数。
+</code></pre><p>对偶问题，顾名思义，可以理解成优化等价的问题，更一般地，是将一个原始目标函数的最小化转化为它的对偶函数最大化的问题。对于当前的优化问题，首先我们写出它的朗格朗日函数：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f9332be7.png" alt="11.png"></p>
+<p>上式很容易验证：当其中有一个约束条件不满足时，L的最大值为 ∞（只需令其对应的α为 ∞即可）；当所有约束条件都满足时，L的最大值为1/2||w||^2（此时令所有的α为0），因此实际上原问题等价于：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f93321c5.png" alt="12.png"></p>
+<p>由于这个的求解问题不好做，因此一般我们将最小和最大的位置交换一下（需满足KKT条件） ，变成原问题的对偶问题：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f9330967.png" alt="13.png"></p>
+<p>这样就将原问题的求最小变成了对偶问题求最大（用对偶这个词还是很形象），接下来便可以先求L对w和b的极小，再求L对α的极大。</p>
+<p>（1）首先求L对w和b的极小，分别求L关于w和b的偏导，可以得出：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f9333e66.png" alt="14.png"></p>
+<p>将上述结果代入L得到：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f935ae21.png" alt="15.png"></p>
+<p>（2）接着L关于α极大求解α（通过SMO算法求解，此处不做深入）。</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f9338a9d.png" alt="16.png"></p>
+<p>（3）最后便可以根据求解出的α，计算出w和b，从而得到分类超平面函数。</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f93419ca.png" alt="17.png"></p>
+<p>在对新的点进行预测时，实际上就是将数据点x*代入分类函数f(x)=w’x+b中，若f(x)&gt;0，则为正类，f(x)&lt;0，则为负类，根据前面推导得出的w与b，分类函数如下所示，此时便出现了上面所提到的内积形式。</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f9353166.png" alt="18.png"></p>
+<p>这里实际上只需计算新样本与支持向量的内积，因为对于非支持向量的数据点，其对应的拉格朗日乘子一定为0，根据最优化理论（K-T条件），对于不等式约束y(w’x+b)-1≥0，满足：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f933c947.png" alt="19.png">        </p>
+<h2 id="6-4-核函数"><a href="#6-4-核函数" class="headerlink" title="6.4 核函数"></a><strong>6.4 核函数</strong></h2><p>由于上述的超平面只能解决线性可分的问题，对于线性不可分的问题，例如：异或问题，我们需要使用核函数将其进行推广。一般地，解决线性不可分问题时，常常采用<strong>映射</strong>的方式，将低维原始空间映射到高维特征空间，使得数据集在高维空间中变得线性可分，从而再使用线性学习器分类。如果原始空间为有限维，即属性数有限，那么总是存在一个高维特征空间使得样本线性可分。若∅代表一个映射，则在特征空间中的划分函数变为：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc72f934303e.png" alt="20.png"></p>
+<p>按照同样的方法，先写出新目标函数的拉格朗日函数，接着写出其对偶问题，求L关于w和b的极大，最后运用SOM求解α。可以得出：</p>
+<p>（1）原对偶问题变为：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc730cc68b3b.png" alt="21.png"></p>
+<p>（2）原分类函数变为：<br>​    <img src="https://i.loli.net/2018/10/17/5bc730cc1b673.png" alt="22.png"></p>
+<p>求解的过程中，只涉及到了高维特征空间中的内积运算，由于特征空间的维数可能会非常大，例如：若原始空间为二维，映射后的特征空间为5维，若原始空间为三维，映射后的特征空间将是19维，之后甚至可能出现无穷维，根本无法进行内积运算了，此时便引出了<strong>核函数</strong>（Kernel）的概念。</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc730cc49adc.png" alt="23.png"></p>
+<p>因此，核函数可以直接计算隐式映射到高维特征空间后的向量内积，而不需要显式地写出映射后的结果，它虽然完成了将特征从低维到高维的转换，但最终却是在低维空间中完成向量内积计算，与高维特征空间中的计算等效<strong>（低维计算，高维表现）</strong>，从而避免了直接在高维空间无法计算的问题。引入核函数后，原来的对偶问题与分类函数则变为：</p>
+<p>（1）对偶问题：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc730cc173b2.png" alt="24.png"></p>
+<p>（2）分类函数：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc730cc05959.png" alt="25.png"></p>
+<p>因此，在线性不可分问题中，核函数的选择成了支持向量机的最大变数，若选择了不合适的核函数，则意味着将样本映射到了一个不合适的特征空间，则极可能导致性能不佳。同时，核函数需要满足以下这个必要条件：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc730ccc468c.png" alt="26.png"></p>
+<p>由于核函数的构造十分困难，通常我们都是从一些常用的核函数中选择，下面列出了几种常用的核函数：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc730ccc541a.png" alt="27.png"></p>
+<h2 id="6-5-软间隔支持向量机"><a href="#6-5-软间隔支持向量机" class="headerlink" title="6.5 软间隔支持向量机"></a><strong>6.5 软间隔支持向量机</strong></h2><p>前面的讨论中，我们主要解决了两个问题：当数据线性可分时，直接使用最大间隔的超平面划分；当数据线性不可分时，则通过核函数将数据映射到高维特征空间，使之线性可分。然而在现实问题中，对于某些情形还是很难处理，例如数据中有<strong>噪声</strong>的情形，噪声数据（<strong>outlier</strong>）本身就偏离了正常位置，但是在前面的SVM模型中，我们要求所有的样本数据都必须满足约束，如果不要这些噪声数据还好，当加入这些outlier后导致划分超平面被挤歪了，如下图所示，对支持向量机的泛化性能造成很大的影响。</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc730ccce68e.png" alt="28.png"></p>
+<p>为了解决这一问题，我们需要允许某一些数据点不满足约束，即可以在一定程度上偏移超平面，同时使得不满足约束的数据点尽可能少，这便引出了<strong>“软间隔”支持向量机</strong>的概念</p>
+<pre><code>* 允许某些数据点不满足约束y(w&#39;x+b)≥1；
+* 同时又使得不满足约束的样本尽可能少。
+</code></pre><p>这样优化目标变为：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc730cc6c9fe.png" alt="29.png"></p>
+<p>如同阶跃函数，0/1损失函数虽然表示效果最好，但是数学性质不佳。因此常用其它函数作为“替代损失函数”。</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc730cc5e5a9.png" alt="30.png"></p>
+<p>支持向量机中的损失函数为<strong>hinge损失</strong>，引入<strong>“松弛变量”</strong>，目标函数与约束条件可以写为：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc7317aa3411.png" alt="31.png"></p>
+<p>其中C为一个参数，控制着目标函数与新引入正则项之间的权重，这样显然每个样本数据都有一个对应的松弛变量，用以表示该样本不满足约束的程度，将新的目标函数转化为拉格朗日函数得到：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc7317a4c96e.png" alt="32.png"></p>
+<p>按照与之前相同的方法，先让L求关于w，b以及松弛变量的极小，再使用SMO求出α，有：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc7317a6dff2.png" alt="33.png"></p>
+<p>将w代入L化简，便得到其对偶问题：</p>
+<p><img src="https://i.loli.net/2018/10/17/5bc7317ab6646.png" alt="34.png"></p>
+<p>将“软间隔”下产生的对偶问题与原对偶问题对比可以发现：新的对偶问题只是约束条件中的α多出了一个上限C，其它的完全相同，因此在引入核函数处理线性不可分问题时，便能使用与“硬间隔”支持向量机完全相同的方法。</p>
+<p>——在此SVM就介绍完毕。</p>
 
       
     </div>
@@ -553,8 +620,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B07--%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" rel="next" title="周志华《Machine Learning》学习笔记(7)">
-                <i class="fa fa-chevron-left"></i> 周志华《Machine Learning》学习笔记(7)
+              <a href="/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B06--%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="next" title="周志华《Machine Learning》学习笔记(6)">
+                <i class="fa fa-chevron-left"></i> 周志华《Machine Learning》学习笔记(6)
               </a>
             
           </div>
@@ -563,8 +630,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/07/11/%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%8D%95%E8%AF%8D%E6%8B%BC%E5%86%99%E5%99%A8/" rel="prev" title="贝叶斯单词拼写器">
-                贝叶斯单词拼写器 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B08--%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/" rel="prev" title="周志华《Machine Learning》学习笔记(8)">
+                周志华《Machine Learning》学习笔记(8) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -743,7 +810,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#7、贝叶斯分类器"><span class="nav-number">1.</span> <span class="nav-text">7、贝叶斯分类器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-贝叶斯决策论"><span class="nav-number">1.1.</span> <span class="nav-text">7.1 贝叶斯决策论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-极大似然法"><span class="nav-number">1.2.</span> <span class="nav-text">7.2 极大似然法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-朴素贝叶斯分类器"><span class="nav-number">1.3.</span> <span class="nav-text">7.3 朴素贝叶斯分类器</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#6、支持向量机"><span class="nav-number">1.</span> <span class="nav-text">6、支持向量机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-函数间隔与几何间隔"><span class="nav-number">1.1.</span> <span class="nav-text">6.1 函数间隔与几何间隔</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-1-函数间隔"><span class="nav-number">1.1.1.</span> <span class="nav-text">6.1.1 函数间隔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-2-几何间隔"><span class="nav-number">1.1.2.</span> <span class="nav-text">6.1.2 几何间隔</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-最大间隔与支持向量"><span class="nav-number">1.2.</span> <span class="nav-text">6.2 最大间隔与支持向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-从原始优化问题到对偶问题"><span class="nav-number">1.3.</span> <span class="nav-text">6.3 从原始优化问题到对偶问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-核函数"><span class="nav-number">1.4.</span> <span class="nav-text">6.4 核函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5-软间隔支持向量机"><span class="nav-number">1.5.</span> <span class="nav-text">6.5 软间隔支持向量机</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1317,8 +1384,8 @@ document.getElementById('busuanzi_container_site_uv').style.display='inline-bloc
 
    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
-   <script type="text/javascript" src="/js/src/fireworks.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>
