@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="机器学习,线性回归," />
+  <meta name="keywords" content="机器学习,周志华《Machine Learning》学习笔记," />
 
 
 
@@ -81,30 +81,40 @@
 
 
 
-<meta name="description" content="标准方程法求线性回归代码展示:数据集下载data">
+<meta name="description" content="上篇主要介绍了概率图模型，首先从生成式模型与判别式模型的定义出发，引出了概率图模型的基本概念，即利用图结构来表达变量之间的依赖关系；接着分别介绍了隐马尔可夫模型、马尔可夫随机场、条件随机场、精确推断方法以及LDA话题模型：HMM主要围绕着评估&#x2F;解码&#x2F;学习这三个实际问题展开论述；MRF基于团和势函数的概念来定义联合概率分布；CRF引入两种特征函数对状态序列进行评价打分；变量消去与信念传播在给定联合概">
 <meta property="og:type" content="article">
-<meta property="og:title" content="标准方程法">
-<meta property="og:url" content="http://yoursite.com/2020/07/11/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%95/index.html">
+<meta property="og:title" content="周志华《Machine Learning》学习笔记(17)">
+<meta property="og:url" content="http://yoursite.com/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B017--%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="张帅的Blog">
-<meta property="og:description" content="标准方程法求线性回归代码展示:数据集下载data">
+<meta property="og:description" content="上篇主要介绍了概率图模型，首先从生成式模型与判别式模型的定义出发，引出了概率图模型的基本概念，即利用图结构来表达变量之间的依赖关系；接着分别介绍了隐马尔可夫模型、马尔可夫随机场、条件随机场、精确推断方法以及LDA话题模型：HMM主要围绕着评估&#x2F;解码&#x2F;学习这三个实际问题展开论述；MRF基于团和势函数的概念来定义联合概率分布；CRF引入两种特征函数对状态序列进行评价打分；变量消去与信念传播在给定联合概">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%951.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%952.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%953.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%954.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%955.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%956.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%957.png">
-<meta property="og:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%958.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/11/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%95/output_2_0.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/11/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%95/output_7_0.png">
-<meta property="article:published_time" content="2020-07-11T08:03:11.000Z">
-<meta property="article:modified_time" content="2020-07-11T08:06:09.113Z">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYOud.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYH3D.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYzUP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYbge.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYqjH.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYjHI.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYXDA.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtS4f.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYxEt.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwt9C8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwt3r9.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtm5V.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtZEq.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtEbn.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwteU0.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtuCT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwt1KJ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtK8U.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtM2F.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtQv4.png">
+<meta property="article:published_time" content="2020-07-11T08:20:38.000Z">
+<meta property="article:modified_time" content="2020-07-27T10:50:32.851Z">
 <meta property="article:author" content="Zhangshuai">
 <meta property="article:tag" content="机器学习">
-<meta property="article:tag" content="线性回归">
+<meta property="article:tag" content="周志华《Machine Learning》学习笔记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%951.png">
+<meta name="twitter:image" content="https://s1.ax1x.com/2018/10/18/iwYOud.png">
 
 
 
@@ -134,13 +144,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/07/11/标准方程法/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/07/11/周志华《Machine Learning》学习笔记17--强化学习/"/>
 
 
 
 
 
-  <title>标准方程法 | 张帅的Blog</title>
+  <title>周志华《Machine Learning》学习笔记(17) | 张帅的Blog</title>
   
 
 
@@ -341,7 +351,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/11/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B017--%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhangshuai">
@@ -358,7 +368,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">标准方程法</h1>
+          <h1 class="post-title" itemprop="name headline">周志华《Machine Learning》学习笔记(17)</h1>
         
 
         <div class="post-meta">
@@ -370,7 +380,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-11T16:03:11+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-11T16:20:38+08:00">
                 2020-07-11
               </time>
             
@@ -393,8 +403,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
+                  <a href="/categories/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine-Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">周志华《Machine Learning》学习笔记</span>
                   </a>
                 </span>
 
@@ -431,36 +441,97 @@
       
 
       
-        <p>标准方程法求线性回归代码展示:<br>数据集下载<a href="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/data/data.csv" target="_blank" rel="noopener">data</a></p>
-<a id="more"></a>
+        <p>上篇主要介绍了概率图模型，首先从生成式模型与判别式模型的定义出发，引出了概率图模型的基本概念，即利用图结构来表达变量之间的依赖关系；接着分别介绍了隐马尔可夫模型、马尔可夫随机场、条件随机场、精确推断方法以及LDA话题模型：HMM主要围绕着评估/解码/学习这三个实际问题展开论述；MRF基于团和势函数的概念来定义联合概率分布；CRF引入两种特征函数对状态序列进行评价打分；变量消去与信念传播在给定联合概率分布后计算特定变量的边际分布；LDA话题模型则试图去推断给定文档所蕴含的话题分布。本篇将介绍最后一种学习算法—强化学习。<br><a id="more"></a><br>参考<a href="https://github.com/Vay-keen/Machine-learning-learning-notes" target="_blank" rel="noopener">此项目</a></p>
+<div style="text-align:center;font-size:25px">目录</div>
 
-<p><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%951.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%952.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%953.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%954.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%955.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%956.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%957.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%958.png" alt></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> genfromtxt</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">data =np.genfromtxt(<span class="string">'./data/data.csv'</span>, delimiter=<span class="string">','</span>)</span><br><span class="line">x_data = data[:,<span class="number">0</span>,np.newaxis]</span><br><span class="line">y_data = data[:,<span class="number">1</span>,np.newaxis]</span><br><span class="line">plt.scatter(x_data,y_data)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-
-<p><img src="/2020/07/11/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%95/output_2_0.png" alt="png"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(np.mat(x_data).shape)</span><br><span class="line">print(np.mat(y_data).shape)</span><br><span class="line">X_data = np.concatenate((np.ones((<span class="number">100</span>,<span class="number">1</span>)),x_data),axis=<span class="number">1</span>)</span><br><span class="line">print(X_data.shape)</span><br></pre></td></tr></table></figure>
-
-<pre><code>(100, 1)
-(100, 1)
-(100, 2)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(X_data[:<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
-
-<pre><code>[[ 1.         32.50234527]
- [ 1.         53.42680403]
- [ 1.         61.53035803]]</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">weights</span><span class="params">(xArr,yArr)</span>:</span></span><br><span class="line">    xMat = np.mat(xArr)</span><br><span class="line">    yMat = np.mat(yArr)</span><br><span class="line">    xTx = xMat.T*xMat</span><br><span class="line">    <span class="keyword">if</span> np.linalg.det(xTx) ==<span class="number">0.0</span>:</span><br><span class="line">        print(<span class="string">'This martix cannot do inverse'</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    ws = xTx.I*xMat.T*yMat</span><br><span class="line">    <span class="keyword">return</span> ws</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ws = weights(X_data,y_data)</span><br><span class="line">print(ws)</span><br></pre></td></tr></table></figure>
-
-<pre><code>[[7.99102098]
- [1.32243102]]</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x_test = np.array([[<span class="number">20</span>],[<span class="number">80</span>]])</span><br><span class="line">y_test = ws[<span class="number">0</span>]+x_test*ws[<span class="number">1</span>]</span><br><span class="line">plt.plot(x_data,y_data,<span class="string">'b.'</span>)</span><br><span class="line">plt.plot(x_test,y_test,<span class="string">'r'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-
-<p><img src="/2020/07/11/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%95/output_7_0.png" alt="png"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01--%E7%BB%AA%E8%AE%BA/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(1)—绪论</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02--%E6%80%A7%E8%83%BD%E5%BA%A6%E9%87%8F/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(2)—性能度量</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03--%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C&amp;%E6%96%B9%E5%B7%AE&amp;%E5%81%8F%E5%B7%AE/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(3)—假设检验&amp;方差&amp;偏差</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B04--%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(4)—线性模型</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B05--%E5%86%B3%E7%AD%96%E6%A0%91/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(5)—决策树</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B06--%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(6)—神经网络</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B07--%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(7)—支持向量机</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B08--%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(8)—贝叶斯分类器</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09--EM%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(9)—EM算法</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B010--%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(10)—集成学习</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B011--%E8%81%9A%E7%B1%BB/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(11)—聚类</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B012--%E9%99%8D%E7%BB%B4%E4%B8%8E%E5%BA%A6%E9%87%8F%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(12)—降维与度量学习</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B013--%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9%E4%B8%8E%E7%A8%80%E7%96%8F%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(13)—特征选择与稀疏学习</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B014--%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(14)—计算学习理论</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B015--%E5%8D%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(15)—半监督学习</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B016--%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(16)—概率图模型</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B017--%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(17)—强化学习</a></li>
+</ul>
+<h1 id="16、强化学习"><a href="#16、强化学习" class="headerlink" title="16、强化学习"></a><strong>16、强化学习</strong></h1><p><strong>强化学习</strong>（Reinforcement Learning，简称<strong>RL</strong>）是机器学习的一个重要分支，前段时间人机大战的主角AlphaGo正是以强化学习为核心技术。在强化学习中，包含两种基本的元素：<strong>状态</strong>与<strong>动作</strong>，<strong>在某个状态下执行某种动作，这便是一种策略</strong>，学习器要做的就是通过不断地探索学习，从而获得一个好的策略。例如：在围棋中，一种落棋的局面就是一种状态，若能知道每种局面下的最优落子动作，那就攻无不克/百战不殆了~</p>
+<p>若将状态看作为属性，动作看作为标记，易知：<strong>监督学习和强化学习都是在试图寻找一个映射，从已知属性/状态推断出标记/动作</strong>，这样强化学习中的策略相当于监督学习中的分类/回归器。但在实际问题中，<strong>强化学习并没有监督学习那样的标记信息</strong>，通常都是在<strong>尝试动作后才能获得结果</strong>，因此强化学习是通过反馈的结果信息不断调整之前的策略，从而算法能够学习到：在什么样的状态下选择什么样的动作可以获得最好的结果。</p>
+<h2 id="16-1-基本要素"><a href="#16-1-基本要素" class="headerlink" title="16.1 基本要素"></a><strong>16.1 基本要素</strong></h2><p>强化学习任务通常使用<strong>马尔可夫决策过程</strong>（Markov Decision Process，简称<strong>MDP</strong>）来描述，具体而言：机器处在一个环境中，每个状态为机器对当前环境的感知；机器只能通过动作来影响环境，当机器执行一个动作后，会使得环境按某种概率转移到另一个状态；同时，环境会根据潜在的奖赏函数反馈给机器一个奖赏。综合而言，强化学习主要包含四个要素：状态、动作、转移概率以及奖赏函数。</p>
+<blockquote>
+<p><strong>状态（X）</strong>：机器对环境的感知，所有可能的状态称为状态空间；<br><strong>动作（A）</strong>：机器所采取的动作，所有能采取的动作构成动作空间；<br><strong>转移概率（P）</strong>：当执行某个动作后，当前状态会以某种概率转移到另一个状态；<br><strong>奖赏函数（R）</strong>：在状态转移的同时，环境给反馈给机器一个奖赏。</p>
+</blockquote>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwYOud.png" alt="iwYOud.png"></p>
+<p>因此，<strong>强化学习的主要任务就是通过在环境中不断地尝试，根据尝试获得的反馈信息调整策略，最终生成一个较好的策略π，机器根据这个策略便能知道在什么状态下应该执行什么动作</strong>。常见的策略表示方法有以下两种：</p>
+<blockquote>
+<p><strong>确定性策略</strong>：π（x）=a，即在状态x下执行a动作；<br><strong>随机性策略</strong>：P=π（x,a），即在状态x下执行a动作的概率。</p>
+</blockquote>
+<p><strong>一个策略的优劣取决于长期执行这一策略后的累积奖赏</strong>，换句话说：可以使用累积奖赏来评估策略的好坏，最优策略则表示在初始状态下一直执行该策略后，最后的累积奖赏值最高。长期累积奖赏通常使用下述两种计算方法：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwYH3D.png" alt="iwYH3D.png"></p>
+<h2 id="16-2-K摇摆赌博机"><a href="#16-2-K摇摆赌博机" class="headerlink" title="16.2 K摇摆赌博机"></a><strong>16.2 K摇摆赌博机</strong></h2><p>首先我们考虑强化学习最简单的情形：仅考虑一步操作，即在状态x下只需执行一次动作a便能观察到奖赏结果。易知：欲最大化单步奖赏，我们需要知道每个动作带来的期望奖赏值，这样便能选择奖赏值最大的动作来执行。若每个动作的奖赏值为确定值，则只需要将每个动作尝试一遍即可，但大多数情形下，一个动作的奖赏值来源于一个概率分布，因此需要进行多次的尝试。</p>
+<p>单步强化学习实质上是<strong>K-摇臂赌博机</strong>（K-armed bandit）的原型，一般我们<strong>尝试动作的次数是有限的</strong>，那如何利用有限的次数进行有效地探索呢？这里有两种基本的想法：</p>
+<blockquote>
+<p><strong>仅探索法</strong>：将尝试的机会平均分给每一个动作，即轮流执行，最终将每个动作的平均奖赏作为期望奖赏的近似值。<br><strong>仅利用法</strong>：将尝试的机会分给当前平均奖赏值最大的动作，隐含着让一部分人先富起来的思想。</p>
+</blockquote>
+<p>可以看出：上述<strong>两种方法是相互矛盾的</strong>，仅探索法能较好地估算每个动作的期望奖赏，但是没能根据当前的反馈结果调整尝试策略；仅利用法在每次尝试之后都更新尝试策略，符合强化学习的思（tao）维（lu），但容易找不到最优动作。因此需要在这两者之间进行折中。</p>
+<h3 id="16-2-1-ε-贪心"><a href="#16-2-1-ε-贪心" class="headerlink" title="16.2.1 ε-贪心"></a><strong>16.2.1 ε-贪心</strong></h3><p><strong>ε-贪心法基于一个概率来对探索和利用进行折中</strong>，具体而言：在每次尝试时，以ε的概率进行探索，即以均匀概率随机选择一个动作；以1-ε的概率进行利用，即选择当前最优的动作。ε-贪心法只需记录每个动作的当前平均奖赏值与被选中的次数，便可以增量式更新。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwYzUP.png" alt="iwYzUP.png"></p>
+<h3 id="16-2-2-Softmax"><a href="#16-2-2-Softmax" class="headerlink" title="16.2.2 Softmax"></a><strong>16.2.2 Softmax</strong></h3><p><strong>Softmax算法则基于当前每个动作的平均奖赏值来对探索和利用进行折中，Softmax函数将一组值转化为一组概率</strong>，值越大对应的概率也越高，因此当前平均奖赏值越高的动作被选中的几率也越大。Softmax函数如下所示：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwYbge.png" alt="iwYbge.png"><br><img src="https://s1.ax1x.com/2018/10/18/iwYqjH.png" alt="iwYqjH.png"></p>
+<h2 id="16-3-有模型学习"><a href="#16-3-有模型学习" class="headerlink" title="16.3 有模型学习"></a><strong>16.3 有模型学习</strong></h2><p>若学习任务中的四个要素都已知，即状态空间、动作空间、转移概率以及奖赏函数都已经给出，这样的情形称为“<strong>有模型学习</strong>”。假设状态空间和动作空间均为有限，即均为离散值，这样我们不用通过尝试便可以对某个策略进行评估。</p>
+<h3 id="16-3-1-策略评估"><a href="#16-3-1-策略评估" class="headerlink" title="16.3.1 策略评估"></a><strong>16.3.1 策略评估</strong></h3><p>前面提到：<strong>在模型已知的前提下，我们可以对任意策略的进行评估</strong>（后续会给出演算过程）。一般常使用以下两种值函数来评估某个策略的优劣：</p>
+<blockquote>
+<p><strong>状态值函数（V）</strong>：V（x），即从状态x出发，使用π策略所带来的累积奖赏；<br><strong>状态-动作值函数（Q）</strong>：Q（x,a），即从状态x出发，执行动作a后再使用π策略所带来的累积奖赏。</p>
+</blockquote>
+<p>根据累积奖赏的定义，我们可以引入T步累积奖赏与r折扣累积奖赏：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwYjHI.png" alt="iwYjHI.png"><br><img src="https://s1.ax1x.com/2018/10/18/iwYXDA.png" alt="iwYXDA.png"></p>
+<p>由于MDP具有马尔可夫性，即现在决定未来，将来和过去无关，我们很容易找到值函数的递归关系：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwtS4f.png" alt="iwtS4f.png"></p>
+<p>类似地，对于r折扣累积奖赏可以得到：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwYxEt.png" alt="iwYxEt.png"></p>
+<p>易知：<strong>当模型已知时，策略的评估问题转化为一种动态规划问题</strong>，即以填表格的形式自底向上，先求解每个状态的单步累积奖赏，再求解每个状态的两步累积奖赏，一直迭代逐步求解出每个状态的T步累积奖赏。算法流程如下所示：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwt9C8.png" alt="iwt9C8.png"></p>
+<p>对于状态-动作值函数，只需通过简单的转化便可得到：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwt3r9.png" alt="iwt3r9.png"></p>
+<h3 id="16-3-2-策略改进"><a href="#16-3-2-策略改进" class="headerlink" title="16.3.2 策略改进"></a><strong>16.3.2 策略改进</strong></h3><p>理想的策略应能使得每个状态的累积奖赏之和最大，简单来理解就是：不管处于什么状态，只要通过该策略执行动作，总能得到较好的结果。因此对于给定的某个策略，我们需要对其进行改进，从而得到<strong>最优的值函数</strong>。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwtm5V.png" alt="iwtm5V.png"><br><img src="https://s1.ax1x.com/2018/10/18/iwtZEq.png" alt="iwtZEq.png"></p>
+<p>最优Bellman等式改进策略的方式为：<strong>将策略选择的动作改为当前最优的动作</strong>，而不是像之前那样对每种可能的动作进行求和。易知：选择当前最优动作相当于将所有的概率都赋给累积奖赏值最大的动作，因此每次改进都会使得值函数单调递增。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwtEbn.png" alt="iwtEbn.png"></p>
+<p>将策略评估与策略改进结合起来，我们便得到了生成最优策略的方法：先给定一个随机策略，现对该策略进行评估，然后再改进，接着再评估/改进一直到策略收敛、不再发生改变。这便是策略迭代算法，算法流程如下所示：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwteU0.png" alt="iwteU0.png"></p>
+<p>可以看出：策略迭代法在每次改进策略后都要对策略进行重新评估，因此比较耗时。若从最优化值函数的角度出发，即先迭代得到最优的值函数，再来计算如何改变策略，这便是值迭代算法，算法流程如下所示：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwtuCT.png" alt="iwtuCT.png"></p>
+<h2 id="16-4-蒙特卡罗强化学习"><a href="#16-4-蒙特卡罗强化学习" class="headerlink" title="16.4 蒙特卡罗强化学习"></a><strong>16.4 蒙特卡罗强化学习</strong></h2><p>在现实的强化学习任务中，<strong>环境的转移函数与奖赏函数往往很难得知</strong>，因此我们需要考虑在不依赖于环境参数的条件下建立强化学习模型，这便是<strong>免模型学习</strong>。蒙特卡罗强化学习便是其中的一种经典方法。</p>
+<p>由于模型参数未知，状态值函数不能像之前那样进行全概率展开，从而运用动态规划法求解。一种直接的方法便是通过采样来对策略进行评估/估算其值函数，<strong>蒙特卡罗强化学习正是基于采样来估计状态-动作值函数</strong>：对采样轨迹中的每一对状态-动作，记录其后的奖赏值之和，作为该状态-动作的一次累积奖赏，通过多次采样后，使用累积奖赏的平均作为状态-动作值的估计，并<strong>引入ε-贪心策略保证采样的多样性</strong>。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwt1KJ.png" alt="iwt1KJ.png"></p>
+<p>在上面的算法流程中，被评估和被改进的都是同一个策略，因此称为<strong>同策略蒙特卡罗强化学习算法</strong>。引入ε-贪心仅是为了便于采样评估，而在使用策略时并不需要ε-贪心，那能否仅在评估时使用ε-贪心策略，而在改进时使用原始策略呢？这便是<strong>异策略蒙特卡罗强化学习算法</strong>。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwtK8U.png" alt="iwtK8U.png"></p>
+<h2 id="16-5-AlphaGo原理浅析"><a href="#16-5-AlphaGo原理浅析" class="headerlink" title="16.5 AlphaGo原理浅析"></a><strong>16.5 AlphaGo原理浅析</strong></h2><p>本篇一开始便提到强化学习是AlphaGo的核心技术之一，刚好借着这个东风将AlphaGo的工作原理了解一番。正如人类下棋那般“<strong>手下一步棋，心想三步棋</strong>”，Alphago也正是这个思想，<strong>当处于一个状态时，机器会暗地里进行多次的尝试/采样，并基于反馈回来的结果信息改进估值函数，从而最终通过增强版的估值函数来选择最优的落子动作。</strong></p>
+<p>其中便涉及到了三个主要的问题：<strong>（1）如何确定估值函数（2）如何进行采样（3）如何基于反馈信息改进估值函数</strong>，这正对应着AlphaGo的三大核心模块：<strong>深度学习</strong>、<strong>蒙特卡罗搜索树</strong>、<strong>强化学习</strong>。</p>
+<blockquote>
+<p><strong>1.深度学习（拟合估值函数）</strong></p>
+</blockquote>
+<p>由于围棋的状态空间巨大，像蒙特卡罗强化学习那样通过采样来确定值函数就行不通了。在围棋中，<strong>状态值函数可以看作为一种局面函数，状态-动作值函数可以看作一种策略函数</strong>，若我们能获得这两个估值函数，便可以根据这两个函数来完成：(1)衡量当前局面的价值；(2)选择当前最优的动作。那如何精确地估计这两个估值函数呢？<strong>这就用到了深度学习，通过大量的对弈数据自动学习出特征，从而拟合出估值函数。</strong></p>
+<blockquote>
+<p><strong>2.蒙特卡罗搜索树（采样）</strong></p>
+</blockquote>
+<p>蒙特卡罗树是一种经典的搜索框架，它通过反复地采样模拟对局来探索状态空间。具体表现在：从当前状态开始，利用策略函数尽可能选择当前最优的动作，同时也引入随机性来减小估值错误带来的负面影响，从而模拟棋局运行，使得棋盘达到终局或一定步数后停止。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwtM2F.png" alt="iwtM2F.png"></p>
+<blockquote>
+<p><strong>3.强化学习（调整估值函数）</strong></p>
+</blockquote>
+<p>在使用蒙特卡罗搜索树进行多次采样后，每次采样都会反馈后续的局面信息（利用局面函数进行评价），根据反馈回来的结果信息自动调整两个估值函数的参数，这便是强化学习的核心思想，最后基于改进后的策略函数选择出当前最优的落子动作。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwtQv4.png" alt="iwtQv4.png"></p>
+<p>在此，强化学习就介绍完毕。同时也意味着大口小口地啃完了这个西瓜，十分记得去年双11之后立下这个Flag，现在回想起来，大半年的时间里在嚼瓜上还是花费了不少功夫。有人说：当你阐述的能让别人看懂才算是真的理解，有人说：在写的过程中能发现那些只看书发现不了的东西，自己最初的想法十分简单：当健忘症发作的时候，如果能看到之前按照自己思路写下的文字，回忆便会汹涌澎湃一些~</p>
+<p>最后，感谢自己这大半年以来的坚持~Get busy living, or get busy dying!</p>
 
       
     </div>
@@ -509,7 +580,7 @@
           
             <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
           
-            <a href="/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" rel="tag"># 线性回归</a>
+            <a href="/tags/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine-Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 周志华《Machine Learning》学习笔记</a>
           
         </div>
       
@@ -522,8 +593,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/07/11/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0voting/" rel="next" title="集成学习voting">
-                <i class="fa fa-chevron-left"></i> 集成学习voting
+              <a href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02--%E6%80%A7%E8%83%BD%E5%BA%A6%E9%87%8F/" rel="next" title="周志华《Machine Learning》学习笔记(2)">
+                <i class="fa fa-chevron-left"></i> 周志华《Machine Learning》学习笔记(2)
               </a>
             
           </div>
@@ -532,8 +603,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01--%E7%BB%AA%E8%AE%BA/" rel="prev" title="周志华《Machine Learning》学习笔记(1)">
-                周志华《Machine Learning》学习笔记(1) <i class="fa fa-chevron-right"></i>
+              <a href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B016--%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" rel="prev" title="周志华《Machine Learning》学习笔记(16)">
+                周志华《Machine Learning》学习笔记(16) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -586,8 +657,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -693,6 +773,22 @@
       </section>
 
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#16、强化学习"><span class="nav-number">1.</span> <span class="nav-text">16、强化学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#16-1-基本要素"><span class="nav-number">1.1.</span> <span class="nav-text">16.1 基本要素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-2-K摇摆赌博机"><span class="nav-number">1.2.</span> <span class="nav-text">16.2 K摇摆赌博机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#16-2-1-ε-贪心"><span class="nav-number">1.2.1.</span> <span class="nav-text">16.2.1 ε-贪心</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-2-2-Softmax"><span class="nav-number">1.2.2.</span> <span class="nav-text">16.2.2 Softmax</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-3-有模型学习"><span class="nav-number">1.3.</span> <span class="nav-text">16.3 有模型学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#16-3-1-策略评估"><span class="nav-number">1.3.1.</span> <span class="nav-text">16.3.1 策略评估</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-3-2-策略改进"><span class="nav-number">1.3.2.</span> <span class="nav-text">16.3.2 策略改进</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-4-蒙特卡罗强化学习"><span class="nav-number">1.4.</span> <span class="nav-text">16.4 蒙特卡罗强化学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-5-AlphaGo原理浅析"><span class="nav-number">1.5.</span> <span class="nav-text">16.5 AlphaGo原理浅析</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
       
 

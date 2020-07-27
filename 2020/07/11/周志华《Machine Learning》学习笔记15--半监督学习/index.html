@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="机器学习,周志华《Machine Learning》学习笔记," />
 
 
 
@@ -81,16 +81,32 @@
 
 
 
-<meta name="description" content="你刚才说了JOJO对吧">
-<meta property="og:type" content="website">
-<meta property="og:title" content="张帅的Blog">
-<meta property="og:url" content="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/page/2/index.html">
+<meta name="description" content="上篇主要介绍了机器学习的理论基础，首先从独立同分布引入泛化误差与经验误差，接着介绍了PAC可学习的基本概念，即以较大的概率学习出与目标概念近似的假设（泛化误差满足预设上限），对于有限假设空间：（1）可分情形时，假设空间都是PAC可学习的，即当样本满足一定的数量之后，总是可以在与训练集一致的假设中找出目标概念的近似；（2）不可分情形时，假设空间都是不可知PAC可学习的，即以较大概率学习出与当前假设空">
+<meta property="og:type" content="article">
+<meta property="og:title" content="周志华《Machine Learning》学习笔记(15)">
+<meta property="og:url" content="http://yoursite.com/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B015--%E5%8D%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="张帅的Blog">
-<meta property="og:description" content="你刚才说了JOJO对吧">
+<meta property="og:description" content="上篇主要介绍了机器学习的理论基础，首先从独立同分布引入泛化误差与经验误差，接着介绍了PAC可学习的基本概念，即以较大的概率学习出与目标概念近似的假设（泛化误差满足预设上限），对于有限假设空间：（1）可分情形时，假设空间都是PAC可学习的，即当样本满足一定的数量之后，总是可以在与训练集一致的假设中找出目标概念的近似；（2）不可分情形时，假设空间都是不可知PAC可学习的，即以较大概率学习出与当前假设空">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc856e39801d.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwJFJS.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc856e3b82dc.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc856e431d30.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc856e43ff08.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc856e3dfb1c.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/18/5bc856e427830.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwJZss.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwJVMj.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwJeLn.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwJAzQ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwJkRg.png">
+<meta property="article:published_time" content="2020-07-11T08:20:38.000Z">
+<meta property="article:modified_time" content="2020-07-27T10:50:21.730Z">
 <meta property="article:author" content="Zhangshuai">
-<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="周志华《Machine Learning》学习笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2018/10/18/5bc856e39801d.png">
 
 
 
@@ -120,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/机器学习/page/2/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/07/11/周志华《Machine Learning》学习笔记15--半监督学习/"/>
 
 
 
 
 
-  <title>Tag: 机器学习 | 张帅的Blog</title>
+  <title>周志华《Machine Learning》学习笔记(15) | 张帅的Blog</title>
   
 
 
@@ -145,7 +161,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -313,310 +329,260 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>机器学习<small>Tag</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B015--%E5%8D%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhangshuai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张帅的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02--%E6%80%A7%E8%83%BD%E5%BA%A6%E9%87%8F/" itemprop="url">
-              
-                <span itemprop="name">周志华《Machine Learning》学习笔记(2)</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">周志华《Machine Learning》学习笔记(15)</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-11T16:20:38+08:00"
-              content="2020-07-11" >
-          07-11
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-11T16:20:38+08:00">
+                2020-07-11
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine-Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">周志华《Machine Learning》学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03--%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C&%E6%96%B9%E5%B7%AE&%E5%81%8F%E5%B7%AE/" itemprop="url">
-              
-                <span itemprop="name">周志华《Machine Learning》学习笔记(3)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-11T16:20:38+08:00"
-              content="2020-07-11" >
-          07-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
+        <p>上篇主要介绍了机器学习的理论基础，首先从独立同分布引入泛化误差与经验误差，接着介绍了PAC可学习的基本概念，即以较大的概率学习出与目标概念近似的假设（泛化误差满足预设上限），对于有限假设空间：（1）可分情形时，假设空间都是PAC可学习的，即当样本满足一定的数量之后，总是可以在与训练集一致的假设中找出目标概念的近似；（2）不可分情形时，假设空间都是不可知PAC可学习的，即以较大概率学习出与当前假设空间中泛化误差最小的假设的有效近似（Hoeffding不等式）。对于无限假设空间，通过增长函数与VC维来描述其复杂度，若学习算法满足经验风险最小化原则，则任何VC维有限的假设空间都是（不可知）PAC可学习的，同时也给出了泛化误差界与样本复杂度。稳定性则考察的是输入发生变化时输出的波动，稳定性通过损失函数与假设空间的可学习理论联系在了一起。本篇将讨论一种介于监督与非监督学习之间的学习算法—半监督学习。<br><a id="more"></a></p>
+<p>参考<a href="https://github.com/Vay-keen/Machine-learning-learning-notes" target="_blank" rel="noopener">此项目</a></p>
+<div style="text-align:center;font-size:25px">目录</div>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B04--%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/" itemprop="url">
-              
-                <span itemprop="name">周志华《Machine Learning》学习笔记(4)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-11T16:20:38+08:00"
-              content="2020-07-11" >
-          07-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B08--%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/" itemprop="url">
-              
-                <span itemprop="name">周志华《Machine Learning》学习笔记(8)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-11T16:20:38+08:00"
-              content="2020-07-11" >
-          07-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B07--%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" itemprop="url">
-              
-                <span itemprop="name">周志华《Machine Learning》学习笔记(7)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-11T16:20:38+08:00"
-              content="2020-07-11" >
-          07-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B06--%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" itemprop="url">
-              
-                <span itemprop="name">周志华《Machine Learning》学习笔记(6)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-11T16:20:38+08:00"
-              content="2020-07-11" >
-          07-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B05--%E5%86%B3%E7%AD%96%E6%A0%91/" itemprop="url">
-              
-                <span itemprop="name">周志华《Machine Learning》学习笔记(5)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-11T16:20:38+08:00"
-              content="2020-07-11" >
-          07-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09--EM%E7%AE%97%E6%B3%95/" itemprop="url">
-              
-                <span itemprop="name">周志华《Machine Learning》学习笔记(9)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-11T16:20:38+08:00"
-              content="2020-07-11" >
-          07-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01--%E7%BB%AA%E8%AE%BA/" itemprop="url">
-              
-                <span itemprop="name">周志华《Machine Learning》学习笔记(1)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-11T16:20:38+08:00"
-              content="2020-07-11" >
-          07-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/11/%E6%A0%87%E5%87%86%E6%96%B9%E7%A8%8B%E6%B3%95/" itemprop="url">
-              
-                <span itemprop="name">标准方程法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-11T16:03:11+08:00"
-              content="2020-07-11" >
-          07-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+<ul>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01--%E7%BB%AA%E8%AE%BA/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(1)—绪论</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02--%E6%80%A7%E8%83%BD%E5%BA%A6%E9%87%8F/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(2)—性能度量</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03--%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C&amp;%E6%96%B9%E5%B7%AE&amp;%E5%81%8F%E5%B7%AE/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(3)—假设检验&amp;方差&amp;偏差</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B04--%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(4)—线性模型</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B05--%E5%86%B3%E7%AD%96%E6%A0%91/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(5)—决策树</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B06--%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(6)—神经网络</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B07--%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(7)—支持向量机</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B08--%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(8)—贝叶斯分类器</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B09--EM%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(9)—EM算法</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B010--%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(10)—集成学习</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B011--%E8%81%9A%E7%B1%BB/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(11)—聚类</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B012--%E9%99%8D%E7%BB%B4%E4%B8%8E%E5%BA%A6%E9%87%8F%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(12)—降维与度量学习</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B013--%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9%E4%B8%8E%E7%A8%80%E7%96%8F%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(13)—特征选择与稀疏学习</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B014--%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(14)—计算学习理论</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B015--%E5%8D%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(15)—半监督学习</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B016--%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(16)—概率图模型</a></li>
+<li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B017--%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(17)—强化学习</a></li>
+</ul>
+<h1 id="14、半监督学习"><a href="#14、半监督学习" class="headerlink" title="14、半监督学习"></a><strong>14、半监督学习</strong></h1><p>前面我们一直围绕的都是监督学习与无监督学习，监督学习指的是训练样本包含标记信息的学习任务，例如：常见的分类与回归算法；无监督学习则是训练样本不包含标记信息的学习任务，例如：聚类算法。在实际生活中，常常会出现一部分样本有标记和较多样本无标记的情形，例如：做网页推荐时需要让用户标记出感兴趣的网页，但是少有用户愿意花时间来提供标记。若直接丢弃掉无标记样本集，使用传统的监督学习方法，常常会由于训练样本的不充足，使得其刻画总体分布的能力减弱，从而影响了学习器泛化性能。那如何利用未标记的样本数据呢？</p>
+<p>一种简单的做法是通过专家知识对这些未标记的样本进行打标，但随之而来的就是巨大的人力耗费。若我们先使用有标记的样本数据集训练出一个学习器，再基于该学习器对未标记的样本进行预测，从中<strong>挑选出不确定性高或分类置信度低的样本来咨询专家并进行打标</strong>，最后使用扩充后的训练集重新训练学习器，这样便能大幅度降低标记成本，这便是<strong>主动学习</strong>（active learning），其目标是<strong>使用尽量少的/有价值的咨询来获得更好的性能</strong>。</p>
+<p>显然，<strong>主动学习需要与外界进行交互/查询/打标，其本质上仍然属于一种监督学习</strong>。事实上，无标记样本虽未包含标记信息，但它们与有标记样本一样都是从总体中独立同分布采样得到，因此<strong>它们所包含的数据分布信息对学习器的训练大有裨益</strong>。如何让学习过程不依赖外界的咨询交互，自动利用未标记样本所包含的分布信息的方法便是<strong>半监督学习</strong>（semi-supervised learning），<strong>即训练集同时包含有标记样本数据和未标记样本数据</strong>。</p>
+<p><img src="https://i.loli.net/2018/10/18/5bc856e39801d.png" alt="1.png"></p>
+<p>此外，半监督学习还可以进一步划分为<strong>纯半监督学习</strong>和<strong>直推学习</strong>，两者的区别在于：前者假定训练数据集中的未标记数据并非待预测数据，而后者假定学习过程中的未标记数据就是待预测数据。主动学习、纯半监督学习以及直推学习三者的概念如下图所示：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwJFJS.png" alt="iwJFJS.png"></p>
+<h2 id="14-1-生成式方法"><a href="#14-1-生成式方法" class="headerlink" title="14.1 生成式方法"></a><strong>14.1 生成式方法</strong></h2><p><strong>生成式方法</strong>（generative methods）是基于生成式模型的方法，即先对联合分布P（x,c）建模，从而进一步求解 P（c | x），<strong>此类方法假定样本数据服从一个潜在的分布，因此需要充分可靠的先验知识</strong>。例如：前面已经接触到的贝叶斯分类器与高斯混合聚类，都属于生成式模型。现假定总体是一个高斯混合分布，即由多个高斯分布组合形成，从而一个子高斯分布就代表一个类簇（类别）。高斯混合分布的概率密度函数如下所示：</p>
+<p><img src="https://i.loli.net/2018/10/18/5bc856e3b82dc.png" alt="3.png"></p>
+<p>不失一般性，假设类簇与真实的类别按照顺序一一对应，即第i个类簇对应第i个高斯混合成分。与高斯混合聚类类似地，这里的主要任务也是估计出各个高斯混合成分的参数以及混合系数，不同的是：对于有标记样本，不再是可能属于每一个类簇，而是只能属于真实类标对应的特定类簇。</p>
+<p><img src="https://i.loli.net/2018/10/18/5bc856e431d30.png" alt="4.png"></p>
+<p>直观上来看，<strong>基于半监督的高斯混合模型有机地整合了贝叶斯分类器与高斯混合聚类的核心思想</strong>，有效地利用了未标记样本数据隐含的分布信息，从而使得参数的估计更加准确。同样地，这里也要召唤出之前的EM大法进行求解，首先对各个高斯混合成分的参数及混合系数进行随机初始化，计算出各个PM（即γji，第i个样本属于j类，有标记样本则直接属于特定类），再最大化似然函数（即LL（D）分别对α、u和∑求偏导 ），对参数进行迭代更新。</p>
+<p><img src="https://i.loli.net/2018/10/18/5bc856e43ff08.png" alt="5.png"></p>
+<p>当参数迭代更新收敛后，对于待预测样本x，便可以像贝叶斯分类器那样计算出样本属于每个类簇的后验概率，接着找出概率最大的即可：</p>
+<p><img src="https://i.loli.net/2018/10/18/5bc856e3dfb1c.png" alt="6.png"></p>
+<p>可以看出：基于生成式模型的方法十分依赖于对潜在数据分布的假设，即假设的分布要能和真实分布相吻合，否则利用未标记的样本数据反倒会在错误的道路上渐行渐远，从而降低学习器的泛化性能。因此，<strong>此类方法要求极强的领域知识和掐指观天的本领</strong>。</p>
+<h2 id="14-2-半监督SVM"><a href="#14-2-半监督SVM" class="headerlink" title="14.2 半监督SVM"></a><strong>14.2 半监督SVM</strong></h2><p>监督学习中的SVM试图找到一个划分超平面，使得两侧支持向量之间的间隔最大，即“<strong>最大划分间隔</strong>”思想。对于半监督学习，S3VM则考虑超平面需穿过数据低密度的区域。TSVM是半监督支持向量机中的最著名代表，其核心思想是：尝试为未标记样本找到合适的标记指派，使得超平面划分后的间隔最大化。TSVM采用局部搜索的策略来进行迭代求解，即首先使用有标记样本集训练出一个初始SVM，接着使用该学习器对未标记样本进行打标，这样所有样本都有了标记，并基于这些有标记的样本重新训练SVM，之后再寻找易出错样本不断调整。整个算法流程如下所示：</p>
+<p><img src="https://i.loli.net/2018/10/18/5bc856e427830.png" alt="7.png"></p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwJZss.png" alt="iwJZss.png"></p>
+<h2 id="14-3-基于分歧的方法"><a href="#14-3-基于分歧的方法" class="headerlink" title="14.3 基于分歧的方法"></a><strong>14.3 基于分歧的方法</strong></h2><p>基于分歧的方法通过多个学习器之间的<strong>分歧（disagreement）/多样性（diversity）</strong>来利用未标记样本数据，协同训练就是其中的一种经典方法。<strong>协同训练最初是针对于多视图（multi-view）数据而设计的，多视图数据指的是样本对象具有多个属性集，每个属性集则对应一个试图</strong>。例如：电影数据中就包含画面类属性和声音类属性，这样画面类属性的集合就对应着一个视图。首先引入两个关于视图的重要性质：</p>
+<blockquote>
+<p><strong>相容性</strong>：即使用单个视图数据训练出的学习器的输出空间是一致的。例如都是{好，坏}、{+1,-1}等。<br><strong>互补性</strong>：即不同视图所提供的信息是互补/相辅相成的，实质上这里体现的就是集成学习的思想。</p>
+</blockquote>
+<p>协同训练正是很好地利用了多视图数据的“<strong>相容互补性</strong>”，其基本的思想是：首先基于有标记样本数据在每个视图上都训练一个初始分类器，然后让每个分类器去挑选分类置信度最高的样本并赋予标记，并将带有伪标记的样本数据传给另一个分类器去学习，从而<strong>你依我侬/共同进步</strong>。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwJVMj.png" alt="iwJVMj.png"><br><img src="https://s1.ax1x.com/2018/10/18/iwJeLn.png" alt="iwJeLn.png"></p>
+<h2 id="14-4-半监督聚类"><a href="#14-4-半监督聚类" class="headerlink" title="14.4 半监督聚类"></a><strong>14.4 半监督聚类</strong></h2><p>前面提到的几种方法都是借助无标记样本数据来辅助监督学习的训练过程，从而使得学习更加充分/泛化性能得到提升；半监督聚类则是借助已有的监督信息来辅助聚类的过程。一般而言，监督信息大致有两种类型：</p>
+<blockquote>
+<p><strong>必连与勿连约束</strong>：必连指的是两个样本必须在同一个类簇，勿连则是必不在同一个类簇。<br><strong>标记信息</strong>：少量的样本带有真实的标记。</p>
+</blockquote>
+<p>下面主要介绍两种基于半监督的K-Means聚类算法：第一种是数据集包含一些必连与勿连关系，另外一种则是包含少量带有标记的样本。两种算法的基本思想都十分的简单：对于带有约束关系的k-均值算法，在迭代过程中对每个样本划分类簇时，需要<strong>检测当前划分是否满足约束关系</strong>，若不满足则会将该样本划分到距离次小对应的类簇中，再继续检测是否满足约束关系，直到完成所有样本的划分。算法流程如下图所示：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwJAzQ.png" alt="iwJAzQ.png"></p>
+<p>对于带有少量标记样本的k-均值算法，则可以<strong>利用这些有标记样本进行类中心的指定，同时在对样本进行划分时，不需要改变这些有标记样本的簇隶属关系</strong>，直接将其划分到对应类簇即可。算法流程如下所示：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwJkRg.png" alt="iwJkRg.png"></p>
+<p>在此，半监督学习就介绍完毕。十分有趣的是：半监督学习将前面许多知识模块联系在了一起，足以体现了作者编排的用心。结合本篇的新知识再来回想之前自己做过的一些研究，发现还是蹚了一些浑水，也许越是觉得过去的自己傻，越就是好的兆头吧~</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin.png" alt="Zhangshuai WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/zhifubao.jpg" alt="Zhangshuai Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine-Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 周志华《Machine Learning》学习笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B014--%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA/" rel="next" title="周志华《Machine Learning》学习笔记(14)">
+                <i class="fa fa-chevron-left"></i> 周志华《Machine Learning》学习笔记(14)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/11/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B013--%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9%E4%B8%8E%E7%A8%80%E7%96%8F%E5%AD%A6%E4%B9%A0/" rel="prev" title="周志华《Machine Learning》学习笔记(13)">
+                周志华《Machine Learning》学习笔记(13) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">上一页</a><a class="page-number" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">1</a><span class="page-number current">2</span><a class="page-number" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/page/3/">3</a><a class="page-number" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/page/4/">4</a><a class="extend next" rel="next" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/page/3/">下一页</a>
-  </nav>
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -624,6 +590,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -644,8 +614,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -751,6 +730,22 @@
       </section>
 
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#14、半监督学习"><span class="nav-number">1.</span> <span class="nav-text">14、半监督学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#14-1-生成式方法"><span class="nav-number">1.1.</span> <span class="nav-text">14.1 生成式方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-2-半监督SVM"><span class="nav-number">1.2.</span> <span class="nav-text">14.2 半监督SVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-3-基于分歧的方法"><span class="nav-number">1.3.</span> <span class="nav-text">14.3 基于分歧的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-4-半监督聚类"><span class="nav-number">1.4.</span> <span class="nav-text">14.4 半监督聚类</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
       
 
@@ -908,6 +903,10 @@ document.getElementById('busuanzi_container_site_uv').style.display='inline-bloc
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
