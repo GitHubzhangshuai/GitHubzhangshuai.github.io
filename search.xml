@@ -12216,4 +12216,132 @@ Iou
         <tag>周志华《Machine Learning》学习笔记</tag>
       </tags>
   </entry>
+  <entry>
+    <title>deep-learning-from-scratch笔记</title>
+    <url>/2020/07/29/deep-learning-from-scratch%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>deep-learning-from-scratch笔记<br><a id="more"></a></p>
+<h1 id="sigmoid函数的平滑性对神经网络的学习具有重要意义。"><a href="#sigmoid函数的平滑性对神经网络的学习具有重要意义。" class="headerlink" title="sigmoid函数的平滑性对神经网络的学习具有重要意义。"></a>sigmoid函数的平滑性对神经网络的学习具有重要意义。</h1><p>识别精度对微小的参数变化基本上没有什么反应，即便有反应，它的值也是不连续地、突然地变化。作为激活函数的阶跃函数也有同样的情况。</p>
+<p>出于相同的原因，如果使用阶跃函数作为激活函数，神经网络的学习将无法进行。</p>
+<p>阶跃函数的导数在绝大多数地方（除了0以外的地方）均为0。</p>
+<p>也就是说，如果使用了阶跃函数，那么即便将损失函数作为指标，参数的微<br>小变化也会被阶跃函数抹杀，导致损失函数的值不会产生任何变化。</p>
+<p>sigmoid函数是一条平滑的曲线，输出随着输入发生连续性的变化。而阶跃函数以0为界，输出发生急剧性的变化。</p>
+<p>另一个不同点是，相对于阶跃函数只能返回0或1，sigmoid函数可以返回0.731 …、0.880 …等实数（这一点和刚才的平滑性有关）。也就是说，感<br>知机中神经元之间流动的是0或1的二元信号，而神经网络中流动的是连续的实数值信号。</p>
+<p>sigmoid函数的导数在任何地方都不为0。这对神经网络的学习非常重要。得益于这个斜率不会为0的性质，神经网络的学习得以正确进行</p>
+<h1 id="神经网络的激活函数必须使用非线性函数。"><a href="#神经网络的激活函数必须使用非线性函数。" class="headerlink" title="神经网络的激活函数必须使用非线性函数。"></a>神经网络的激活函数必须使用非线性函数。</h1><p>换句话说，激活函数不能使用线性函数。为什么不能使用线性函数呢？因为使用线性函数的话，加深神经网络的层数就没有意义了。</p>
+<p>线性函数的问题在于，不管如何加深层数，总是存在与之等效的“无隐藏层的神经网络”。</p>
+<h1 id="实现-softmax函数时的注意事项"><a href="#实现-softmax函数时的注意事项" class="headerlink" title="实现 softmax函数时的注意事项"></a>实现 softmax函数时的注意事项</h1><p><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/softmax1.png" alt></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def softmax(a):</span><br><span class="line"> exp_a &#x3D; np.exp(a)</span><br><span class="line"> sum_exp_a &#x3D; np.sum(exp_a)</span><br><span class="line"> y &#x3D; exp_a &#x2F; sum_exp_a</span><br><span class="line"> return y</span><br></pre></td></tr></table></figure>
+<p>上面的softmax函数的实现虽然正确描述了式，但在计算机的运算上有一定的缺陷。这个缺陷就是溢出问题。softmax函数的实现中要进行指<br>数函数的运算，但是此时指数函数的值很容易变得非常大。<br>比如，e的10次方的值会超过20000，e的1000次方会变成一个后面有40多个0的超大值，e的1000次方的结果会返回一个表示无穷大的inf。如果在这些超大值之间进行除法运算，结果会出现“不确定”的情况。<br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/softmax2.png" alt><br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; a &#x3D; np.array([1010, 1000, 990])</span><br><span class="line">&gt;&gt;&gt; np.exp(a) &#x2F; np.sum(np.exp(a)) # softmax函数的运算</span><br><span class="line">array([ nan, nan, nan]) # 没有被正确计算</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">&gt;&gt;&gt; c &#x3D; np.max(a) # 1010</span><br><span class="line">&gt;&gt;&gt; a - c</span><br><span class="line">array([ 0, -10, -20])</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">&gt;&gt;&gt; np.exp(a - c) &#x2F; np.sum(np.exp(a - c))</span><br><span class="line">array([ 9.99954600e-01, 4.53978686e-05, 2.06106005e-09])</span><br></pre></td></tr></table></figure></p>
+<p>如该例所示，通过减去输入信号中的最大值（上例中的c），我们发现原<br>本为nan（not a number，不确定）的地方，现在被正确计算了。综上，我们<br>可以像下面这样实现softmax函数。<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def softmax(a):</span><br><span class="line"> c &#x3D; np.max(a)</span><br><span class="line"> exp_a &#x3D; np.exp(a - c) # 溢出对策</span><br><span class="line"> sum_exp_a &#x3D; np.sum(exp_a)</span><br><span class="line"> y &#x3D; exp_a &#x2F; sum_exp_a</span><br><span class="line"> return y</span><br></pre></td></tr></table></figure></p>
+<h1 id="获得泛化能力是机器学习的最终目标。"><a href="#获得泛化能力是机器学习的最终目标。" class="headerlink" title="获得泛化能力是机器学习的最终目标。"></a>获得泛化能力是机器学习的最终目标。</h1><p>如果让我们自己来设计一个能将5正确分类的程序，就会意外地发现这是一个很难的问题。人可以简单地识别出5，但却很难明确说出是基于何种规律而识别出了5。</p>
+<p>因此，与其绞尽脑汁，从零开始想出一个可以识别5的算法，不如考虑通过有效利用数据来解决这个问题。</p>
+<p>一种方案是，先从图像中提取特征量，再用机器学习技术学习这些特征量的模式。这里所说的“特征量”是指可以从输入数据（输入图像）中准确地提取本质数据（重要的数据）的转换器。</p>
+<p>图像的特征量通常表示为向量的形式。在计算机视觉领域，常用的特征量包括SIFT、SURF和HOG等。使用这些特征量将图像数据转换为向量，然后对转换后的向量使用机器学习中的SVM、KNN等分类器进行学习。</p>
+<p>机器学习的方法中，由机器从收集到的数据中找出规律性。与从零开始想出算法相比，这种方法可以更高效地解决问题，也能减轻人的负担。</p>
+<p>但是需要注意的是，将图像转换为向量时使用的特征量仍是由人设计的。对于不同的问题，必须使用合适的特征量（必须设计专门的特征量），才能得到好的结果。</p>
+<p>比如，为了区分狗的脸部，人们需要考虑与用于识别5的特征量不同的其他特征量。也就是说，即使使用特征量和机器学习的方法，也需要针对不同的问题人工考虑合适的特征量</p>
+<p>神经网络的优点是对所有的问题都可以用同样的流程来解决。比如，不管要求解的问题是识别5，还是识别狗，抑或是识别人脸，神经网络都是通<br>过不断地学习所提供的数据，尝试发现待求解的问题的模式。也就是说，与待处理的问题无关，神经网络可以将数据直接作为原始数据，进行“端对端”<br>的学习。</p>
+<p>泛化能力是指处理未被观察过的数据（不包含在训练数据中的数据）的<br>能力。获得泛化能力是机器学习的最终目标。</p>
+<h1 id="计算图优点"><a href="#计算图优点" class="headerlink" title="计算图优点"></a>计算图优点</h1><p>计算图到底有什么优点呢？</p>
+<p>一个优点就在于前面所说的局部计算。无论全局是多么复杂的计算，都可以通过局部计算使各个节点致力于简单的计算，从而简化问题。</p>
+<p>另一个优点是，利用计算图可以将中间的计算结果全部保存起来（比如，计算进行到2个苹果时的金额是200日元、加上消费税之前的金额650日元等）。</p>
+<p>但是只有这些理由可能还无法令人信服。实际上，使用计算图最大的原因是，可以通过反向传播高效计算导数。</p>
+<p>计算图可以集中精力于局部计算。无论全局的计算有多么复杂，各个步骤所要做的就是对象节点的局部计算。虽然局部计算非常简单，但是通过传递它的计算结果，可以获得全局的复杂计算的结果。</p>
+<h1 id="推理和学习"><a href="#推理和学习" class="headerlink" title="推理和学习"></a>推理和学习</h1><p>神经网络中进行的处理有推理（inference）和学习两个阶段。</p>
+<p>神经网络的推理通常不使用 Softmax层。</p>
+<p><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%8E%A8%E7%90%86%E4%B8%8E%E5%AD%A6%E4%B9%A0.png" alt></p>
+<p>比如，用上图网络进行推理时，会将最后一个 Affine层的输出作为识别结果。神经网络中未被正规化的输出结果（Softmax层前面的 Affine层的输出）有时被称为“得分”。也就是说，当神经网络的推理只需要给出一个答案的情况下，因为此时只对得分最大值感兴趣，所以不需要 Softmax层。不过，神经网络的学习阶段则需要 Softmax层。</p>
+<h1 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h1><p><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/Momentum.png" alt><br>式中有αv这一项。在物体不受任何力时，该项承担使物体逐渐减速的任务（α设定为0.9之类的值），对应物理上的地面摩擦或空气阻力。<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Momentum:</span><br><span class="line"> def __init__(self, lr&#x3D;0.01, momentum&#x3D;0.9):</span><br><span class="line"> self.lr &#x3D; lr</span><br><span class="line"> self.momentum &#x3D; momentum</span><br><span class="line"> self.v &#x3D; None</span><br><span class="line"> def update(self, params, grads):</span><br><span class="line"> if self.v is None:</span><br><span class="line"> self.v &#x3D; &#123;&#125;</span><br><span class="line"> for key, val in params.items():</span><br><span class="line"> self.v[key] &#x3D; np.zeros_like(val)</span><br><span class="line"> for key in params.keys():</span><br><span class="line"> self.v[key] &#x3D; self.momentum*self.v[key] - self.lr*grads[key]</span><br><span class="line"> params[key] +&#x3D; self.v[key]</span><br></pre></td></tr></table></figure><br>实例变量v会保存物体的速度。初始化时，v中什么都不保存，但当第一次调用update()时，v会以字典型变量的形式保存与参数结构相同的数据。</p>
+<h1 id="AdaGrad和RMSProp"><a href="#AdaGrad和RMSProp" class="headerlink" title="AdaGrad和RMSProp"></a>AdaGrad和RMSProp</h1><p>在神经网络的学习中，学习率（数学式中记为η）的值很重要。学习率过小，会导致学习花费过多时间；反过来，学习率过大，则会导致学习发散而不能正确进行。<br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/AdaGrad.png" alt><br>在关于学习率的有效技巧中，有一种被称为学习率衰减（learning rate decay）的方法，即随着学习的进行，使学习率逐渐减小。实际上，一开始“多”学，然后逐渐“少”学的方法，在神经网络的学习中经常被使用。逐渐减小学习率的想法，相当于将“全体”参数的学习率值一起降低。而AdaGrad进一步发展了这个想法，针对“一个一个”的参数，赋予其“定制”的值。</p>
+<p>AdaGrad会记录过去所有梯度的平方和。因此，学习越深入，更新的幅度就越小。实际上，如果无止境地学习，更新量就会变为 0，完全不再更新。为了改善这个问题，可以使用 RMSProp方法。RMSProp方法并不是将过去所有的梯度一视同仁地相加，而是逐渐地遗忘过去的梯度，在做加法运算时将新梯度的信息更多地反映出来。这种操作从专业上讲，称为“指数移动平均”，呈指数函数式地减小过去的梯度的尺度。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class AdaGrad:</span><br><span class="line"> def __init__(self, lr&#x3D;0.01):</span><br><span class="line"> self.lr &#x3D; lr</span><br><span class="line"> self.h &#x3D; None</span><br><span class="line"> def update(self, params, grads):</span><br><span class="line"> if self.h is None:</span><br><span class="line"> self.h &#x3D; &#123;&#125;</span><br><span class="line"> for key, val in params.items():</span><br><span class="line"> self.h[key] &#x3D; np.zeros_like(val)</span><br><span class="line"> for key in params.keys():</span><br><span class="line"> self.h[key] +&#x3D; grads[key] * grads[key]</span><br><span class="line"> params[key] -&#x3D; self.lr * grads[key] &#x2F; (np.sqrt(self.h[key]) + 1e-7)</span><br></pre></td></tr></table></figure>
+<p>这里需要注意的是，最后一行加上了微小值1e-7。这是为了防止当<br>self.h[key]中有0时，将0用作除数的情况。在很多深度学习的框架中，这<br>个微小值也可以设定为参数，但这里我们用的是1e-7这个固定值。<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class RMSprop:</span><br><span class="line"></span><br><span class="line">    &quot;&quot;&quot;RMSprop&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def __init__(self, lr&#x3D;0.01, decay_rate &#x3D; 0.99):</span><br><span class="line">        self.lr &#x3D; lr</span><br><span class="line">        self.decay_rate &#x3D; decay_rate</span><br><span class="line">        self.h &#x3D; None</span><br><span class="line">        </span><br><span class="line">    def update(self, params, grads):</span><br><span class="line">        if self.h is None:</span><br><span class="line">            self.h &#x3D; &#123;&#125;</span><br><span class="line">            for key, val in params.items():</span><br><span class="line">                self.h[key] &#x3D; np.zeros_like(val)</span><br><span class="line">            </span><br><span class="line">        for key in params.keys():</span><br><span class="line">            self.h[key] *&#x3D; self.decay_rate</span><br><span class="line">            self.h[key] +&#x3D; (1 - self.decay_rate) * grads[key] * grads[key]</span><br><span class="line">            params[key] -&#x3D; self.lr * grads[key] &#x2F; (np.sqrt(self.h[key]) + 1e-7)</span><br></pre></td></tr></table></figure></p>
+<h1 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h1><p>Adam是2015年提出的新方法。它的理论有些复杂，直观地讲，就是融合了Momentum和AdaGrad的方法。通过组合前面两个方法的优点，有望实现参数空间的高效搜索。<br>此外，进行超参数的“偏置校正”也是Adam的特征。<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Adam:</span><br><span class="line"></span><br><span class="line">    &quot;&quot;&quot;Adam (http:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;1412.6980v8)&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def __init__(self, lr&#x3D;0.001, beta1&#x3D;0.9, beta2&#x3D;0.999):</span><br><span class="line">        self.lr &#x3D; lr</span><br><span class="line">        self.beta1 &#x3D; beta1</span><br><span class="line">        self.beta2 &#x3D; beta2</span><br><span class="line">        self.iter &#x3D; 0</span><br><span class="line">        self.m &#x3D; None</span><br><span class="line">        self.v &#x3D; None</span><br><span class="line">        </span><br><span class="line">    def update(self, params, grads):</span><br><span class="line">        if self.m is None:</span><br><span class="line">            self.m, self.v &#x3D; &#123;&#125;, &#123;&#125;</span><br><span class="line">            for key, val in params.items():</span><br><span class="line">                self.m[key] &#x3D; np.zeros_like(val)</span><br><span class="line">                self.v[key] &#x3D; np.zeros_like(val)</span><br><span class="line">        </span><br><span class="line">        self.iter +&#x3D; 1</span><br><span class="line">        lr_t  &#x3D; self.lr * np.sqrt(1.0 - self.beta2**self.iter) &#x2F; (1.0 - self.beta1**self.iter)         </span><br><span class="line">        </span><br><span class="line">        for key in params.keys():</span><br><span class="line">            #self.m[key] &#x3D; self.beta1*self.m[key] + (1-self.beta1)*grads[key]</span><br><span class="line">            #self.v[key] &#x3D; self.beta2*self.v[key] + (1-self.beta2)*(grads[key]**2)</span><br><span class="line">            self.m[key] +&#x3D; (1 - self.beta1) * (grads[key] - self.m[key])</span><br><span class="line">            self.v[key] +&#x3D; (1 - self.beta2) * (grads[key]**2 - self.v[key])</span><br><span class="line">            </span><br><span class="line">            params[key] -&#x3D; lr_t * self.m[key] &#x2F; (np.sqrt(self.v[key]) + 1e-7)</span><br><span class="line">            </span><br><span class="line">            #unbias_m +&#x3D; (1 - self.beta1) * (grads[key] - self.m[key]) # correct bias</span><br><span class="line">            #unbisa_b +&#x3D; (1 - self.beta2) * (grads[key]*grads[key] - self.v[key]) # correct bias</span><br><span class="line">            #params[key] +&#x3D; self.lr * unbias_m &#x2F; (np.sqrt(unbisa_b) + 1e-7)</span><br></pre></td></tr></table></figure></p>
+<h1 id="可以将权重初始值设为0吗"><a href="#可以将权重初始值设为0吗" class="headerlink" title="可以将权重初始值设为0吗"></a>可以将权重初始值设为0吗</h1><p>为什么不能将权重初始值设为0呢？</p>
+<p>严格地说，为什么不能将权重初始值设成一样的值呢？</p>
+<p>这是因为在误差反向传播法中，所有的权重值都会进行相同的更新。</p>
+<p>比如，在2层神经网络中，假设第1层和第2层的权重为0。这样一来，正向传播时，因为输入层的权重为0，所以第2层的神经元全部会<br>被传递相同的值。第2层的神经元中全部输入相同的值，这意味着反向传播时第2层的权重全部都会进行相同的更新（回忆一下“乘法节点的反向传播”的内容）。</p>
+<p>因此，权重被更新为相同的值，并拥有了对称的值（重复的值）。这使得神经网络拥有许多不同的权重的意义丧失了。为了防止“权重均一化”（严格地讲，是为了瓦解权重的对称结构），必须随机生成初始值。</p>
+<h1 id="各层的激活值的分布都要求有适当的广度"><a href="#各层的激活值的分布都要求有适当的广度" class="headerlink" title="各层的激活值的分布都要求有适当的广度"></a>各层的激活值的分布都要求有适当的广度</h1><p>各层的激活值的分布都要求有适当的广度。为什么呢？</p>
+<p>因为通过在各层间传递多样性的数据，神经网络可以进行高效的学习。</p>
+<p>反过来，如果传递的是有所偏向的数据，就会出现梯度消失或者“表现力受限”的问题，导致学习可能无法顺利进行。</p>
+<p>激活值的分布有所偏向，说明在表现力上会有很大问题。为什么这么说呢？</p>
+<p>因为如果有多个神经元都输出几乎相同的值，那它们就没有存在的意义了。</p>
+<p>比如，如果100个神经元都输出几乎相同的值，那么也可以由1个神经元来表达基本相同的事情。</p>
+<p>因此，激活值在分布上有所偏向会出现“表现力受限”的问题。</p>
+<h1 id="Batch-Norm"><a href="#Batch-Norm" class="headerlink" title="Batch Norm"></a>Batch Norm</h1><p>为什么Batch Norm这么惹人注目呢？因为Batch Norm有以下优点。</p>
+<ul>
+<li>可以使学习快速进行（可以增大学习率）。</li>
+<li>不那么依赖初始值（对于初始值不用那么神经质）。</li>
+<li>抑制过拟合（降低Dropout等的必要性）。</li>
+</ul>
+<p>Batch Norm的思路是调整各层的激活值分布使其拥有适当的广度。<br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/Batch%20Norm.png" alt></p>
+<h1 id="权值衰减"><a href="#权值衰减" class="headerlink" title="权值衰减"></a>权值衰减</h1><p>权值衰减是一直以来经常被使用的一种抑制过拟合的方法。</p>
+<p>该方法通过在学习的过程中对大的权重进行惩罚，来抑制过拟合。</p>
+<p>很多过拟合原本就是因为权重参数取值过大才发生的。<br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9D%83%E5%80%BC%E8%A1%B0%E5%87%8F.png" alt></p>
+<h1 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h1><p>作为抑制过拟合的方法，前面我们介绍了为损失函数加上权重的L2范数的权值衰减方法。</p>
+<p>该方法可以简单地实现，在某种程度上能够抑制过拟合。但是，如果网络的模型变得很复杂，只用权值衰减就难以应对了。</p>
+<p>在这种情况下，我们经常会使用Dropout方法。</p>
+<p>Dropout是一种在学习的过程中随机删除神经元的方法。<br>训练时，随机选出隐藏层的神经元，然后将其删除。被删除的神经元不再进行信号的传递，</p>
+<p><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/Dropout.png" alt><br>训练时，每传递一次数据，就会随机选择要删除的神经元。<br>然后，测试时，虽然会传递所有的神经元信号，但是对于各个神经元的输出，要乘上训练时的删除比例后再输出。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Dropout:</span><br><span class="line"> def __init__(self, dropout_ratio&#x3D;0.5):</span><br><span class="line"> self.dropout_ratio &#x3D; dropout_ratio</span><br><span class="line"> self.mask &#x3D; None</span><br><span class="line"> def forward(self, x, train_flg&#x3D;True):</span><br><span class="line"> if train_flg:</span><br><span class="line"> self.mask &#x3D; np.random.rand(*x.shape) &gt; self.dropout_ratio</span><br><span class="line"> return x * self.mask</span><br><span class="line"> else:</span><br><span class="line"> return x * (1.0 - self.dropout_ratio)</span><br><span class="line"> def backward(self, dout):</span><br><span class="line"> return dout * self.mask</span><br></pre></td></tr></table></figure>
+<p>这里的要点是，每次正向传播时，self.mask中都会以False的形式保存要删除的神经元。</p>
+<p>self.mask会随机生成和x形状相同的数组，并将值比dropout_ratio大的元素设为True。反向传播时的行为和ReLU相同。</p>
+<p>也就是说，正向传播时传递了信号的神经元，反向传播时按原样传递信号；正向传播时没有传递信号的神经元，反向传播时信号将停在那里。</p>
+<h1 id="验证数据"><a href="#验证数据" class="headerlink" title="验证数据"></a>验证数据</h1><p>调整超参数时，必须使用超参数专用的确认数据。</p>
+<p>用于调整超参数的数据，一般称为验证数据（validation data）。</p>
+<p>我们使用这个验证数据来评估超参数的好坏。</p>
+<h1 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h1><p><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E5%8D%B7%E7%A7%AF1.png" alt><br>卷积运算对输入数据应用滤波器。</p>
+<p>在这个例子中，输入数据是有高长方向的形状的数据，滤波器也一样，有高长方向上的维度。</p>
+<p>假设用（height, width）表示数据和滤波器的形状，则在本例中，输入大小是(4, 4)，滤波器大小是(3, 3)，输出大小是(2, 2)。</p>
+<p>另外，有的文献中也会用“核”这个词来表示这里所说的“滤波器”。</p>
+<p><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E5%8D%B7%E7%A7%AF2.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E5%8D%B7%E7%A7%AF3.png" alt></p>
+<p>应用滤波器的位置间隔称为步幅（stride）。之前的例子中步幅都是1，如果将步幅设为2，则如下图所示，应用滤波器的窗口的间隔变为2个元素。<br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E5%8D%B7%E7%A7%AF4.png" alt></p>
+<p><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E5%8D%B7%E7%A7%AF5.png" alt></p>
+<p>之前的卷积运算的例子都是以有高、长方向的2维形状为对象的。</p>
+<p>但是，图像是3维数据，除了高、长方向之外，还需要处理通道方向。</p>
+<p>这里，我们按照与之前相同的顺序，看一下对加上了通道方向的3维数据进行卷积运算的例子。</p>
+<p>图7-8是卷积运算的例子，图7-9是计算顺序。</p>
+<p>这里以3通道的数据为例，展示了卷积运算的结果。和2维数据时（图7-3的例子）相比，可以发现纵深方向（通道方向）上特征图增加了。</p>
+<p>通道方向上有多个特征图时，会按通道进行输入数据和滤波器的卷积运算，并将结果相加，从而得到输出。<br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E5%8D%B7%E7%A7%AF6.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E5%8D%B7%E7%A7%AF7.png" alt></p>
+<p>将数据和滤波器结合长方体的方块来考虑，3维数据的卷积运算会很容易理解。</p>
+<p>方块是如图7-10所示的3维长方体。把3维数据表示为多维数组时，书写顺序为（channel, height, width）。</p>
+<p>比如，通道数为C、高度为H、长度为W的数据的形状可以写成（C, H, W）。</p>
+<p>滤波器也一样，要按（channel, height, width）的顺序书写。</p>
+<p>比如，通道数为C、滤波器高度为FH（Filter Height）、长度为FW（Filter Width）时，可以写成（C, FH, FW）。</p>
+<p><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E5%8D%B7%E7%A7%AF8.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E5%8D%B7%E7%A7%AF9.png" alt></p>
+<p>图7-11中，通过应用FN个滤波器，输出特征图也生成了FN个。</p>
+<p>如果将这FN个特征图汇集在一起，就得到了形状为(FN, OH, OW)的方块。将这个方块传给下一层，就是CNN的处理流。</p>
+<p>如图 7-11 所示，关于卷积运算的滤波器，也必须考虑滤波器的数量。</p>
+<p>因此，作为4维数据，滤波器的权重数据要按(output_channel, input_channel, height, width)的顺序书写。</p>
+<p>比如，通道数为3、大小为5 × 5的滤波器有20个时，可以写成(20, 3, 5, 5)。</p>
+<p>卷积运算中（和全连接层一样）存在偏置。在图7-11的例子中，如果进一步追加偏置的加法运算处理，则结果如下面的图7-12所示。</p>
+<p>图7-12中，每个通道只有一个偏置。这里，偏置的形状是(FN, 1, 1)，滤波器的输出结果的形状是(FN, OH, OW)。</p>
+<p>这两个方块相加时，要对滤波器的输出结果(FN, OH, OW)按通道加上相同的偏置值。</p>
+<p>另外，不同形状的方块相加时，可以基于NumPy的广播功能轻松实现<br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E5%8D%B7%E7%A7%AF10.png" alt></p>
+<p>神经网络的处理中进行了将输入数据打包的批处理。</p>
+<p>之前的全连接神经网络的实现也对应了批处理，通过批处理，能够实现处理的高效化和学习时对mini-batch的对应。</p>
+<p>我们希望卷积运算也同样对应批处理。为此，需要将在各层间传递的数据保存为4维数据。</p>
+<p>具体地讲，就是按(batch_num, channel, height, width)的顺序保存数据。</p>
+<p>比如，将图7-12中的处理改成对N个数据进行批处理时，数据的形状如图7-13所示。</p>
+<p>图7-13的批处理版的数据流中，在各个数据的开头添加了批用的维度。像这样，数据作为4维的形状在各层间传递。</p>
+<p>这里需要注意的是，网络间传递的是4维数据，对这N个数据进行了卷积运算。也就是说，批处理将N次的处理汇总成了1次进行。<br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E5%8D%B7%E7%A7%AF11.png" alt></p>
+<h1 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h1><p><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%B1%A0%E5%8C%961.png" alt><br>图7-14的例子是按步幅2进行2 × 2的Max池化时的处理顺序。“Max池化”是获取最大值的运算，“2 × 2”表示目标区域的大小。</p>
+<p>如图所示，从2 × 2的区域中取出最大的元素。此外，这个例子中将步幅设为了2，所以2 × 2的窗口的移动间隔为2个元素。</p>
+<p>另外，一般来说，池化的窗口大小会和步幅设定成相同的值。比如，3 × 3的窗口的步幅会设为3，4 × 4的窗口的步幅会设为4等。</p>
+<p>池化层有以下特征。</p>
+<ul>
+<li>没有要学习的参数。池化层和卷积层不同，没有要学习的参数。池化只是从目标区域中取最大值（或者平均值），所以不存在要学习的参数。<br>通道数不发生变化</li>
+<li>经过池化运算，输入数据和输出数据的通道数不会发生变化。如图7-15<br>所示，计算是按通道独立进行的。<br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%B1%A0%E5%8C%962.png" alt><br>对微小的位置变化具有鲁棒性（健壮）</li>
+</ul>
+<p>输入数据发生微小偏差时，池化仍会返回相同的结果。因此，池化对输入数据的微小偏差具有鲁棒性。比如，3 × 3的池化的情况下，如图7-16所示，池化会吸收输入数据的偏差（根据数据的不同，结果有可能不一致）。<br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%B1%A0%E5%8C%963.png" alt></p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>deep-learning-from-scratch笔记</tag>
+      </tags>
+  </entry>
 </search>
