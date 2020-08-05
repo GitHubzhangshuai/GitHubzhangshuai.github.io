@@ -12560,7 +12560,7 @@ Iou
 </ul>
 </li>
 <li><p>Consider this numerical problem when you are computing Softmax:</p>
-  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">f = np.array([<span class="number">123</span>, <span class="number">456</span>, <span class="number">789</span>]) <span class="comment"># example with 3 classes and each having large scores</span></span><br><span class="line">p = np.exp(f) / np.sum(np.exp(f)) <span class="comment"># Bad: Numeric problem, potential blowup</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># instead: first shift the values of f so that the highest number is 0:</span></span><br><span class="line">f -= np.max(f) <span class="comment"># f becomes [-666, -333, 0]</span></span><br><span class="line">p = np.exp(f) / np.sum(np.exp(f)) <span class="comment"># safe to do, gives the correct answer</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># example with 3 classes and each having large scores</span></span><br><span class="line">f = np.array([<span class="number">123</span>, <span class="number">456</span>, <span class="number">789</span>]) </span><br><span class="line"><span class="comment"># Bad: Numeric problem, potential blowup</span></span><br><span class="line">p = np.exp(f) / np.sum(np.exp(f)) </span><br><span class="line"></span><br><span class="line"><span class="comment"># instead: first shift the values of f so that the highest number is 0:</span></span><br><span class="line">f -= np.max(f) <span class="comment"># f becomes [-666, -333, 0]</span></span><br><span class="line"><span class="comment"># safe to do, gives the correct answer</span></span><br><span class="line">p = np.exp(f) / np.sum(np.exp(f))</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -12592,7 +12592,7 @@ Iou
 </li>
 <li><p>stochastic gradient descent:</p>
 <ul>
-<li>Instead of using all the date, use a mini batch of examples (32/64/128 are commonly used) for faster results.</li>
+<li>Instead of using all the data, use a mini batch of examples (32/64/128 are commonly used) for faster results.</li>
 </ul>
 </li>
 </ul>
@@ -12893,7 +12893,7 @@ Iou
 </ul>
 </li>
 <li><p>Exponential linear units (ELU):</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ELU(x) &#x3D; &#123; x                                           if x &gt; 0</span><br><span class="line">		   alpah *(exp(x) -1)		                   if x &lt;&#x3D; 0</span><br><span class="line">           # alpah are a learning parameter</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ELU(x) &#x3D; &#123; x if x &gt; 0</span><br><span class="line">		   alpah *(exp(x) -1)	if x &lt;&#x3D; 0</span><br><span class="line">       # alpah are a learning parameter</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>It has all the benefits of RELU</p>
 </li>
@@ -12912,7 +12912,7 @@ Iou
 <li>Generalizes RELU and Leaky RELU</li>
 <li>Doesn’t die!</li>
 <li>Problems:<ul>
-<li>oubles the number of parameters per neuron</li>
+<li>doubles the number of parameters per neuron</li>
 </ul>
 </li>
 </ul>
@@ -12930,7 +12930,7 @@ Iou
 <li><p><strong>Data preprocessing</strong>:</p>
 <ul>
 <li><p>Normalize the data:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Zero centered data. (Calculate the mean for every input).</span></span><br><span class="line"><span class="comment"># On of the reasons we do this is because we need data to be between positive and negative and not all the be negative or positive. </span></span><br><span class="line">X -= np.mean(X, axis = <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Then apply the standard deviation. Hint: in images we don't do this.</span></span><br><span class="line">X /= np.std(X, axis = <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Zero centered data. (Calculate the mean for every input).</span></span><br><span class="line"><span class="comment"># On of the reasons we do this is because we need data to be between </span></span><br><span class="line"><span class="comment"># positive and negative and not all the be negative or positive. </span></span><br><span class="line">X -= np.mean(X, axis = <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Then apply the standard deviation. Hint: in images we don't do this.</span></span><br><span class="line">X /= np.std(X, axis = <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>To normalize images:</p>
 <ul>
@@ -13235,14 +13235,35 @@ Iou
 </ol>
 </li>
 <li><p>Guide to use transfer learning:</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Very Similar dataset</th>
+<th>very different dataset</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>very little dataset</strong></td>
+<td>Use Linear classifier on top layer</td>
+<td>You’re in trouble.. Try linear classifier from different stages</td>
+</tr>
+<tr>
+<td><strong>quite a lot of data</strong></td>
+<td>Finetune a few layers</td>
+<td>Finetune a large layers</td>
+</tr>
+</tbody>
+</table>
+</div>
 <ul>
-<li>|                         | Very Similar dataset               | very different dataset                   |<br>| ———————————- | ————————————————— | ———————————————————— |<br>| <strong>very little dataset</strong> | Use Linear classifier on top layer | You’re in trouble.. Try linear classifier from different stages |<br>| <strong>quite a lot of data</strong> | Finetune a few layers              | Finetune a large layers                  |</li>
-</ul>
-</li>
-<li><p>Transfer learning is the normal not an exception.</p>
-</li>
-</ul>
-</li>
+<li>Transfer learning is the normal not an exception.</li>
 </ul>
 <h2 id="08-Deep-learning-software"><a href="#08-Deep-learning-software" class="headerlink" title="08. Deep learning software"></a>08. Deep learning software</h2><ul>
 <li>This section changes a lot every year in CS231n due to rabid changes in the deep learning softwares.</li>
@@ -13276,7 +13297,7 @@ Iou
 </ul>
 </li>
 <li>There are a lot of courses for learning parallel programming.</li>
-<li>If you aren’t careful, training can bottleneck on reading dara and transferring to GPU. So the solutions are:<ul>
+<li>If you aren’t careful, training can bottleneck on reading data and transferring to GPU. So the solutions are:<ul>
 <li>Read all the data into RAM. # If possible</li>
 <li>Use SSD instead of HDD</li>
 <li>Use multiple CPU threads to prefetch data!<ul>
@@ -13386,13 +13407,9 @@ Iou
 <li><p>Serialization</p>
 <ul>
 <li><strong>Static</strong>: Once graph is built, can serialize it and run it without the code that built the graph. Ex use the graph in c++</li>
+<li><strong>Dynamic</strong>: Always need to keep the code around.</li>
 </ul>
 </li>
-</ul>
-</li>
-</ul>
-<pre><code>- **Dynamic**: Always need to keep the code around.
-</code></pre><ul>
 <li><p>Conditional</p>
 <ul>
 <li>Is easier in dynamic graphs. And more complicated in static graphs.</li>
@@ -13404,7 +13421,7 @@ Iou
 </ul>
 </li>
 </ul>
-<ul>
+</li>
 <li><p>Tensorflow fold make dynamic graphs easier in Tensorflow through dynamic batching.</p>
 </li>
 <li><p>Dynamic graph applications include: recurrent networks and recursive networks.</p>
@@ -13771,7 +13788,7 @@ Iou
 <li><p>The RNN block should return a vector.</p>
 </li>
 <li><p>We can process a sequence of vectors x by applying a recurrence formula at every time step:</p>
-  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">h[t] = fw (h[t<span class="number">-1</span>], x[t])			<span class="comment"># Where fw is some function with parameters W</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">h[t] = fw (h[t<span class="number">-1</span>], x[t])			</span><br><span class="line"><span class="comment"># Where fw is some function with parameters W</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>The same function and the same set of parameters are used at every time step.</li>
 </ul>
@@ -14237,10 +14254,42 @@ Iou
 <li><p>Generative models are type of Unsupervised learning.</p>
 </li>
 <li><p>Supervised vs Unsupervised Learning:</p>
-<ul>
-<li>|                | Supervised Learning                      | Unsupervised Learning                    |<br>| ——————— | ———————————————————— | ———————————————————— |<br>| Data structure | Data: (x, y), and x is data, y is label  | Data: x, Just data, no labels!           |<br>| Data price     | Training data is expensive in a lot of cases. | Training data are cheap!                 |<br>| Goal           | Learn a function to map x -&gt; y           | Learn some underlying hidden structure of the data |<br>| Examples       | Classification, regression, object detection, semantic segmentation, image captioning | Clustering, dimensionality reduction, feature learning, density estimation |</li>
-</ul>
 </li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Supervised Learning</th>
+<th>Unsupervised Learning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data structure</td>
+<td>Data: (x, y), and x is data, y is label</td>
+<td>Data: x, Just data, no labels!</td>
+</tr>
+<tr>
+<td>Data price</td>
+<td>Training data is expensive in a lot of cases.</td>
+<td>Training data are cheap!</td>
+</tr>
+<tr>
+<td>Goal</td>
+<td>Learn a function to map x -&gt; y</td>
+<td>Learn some underlying hidden structure of the data</td>
+</tr>
+<tr>
+<td>Examples</td>
+<td>Classification, regression, object detection, semantic segmentation, image captioning</td>
+<td>Clustering, dimensionality reduction, feature learning, density estimation</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
 <li><p>Autoencoders are a Feature learning technique.</p>
 <ul>
 <li><img src="/2020/07/29/CS231N/24.png" alt></li>
@@ -14466,10 +14515,8 @@ Iou
 <li><code>S</code>: set of possible states.</li>
 <li><code>A</code>: set of possible actions</li>
 <li><code>R</code>: distribution of reward given (state, action) pair</li>
-<li><code>P</code>: transition probability i.e. distribution over next state given (state, action) pair<ul>
+<li><code>P</code>: transition probability i.e. distribution over next state given (state, action) pair</li>
 <li><code>Y</code>: discount factor    <code># How much we value rewards coming up soon verses later on.</code></li>
-</ul>
-</li>
 </ul>
 </li>
 <li>Algorithm:<ul>
@@ -14638,14 +14685,12 @@ Iou
 </li>
 <li>Hardware 101: the Family<ul>
 <li><strong>General Purpose</strong>            <code># Used for any hardware</code><ul>
-<li>CPU                <code># Latency oriented, Single strong threaded like a single elepahnt</code><ul>
+<li>CPU                <code># Latency oriented, Single strong threaded like a single elepahnt</code></li>
 <li>GPU            <code># Throughput oriented, So many small threads like a lot of ants</code></li>
-</ul>
-</li>
 <li>GPGPU<ul>
 <li><strong>Specialized HW</strong>        <code>#Tuned for a domain of applications</code><ul>
-<li>FPGA# Programmable logic, Its cheaper but less effiecnet`</li>
-<li>ASIC<code># Fixed logic, Designed for a certian applications (Can be designed for deep learning applications)</code></li>
+<li>FPGA <code># Programmable logic, Its cheaper but less effiecnet</code></li>
+<li>ASIC <code># Fixed logic, Designed for a certian applications (Can be designed for deep learning applications)</code></li>
 </ul>
 </li>
 </ul>
@@ -14997,7 +15042,6 @@ Iou
 </ul>
 </li>
 </ul>
-<p><br><br><br><br><br><br>These Notes was made by <a href="mailto:mma18@fayoum.edu.eg">Mahmoud Badry</a> @2017</p>
 ]]></content>
       <categories>
         <category>深度学习</category>
@@ -15038,7 +15082,7 @@ Iou
 <script type="math/tex; mode=display">b^i_{x,y} = a^i_{x,y}/ (k+a\sum^{min(N-1,i+n/2)}_{j=max(0,i-n/2)} {a^i_{x,y}}^2)^\beta</script><p>where the sum runs over n “adjacent” kernel maps at the same spatial position, and N is the total number of kernels in the layer. The ordering of the kernel maps is of course arbitrary and determined before training begins. This sort of response normalization implements a form of lateral inhibition inspired by the type found in real neurons, creating competition for big activities amongst neuron outputs computed using different kernels. The constants k, n, α, and β are hyper-parameters whose values are determined using a validation set; we used k = 2, n = 5, α = $10^{-4}$, and β = 0.75. We applied this normalization after applying the ReLU nonlinearity in certain layers (see Section 3.5).</p>
 <p>This scheme bears some resemblance to the local contrast normalization scheme of Jarrett et al. [11], but ours would be more correctly termed “brightness normalization”, since we do not subtract the mean activity. Response normalization reduces our top-1 and top-5 error rates by 1.4% and 1.2%, respectively. We also verified the effectiveness of this scheme on the CIFAR-10 dataset: a four-layer CNN achieved a 13% test error rate without normalization and 11% with normalization $^3$.</p>
 <hr>
-<p>$^3$We cannot describe this network in detail due to space constraints, but it is specified precisely by the code<br>and parameter files provided here: <a href="http://code.google.com/p/cuda-convnet/" target="_blank" rel="noopener">http://code.google.com/p/cuda-convnet/</a></p>
+<p>$^3$We cannot describe this network in detail due to space constraints, but it is specified precisely by the code and parameter files provided here: <a href="http://code.google.com/p/cuda-convnet/" target="_blank" rel="noopener">http://code.google.com/p/cuda-convnet/</a></p>
 <h3 id="3-4Overlapping-Pooling"><a href="#3-4Overlapping-Pooling" class="headerlink" title="3.4Overlapping Pooling"></a>3.4Overlapping Pooling</h3><p>Pooling layers in CNNs summarize the outputs of neighboring groups of neurons in the same kernel map.  Traditionally, the neighborhoods summarized by adjacent pooling units do not overlap (e.g.,[17, 11, 4]). To be more precise, a pooling layer can be thought of as consisting of a grid of pooling units spaced s pixels apart, each summarizing a neighborhood of size z × z centered at the location of the pooling unit. If we set s = z, we obtain traditional local pooling as commonly employed in CNNs. If we set s &lt; z, we obtain overlapping pooling. This is what we use throughout our network, with s = 2 and z = 3. This scheme reduces the top-1 and top-5 error rates by 0.4% and 0.3%, respectively, as compared with the non-overlapping scheme s = 2, z = 2, which produces output of equivalent dimensions. We generally observe during training that models with overlapping pooling find it slightly more difficult to overfit.</p>
 <h3 id="3-5-Overall-Architecture"><a href="#3-5-Overall-Architecture" class="headerlink" title="3.5 Overall Architecture"></a>3.5 Overall Architecture</h3><p>Now we are ready to describe the overall architecture of our CNN. As depicted in Figure 2, the net contains eight layers with weights; the first five are convolutional and the remaining three are fullyconnected. The output of the last fully-connected layer is fed to a 1000-way softmax which produces a distribution over the 1000 class labels. Our network maximizes the multinomial logistic regression objective, which is equivalent to maximizing the average across training cases of the log-probability of the correct label under the prediction distribution. The kernels of the second, fourth, and fifth convolutional layers are connected only to those kernel maps in the previous layer which reside on the same GPU (see Figure 2). The kernels of the third convolutional layer are connected to all kernel maps in the second layer. The neurons in the fully-connected layers are connected to all neurons in the previous layer.Response-normalization layers follow the first and second convolutional layers. Max-poolinglayers, ofthekinddescribedinSection 3.4, follow both response-normalization layers as well as the fifth convolutional layer. The ReLU non-linearity is applied to the output of every convolutional and fully-connected layer. The first convolutional layer filters the 224×224×3 input image with 96 kernels of size 11×11×3 with a stride of 4 pixels (this is the distance between the receptive field centers of neighboring neurons in a kernel map). The second convolutional layer takes as input the (response-normalized and pooled) output of the first convolutional layer and filters it with 256 kernels of size 5 × 5 × 48. The third, fourth, and fifth convolutional layers are connected to one another without any intervening pooling or normalization layers. The third convolutional layer has 384 kernels of size 3 × 3 × 256 connected to the (normalized, pooled) outputs of the second convolutional layer. The fourth convolutional layer has 384 kernels of size 3 × 3 × 192 , and the fifth convolutional layer has 256 kernels of size 3 × 3 × 192. The fully-connected layers have 4096 neurons each.</p>
 <p><img src="/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure2.png" alt></p>
@@ -15052,7 +15096,7 @@ Iou
 <script type="math/tex; mode=display">[P1,P2,P3][\alpha1 \lambda1,\alpha2 \lambda2,\alpha3 \lambda3]^T</script><p>where pi and λi are ith eigenvector and eigenvalue of the 3 × 3 covariance matrix of RGB pixel values, respectively, and αiis the aforementioned random variable. Each αiis drawn only once for all the pixels of a particular training image until that image is used for training again, at which point it is re-drawn. This scheme approximately captures an important property of natural images, namely, that object identity is invariant to changes in the intensity and color of the illumination. This scheme reduces the top-1 error rate by over 1%.</p>
 <h3 id="4-2-Dropout"><a href="#4-2-Dropout" class="headerlink" title="4.2 Dropout"></a>4.2 Dropout</h3><p>Combining the predictions of many different models is a very successful way to reduce test errors [1, 3], but it appears to be too expensive for big neural networks that already take several days to train. There is, however, a very efficient version of model combination that only costs about a factor of two during training. The recently-introduced technique, called “dropout” [10], consists of setting to zero the output of each hidden neuron with probability 0.5. The neurons which are “dropped out” in this way do not contribute to the forward pass and do not participate in backpropagation. So every time an input is presented, the neural network samples a different architecture, but all these architectures share weights. This technique reduces complex co-adaptations of neurons, since a neuron cannot rely on the presence of particular other neurons. It is, therefore, forced to learn more robust features that are useful in conjunction with many different random subsets of the other neurons. At test time, we use all the neurons but multiply their outputs by 0.5, which is a reasonable approximation to taking the geometric mean of the predictive distributions produced by the exponentially-many dropout networks. We use dropout in the first two fully-connected layers of Figure 2. Without dropout, our network exhibits substantial overfitting. Dropout roughly doubles the number of iterations required to converge.</p>
 <h2 id="5-Details-of-learning"><a href="#5-Details-of-learning" class="headerlink" title="5 Details of learning"></a>5 Details of learning</h2><p>We trained our models using stochastic gradient descent with a batch size of 128 examples, momentum of 0.9, and weight decay of 0.0005. We found that this small amount of weight decay was important for the model to learn. In other words, weight decay here is not merely a regularizer: it reduces the model’s training error. The update rule for weight w was</p>
-<script type="math/tex; mode=display">v_{i+1}:=0.9v_{i}-0.0005\epsilon w_i-\epsilon \langle \frac{\delta L}{\delta W }|_{w_i}\rangle _{D_i}</script><script type="math/tex; mode=display">w_{i+1}:=w_i+v_{i+1}</script><p>where i is the iteration index,v is the momentum variable,$\epsilon $is the learning rate,$\langle \frac{\delta L}{\delta W }|_{w_i}\rangle _{D_i}$is the average over the ith batch Diof the derivative of the objective with respect to w, evaluated at wi.<br><img src="/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure.png" alt></p>
+<script type="math/tex; mode=display">v_{i+1}:=0.9v_{i}-0.0005\epsilon w_i-\epsilon \langle \frac{\delta L}{\delta W }|_{w_i}\rangle _{D_i}</script><script type="math/tex; mode=display">w_{i+1}:=w_i+v_{i+1}</script><p>where i is the iteration index,v is the momentum variable,$\epsilon $is the learning rate,$\langle \frac{\delta L}{\delta W }|_{w_i}\rangle _{D_i}$is the average over the ith batch Diof the derivative of the objective with respect to w, evaluated at wi.<br><img src="/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure3.png" alt></p>
 <p>Figure 3: 96 convolutional kernels of size 11×11×3learned by the first convolutional layer on the 224×224×3 input images. The top 48 kernels were learned on GPU 1 while the bottom 48 kernels were learned on GPU 2. See Section 6.1 for details.</p>
 <p>We initialized the weights in each layer from a zero-mean Gaussian distribution with standard deviation 0.01. We initialized the neuron biases in the second, fourth, and fifth convolutional layers, as well as in the fully-connected hidden layers, with the constant 1. This initialization accelerates the early stages of learning by providing the ReLUs with positive inputs. We initialized the neuron biases in the remaining layers with the constant 0.</p>
 <p>We used an equal learning rate for all layers, which we adjusted manually throughout training.<br>The heuristic which we followed was to divide the learning rate by 10 when the validation error rate stopped improving with the current learning rate. The learning rate was initialized at 0.01 and reduced three times prior to termination. We trained the network for roughly 90 cycles through the training set of 1.2 million images, which took five to six days on two NVIDIA GTX 580 3GB GPUs.</p>
@@ -15113,7 +15157,7 @@ Iou
 <h3 id="4-2-Dropout-1"><a href="#4-2-Dropout-1" class="headerlink" title="4.2 Dropout"></a>4.2 Dropout</h3><p>将许多不同模型的预测结合起来是减少测试误差的一种非常成功的方法[1,3]，但对于已经花费数天时间进行训练的大型神经网络来说，这似乎太贵了。然而，有一个非常有效的模型组合版本，在培训期间只需花费大约两倍的成本。最近引入的技术称为“dropout”[10]，包括将每个隐藏神经元的输出设为0，概率为0.5。 以这种方式“退出”的神经元不参与前向传递，也不参与反向传播。 所以每次输入被提出时，神经网络都会对不同的结构进行采样，但所有这些结构都共享权重。 这种技术减少了神经元复杂的共适应，因为一个神经元不能依赖于其他特定神经元的存在。 因此，它被迫学习更健壮的特征，这些特征与其他神经元的许多不同的随机子集结合起来是有用的。在测试时，我们使用所有的神经元，但将它们的输出乘以0.5，这是一个合理的近似值，取指数型多个丢失网络产生的预测分布的几何平均值。我们在图2中的前两个完全连接的层中使用dropout。在没有dropout的情况下，我们的网络表现出严重的过度适应。Dropout大约是收敛所需迭代次数的两倍。</p>
 <h2 id="5-学习细节"><a href="#5-学习细节" class="headerlink" title="5.学习细节"></a>5.学习细节</h2><p>我们使用随机梯度下降训练我们的模型，批量大小为128个例子，动量为0.9，权重衰减为0.0005。我们发现这个小的重量衰减对模型的学习很重要。换句话说，这里的权重衰减不仅仅是一个正则化器：它减少了模型的训练误差。权重w的更新规则是</p>
 <script type="math/tex; mode=display">v_{i+1}:=0.9v_{i}-0.0005\epsilon w_i-\epsilon \langle \frac{\delta L}{\delta W }|_{w_i}\rangle _{D_i}</script><script type="math/tex; mode=display">w_{i+1}:=w_i+v_{i+1}</script><p>其中i是迭代索引,v是动量变量，$\epsilon$ 是学习率，$\langle \frac{\delta L}{\delta W }|_{w_i}\rangle _{D_i}$是第i批中目标相对于w的导数的平均值，在wi处计算。</p>
-<p><img src="/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure.png" alt><br>图3:224×224×3输入图像第一卷积层学习的96个卷积核，大小为11×11×3。前48个内核在gpu1上学习，而后48个内核在gpu2上学习。详见第6.1节。</p>
+<p><img src="/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure3.png" alt><br>图3:224×224×3输入图像第一卷积层学习的96个卷积核，大小为11×11×3。前48个内核在gpu1上学习，而后48个内核在gpu2上学习。详见第6.1节。</p>
 <p>我们用标准差为0.01的零均值高斯分布初始化每个层的权重。我们用常数1初始化第二、第四和第五卷积层以及完全连接的隐藏层中的神经元偏差。这种初始化通过向ReLUs提供积极的输入加快了学习的早期阶段。我们用常数0初始化剩余层中的神经元偏差。</p>
 <p>我们对所有层使用相同的学习率，在整个培训过程中我们手动调整。我们遵循的启发式方法是，当验证错误率不再随当前学习率提高时，将学习率除以10。学习率初始化为0.01，终止前降低3倍。我们通过120万张图像的训练集训练了网络大约90个周期，在两个 NVIDIA GTX 5803 gb gpu上花了5到6天的时间。</p>
 <h2 id="6-Results-1"><a href="#6-Results-1" class="headerlink" title="6 Results"></a>6 Results</h2><p>表1总结了我们在ILSVRC-2010上的结果。我们的网络实现了前1名和前5名测试集错误率分别为37.5%和17.0% $^5$。</p>
@@ -15152,6 +15196,2686 @@ Iou
       </categories>
       <tags>
         <tag>卷积经典模型论文</tag>
+        <tag>翻译</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CS231N翻译版</title>
+    <url>/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/</url>
+    <content><![CDATA[<p>斯坦福大学深度学习课程笔记翻译版<br><a id="more"></a><br><a href="https://githubzhangshuai.github.io/2020/07/29/CS231N/#more" target="_blank" rel="noopener">英文版</a></p>
+<h1 id="Standford-CS231n-2017-Summary"><a href="#Standford-CS231n-2017-Summary" class="headerlink" title="Standford CS231n 2017 Summary"></a>Standford CS231n 2017 Summary</h1><p>在观看了2017年著名的斯坦福<a href="http://cs231n.stanford.edu/" target="_blank" rel="noopener">CS231n</a>课程的所有视频后，我决定对整个课程进行总结，以帮助我记住并向任何想知道它的人。有些课我跳过了一些内容，因为这对我来说并不重要。</p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="#standford-cs231n-2017-summary">Standford CS231n 2017 Summary</a><ul>
+<li><a href="#目录">目录</a></li>
+<li><a href="#课程信息">课程信息</a></li>
+<li><a href="#01-introduction-to-cnn-for-visual-recognition">01. CNN视觉识别简介</a></li>
+<li><a href="#02-image-classification">02. 图像分类</a></li>
+<li><a href="#03-loss-function-and-optimization">03. 损失函数与最优化</a></li>
+<li><a href="#04-introduction-to-neural-network">04. 神经网络概论</a></li>
+<li><a href="#05-convolutional-neural-networks-cnns">05. 卷积神经网络</a></li>
+<li><a href="#06-training-neural-networks-i">06. 神经网络训练I</a></li>
+<li><a href="#07-training-neural-networks-ii">07. 训练神经网络2</a></li>
+<li><a href="#08-deep-learning-software">08. 深度学习软件</a></li>
+<li><a href="#09-cnn-architectures">09. CNN架构</a></li>
+<li><a href="#10-recurrent-neural-networks">10. 循环神经网络</a></li>
+<li><a href="#11-detection-and-segmentation">11. 检测与分割</a></li>
+<li><a href="#12-visualizing-and-understanding">12. 形象化和理解</a></li>
+<li><a href="#13-generative-models">13. 生成模型</a></li>
+<li><a href="#14-deep-reinforcement-learning">14. 深度强化学习</a></li>
+<li><a href="#15-efficient-methods-and-hardware-for-deep-learning">15. 有效的深度学习方法和硬件</a></li>
+<li><a href="#16-adversarial-examples-and-adversarial-training">16. 对抗性范例与对抗性训练</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="课程信息"><a href="#课程信息" class="headerlink" title="课程信息"></a>课程信息</h2><ul>
+<li><p>网站: <a href="http://cs231n.stanford.edu/" target="_blank" rel="noopener">http://cs231n.stanford.edu/</a></p>
+</li>
+<li><p>讲座链接: <a href="https://www.youtube.com/playlist?list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk" target="_blank" rel="noopener">https://www.youtube.com/playlist?list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk</a></p>
+</li>
+<li><p>完整教学大纲链接: <a href="http://cs231n.stanford.edu/syllabus.html" target="_blank" rel="noopener">http://cs231n.stanford.edu/syllabus.html</a></p>
+</li>
+<li><p>作业解决方案: <a href="https://github.com/Burton2000/CS231n-2017" target="_blank" rel="noopener">https://github.com/Burton2000/CS231n-2017</a></p>
+</li>
+<li><p>讲座次数: <strong>16</strong></p>
+</li>
+<li><p>课程描述:</p>
+<ul>
+<li><blockquote>
+<p>计算机视觉在我们的社会中已经变得无处不在，在搜索、图像理解、应用程序、地图、医学、无人机和自动驾驶汽车等领域都有应用。这些应用的核心是视觉识别任务，如图像分类、定位和检测。神经网络（又名“深度学习”）方法的最新发展极大地提高了这些最先进的视觉识别系统的性能。本课程深入研究深度学习架构的细节，重点学习这些任务的端到端模型，特别是图像分类。在为期10周的课程中，学生们将学习如何实现、训练和调试自己的神经网络，并详细了解计算机视觉领域的前沿研究。最后的任务是训练一个数百万参数的卷积神经网络，并将其应用于最大的图像分类数据集（ImageNet）。我们将重点教授如何设置图像识别问题、学习算法（如反向传播）、训练和微调网络的实用工程技巧，并指导学生通过实际作业和最终课程项目。本课程的大部分背景和材料都将来自<a href="http://image-net.org/challenges/LSVRC/2014/index" target="_blank" rel="noopener">ImageNet挑战赛</a>。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="01-Introduction-to-CNN-for-visual-recognition"><a href="#01-Introduction-to-CNN-for-visual-recognition" class="headerlink" title="01. Introduction to CNN for visual recognition"></a>01. Introduction to CNN for visual recognition</h2><ul>
+<li>20世纪60年代末至2017年计算机视觉发展简史</li>
+<li>计算机视觉问题包括图像分类、目标定位、目标检测和场景理解。</li>
+<li><a href="http://www.image-net.org/" target="_blank" rel="noopener">Imagenet</a> 是目前可用的最大的图像分类数据集之一</li>
+<li>从2012年的Imagenet竞赛开始，CNN（卷积神经网络）总是胜出</li>
+<li>CNN实际上是由<a href="http://ieeexplore.ieee.org/document/726791/" target="_blank" rel="noopener">Yann Lecun</a>在1997年发明的 .</li>
+</ul>
+<h2 id="02-Image-classification"><a href="#02-Image-classification" class="headerlink" title="02. Image classification"></a>02. Image classification</h2><ul>
+<li>图像分类问题有很多挑战，比如光照和视角<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/39.jpeg" alt></li>
+</ul>
+</li>
+<li>一种图像分类算法可以用<strong>K近邻</strong>(KNN)来解决，但它不能很好地解决这个问题。KNN的性质是:<ul>
+<li>KNN的超参数是：k和距离测度</li>
+<li>K是我们正在比较的邻居结点的数目。</li>
+<li>距离测量包括:<ul>
+<li>L2距离（欧几里得距离）<ul>
+<li>最适合非坐标点</li>
+</ul>
+</li>
+<li>L1距离（曼哈顿距离）<ul>
+<li>最适合坐标点</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>超参数可以使用交叉验证进行优化，如下所示（在我们的例子中，我们尝试tp predict K）:<ol>
+<li>把数据集分成k份</li>
+<li>给定预测超参数：<ul>
+<li>先找出f-1份训练你的算法，用剩余的1份来测试它。对每份都要重复这个动作。</li>
+</ul>
+</li>
+<li>选择提供最佳训练值的超参数（所有份数的平均值）</li>
+</ol>
+</li>
+<li><strong>线性支持向量机</strong>分类器是解决图像分类问题的一种选择，但维数灾难使其在某些情况下停止了改进</li>
+<li><strong>逻辑回归</strong>也是解决图像分类问题的一种方法，但图像分类问题是非线性的</li>
+<li>线性分类器必须遵从以下等式: <code>Y = wX + b</code> <ul>
+<li>w的形状与x相同，b的形状为1。</li>
+</ul>
+</li>
+<li>我们可以在X向量上加1，去掉偏差，像这样: <code>Y = wX</code><ul>
+<li>x的形状是旧的x+1的形状，w与x相同</li>
+</ul>
+</li>
+<li>我们需要知道如何得到w和b，使分类器运行得最好。</li>
+</ul>
+<h2 id="03-Loss-function-and-optimization"><a href="#03-Loss-function-and-optimization" class="headerlink" title="03. Loss function and optimization"></a>03. Loss function and optimization</h2><ul>
+<li><p>在最后一节中，我们讨论了线性分类器，但是我们没有讨论如何训练模型的参数以获得最佳的w和b。</p>
+</li>
+<li><p>我们需要一个损失函数来衡量我们当前参数的好坏。</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Loss = L[i] =(f(X[i],W),Y[i])</span><br><span class="line">Loss_for_all = <span class="number">1</span>/N * Sum(Li(f(X[i],W),Y[i]))      <span class="comment">#表示平均值</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后在给定参数的情况下，找到了一种最小化损失函数的方法。这叫做<strong>优化</strong>.</p>
+</li>
+<li><p>线性支持<strong>向量机</strong>分类器的损失函数:</p>
+<ul>
+<li><code>L[i] = 除预测类外的所有类的和 (max(0, s[j] - s[y[i]] + 1))</code></li>
+<li>我们叫它 <strong><em>the hinge loss</em></strong>.</li>
+<li>损失函数意味着，如果最佳预测值与真实值相同，则我们很高兴；反之，我们给出的误差为1。</li>
+<li>例子:<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/40.jpg" alt></li>
+<li>在这个例子中，我们要计算这个图像的损失。</li>
+<li><code>L = max (0, 437.9 - (-96.8) + 1) + max(0, 61.95 - (-96.8) + 1) = max(0, 535.7) + max(0, 159.75) = 695.45</code></li>
+<li>最后的损失是695.45分，这是一个很大的数字，反映出猫的分数需要是最好的所有类别，作为它的最低值现在。 我们需要把损失降到最低。</li>
+</ul>
+</li>
+<li>边距为1是可以的。但它也是一个超参数。</li>
+</ul>
+</li>
+<li><p>如果你的损失函数为零，这个值和你的参数值一样吗？不，有很多参数可以给你最好的分数。</p>
+</li>
+<li><p>你有时会听到人们用<strong>the squared hinge loss SVM</strong>(or <strong>L2-SVM</strong>)来代替. 这对违规利润的惩罚力度更大（二次方而不是线性）。 无平方的版本更为标准，但在某些数据集中，<strong>the squared hinge loss</strong>可以更好地工作。</p>
+</li>
+<li><p>我们对损失函数进行了<strong>正则化</strong>处理，这样发现的模型不会过度拟合数据。</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Loss = L = <span class="number">1</span>/N * Sum(Li(f(X[i],W),Y[i])) + <span class="keyword">lambda</span> * R(W)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>其中<code>R</code>是正则化子，<code>lambda</code>是正则化项</li>
+</ul>
+</li>
+<li><p>有不同的正则化技术:</p>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>正则化矩阵</th>
+<th>等式</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L2</td>
+<td><code>R(W) = Sum(W^2)</code></td>
+<td>所有W的平方和</td>
+</tr>
+<tr>
+<td>L1</td>
+<td><code>R(W) = Sum(lWl)</code></td>
+<td>所有W的绝对值之和</td>
+</tr>
+<tr>
+<td>Elastic net (L1 + L2)</td>
+<td><code>R(W) = beta * Sum(W^2) + Sum(lWl)</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Dropout</td>
+<td></td>
+<td>没有等式</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p>正则化倾向于较小的<code>W</code> s而不是大的<code>W</code> s。</p>
+</li>
+<li><p>正则化称为权重衰减。偏置不应包括在正规化中。</p>
+</li>
+<li><p>Softmax损失（类似线性回归，但适用于2个以上类别）：</p>
+<ul>
+<li><p>Softmax function:</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">A[L] = e^(score[L]) / sum(e^(score[L]), NoOfClasses)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>矢量和应为1</p>
+</li>
+<li><p>Softmax loss:</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">Loss = -logP(Y = y[i]|X = x[i])</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>好类比的概率的log值。我们希望它接近1，所以我们加了个负数。</p>
+</li>
+<li><p>Softmax损失称为交叉熵损失。</p>
+</li>
+</ul>
+</li>
+<li><p>在计算Softmax时，请考虑这个数值问题:</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 3个分类的示例，每个分类都有很高的分数</span></span><br><span class="line">f = np.array([<span class="number">123</span>, <span class="number">456</span>, <span class="number">789</span>]) </span><br><span class="line"><span class="comment"># 坏：数字问题，潜在爆炸</span></span><br><span class="line">p = np.exp(f) / np.sum(np.exp(f)) </span><br><span class="line"></span><br><span class="line"><span class="comment"># instead: 首先将f的值移位，以使最大数为0：</span></span><br><span class="line">f -= np.max(f) <span class="comment"># f becomes [-666, -333, 0]</span></span><br><span class="line"><span class="comment"># safe to do, gives the correct answer</span></span><br><span class="line">p = np.exp(f) / np.sum(np.exp(f))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>最优化</strong>:</p>
+<ul>
+<li>如何优化我们讨论过的损失函数?</li>
+<li>策略一:<ul>
+<li>给定一个随机参数，并尝试所有的损失，得到最佳的损失。但这是个坏主意。</li>
+</ul>
+</li>
+<li><p>策略二:</p>
+<ul>
+<li><p>沿着斜坡走。</p>
+<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/41.png" alt></li>
+<li>Image <a href="https://rasbt.github.io/mlxtend/user_guide/general_concepts/gradient-optimization_files/ball.png" target="_blank" rel="noopener">source</a>.</li>
+</ul>
+</li>
+<li><p>我们的目标是计算每个参数的梯度。</p>
+<ul>
+<li><strong>数值梯度</strong>: 近似，缓慢，易于书写。（但它在调试中很有用。）</li>
+<li><strong>解析梯度</strong>: 准确、快速、容易出错。（实践中经常使用）</li>
+</ul>
+</li>
+<li><p>计算参数梯度后，计算梯度下降:</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">W = W - learning_rate * W_grad</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>学习速率是一个非常重要的超参数，在所有的超参数中，首先要得到它的最佳值。</p>
+</li>
+<li><p>随机梯度下降:</p>
+<ul>
+<li>不要使用所有的数据，而是使用小批量的示例（通常使用32/64/128）来获得更快的结果。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="04-Introduction-to-Neural-network"><a href="#04-Introduction-to-Neural-network" class="headerlink" title="04. Introduction to Neural network"></a>04. Introduction to Neural network</h2><ul>
+<li><p>计算任意复函数的解析梯度:</p>
+<ul>
+<li><p>什么是计算图?</p>
+<ul>
+<li>用节点来表示任何函数</li>
+<li>使用计算图可以很容易地引导我们使用一种称为反向传播的技术。即使是像CNN和RNN这样的复杂模型。</li>
+</ul>
+</li>
+<li><p>反向传播简单示例:</p>
+<ul>
+<li><p>假设我们有 <code>f(x,y,z) = (x+y)z</code></p>
+</li>
+<li><p>然后计算图可以被这种方式表示:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">X         </span><br><span class="line">  \</span><br><span class="line">   (+)--&gt; q ---(*)--&gt; f</span><br><span class="line">  &#x2F;           &#x2F;</span><br><span class="line">Y            &#x2F;</span><br><span class="line">            &#x2F;</span><br><span class="line">           &#x2F;</span><br><span class="line">Z---------&#x2F;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>我们制作了一个中间变量<code>q</code>来保存<code>x+y</code>的值</p>
+</li>
+<li><p>然后我们有:</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">q = (x+y)              <span class="comment"># dq/dx = 1 , dq/dy = 1</span></span><br><span class="line">f = qz                 <span class="comment"># df/dq = z , df/dz = q</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后:</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df/dq = z</span><br><span class="line">df/dz = q</span><br><span class="line">df/dx = df/dq * dq/dx = z * <span class="number">1</span> = z       <span class="comment"># Chain rule</span></span><br><span class="line">df/dy = df/dq * dq/dy = z * <span class="number">1</span> = z       <span class="comment"># Chain rule</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>所以在计算图中，我们称每个运算为 <code>f</code>。 对于每一个<code>f</code>，我们在进行反向传播之前计算局部梯度，然后使用链式法则计算关于损失函数的梯度。</p>
+</li>
+<li><p>在计算图中，你可以将每个操作拆分为你想要的那样简单，但是节点会很多。如果希望节点更小到可以计算该节点的梯度。</p>
+</li>
+<li><p>一个更大的例子:</p>
+<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/01.png" alt></li>
+<li>提示：两个节点从后面到一个节点的反向传播是通过添加两个导数来实现的。</li>
+</ul>
+</li>
+<li><p>模块化实现：正向/反向API（示例乘法代码）:</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MultuplyGate</span><span class="params">(object)</span>:</span></span><br><span class="line">  <span class="string">"""</span></span><br><span class="line"><span class="string">  x,y are scalars</span></span><br><span class="line"><span class="string">  """</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(x,y)</span>:</span></span><br><span class="line">    z = x*y</span><br><span class="line">    self.x = x  <span class="comment"># Cache</span></span><br><span class="line">    self.y = y	<span class="comment"># Cache</span></span><br><span class="line">    <span class="comment"># We cache x and y because we know that the derivatives contains them.</span></span><br><span class="line">    <span class="keyword">return</span> z</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">backward</span><span class="params">(dz)</span>:</span></span><br><span class="line">    dx = self.y * dz         <span class="comment">#self.y is dx</span></span><br><span class="line">    dy = self.x * dz</span><br><span class="line">    <span class="keyword">return</span> [dx, dy]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果你看一个深度学习框架，你会发现它遵循模块化的实现，每个类都有正向传播和反向传播的定义。例如：</p>
+<ul>
+<li>Multiplication</li>
+<li>Max</li>
+<li>Plus</li>
+<li>Minus</li>
+<li>Sigmoid</li>
+<li>Convolution</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>把神经网络定义为一个函数:</p>
+<ul>
+<li>（之前）线性评分函数: <code>f = Wx</code></li>
+<li>（现在）2层神经网络:    <code>f = W2*max(0,W1*x)</code> <ul>
+<li>其中max是RELU非线性函数</li>
+</ul>
+</li>
+<li>（现在）三层神经网络:    <code>f = W3*max(0,W2*max(0,W1*x)</code></li>
+<li>等等..</li>
+</ul>
+</li>
+<li><p>神经网络是一些简单操作的堆栈，形成复杂的操作。</p>
+</li>
+</ul>
+<h2 id="05-Convolutional-neural-networks-CNNs"><a href="#05-Convolutional-neural-networks-CNNs" class="headerlink" title="05. Convolutional neural networks (CNNs)"></a>05. Convolutional neural networks (CNNs)</h2><ul>
+<li>神经网络历史:<ul>
+<li>第一台感知器机器是弗兰克罗森布拉特在1957年开发的。它被用来识别字母表中的字母。反向传播还没有发展。</li>
+<li>多层感知器是由Adaline/Madaline于1960年开发的。反向传播还没有发展。</li>
+<li>反向传播是Rumeelhart在1986年发明的。</li>
+<li>有一段时间，NN没有什么新的事情发生。由于计算资源和数据有限。</li>
+<li><a href="www.cs.toronto.edu/~fritz/absps/netflix.pdf">2006</a>年，Hinton发表了一篇论文，表明我们可以使用受限的Boltzmann机器来训练一个深度神经网络来初始化权值，然后再进行反向传播。</li>
+<li>2012年，Hinton在<a href="http://ieeexplore.ieee.org/document/6296526/" target="_blank" rel="noopener">语音识别</a>领域取得了第一个强劲的成果。而<a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf" target="_blank" rel="noopener">Alexnet</a> 的“卷积神经网络”在2012年赢得了图像网络，也是由Hinton的团队完成的</li>
+<li>之后，神经网络被广泛应用于各种应用中。</li>
+</ul>
+</li>
+<li>卷积神经网络历史：<ul>
+<li>Hubel和Wisel在1959年至1968年对猫大脑皮层的实验发现，大脑皮层有一个地形图，神经元具有从简单到复杂的特殊组织。</li>
+<li>1998年，Yann-Lecun提出了一篇<a href="http://ieeexplore.ieee.org/document/726791/" target="_blank" rel="noopener">基于梯度的学习应用于文档识别的论文</a>，引入了卷积神经网络。它很好地识别邮政编码，但不能运行在更复杂的例子</li>
+<li>2012年，<a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf" target="_blank" rel="noopener">AlexNet</a> 使用了同样的Yan Lecun架构，并赢得了图像网络挑战赛。 与1998年不同的是，现在我们有了一个可以使用的大数据集，gpu的强大功能解决了很多性能问题。</li>
+<li>从2012年开始，CNN将用于各种任务（以下是一些应用程序）:<ul>
+<li>图像分类.</li>
+<li>图像检索.<ul>
+<li>利用神经网络提取特征，然后进行相似性匹配.</li>
+</ul>
+</li>
+<li>目标检测.</li>
+<li>分割.<ul>
+<li>图像中的每个像素都有一个标签.</li>
+</ul>
+</li>
+<li>人脸识别.</li>
+<li>姿势识别.</li>
+<li>医学图像.</li>
+<li>用强化学习玩阿塔里游戏.</li>
+<li>星系分类.</li>
+<li>路标识别.</li>
+<li>图片字幕.</li>
+<li>风格迁移.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ConvNet体系结构明确假设输入是图像，这允许我们将某些属性编码到体系结构中</li>
+<li>ConvNet中有几种不同类型的层（例如CONV/FC/RELU/POOL是目前最流行的）</li>
+<li>每个层可能有参数，也可能没有参数（例如CONV/FC 会，RELU/POOL 不会）</li>
+<li>每一层可能有也可能没有额外的超参数（例如CONV/FC/POOL 有，RELU没有）</li>
+<li>卷积神经网络的工作原理?<ul>
+<li>完全连接层是所有神经元都连接在一起的层. 有时我们称之为稠密层<ul>
+<li>If input shape is <code>(X, M)</code> the weighs shape for this will be <code>(NoOfHiddenNeurons, X)</code></li>
+</ul>
+</li>
+<li>卷积层是一层，在这个层中，我们将通过一个滤波器来保持输入的结构，该滤波器将穿过所有图像。<ul>
+<li>我们用点积：W.T*X+b。这个等式使用广播技术。</li>
+<li>所以我们需要得到W和b的值</li>
+<li>我们通常把滤波器（W）当作向量而不是矩阵来处理。</li>
+</ul>
+</li>
+<li>我们称之为卷积激活图的输出。我们需要多个激活图。<ul>
+<li>例如，如果我们有6个过滤器，下面是形状：<ul>
+<li>输入图像                        <code>(32,32,3)</code></li>
+<li>滤波器尺寸                              <code>(5,5,3)</code><ul>
+<li>我们使用6个过滤器。深度必须为3，因为输入图的深度为3。</li>
+</ul>
+</li>
+<li>卷积的输出.                 <code>(28,28,6)</code> <ul>
+<li>如果是一个滤波器会是   <code>(28,28,1)</code></li>
+</ul>
+</li>
+<li>RELU之后                          <code>(28,28,6)</code> </li>
+<li>另一个滤波器                     <code>(5,5,6)</code></li>
+<li>卷积的输出.                 <code>(24,24,10)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>事实证明，卷积神经网络在第一层学习低级特性，然后学习中级特性，然后学习高级特性。</li>
+<li>在卷积层之后，我们可以为分类任务提供一个线性分类器。</li>
+<li>在卷积神经网络中，我们通常有一些（Conv==&gt;Relu），然后我们应用池操作来降低激活的大小。</li>
+</ul>
+</li>
+<li><p>我们做卷积的时候步幅是什么:</p>
+<ul>
+<li>在做一个转换层时，我们有很多选择要做，关于我们将采取的步骤。我将用例子来解释这一点。</li>
+<li>步幅是在滑行时跳跃。默认为1。</li>
+<li>给定形状为<code>（7,7）</code>的矩阵和形状为<code>（3,3）</code>的滤波器：<ul>
+<li>If stride is <code>1</code> then the output shape will be <code>(5,5)</code>              <code># 2 are dropped</code></li>
+<li>If stride is <code>2</code> then the output shape will be <code>(3,3)</code>             <code># 4 are dropped</code></li>
+<li>If stride is <code>3</code> it doesn’t work.</li>
+</ul>
+</li>
+<li>一般的公式是 <code>((N-F)/stride +1)</code><ul>
+<li>If stride is <code>1</code> then <code>O = ((7-3)/1)+1 = 4 + 1 = 5</code></li>
+<li>If stride is <code>2</code> then <code>O = ((7-3)/2)+1 = 2 + 1 = 3</code></li>
+<li>If stride is <code>3</code> then <code>O = ((7-3)/3)+1 = 1.33 + 1 = 2.33</code>        <code># doesn&#39;t work</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>在实践中，零填充边界是很常见的。   <code># 从两侧填充.</code></p>
+<ul>
+<li>将步幅设为1是这个等式的共同点：（F-1）/2，其中F是滤波器的尺寸<ul>
+<li>Example <code>F = 3</code> ==&gt; Zero pad with <code>1</code></li>
+<li>Example <code>F = 5</code> ==&gt; Zero pad with <code>2</code></li>
+</ul>
+</li>
+<li>如果我们这样做，我们称之为相同的卷积。</li>
+<li>添加0给边缘提供了另一个功能，这就是为什么有不同的填充技术，如填充角不是零，但在实践中，零是有效的！</li>
+<li>我们这样做是为了保持输入的完整大小。如果我们不这样做的话，输入将收缩得太快，我们将丢失大量数据。</li>
+</ul>
+</li>
+<li>例子:<ul>
+<li>如果我们输入了<code>shape（32,32,3）</code>和10个形状是<code>（5,5）</code>的过滤器，步长为1和填充为2<ul>
+<li>输出尺寸为 <code>(32,32,10)</code>                       <code># 我们保留了尺寸不变</code></li>
+</ul>
+</li>
+<li>每个滤波器参数个数为 <code>= 5*5*3 + 1 = 76</code></li>
+<li>所有的参数个数为 <code>= 76 * 10 = 76</code></li>
+</ul>
+</li>
+<li>滤波器的数量通常是2的幂次方.           <code># 为了更好矢量化</code></li>
+<li>这里是Conv层的参数:<ul>
+<li>滤波器数量 K.<ul>
+<li>通常是2的幂次方.</li>
+</ul>
+</li>
+<li>空间内容大小F.<ul>
+<li>3,5,7 ….</li>
+</ul>
+</li>
+<li>步幅 S. <ul>
+<li>通常是1或者2        (如果步幅较大，则会有一个下采样，但不同于池化) </li>
+</ul>
+</li>
+<li>填充量<ul>
+<li>如果我们希望输入形状作为输出形状，如果F是3则是1，如果F是5则是2，依此类推</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>池化使表示更小，更易于管理。</li>
+<li>池化在每个激活映射上独立运行。</li>
+<li>最大池化层的例子.<ul>
+<li>最大池的参数是滤波器的大小和步长<ul>
+<li>示例2x2，步幅为2 <code>#通常这两个参数是相同的2，2</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>平均池化层的例子.<ul>
+<li>在这种情况下，这可能是可以学习的。</li>
+</ul>
+</li>
+</ul>
+<h2 id="06-Training-neural-networks-I"><a href="#06-Training-neural-networks-I" class="headerlink" title="06. Training neural networks I"></a>06. Training neural networks I</h2><ul>
+<li><p>作为修订，这里是小批量随机梯度下降算法步骤：</p>
+<ul>
+<li>循环:<ol>
+<li>抽样一批数据。</li>
+<li>通过图（网络）向前推进并获得损失。</li>
+<li>反向传播计算梯度.</li>
+<li>用梯度更新参数</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>激活函数:</p>
+<ul>
+<li><p>激活函数的不同选择包括 Sigmoid, tanh, RELU, Leaky RELU, Maxout, and ELU.</p>
+</li>
+<li><p><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/42.png" alt></p>
+</li>
+<li><p>Sigmoid:</p>
+<ul>
+<li>压缩[0,1]之间的数字</li>
+<li>像人脑一样用作发射率.</li>
+<li><code>Sigmoid(x) = 1 / (1 + e^-x)</code></li>
+<li>sigmoid的问题:<ul>
+<li>大值神经元会破坏梯度。<ul>
+<li>在大多数情况下，渐变接近0（大值/小值），如果图形/网络很大，则会终止更新。</li>
+</ul>
+</li>
+<li>不是以零为中心。<ul>
+<li>不会产生零均值数据</li>
+</ul>
+</li>
+<li><code>exp()</code> 的计算开销有点大.<ul>
+<li>只是想提一下。我们在深度学习中有更复杂的运算，比如卷积。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Tanh:</p>
+<ul>
+<li>压缩[-1,1]之间的数字</li>
+<li>以0的中心.</li>
+<li>大值神经元仍然会破坏梯度。</li>
+<li><code>Tanh(x)</code> 是个方程.</li>
+<li>1991年由Yann Lecun提出</li>
+</ul>
+</li>
+<li><p>RELU (<code>Rectified</code>改正的 <code>linear</code>线性 <code>unit</code>单元):</p>
+<ul>
+<li><code>RELU(x) = max(0,x)</code></li>
+<li>不会破坏梯度<ul>
+<li>只有小值被杀死。在一半结束了梯度</li>
+</ul>
+</li>
+<li>计算效率高。</li>
+<li>比Sigmoid和Tanh快得多 <code>(6x)</code></li>
+<li>在生物学上比sigmoid更可信。</li>
+<li>由Alex Krizhevsky在2012年多伦多大学提出 (AlexNet)</li>
+<li>问题:<ul>
+<li>不以0为中心.</li>
+</ul>
+</li>
+<li>如果权重初始化不好，可能75%的神经元会死亡，这是浪费计算。但它仍然有效。这是一个积极的研究领域，以优化这一点。</li>
+<li>为了解决上述问题，人们可以将所有偏差初始化为0.01</li>
+</ul>
+</li>
+<li><p>Leaky RELU:</p>
+<ul>
+<li><code>leaky_RELU(x) = max(0.01x,x)</code></li>
+<li>不会破坏两边的梯度。</li>
+<li>计算效率高</li>
+<li>比Sigmoid和Tanh快得多 (6x)</li>
+<li>不会挂掉</li>
+<li>PRELU通过变量alpha来放置0.01，alpha作为参数学习</li>
+</ul>
+</li>
+<li><p>ELU(<code>Exponential</code>指数 <code>linear</code>线性 <code>units</code>单元):</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ELU(x) &#x3D; &#123; x if x &gt; 0</span><br><span class="line">		   alpah *(exp(x) -1)	if x &lt;&#x3D; 0</span><br><span class="line">       # alpah are a learning parameter</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>有RELU的所有优点</p>
+</li>
+<li><p>更接近于零的平均输出，并增加了一些噪声的鲁棒性。</p>
+</li>
+<li><p>问题</p>
+<ul>
+<li><code>exp()</code> 的计算开销有点大.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>最大输出激活(Maxout activations):</p>
+<ul>
+<li><code>maxout(x) = max(w1.T*x + b1, w2.T*x + b2)</code></li>
+<li>推广了RELU和Leaky RELU</li>
+<li>不会挂掉</li>
+<li>问题:<ul>
+<li>每个神经元的参数数量加倍</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>在实践中:</p>
+<ul>
+<li>使用RELU。注意你的学习率。</li>
+<li>尝试Leaky RELU/Maxout/ELU</li>
+<li>尝试 tanh 但是不要过高的期望</li>
+<li>不要用 sigmoid!</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>数据预处理</strong>:</p>
+<ul>
+<li><p>正则化数据:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 零中心数据。（计算每个输入的平均值）</span></span><br><span class="line"><span class="comment"># 之所以这样做，是因为我们需要数据介于正数和负数之间</span></span><br><span class="line"><span class="comment"># 而不是全部都是负数或正数。</span></span><br><span class="line">X -= np.mean(X, axis = <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后应用标准差。提示：在图像中我们不会这样做</span></span><br><span class="line">X /= np.std(X, axis = <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>正则化图片:</p>
+<ul>
+<li>减去平均图像（例如Alexnet）<ul>
+<li>平均图像形状与输入图像相同。</li>
+</ul>
+</li>
+<li>或减去每个通道的平均值<ul>
+<li>平均值计算所有图像的每个通道的平均值。形状为3（3通道）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>权重初始化</strong>:</p>
+<ul>
+<li><p>用零初始化所有W时发生了什么?</p>
+<ul>
+<li>所有的神经元都会做同样的事情。他们将有相同的梯度，他们将有相同的更新</li>
+<li>所以如果某个特定层的W相等，那么所描述的事情就发生了</li>
+</ul>
+</li>
+<li><p>第一个想法是用小随机数初始化w:</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">W = <span class="number">0.01</span> * np.random.rand(D, H)</span><br><span class="line"><span class="comment"># 适用于小型网络，但对于较深的网络会产生问题</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>在更深的网络中，标准差将为零。而在深层网络中，这种梯度会很快消失。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">W = <span class="number">1</span> * np.random.rand(D, H) </span><br><span class="line"><span class="comment"># 适用于小型网络，但对于较深的网络会产生问题</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>网络会因为大值数据而没法计算</p>
+</li>
+</ul>
+</li>
+<li><p><strong><em>Xavier 初始化</em></strong>:</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">W = np.random.rand(<span class="keyword">in</span>, out) / np.sqrt(<span class="keyword">in</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>它之所以有效，是因为我们希望输入的方差和输出的方差一样。</p>
+</li>
+<li><p>但它有一个问题，当你使用RELU时，它会崩溃</p>
+</li>
+</ul>
+</li>
+<li><p><strong><em>He 初始化</em></strong> (RELU问题的解决方案):</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">W = np.random.rand(<span class="keyword">in</span>, out) / np.sqrt(<span class="keyword">in</span>/<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>解决了RELU的问题。建议在使用RELU时使用</li>
+</ul>
+</li>
+<li><p>适当的初始化是一个活跃的研究领域。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>批次正则化(Batch normalization)</strong>:</p>
+<ul>
+<li>是一种为神经网络的任何层提供零均值/单位方差输入的技术.</li>
+<li>它加快了训练的速度。你很想这么做。<ul>
+<li>2015年由Sergey Ioffe和Christian Szegedy制作。</li>
+</ul>
+</li>
+<li>我们在每一层进行高斯激活。通过计算均值和方差。</li>
+<li>通常插入在（完全连接或卷积层）和（非线性之前）。</li>
+<li>步骤（对于层的每个输出）<ol>
+<li>首先，我们计算每一个特征批次的平均值和方差^2</li>
+<li>我们通过减去平均值并除以（方差^2+epsilon）的平方根进行归一化<ul>
+<li>加上epsilon为了不被零除</li>
+</ul>
+</li>
+<li>然后我们制作一个尺寸和移位变量: <code>Result = gamma * normalizedX + beta</code>  <ul>
+<li>gamma和beta是可学习的参数</li>
+<li>基本上可以说“嘿！！我不想要零均值/单位方差输入，请把原始输入还给我，这样对我更好。”</li>
+<li>嘿，根据你想要的改变和比例，而不仅仅是均值和方差！</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>该算法使每一层变得灵活（它选择它想要的分布）</li>
+<li>我们初始化批处理范数参数以将输入转换为零均值/单位方差分布，但在训练过程中，他们可以了解到任何其他分布都可能更好。</li>
+<li>在训练过程中，我们需要用加权平均法计算出每一层的总体均值和总体方差。</li>
+<li><u>批次正则化的好处</u>:<ul>
+<li>网络训练更快.</li>
+<li>允许更高的学习率。</li>
+<li>有助于降低对初始起始重量的敏感性</li>
+<li>使更多的激活功能可行。</li>
+<li>提供一些正则化。<ul>
+<li>因为我们计算的是每个批次的均值和方差，这会产生轻微的正则化效果。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>在conv层中，每个激活图有一个方差和一个平均值。</li>
+<li>批次正则化在CONV和正则深层神经网络中效果最好，但对于递归神经网络和强化学习仍然是一个活跃的研究领域。<ul>
+<li>它的挑战在于强化学习，因为它的批量很小。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>浅显易懂的学习过程(Baby sitting the learning process)</strong></p>
+<ol>
+<li>数据预处理。</li>
+<li>选择架构。</li>
+<li>正向传播并检查损失（禁用正则化）。检查损失是否合理</li>
+<li>加上正规化，损失应该上去了！</li>
+<li>再次禁用正则化，取少量数据，尝试训练损失并达到零损失。<ul>
+<li>你应该在小数据集上过拟合</li>
+</ul>
+</li>
+<li>把你的全部训练数据，和小正则化，然后尝试一些学习率的值。<ul>
+<li>如果损失几乎没有变化，那么学习率设置的太小了。</li>
+<li>如果你得到了NAN，那么你的NN爆炸了，你的学习率太高了。</li>
+<li>通过尝试最小值（可以更改）和最大值（不会使网络爆炸）来获取学习速率范围。</li>
+</ul>
+</li>
+<li>对超参数进行优化，得到最佳的超参数值。</li>
+</ol>
+</li>
+<li><p>超参数优化</p>
+<ul>
+<li>尝试交叉验证策略。<ul>
+<li>用几个Ephoc跑，试着优化范围。</li>
+</ul>
+</li>
+<li>最好在log空间中进行优化。</li>
+<li>请调整范围，然后再试一次</li>
+<li>最好尝试随机搜索而不是网格搜索（在log空间中）</li>
+</ul>
+</li>
+</ul>
+<h2 id="07-Training-neural-networks-II"><a href="#07-Training-neural-networks-II" class="headerlink" title="07. Training neural networks II"></a>07. Training neural networks II</h2><ul>
+<li><p><strong>优化算法</strong>:</p>
+<ul>
+<li><p>随机梯度下降问题:</p>
+<ul>
+<li>如果在一个方向上损失很快，而在另一个方向上损失缓慢（仅针对两个变量），那么沿着浅维度的进展将非常缓慢，在陡峭的方向上会出现抖动。我们的神经网络会有很多参数，然后问题会更多。</li>
+<li>局部最小值或鞍点<ul>
+<li>如果SGD进入局部极小值，我们将在这一点上卡住，因为梯度是零。</li>
+<li>同样在鞍点，梯度为零，所以我们会卡住。</li>
+<li>鞍点在某一点上说:<ul>
+<li>一些梯度会增加损失。</li>
+<li>一些梯度会降低损失。</li>
+<li>而在高维（例如1亿维）中发生的更多</li>
+</ul>
+</li>
+<li>深度神经网络的问题更多的是关于鞍点而不是局部最小值，因为深度神经网络具有高维（参数）</li>
+<li>小批量是有噪音的，因为没有对整个批次采取梯度。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>SGD + momentum</strong>:</p>
+<ul>
+<li><p>建立速度作为梯度的运行平均值</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 计算加权平均数。 rho best 在 [0.9 - 0.99]</span></span><br><span class="line">V[t+<span class="number">1</span>] = rho * v[t] + dx</span><br><span class="line">x[t+<span class="number">1</span>] = x[t] - learningRate * V[t+<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>V[0]</code> 是0.</p>
+</li>
+<li><p>解决了鞍点和局部极小问题。</p>
+</li>
+<li><p>它越过极值点，然后仔回到了原来的状态。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Nestrov momentum</strong>:</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dx = compute_gradient(x)</span><br><span class="line">old_v = v</span><br><span class="line">v = rho * v - learning_rate * dx</span><br><span class="line">x+= -rho * old_v + (<span class="number">1</span>+rho) * v</span><br></pre></td></tr></table></figure>
+<ul>
+<li>不会越过极值点，但比SGD + momentum慢</li>
+</ul>
+</li>
+<li><p><strong>AdaGrad</strong></p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">grad_squared = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span>(<span class="literal">True</span>):</span><br><span class="line">  dx = compute_gradient(x)</span><br><span class="line">  </span><br><span class="line">  <span class="comment"># 这里有一个问题，梯度平方没有衰减（变的特别大）</span></span><br><span class="line">  grad_squared += dx * dx			</span><br><span class="line">  </span><br><span class="line">  x -= (learning_rate*dx) / (np.sqrt(grad_squared) + <span class="number">1e-7</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>RMSProp</strong></p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">grad_squared = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span>(<span class="literal">True</span>):</span><br><span class="line">  dx = compute_gradient(x)</span><br><span class="line">  </span><br><span class="line">  <span class="comment">#Solved ADAgra</span></span><br><span class="line">  grad_squared = decay_rate * grad_squared + (<span class="number">1</span>-grad_squared) * dx * dx  </span><br><span class="line">  </span><br><span class="line">  x -= (learning_rate*dx) / (np.sqrt(grad_squared) + <span class="number">1e-7</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>人们用这个来代替AdaGrad</li>
+</ul>
+</li>
+<li><p><strong>Adam</strong></p>
+<ul>
+<li>结合了momentum和RMSProp来计算梯度。</li>
+<li>它需要一个固定偏差来确定梯度的起始点</li>
+<li>是目前为止最好的技术在很多问题上都是最好的。</li>
+<li>赋值 <code>beta1 = 0.9</code> 并且 <code>beta2 = 0.999</code> 并且 <code>learning_rate = 1e-3</code> 或者 <code>5e-4</code> 是许多模型的一个很好的选择！</li>
+</ul>
+</li>
+<li><p><strong>学习衰退(Learning decay)</strong></p>
+<ul>
+<li>每隔几个时代学习率下降一半。</li>
+<li>帮助学习率不反弹。</li>
+<li>学习衰退在SGD+动量中很常见，但在Adam中不常见。</li>
+<li>不要从一开始就用学习衰退来选择超参数。先试试，看看你是否需要衰退学习率</li>
+</ul>
+</li>
+<li><p>以上算法都是一阶优化问题。</p>
+</li>
+<li><p><strong>二阶优化</strong></p>
+<ul>
+<li>使用梯度和Hessian到二次逼近</li>
+<li>逼近的最小值</li>
+<li>这次更新有什么好处?<ul>
+<li>有些版本没有学习率。</li>
+</ul>
+</li>
+<li>但对于深度学习是不现实的<ul>
+<li>有 O(N^2) 个元素.</li>
+<li>反转复杂度 O(N^3).</li>
+</ul>
+</li>
+<li><strong>L-BFGS</strong> 是二阶优化的一个版本<ul>
+<li>适用于批量优化，但不适用于小批量。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>在实践中，首先使用ADAM，如果不起作用，再试试L-BFGS</p>
+</li>
+<li><p>有人说所有著名的深层架构都使用 <strong>SGS + Nestrov momentum</strong></p>
+</li>
+</ul>
+</li>
+<li><p><strong>正则化</strong></p>
+<ul>
+<li>到目前为止，我们已经讨论过减少训练误差，但我们最关心的是我们的模型将如何处理看不见的数据！</li>
+<li>如果训练数据和验证数据之间的误差太大怎么办？</li>
+<li>这种误差称为高方差</li>
+<li><strong>模型集合</strong>:<ul>
+<li>算法:<ul>
+<li>训练具有不同初始化的同一体系结构的多个独立模型。</li>
+<li>在测试时平均他们的结果。</li>
+</ul>
+</li>
+<li>它可以给你额外的2%的性能</li>
+<li>减少了泛化误差。</li>
+<li>你可以在训练中使用你的神经网络的一些快照，把它们集合起来，然后获取结果。</li>
+</ul>
+</li>
+<li>正则化解决了高方差问题。我们已经讨论过L1，L2正则化。</li>
+<li>一些正则化技术只针对神经网络设计，可以做得更好。</li>
+<li><strong>Drop out</strong>:<ul>
+<li>在每一次正向传播中，随机将一些神经元设为零。drop概率是一个超参数，在大多数情况下为0.5。</li>
+<li>所以你会选择一些激活，使它们为零。</li>
+<li>它起作用是因为:<ul>
+<li>它迫使网络具有冗余表示；防止特征的协同适应!</li>
+<li>如果你想一想，它将一些模型集成在同一个模型中!</li>
+</ul>
+</li>
+<li>在测试时，我们可以用每一个drop层乘以drop的概率</li>
+<li>有时在测试时，我们不乘法任何东西，并保持原样。</li>
+<li>带有drop需要更多的时间来训练。</li>
+</ul>
+</li>
+<li><strong>数据增强</strong>:<ul>
+<li>另一种使正则化的技术。</li>
+<li>更改数据!</li>
+<li>例如，翻转图像或旋转图像。</li>
+<li>ResNet中的示例:<ul>
+<li>训练时: 随机采样进行裁剪和缩放:<ol>
+<li>在[256,480]范围内选择随机数L</li>
+<li>调整训练图像大小，短边=L</li>
+<li>随机抽样224x244补丁.</li>
+</ol>
+</li>
+<li>测试时: 对一套固定裁剪取平均值<ol>
+<li>按5个比例调整图像大小 {224, 256, 384, 480, 640}</li>
+<li>对于每个尺寸，使用10(<code>(4+1)*2</code>)个224x224裁剪：4个角+中心+翻转</li>
+</ol>
+</li>
+<li>应用颜色抖动或PCA</li>
+<li>平移，旋转，伸展。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>断开连接(Drop connect)<ul>
+<li>就像辍学的想法一样，它达到了规则化的效果</li>
+<li>我们没有将激活drop，而是随机地将权重归零</li>
+</ul>
+</li>
+<li>部分最大池化(Fractional Max Pooling)<ul>
+<li>很酷的正则化思想。不常用</li>
+<li>随机化我们聚集的区域</li>
+</ul>
+</li>
+<li>随机深度<ul>
+<li>新想法.</li>
+<li>直接消除层数而不是，而不是神经元</li>
+<li>有类似drop的效果，但这是一个新的想法。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>迁移学习</strong>:</p>
+<ul>
+<li><p>有时，模型会过度拟合数据，因为数据很小，而不是因为正则化。</p>
+</li>
+<li><p>如果你想训练/使用CNNs，你需要大量的数据。</p>
+</li>
+<li><p>迁移学习的步骤</p>
+<ol>
+<li>在一个与你的数据集有共同特征的大数据集上训练。叫做预训练。</li>
+<li>冻结除最后一层以外的所有层，并输入您的小数据集，以便只了解最后一层。</li>
+<li>不仅最后一层可能会再次训练，您还可以根据您拥有的数据数量微调任意数量的层</li>
+</ol>
+</li>
+<li><p>迁移学习使用指南:</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>非常相似的数据集</th>
+<th>非常不同的数据集</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>很少的数据集</strong></td>
+<td>在顶层使用线性分类器</td>
+<td>你有麻烦了。。尝试不同阶段的线性分类器</td>
+</tr>
+<tr>
+<td><strong>相当多的数据</strong></td>
+<td>微调几层</td>
+<td>精细调整一大层</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>迁移学习是正常现象，也不例外</li>
+</ul>
+<h2 id="08-Deep-learning-software"><a href="#08-Deep-learning-software" class="headerlink" title="08. Deep learning software"></a>08. Deep learning software</h2><ul>
+<li>由于深度学习软件的急剧变化，CS231n的这一部分每年都会发生很大的变化。</li>
+<li>CPU vs GPU<ul>
+<li>图形卡的开发是为了渲染图形来玩游戏或制作3D媒体，。等。<ul>
+<li>NVIDIA vs AMD<ul>
+<li>深度学习选择NVIDIA而不是AMD GPU，因为NVIDIA正在推动研究的发展，深度学习也使它的架构更适合深度学习</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CPU有更少的内核，但每个内核都更快，功能更强；擅长顺序任务。虽然gpu有更多的内核，但每个内核都慢得多“笨”；非常适合并行任务</li>
+<li>GPU核心需要协同工作。有自己的记忆</li>
+<li>矩阵乘法来自于适合gpu的运算。它有独立于MxN的操作，可以并行进行。</li>
+<li>卷积运算也可以瘫痪，因为它有独立的运算。</li>
+<li>编程GPU框架:<ul>
+<li><strong>CUDA</strong> (仅限英伟达)<ul>
+<li>编写直接在GPU上运行的类c代码。</li>
+<li>很难构建一个运行在GPU上的好的优化代码。这就是为什么他们提供高级API。</li>
+<li>高级API：cuBLAS、cuDNN等</li>
+<li><strong>CuDNN</strong> 已经实施了反向传播，卷积，循环，对你来说更多！</li>
+<li>实际上，您不用编写并行代码。你可以使用其他人实现和优化的代码！</li>
+</ul>
+</li>
+<li><strong>OpenCl</strong><ul>
+<li>类似于CUDA，但可以在任何GPU上运行</li>
+<li>通常较慢。</li>
+<li>目前还没有得到所有深度学习软件的支持。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>学习并行编程有很多课程。</li>
+<li>如果不小心，训练可能会成为读取数据和传输到GPU的瓶颈。 解决方案如下:<ul>
+<li>将所有数据读入RAM. # If possible</li>
+<li>使用SSD而不是HDD</li>
+<li>使用多个CPU线程预取数据!<ul>
+<li>当GPU进行计算时，CPU线程将为您获取数据</li>
+<li>很多框架都为您实现了这一点，因为这有点痛苦！</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>深度学习框架</strong><ul>
+<li>它的移动速度非常快!</li>
+<li>当前可用的框架:<ul>
+<li>Tensorflow (Google)</li>
+<li>Caffe (UC Berkeley)</li>
+<li>Caffe2 (Facebook)</li>
+<li>Torch (NYU / Facebook)</li>
+<li>PyTorch (Facebook)</li>
+<li>Theano (U monteral) </li>
+<li>Paddle (Baidu)</li>
+<li>CNTK (Microsoft)</li>
+<li>MXNet (Amazon)</li>
+</ul>
+</li>
+<li>老师认为你应该把重点放在Tensorflow和Pythorch上。</li>
+<li>深度学习框架的意义:<ul>
+<li>轻松构建大型计算图.</li>
+<li>在计算图中容易地计算梯度。</li>
+<li>在GPU上高效运行（cuDNN-cuBLAS）</li>
+</ul>
+</li>
+<li>Numpy不能在GPU上运行。</li>
+<li>大多数框架在正向传播时都会像NUMPY一样，然后他们会为你计算梯度。</li>
+</ul>
+</li>
+<li><strong>Tensorflow (Google)</strong><ul>
+<li>代码由两部分组成:<ol>
+<li>定义计算图.</li>
+<li>运行图形并多次重用它。</li>
+</ol>
+</li>
+<li>Tensorflow使用静态图形架构。</li>
+<li>Tensorflow变量存在于图中。用占位符来挨个喂养数据</li>
+<li>全局初始化器函数初始化图中的变量。</li>
+<li>使用预定义的优化器和损失。</li>
+<li>你可以用<code>layers.dense</code>函数来实现一个完整的网络层.</li>
+<li><strong>Keras</strong> (高级包装机High level wrapper):<ul>
+<li>Keras是tensorflow顶部的一层,使普通的事情容易做。</li>
+<li>太受欢迎了</li>
+<li>用几行代码训练一个完整的深层神经网络。</li>
+</ul>
+</li>
+<li>有很多高级包装:<ul>
+<li>Keras</li>
+<li>TFLearn</li>
+<li>TensorLayer</li>
+<li>tf.layers   <code>#使用tensorflow</code></li>
+<li>tf-Slim   <code>#使用tensorflow</code></li>
+<li>tf.contrib.learn   <code>#使用tensorflow</code></li>
+<li>Sonnet <code># 心灵深处的新事物</code></li>
+</ul>
+</li>
+<li>Tensorflow有预先训练过的模型，您可以在使用转移学习时使用这些模型。</li>
+<li>Tensorboard增加了记录损失和统计数据的功能。运行服务器，得到漂亮的图形!</li>
+<li>如果您想在某些节点上拆分图，它具有分布式代码</li>
+<li>Tensorflow的灵感来自Theano。它有相同的灵感和结构。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>PyTorch (Facebook)</strong></p>
+<ul>
+<li>有三层抽象:<ul>
+<li>Tensor: <code>ndarray</code>但在tensorflow中 #<code>类似于numpy数组的GPU上运行</code><ul>
+<li>Variable:计算图中的结点; 存储数据和梯度 <code>#Like Tensor, Variable, Placeholders</code></li>
+</ul>
+</li>
+<li>Module: A NN layer;可以存储状态或可学习的权重<code>#Like tf.layers in tensorflow</code></li>
+</ul>
+</li>
+<li>在PyTorch中，图形运行在您正在执行的同一个循环中，这使得调试更加容易。这叫做动态图。</li>
+<li>在PyTorch中，您可以通过向前和向后写入张量来定义自己的autograd函数。大多数时候它会为你实现。</li>
+<li>torch.nn是一个类似于tensorflow中keras的高级api。你可以创建模型，然后继续下去<ul>
+<li>您可以定义自己的nn模块</li>
+</ul>
+</li>
+<li>Pythorch还包含tensorflow之类的优化器。</li>
+<li>它包含一个数据加载器，它包装了一个数据集，并提供了minbatches、shuffling和多线程处理。</li>
+<li>Pythorch包含最好和超级容易使用的预训练模型</li>
+<li>Pythorch含有类似Tensorboard的Visdom。但Tensorboard 似乎更强大。</li>
+<li>与Torch相比，PyTorch是一个新的且仍在不断发展。它仍然处于beta状态。</li>
+<li>Pythorch最适合研究</li>
+</ul>
+</li>
+<li><p>Tensorflow构建一次图形，然后运行多次（称为静态图形）</p>
+</li>
+<li><p>在每个PyTorch迭代中，我们构建一个新的图（称为动态图）</p>
+</li>
+<li><p><strong>静态图vs动态图</strong>:</p>
+<ul>
+<li><p>最优化(Optimization):</p>
+<ul>
+<li>使用静态图，框架可以在运行之前为您优化图形.</li>
+</ul>
+</li>
+<li><p>序列化(Serialization)</p>
+<ul>
+<li><strong>Static</strong>: 一旦构建了graph，就可以序列化它并运行它，而不需要构建该图的代码。例如在c中使用图++</li>
+<li><strong>Dynamic</strong>: 总是需要保留代码。</li>
+</ul>
+</li>
+<li><p>条件(Conditional)</p>
+<ul>
+<li>在动态图中更容易,在静态图中更加复杂。</li>
+</ul>
+</li>
+<li><p>循环(Loops):</p>
+<ul>
+<li>在动态图中更容易,在静态图中更加复杂。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Tensorflow fold 通过动态批处理使动态图在Tensorflow中更容易实现</p>
+</li>
+<li><p>动态图的应用包括：递归网络(recurrent networks and recursive networks).</p>
+</li>
+<li><p>Caffe2使用静态图，可以在python中训练模型，也可以在IOS和Android上运行</p>
+</li>
+<li><p>Tensorflow/Caffe2在生产中得到了广泛的应用，特别是在移动设备上</p>
+</li>
+</ul>
+<h2 id="09-CNN-architectures"><a href="#09-CNN-architectures" class="headerlink" title="09. CNN architectures"></a>09. CNN architectures</h2><ul>
+<li><p>本节介绍著名的CNN架构。关注自2012年以来赢得<a href="www.image-net.org/">ImageNet</a>竞赛的CNN架构。 </p>
+<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/43.png" alt></li>
+</ul>
+</li>
+<li><p>这些体系结构包括: <a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf" target="_blank" rel="noopener">AlexNet</a>, <a href="https://arxiv.org/abs/1409.1556" target="_blank" rel="noopener">VGG</a>, <a href="https://research.google.com/pubs/pub43022.html" target="_blank" rel="noopener">GoogLeNet</a>, and <a href="https://arxiv.org/abs/1512.03385" target="_blank" rel="noopener">ResNet</a>.</p>
+</li>
+<li><p>我们还将讨论一些有趣的架构。</p>
+</li>
+<li><p>第一个ConvNet是Yann Lecun在1998年提出的<a href="http://ieeexplore.ieee.org/document/726791/" target="_blank" rel="noopener">LeNet-5</a> 体系结构</p>
+<ul>
+<li>结构是: <code>CONV-POOL-CONV-POOL-FC-FC-FC</code><ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/02.jpg" alt></li>
+</ul>
+</li>
+<li>每个卷积层滤波器步幅为<code>1</code>且采用<code>5x5</code>尺寸</li>
+<li>每个池化层滤波器步幅为<code>2</code>且采用<code>2x2</code>尺寸</li>
+<li>它在数字识别中很有用。</li>
+<li>特别是图像特征分布在整个图像上的特点，以及具有可学习参数的卷积是在多个位置用较少的参数提取相似特征的有效方法。</li>
+<li>它正好包含 <strong><u>5</u></strong> 层</li>
+</ul>
+</li>
+<li><p>In <a href="https://arxiv.org/abs/1003.0358" target="_blank" rel="noopener">2010</a> 丹·克劳迪乌西雷桑（Dan Claudiu Ciresan）和Jurgen Schmidhuber发表了GPU神经网络的最早实现之一。这种实现方法在NVIDIA GTX 280 图形处理器上实现了前向和后向两个层次的神经网络。</p>
+</li>
+<li><p><a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf" target="_blank" rel="noopener"><strong>AlexNet</strong></a> (2012):</p>
+<ul>
+<li>ConvNet开创了进化之路，并在2012年赢得了ImageNet.</li>
+<li>结构如下: <code>CONV1-MAXPOOL1-NORM1-CONV2-MAXPOOL2-NORM2-CONV3-CONV4-CONV5-MAXPOOL3-FC6-FC7-FC8</code></li>
+<li>包含 <strong><u>8</u></strong> 层，前5层为卷积层，后3层为完全连通层。</li>
+<li>AlexNet的准确度误差为<code>16.4%</code></li>
+<li>例如，如果输入为227 x 227 x3，则每层输出的形状如下：<ul>
+<li>CONV1    (96 11 x 11 filters at stride 4, pad 0)<ul>
+<li>Output shape <code>(55,55,96)</code>,   Number of weights are <code>(11*11*3*96)+96 = 34944</code></li>
+</ul>
+</li>
+<li>MAXPOOL1 (3 x 3 filters applied at stride 2)<ul>
+<li>Output shape <code>(27,27,96)</code>,   No Weights</li>
+</ul>
+</li>
+<li>NORM1<ul>
+<li>Output shape <code>(27,27,96)</code>,     We don’t do this any more</li>
+</ul>
+</li>
+<li>CONV2 (256 5 x 5 filters at stride 1, pad 2)</li>
+<li>MAXPOOL2 (3 x 3 filters at stride 2)</li>
+<li>NORM2</li>
+<li>CONV3 (384 3 x 3 filters ar stride 1, pad 1)</li>
+<li>CONV4 (384 3 x 3 filters ar stride 1, pad 1)</li>
+<li>CONV5 (256 3 x 3 filters ar stride 1, pad 1)</li>
+<li>MAXPOOL3 (3 x 3 filters at stride 2)<ul>
+<li>Output shape <code>(6,6,256)</code></li>
+</ul>
+</li>
+<li>FC6 (4096)</li>
+<li>FC7 (4096)</li>
+<li>FC8 (1000 neurons for class score)</li>
+</ul>
+</li>
+<li>一些其他细节:<ul>
+<li>首次使用RELU.</li>
+<li>标准层(Norm layers)，但不再使用。</li>
+<li>海量数据扩充</li>
+<li>Dropout <code>0.5</code></li>
+<li>batch size <code>128</code></li>
+<li>SGD momentum <code>0.9</code></li>
+<li>Learning rate <code>1e-2</code> reduce by 10 at some iterations</li>
+<li>7 CNN ensembles!</li>
+</ul>
+</li>
+<li>AlexNet是在GTX 580 GPU上训练的，只有3GB，这不足以在一台机器上进行训练，所以他们将特征地图分为两半。第一个AlexNet是分布式的</li>
+<li>在很多任务中，迁移学习仍然使用它</li>
+<li>参数总数为<code>6000万</code></li>
+</ul>
+</li>
+<li><p><a href="https://arxiv.org/abs/1311.2901" target="_blank" rel="noopener"><strong>ZFNet</strong></a> (2013)</p>
+<ul>
+<li>2013年获胜，错误率为11.7%</li>
+<li>它具有相同的一般结构，但它们在超参数上有一些变化，以获得最佳输出。</li>
+<li>也包含 <strong><u>8</u></strong> 层。</li>
+<li>AlexNet but:<ul>
+<li><code>CONV1</code>: 从 (11 x 11 stride 4) 变为 (7 x 7 stride 2)</li>
+<li><code>CONV3,4,5</code>: 分别用 512, 1024, 512 滤波器来代替 384, 384, 256 滤波器</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a href="https://arxiv.org/abs/1312.6229" target="_blank" rel="noopener">OverFeat</a> (2013)</p>
+<ul>
+<li>2013赢得比赛</li>
+<li>我们展示了如何在ConvNet中有效地实现多尺度滑动窗口方法。我们还介绍了一种新的深度学习方法，通过学习预测对象边界来定位。</li>
+</ul>
+</li>
+<li><p><a href="https://arxiv.org/pdf/1409.1556" target="_blank" rel="noopener"><strong>VGGNet</strong></a> (2014) (Oxford)</p>
+<ul>
+<li>更深层次的网络。</li>
+<li>包含19层。</li>
+<li>2014年和GoogleNet一起赢得比赛，错误率7.3%</li>
+<li>具有较深层的较小过滤器</li>
+<li>VGG的最大优点在于，连续多次3×3卷积可以模拟较大感受野的影响，例如5×5和7×7。</li>
+<li>网络全程使用简单的3 x 3 Conv。<ul>
+<li>3个（3 x 3）核的效果可以与一个（7 x 7）核相同</li>
+</ul>
+</li>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/03.png" alt></li>
+<li>该体系结构包含多个CONV层，然后是5层以上的池化层，然后是全连接层。</li>
+<li>它每个图像的总内存为96MB，仅用于前向传播<ul>
+<li>大多数内存都在前几层</li>
+</ul>
+</li>
+<li>参数总数为1.38亿<ul>
+<li>大多数参数都在完全连接的层中</li>
+</ul>
+</li>
+<li>在训练中也有类似的细节。比如利用momentum 和 dropout。</li>
+<li>VGG19是VGG16的升级版，性能稍好，但内存更大<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/04.png" alt></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a href="https://research.google.com/pubs/pub43022.html" target="_blank" rel="noopener"><strong>GoogleNet</strong></a> (2014)</p>
+<ul>
+<li>更深层次的网络。</li>
+<li>包含22层。</li>
+<li>它具有高效的 <strong><u>Inception</u></strong> 模块</li>
+<li>只有500万个参数！比AlexNet少12倍</li>
+<li>2014年赢得VGGNet，错误率为6.7%</li>
+<li>Inception 模块:<ul>
+<li>设计一个良好的局域网拓扑结构 (网络中的网络network within a network (NiN)) 然后将这些模块堆叠在一起。</li>
+<li>它包括：<ul>
+<li>对上一层的输入应用并行过滤操作<ul>
+<li>多种规格的卷积 (1 x 1, 3 x 3, 5 x 5) <ul>
+<li>添加填充以保持大小</li>
+</ul>
+</li>
+<li>池化层操作. (Max Pooling)<ul>
+<li>添加填充以保持大小</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>将所有滤波器输出串联在一起。</li>
+</ul>
+</li>
+<li>比如:<ul>
+<li>inception模块的输入是 28 x 28 x 256</li>
+<li>然后应用并行滤波器:<ul>
+<li>(1 x 1), 128 filter               <code># output shape (28,28,128)</code></li>
+<li>(3 x 3), 192 filter                 <code># output shape (28,28,192)</code></li>
+<li>(5 x 5), 96 filter                   <code># output shape (28,28,96)</code></li>
+<li>(3 x 3) Max pooling            <code># output shape (28,28,256)</code></li>
+</ul>
+</li>
+<li>连接后，这将是 <code>(28,28,672)</code></li>
+</ul>
+</li>
+<li>通过这种设计，我们称之为天真(Naive)，它有很大的计算复杂性。<ul>
+<li>最后一个例子将使:<ul>
+<li>[1 x 1 conv, 128] ==&gt; 28 <em> 28 </em> 128 <em> 1 </em> 1 * 256 = 25 Million approx</li>
+<li>[3 x 3 conv, 192] ==&gt; 28 <em> 28 </em> 192 <em>3 </em>3 * 256 = 346 Million approx</li>
+<li>[5 x 5 conv, 96] ==&gt; 28 <em> 28 </em> 96 <em> 5 </em> 5 * 256 = 482 Million approx</li>
+<li>总共约8.54亿次操作!</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>解决方案：使用1x1卷积来减少特征深度的瓶颈层<ul>
+<li>受 NiN (<a href="https://arxiv.org/abs/1312.4400" target="_blank" rel="noopener">Network in network</a>)的启发</li>
+</ul>
+</li>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/05.png" alt></li>
+<li>在这个例子中，瓶颈解决方案的总操作量将达到358M，与原始的实现相比是很好的。</li>
+</ul>
+</li>
+<li>所以GoogleNet将这个初始模块进行多次堆叠，以获得一个完整的网络架构，可以在没有完全连接的层的情况下解决问题。</li>
+<li>它在分类步骤之前的末尾使用平均池层。</li>
+<li>完整体系结构:<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/44.png" alt></li>
+</ul>
+</li>
+<li>2015年2月，批量标准化初始作为Inception V2引入。批量标准化计算图层输出处所有特征图的平均值和标准差，并用这些值规范化它们的响应。</li>
+<li><a href="https://arxiv.org/abs/1512.00567" target="_blank" rel="noopener">2015</a>年12月，他们介绍了一篇论文“重新思考计算机视觉的初始架构”，这篇论文很好地解释了早期的Inception模型，并引入了新版本V3。</li>
+</ul>
+</li>
+<li><p>第一个GoogleNet和VGG是在批处理规范化发明之前，所以他们有一些技巧来训练NN并很好地收敛。</p>
+</li>
+<li><p><a href="https://arxiv.org/abs/1512.03385" target="_blank" rel="noopener"><strong>ResNet</strong></a> (2015) (Microsoft Research)</p>
+<ul>
+<li><p>ImageNet的152层模型。以3.57%胜出，这好于人为水平的误差。</p>
+</li>
+<li><p>这也是第一次训练一个超过100层甚至1000层的网络。</p>
+</li>
+<li><p>在ILSVRC’15和COCO’15横扫了所有的分类和探测比赛！</p>
+</li>
+<li><p>当我们继续在一个“普通”的卷积神经网络上堆积更深的层时会发生什么？</p>
+<ul>
+<li>较深的模型性能更差，但不是由于过度拟合造成的！</li>
+<li>学习停止执行得很好，因为更深的神经网络更难优化！</li>
+</ul>
+</li>
+<li><p>更深层次的模型应该至少能和浅层次的模型一样好</p>
+</li>
+<li><p>构造的解决方案是从较浅的模型复制学习的层，并将附加层设置为标识映射。</p>
+</li>
+<li><p>残差块:</p>
+<ul>
+<li><p>微软提出了一个残差块，它具有以下架构：:</p>
+<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/45.png" alt></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Instead of us trying To learn a new representation, We learn only Residual</span></span><br><span class="line">Y = (W2* RELU(W1x+b1) + b2) + X</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>假设你有一个直到N层深度的网络。你只想添加一个新的层，如果你得到了额外的添加层。</p>
+</li>
+<li><p>确保这个新的（N+1）层学习网络新知识的一种方法是同时提供输入（x），而无需对第（N+1）层的输出进行任何转换。这本质上驱动新层学习与输入已经编码的内容不同的内容。</p>
+</li>
+<li><p>另一个优点是这种连接有助于处理非常深的网络中的消失梯度问题。</p>
+</li>
+</ul>
+</li>
+<li><p>有了残差块，我们现在可以得到任何深度的深度神经网络，而不用担心我们无法优化网络。</p>
+</li>
+<li><p>ResNet在具有大量层的情况下开始使用类似于Inception瓶颈的瓶颈层(即1x1核)来降低维数。</p>
+<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/07.jpg" alt></li>
+</ul>
+</li>
+<li><p><strong><u>完整的ResNet架构</u></strong>:</p>
+<ul>
+<li>残差块堆积.<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/08.png" alt></li>
+</ul>
+</li>
+<li>每个剩余块有两个3 x 3 conv层。</li>
+<li>开始时的附加转换层</li>
+<li>结尾没有FC层（只有FC 1000到输出类）</li>
+<li>周期性地，两倍数量的过滤器和使用步长2（每个维度中的/2）在空间上进行下采样</li>
+<li>ResNet实践培训:<ul>
+<li>每层转换后Batch Normalization.</li>
+<li>来自He等人的Xavier/2初始化.</li>
+<li>SGD + Momentum (<code>0.9</code>) </li>
+<li>Learning rate: 0.1, 当验证误差稳定时除以10</li>
+<li>Mini-batch size <code>256</code></li>
+<li>Weight decay of <code>1e-5</code></li>
+<li>No dropout used.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a href="https://arxiv.org/abs/1602.07261" target="_blank" rel="noopener">Inception-v4</a>: Resnet + Inception and was founded in 2016.</p>
+</li>
+<li><p>所有体系结构的复杂性：</p>
+<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/09.png" alt></li>
+<li>VGG:最高的内存，最多的操作.</li>
+<li>GoogLeNet: 效率最高.</li>
+</ul>
+</li>
+<li><p><strong>ResNets 改进</strong>:</p>
+<ul>
+<li>(<a href="https://arxiv.org/abs/1603.05027" target="_blank" rel="noopener">2016</a>) <u>深剩余网络中的恒等映射</u><ul>
+<li>来自ResNet的创造者.</li>
+<li>提供更好的性能。</li>
+</ul>
+</li>
+<li>(<a href="https://arxiv.org/abs/1605.07146" target="_blank" rel="noopener">2016</a>) <u>宽残差网络</u><ul>
+<li>认为残差是重要因素，而不是深度</li>
+<li>50层宽ResNet优于152层原始ResNet</li>
+<li>增加宽度而不是深度更有效地计算（可并行化）</li>
+</ul>
+</li>
+<li>(<a href="https://arxiv.org/abs/1603.09382" target="_blank" rel="noopener">2016</a>) 深度随机网络<ul>
+<li>动机：在训练过程中通过短网络减少消失梯度和训练时间。</li>
+<li>在每一次训练过程中随机放下一个子集的图层</li>
+<li>在测试时使用全深度网络。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>超越 ResNets</strong>:</p>
+<ul>
+<li>(<a href="https://arxiv.org/abs/1605.07648" target="_blank" rel="noopener">2017</a>) <u>分形网络：无残差的超深神经网络</u><ul>
+<li>认为关键是要有效地从浅层过渡到深层，不需要残差表示。.</li>
+<li>通过退出子路径训练</li>
+<li>测试时全网。</li>
+</ul>
+</li>
+<li>(<a href="https://arxiv.org/abs/1608.06993" target="_blank" rel="noopener">2017</a>) <u>密接卷积网络</u></li>
+<li>(<a href="https://arxiv.org/abs/1602.07360" target="_blank" rel="noopener">2017</a>) SqueezeNet:AlexNet级精度，参数减少50倍，型号尺寸&lt;0.5Mb<ul>
+<li>有利于生产</li>
+<li>它是对ResNet和Inception中的许多概念的重新散列，并表明，毕竟，一个更好的架构设计将提供较小的网络规模和参数，而不需要复杂的压缩算法。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>结论:</p>
+<ul>
+<li>ResNet当前最佳默认值</li>
+<li>网络极深的趋势</li>
+<li>在过去的几年里，一些模型都使用像“ResNet”这样的快捷方式来改变梯度。</li>
+</ul>
+</li>
+</ul>
+<h2 id="10-Recurrent-Neural-networks"><a href="#10-Recurrent-Neural-networks" class="headerlink" title="10. Recurrent Neural networks"></a>10. Recurrent Neural networks</h2><ul>
+<li>Vanilla 神经网络给神经网络“输入”，固定大小的输入经过一些隐藏单元，然后输出。我们称之为一对一网络。</li>
+<li><p>递归神经网络RNN模型:</p>
+<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/46.png" alt></li>
+<li>一对多<ul>
+<li>示例：图像字幕<ul>
+<li>图像==&gt;单词序列</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>多对一<ul>
+<li>示例：情绪分类<ul>
+<li>词序==&gt;情感</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>多对多<ul>
+<li>示例：机器翻译<ul>
+<li>一种语言的单词序列==&gt;另一种语言的单词序列</li>
+</ul>
+</li>
+<li>示例：帧级视频分类</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>RNN也可以用于非序列数据（一对一问题）</p>
+<ul>
+<li>它通过采取一系列“瞥见”的方式进行了数字分类<ul>
+<li>“<a href="https://arxiv.org/abs/1412.7755" target="_blank" rel="noopener">视觉注意下的多目标识别</a>”, ICLR 2015.</li>
+</ul>
+</li>
+<li>它致力于一次生成一幅图像<ul>
+<li>比如生成 <a href="http://ieeexplore.ieee.org/document/7966808/" target="_blank" rel="noopener">验证码</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>那么什么是递归神经网络?</p>
+<ul>
+<li><p>接收输入x的循环核心单元，该单元具有每次读取输入时更新的内部状态。</p>
+</li>
+<li><p><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/47.png" alt></p>
+</li>
+<li><p>RNN块应该返回一个向量</p>
+</li>
+<li><p>我们可以通过在每个时间步应用递归公式来处理向量x序列：</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">h[t] = fw (h[t<span class="number">-1</span>], x[t])			</span><br><span class="line"><span class="comment"># Where fw is some function with parameters W</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>每个时间步使用相同的函数和相同的参数集。</li>
+</ul>
+</li>
+<li><p>(Vanilla) Recurrent Neural Network:</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">h[t] &#x3D; tanh (W[h,h]*h[t-1] + W[x,h]*x[t])   </span><br><span class="line"># Then we save h[t]</span><br><span class="line">y[t] &#x3D; W[h,y]*h[t]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这是RNN最简单的例子。</li>
+</ul>
+</li>
+<li><p>RNN处理一系列相关数据。</p>
+</li>
+</ul>
+</li>
+<li><p>递归神经网络计算图:</p>
+<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/10.png" alt></li>
+<li><code>h0</code>初始化为零</li>
+<li>梯度W是所有已计算的W梯度之和</li>
+<li>多对多图<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/11.png" alt></li>
+<li>最后一个是所有损失的和，Y的权重是1，通过求和所有梯度来更新</li>
+</ul>
+</li>
+<li>多对一图<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/12.png" alt></li>
+</ul>
+</li>
+<li>一对多图<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/13.png" alt></li>
+</ul>
+</li>
+<li>序列到图形<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/14.png" alt></li>
+<li>编码器和解码器原理。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>例子:</p>
+<ul>
+<li>假设我们使用字符来构建单词 。我们需要一个模型来预测序列的下一个特征。假设字符只有[h，e，l，o]，单词是[hello]<ul>
+<li>训练:<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/15.png" alt></li>
+<li>这里只有第三个预言是正确的。损失需要优化。</li>
+<li>我们可以通过输入整个单词来训练网络。</li>
+</ul>
+</li>
+<li>测试:<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/16.png" alt></li>
+<li>在测试时，我们逐个处理。输出字符将是下一个输入，其他已保存的隐藏激活。</li>
+<li>这个<a href="https://gist.github.com/karpathy/d4dee566867f8291f086" target="_blank" rel="noopener">链接</a> 包含了所有的代码，但是使用了截短的反向传播，正如我们将要讨论的那样。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>反向传播通过时间向前通过整个序列来计算损耗，然后反向通过整个序列来计算梯度。</p>
+<ul>
+<li>但如果我们选择整个序列，它将是如此缓慢，占用大量内存，永远不会收敛！</li>
+</ul>
+</li>
+<li><p>所以在实践中，人们做的是“通过时间截短的反向传播”，我们继续向前和向后运行序列的块，而不是整个序列</p>
+<ul>
+<li>然后将隐藏状态永远向前推进，但只对一些较小的步骤进行反向传播。</li>
+</ul>
+</li>
+<li><p>图像字幕示例:</p>
+<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/17.png" alt></li>
+<li>他们用代币来完成跑步。</li>
+<li>最大的图片字幕数据集是微软COCO</li>
+</ul>
+</li>
+<li><p>注意图像字幕是一个项目，在这个项目中，RNN在生成字幕时，会看到图像的特定部分，而不是整个图像。</p>
+<ul>
+<li>在“视觉答疑”问题中也采用了带注意的图像字幕技术</li>
+</ul>
+</li>
+<li><p>多层rnn通常使用一些层作为隐藏层，这些层被再次馈入。<strong>LSTM</strong>是一个多层RNN。</p>
+</li>
+<li><p>可能会以反方向消失。爆炸是通过渐变剪裁控制的。消失由加性相互作用控制（LSTM）</p>
+</li>
+<li><p>LSTM代表长时短时记忆。它的目的是帮助解决RNNs上的消失梯度问题。</p>
+<ul>
+<li>它包括:<ul>
+<li>f: Forget gate, 是否删除单元格</li>
+<li>i: Input gate, 是否写入单元格</li>
+<li>g: Gate gate (?), 写多少个单元格</li>
+<li>o: Output gate, 输出多少个单元格</li>
+</ul>
+</li>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/18.png" alt></li>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/18.1.png" alt></li>
+<li>像ResNet一样，LSTM梯度很容易计算</li>
+<li>LSTM将数据保存在长或短内存中，因为它训练意味着它不仅可以记住最后一层的内容，而且可以记住各个层的内容</li>
+</ul>
+</li>
+<li><p>公路网是介于ResNet和LSTM之间的东西，目前仍在研究中。</p>
+</li>
+<li><p>更好/更简单的体系结构是当前研究的热点</p>
+</li>
+<li><p>需要更好的理解（理论和经验）</p>
+</li>
+<li><p>RNN用于更多地使用相关输入序列的问题。比如NLP和语音识别。</p>
+</li>
+</ul>
+<h2 id="11-Detection-and-Segmentation"><a href="#11-Detection-and-Segmentation" class="headerlink" title="11. Detection and Segmentation"></a>11. Detection and Segmentation</h2><ul>
+<li><p>到目前为止，我们讨论的是图像分类问题。在本节中，我们将讨论分割、定位和检测。</p>
+</li>
+<li><p><strong><u>语义切分(Semantic Segmentation)</u></strong></p>
+<ul>
+<li><p>我们想用分类标签来标记图像中的每个像素。</p>
+</li>
+<li><p><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/19.png" alt></p>
+</li>
+<li><p>当你看到图像中的奶牛时，语义分割并不区分实例，只关心像素。</p>
+</li>
+<li><p>第一个想法是使用<strong>滑动窗口</strong>。我们取一个小尺寸的窗口，把它滑到整个画面上。对于每个窗口，我们要标记中心像素。</p>
+<ul>
+<li>它可以工作，但这不是一个好主意，因为它的计算成本很高</li>
+<li>效率很低！不重复使用重叠修补程序之间的共享功能</li>
+<li>实际上没人用这个</li>
+</ul>
+</li>
+<li><p>第二个想法是将一个网络设计成一组卷积层，以便一次对像素进行预测！</p>
+<ul>
+<li>输入是整个图像。输出是每个像素标记的图像。</li>
+<li>我们需要很多标签数据。而且数据非常昂贵。</li>
+<li>它需要很深的卷积层。</li>
+<li>损失是提供的每个像素之间的交叉熵。</li>
+<li>数据扩充在这里很好。</li>
+<li>这种实现的问题是原始图像分辨率下的卷积将非常昂贵。</li>
+<li>所以在实践中，我们现在还没有看到这样的情况。</li>
+</ul>
+</li>
+<li><p>第三个想法是基于最后一个想法。不同的是，我们在网络内部进行下采样和上采样。</p>
+<ul>
+<li><p>我们下采样是因为使用整个图像是非常昂贵的。所以我们在最后进行了多层下采样和上采样。</p>
+</li>
+<li><p>下采样是一种类似于池化和跨步卷积的操作。.</p>
+</li>
+<li><p>Upsampling is like “Nearest Neighbor” or “Bed of Nails” or “Max unpooling”</p>
+<ul>
+<li><p><strong>Nearest Neighbor</strong> example:</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Input:   1  2               Output:   1  1  2  2</span><br><span class="line">         3  4                         1  1  2  2</span><br><span class="line">                                      3  3  4  4</span><br><span class="line">                                      3  3  4  4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Bed of Nails</strong> example:</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Input:   1  2               Output:   1  0  2  0</span><br><span class="line">         3  4                         0  0  0  0</span><br><span class="line">                                      3  0  4  0</span><br><span class="line">                                      0  0  0  0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Max unpooling</strong> 取决于Max pooling之前的步骤。填充发生最大池化的像素，然后用零填充其他像素。</p>
+</li>
+</ul>
+</li>
+<li><p>Max unpooling似乎是上采样的最佳方法。</p>
+</li>
+<li><p>有一种可学习的上采样的想法叫做 “<strong>Transpose Convolution</strong>“</p>
+<ul>
+<li>我们做的不是卷积，而是相反。</li>
+<li>也叫做:<ul>
+<li>上卷积(Upconvolution)</li>
+<li>分步卷积(Fractionally strided convolution)</li>
+<li>后跨步卷积(Backward strided convolution)</li>
+</ul>
+</li>
+<li>学习上采样的艺术性请参考<a href="https://arxiv.org/abs/1603.07285" target="_blank" rel="noopener">此文章</a>第四章.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><u>Classification + Localization</u></strong>:</p>
+<ul>
+<li>在这个问题中，我们希望将图像中的主要对象及其位置分类为矩形。</li>
+<li>我们假设有一个物体。</li>
+<li>我们将创建一个多任务NN。体系结构如下:<ul>
+<li>卷积网络层连接到<ul>
+<li>对对象进行分类的FC层. <code># 我们知道的简单分类问题</code></li>
+<li>连接到四个数字<code>（x、y、w、h）</code>的FC层<ul>
+<li>我们将本地化(Localization)视为一个回归问题。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>这个问题会有两个损失:<ul>
+<li>Softmax分类损失</li>
+<li>局部回归（线性损失）（L2损失）</li>
+</ul>
+</li>
+<li>Loss = SoftmaxLoss + L2 loss</li>
+<li>通常，第一个Conv层是像AlexNet一样经过预训练的nn!</li>
+<li>这种技术可以应用于许多其他问题，如：人体姿态估计。</li>
+</ul>
+</li>
+<li><p><strong><u>Object Detection</u></strong></p>
+<ul>
+<li>计算机视觉的核心思想。我们将详细讨论这个问题。</li>
+<li>“分类+定位”和这个问题的区别在于，我们要检测一个或多个不同的对象及其位置</li>
+<li>第一个想法是使用滑动窗口<ul>
+<li>干得好但是时间长</li>
+<li>步骤是:<ul>
+<li>将CNN应用于图像的许多不同裁剪，CNN将每种裁剪分类为对象或背景。</li>
+</ul>
+</li>
+<li>问题是我们需要将CNN应用于大量的位置和规模，计算非常昂贵</li>
+<li>成千上万的人会用上千次的蛮力来滑动窗口</li>
+</ul>
+</li>
+<li>区域建议将帮助我们决定在哪个区域运行NN:<ul>
+<li>查找可能包含对象的滴状(blobby)图像区域</li>
+<li>运行速度相对较快；例如，选择性搜索在CPU上几秒钟内提供1000个区域建议</li>
+</ul>
+</li>
+<li>所以现在我们可以应用其中一个区域提案网络，然后应用第一个想法</li>
+<li>还有一个想法叫做R-CNN<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/20.png" alt></li>
+<li>这个想法是不好的，因为它将图像的一部分——包括区域建议——如果大小不同，在将它们全部缩放到一个尺寸后，将其提供给CNN。缩放不好</li>
+<li>而且他非常缓慢</li>
+</ul>
+</li>
+<li>快速R-CNN是在R-CNN上发展起来的另一个想法<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/48.png" alt></li>
+<li>它用一个CNN来做任何事情。</li>
+</ul>
+</li>
+<li>Faster R-CNN 通过插入区域建议网络（RPN）来根据特征预测提案，从而完成自己的区域提案。<ul>
+<li>最快的R-CNNs.</li>
+</ul>
+</li>
+<li>另一个想法是没有建议的检测: YOLO / SSD<ul>
+<li>YOLO 代表你只看一次.</li>
+<li>YOLO/SDD 是两个独立的算法</li>
+<li>速度更快但不够准确。</li>
+</ul>
+</li>
+<li>Takeaways<ul>
+<li>Faster R-CNN速度较慢，但更准确。</li>
+<li>SSD/YOLO 速度快得多，但不够准确</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><u>Denese Captioning</u></strong></p>
+<ul>
+<li>Denese Captioning is “Object Detection + Captioning”</li>
+<li>关于这个想法的<a href="https://arxiv.org/abs/1511.07571" target="_blank" rel="noopener">论文</a>可以在这里找到.</li>
+</ul>
+</li>
+<li><p><strong><u>实例分割(Instance Segmentation)</u></strong></p>
+<ul>
+<li>问题就是这样</li>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/49.png" alt></li>
+<li>我们不想预测边界框，而是想知道哪个像素标签，同时还要区分它们。</li>
+<li>有很多想法</li>
+<li>有一个新的想法”Mask R-CNN”<ul>
+<li>像R-CNN一样，但在它里面我们应用了语义分割</li>
+<li>这篇论文有很多很好的结果。</li>
+<li>它总结了我们在这堂课上讨论过的所有事情</li>
+<li>这方面的表现似乎不错。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="12-Visualizing-and-Understanding"><a href="#12-Visualizing-and-Understanding" class="headerlink" title="12. Visualizing and Understanding"></a>12. Visualizing and Understanding</h2><ul>
+<li><p>我们想知道ConvNets内部发生了什么？</p>
+</li>
+<li><p>人们希望相信黑匣子（CNN）并知道它是如何工作的，并做出正确的决定。</p>
+</li>
+<li><p>第一种方法是可视化第一层的过滤器</p>
+<ul>
+<li>可能第一层过滤器的形状是5×5×3，过滤器的数量是16。然后我们将有16个不同的“彩色”过滤器图像。</li>
+<li>事实证明，这些过滤器像人脑一样学习原始形状和定向边缘。</li>
+<li>这些过滤器在你将要训练的每个Conv网络上看起来都是一样的，例如如果你试图从AlexNet、VGG、GoogleNet或ResNet获取它。</li>
+<li>这将告诉您第一个卷积层在图像中寻找什么。</li>
+</ul>
+</li>
+<li><p>我们可以看到下一层的过滤器，但它们不会告诉我们任何信息。</p>
+<ul>
+<li>第一层过滤器的形状可能是5×5×20，过滤器的数量是16。然后我们将有16*20个不同的“灰色”滤镜图像。</li>
+</ul>
+</li>
+<li><p>在AlexNet，最后有一些FC层。如果我们取4096维特征向量作为图像，并收集这些特征向量。</p>
+<ul>
+<li>如果我们在这些特征向量之间建立一个最近的邻域，并得到这些特征的真实图像，那么与直接在图像上运行KNN相比，我们将得到非常好的结果！</li>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/21.png" alt></li>
+<li>这种相似性告诉我们，这些cnn真正获得的是这些图像的语义，而不是像素级的语义！</li>
+<li>我们可以对4096维特征进行降维，并将其压缩到二维。<ul>
+<li>这可以通过PCA或t-SNE来实现。</li>
+<li>t-SNE更多地与深度学习一起用于可视化数据。可以在<a href="http://cs.stanford.edu/people/karpathy/cnnembed/" target="_blank" rel="noopener">这里</a>找到示例</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>我们可以看到激活图</p>
+<ul>
+<li>例如，如果CONV5功能图是128 x 13 x 13，我们可以将其可视化为128 13 x 13灰度图像。</li>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/50.png" alt></li>
+<li>其中的一个特性是根据输入激活的，所以现在我们知道这个特定的映射正在寻找一些东西。</li>
+<li>这是由吉辛斯基等人(Yosinski et.)完成的。更多信息在<a href="http://yosinski.com/deepvis#toolbox" target="_blank" rel="noopener">这里</a>。</li>
+</ul>
+</li>
+<li><p>有一种叫做最大激活补丁(<strong>Maximally Activating Patches</strong>)的东西可以帮助我们可视化Convnets中的中间特性</p>
+<ul>
+<li>这样做的步骤如下:<ul>
+<li>我们先选择一层神经元<ul>
+<li>例如，我们在AlexNet中选择Conv5，它是128 x 13 x 13，然后选择通道（神经元）17/128</li>
+</ul>
+</li>
+<li>通过网络运行许多图像，记录所选频道的值</li>
+<li>可视化对应于最大激活的图像块<ul>
+<li>我们会发现每个神经元都在观察图像的特定部分</li>
+<li>利用感受野(eceptive field)提取(Extract)图像</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>另一个想法是遮挡实验(<strong>Occlusion Experiments</strong>)</p>
+<ul>
+<li>我们将图像的一部分蒙版后再输入CNN，在每个掩模位置绘制概率热图（输出为真）</li>
+<li>它将给你形象中最重要的部分，从中我们学习到了。</li>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/51.png" alt></li>
+</ul>
+</li>
+<li><p>显著性映射(<strong>Saliency Maps</strong>)指出哪些像素对分类很重要</p>
+<ul>
+<li>类似于遮挡实验，但使用了完全不同的方法</li>
+<li>我们计算（未规范化）类分数相对于图像像素的梯度，在RGB通道上取绝对值和最大值。它会给我们一个灰色的图像，代表图像中最重要的区域。</li>
+<li>这有时可以用于语义分割。</li>
+</ul>
+</li>
+<li><p>（引导的）backprop可以最大限度地激活补丁(<strong>Maximally Activating Patches</strong>)，但不同的是，它能获得我们所关心的像素。</p>
+<ul>
+<li>在该方法中，选择一个最大激活块的通道，然后计算神经元值相对于图像像素的梯度</li>
+<li>如果您只通过每个RELU反向投影正渐变（guided backprop），图像会变得更好</li>
+</ul>
+</li>
+<li><p>坡度上升(<strong>Gradient Ascent</strong>)</p>
+<ul>
+<li><p>生成一个最大限度地激活神经元的合成图像。</p>
+</li>
+<li><p>反向坡度下降。不是取最小值而是取最大值。</p>
+</li>
+<li><p>我们想用输入图像最大化神经元。因此，我们在这里尝试学习使激活最大化的图像：</p>
+  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># R（I）是自然图像正则化器，f（I）是神经元值</span></span><br><span class="line">I *= argmax(f(I)) + R(I)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>坡度上升的步骤</p>
+<ul>
+<li>将图像初始化为零.</li>
+<li>传播图像以计算当前分数。</li>
+<li>Backprop获取神经元值相对于图像像素的梯度</li>
+<li>对图像做一个小的更新</li>
+</ul>
+</li>
+<li><p><code>R(I)</code> 可能等于生成图像的L2</p>
+</li>
+<li><p>为了得到更好的结果，我们使用了一个更好的正则化器:</p>
+<ul>
+<li>惩罚图像的L2范数；也在周期性优化期间:<ul>
+<li>高斯模糊图像</li>
+<li>将小值的像素剪裁为0</li>
+<li>将小梯度的像素剪裁为0</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>一个更好的正则化器使图像更干净</p>
+</li>
+<li><p><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/22.png" alt></p>
+</li>
+<li><p>后一层的结果似乎比其他层更有意义</p>
+</li>
+</ul>
+</li>
+<li><p>我们可以用这个程序愚弄CNN:</p>
+<ul>
+<li>从任意图像开始.            <code># 无根据的随机图片</code></li>
+<li>选择任意类 <code># Random class</code></li>
+<li>修改图像以最大化类</li>
+<li>重复，直到网络被愚弄。</li>
+</ul>
+</li>
+<li><p>愚弄网络的结果令人惊讶</p>
+<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/23.png" alt></li>
+<li>对于人眼来说，它们是一样的，但它只是通过添加一些噪音来愚弄网络</li>
+</ul>
+</li>
+<li><p><strong>DeepDream</strong>: 扩大现有功能(Amplify existing features)</p>
+<ul>
+<li>谷歌在他们的网站上发布了DeepDream</li>
+<li>它的实际操作与我们讨论过的愚弄神经网络的过程是一样的，但不是合成一个图像来最大化特定的神经元，而是试图放大网络中某一层的神经元激活。</li>
+<li>Steps:<ul>
+<li>Forward: 计算所选层的激活.        <code># form an input image (Any image)</code></li>
+<li>设置所选层的梯度等于其激活.<ul>
+<li>相当于<code>I* = arg max[I] sum(f(I)^2)</code></li>
+</ul>
+</li>
+<li>Backward: 计算图像的梯度</li>
+<li>更新图像.</li>
+</ul>
+</li>
+<li>deep dream 的代码是在线的，你可以自己下载和检查yourself.</li>
+</ul>
+</li>
+<li><p>特征反演(<strong>Feature Inversion</strong>)</p>
+<ul>
+<li>让我们知道不同层次的网络元素被捕捉到了什么</li>
+<li>给定一个图像的CNN特征向量，找到一个新的图像<ul>
+<li>匹配给定的特征向量</li>
+<li>看起来自然（图像优先正则化）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>纹理合成(<strong>Texture Synthesis</strong>)</p>
+<ul>
+<li>计算机图形学中的老问题。</li>
+<li>给定一个纹理的样本块，我们能生成一个更大的相同纹理的图像吗</li>
+<li>有一种算法不依赖于神经网络:<ul>
+<li>Wei and Levoy, 基于树结构矢量量化的快速纹理合成，SIGGRAPH 2000</li>
+<li>这是一个非常简单的算法</li>
+</ul>
+</li>
+<li>这里的想法是，这是一个老问题，有很多算法已经解决了这个问题，但是简单的算法在复杂的纹理上效果不佳</li>
+<li>2015年提出了一种基于梯度上升的神经网络方法，称之为“神经纹理合成”<ul>
+<li>它依赖于一种叫做Gram矩阵的东西。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Neural Style Transfer =  Feature + Gram Reconstruction</p>
+<ul>
+<li>Gatys, Ecker, and Bethge, 使用卷积神经网络的图像风格传输(Image style transfer using Convolutional neural<br>networks)，CVPR 2016</li>
+<li>Implementation by pytorch <a href="https://github.com/jcjohnson/neural-style" target="_blank" rel="noopener">here</a>.</li>
+</ul>
+</li>
+<li><p>风格转换需要许多向前/向后通过VGG；非常慢</p>
+<ul>
+<li>训练另一个神经网络为我们进行风格转换</li>
+<li>快速风格转换是解决方案</li>
+<li>Johnson, Alahi, and Fei-Fei, 实时风格转换和超分辨率感知损失(Perceptual Losses for Real-Time Style Transfer and Super-Resolution)，ECCV 2016</li>
+<li><a href="https://github.com/jcjohnson/fast-neural-style" target="_blank" rel="noopener">https://github.com/jcjohnson/fast-neural-style</a></li>
+</ul>
+</li>
+<li><p>有很多关于这种风格转换的工作，而且一直持续到现在</p>
+</li>
+<li><p>总结:</p>
+<ul>
+<li>Activations: 最近邻，降维，最大面片，遮挡( Nearest neighbors, Dimensionality reduction, maximal patches,<br>occlusion)</li>
+<li>Gradients: 显著图，类可视化，愚弄图像，特征反演(Saliency maps, class visualization, fooling images, feature inversion)</li>
+<li>Fun: 深度梦想，风格转换(DeepDream, Style Transfer)</li>
+</ul>
+</li>
+</ul>
+<h2 id="13-Generative-models"><a href="#13-Generative-models" class="headerlink" title="13. Generative models"></a>13. Generative models</h2><ul>
+<li><p>生成模型是一种无监督学习</p>
+</li>
+<li><p>有监督vs无监督学习:</p>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>有监督学习</th>
+<th>无监督学习</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据结构</td>
+<td>Data: (x, y), x是数据，y是标签</td>
+<td>Data: x, 只有数据，没有标签！</td>
+</tr>
+<tr>
+<td>数据代价</td>
+<td>在很多情况下，培训数据是昂贵的。</td>
+<td>训练数据很便宜！</td>
+</tr>
+<tr>
+<td>目标</td>
+<td>学习映射x-&gt;y的函数</td>
+<td>了解一些隐藏的数据结构</td>
+</tr>
+<tr>
+<td>例子</td>
+<td>分类，回归，目标检测，语义分割，图像字幕</td>
+<td>聚类，降维，特征学习，密度估计</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p>自动编码器是一种特征学习技术。</p>
+<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/24.png" alt></li>
+<li>它包含一个编码器和一个解码器。编码器对图像进行降采样，而解码器对特征进行上采样。</li>
+<li>损失为L2损失。</li>
+</ul>
+</li>
+<li><p>密度估计是我们要学习/估计数据的底层分布的地方</p>
+</li>
+<li><p>与有监督学习相比，无监督学习还存在许多研究性开放性问题！</p>
+</li>
+<li><p>生成模型(<strong>Generative Models</strong>)</p>
+<ul>
+<li>给定训练数据，从同一分布生成新样本。</li>
+<li>解决了无监督学习中的一个核心问题——密度估计。</li>
+<li>我们有不同的方法：<ul>
+<li>显式密度估计：明确定义和求解学习模型</li>
+<li>学习模型，它可以从学习模型中进行采样，而无需显式地定义它</li>
+</ul>
+</li>
+<li>为什么是生成模型<ul>
+<li>艺术作品、超分辨率、彩色化等的逼真样品</li>
+<li>时间序列数据的生成模型可用于模拟和规划（强化学习应用程序！）</li>
+<li>训练生成模型还可以推理潜在的表示，这些表示可以作为一般特征有用</li>
+</ul>
+</li>
+<li>生成模型分类法:<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/52.png" alt></li>
+</ul>
+</li>
+<li>在这节课中，我们将讨论: PixelRNN/CNN, 变分自动编码器和GANs，因为它们是目前研究中流行的模型。</li>
+</ul>
+</li>
+<li><p><strong>PixelRNN</strong> and <strong>PixelCNN</strong></p>
+<ul>
+<li>在完全可见的信念网络中，我们使用链式规则将图像x的似然分解为一维分布的乘积<ul>
+<li><code>p(x) = sum(p(x[i]| x[1]x[2]....x[i-1]))</code></li>
+<li>其中p（x）是图像x的可能性，x[i]是给定所有先前像素的第i个像素值的概率。</li>
+</ul>
+</li>
+<li>为了解决这个问题，我们需要最大化训练数据的可能性，但是像素值的分布非常复杂。</li>
+<li>我们还需要定义先前像素的顺序。</li>
+<li>PixelRNN<ul>
+<li>Founded by [van der Oord et al. 2016]</li>
+<li>对使用RNN（LSTM）建模的先前像素的依赖性</li>
+<li>从角点开始生成图像像素</li>
+<li>缺点：顺序生成速度慢！因为你必须逐像素地生成</li>
+</ul>
+</li>
+<li>PixelCNN<ul>
+<li>Also Founded by [van der Oord et al. 2016]</li>
+<li>仍然生成从角开始的图像像素。</li>
+<li>对先前像素的依赖现在使用CNN的上下文区域建模</li>
+<li>训练比pixerlnn快（可以并行卷积，因为从训练图像知道上下文区域值）</li>
+<li>生成仍然必须循序渐进，仍然缓慢。</li>
+</ul>
+</li>
+<li>有一些技巧需要改进 PixelRNN &amp; PixelCNN.</li>
+<li>PixelRNN and PixelCNN 能产生良好的样本，目前仍是研究的活跃领域。</li>
+</ul>
+</li>
+<li><p><strong>Autoencoders</strong></p>
+<ul>
+<li>无监督方法从未标记的训练数据中学习低维特征表示。</li>
+<li>由编码器和解码器组成。</li>
+<li>编码器:<ul>
+<li>将输入x转换为特性z。z应小于x才能从输入中获取重要值。我们可以称之为降维。</li>
+<li>编码器可以用:<ul>
+<li>线性或非线性层(earlier days days)</li>
+<li>Deep fully connected NN (Then)</li>
+<li>RELU CNN (Currently we use this on images)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>解码器:<ul>
+<li>我们希望编码器映射我们已经产生的特性，以输出类似于x或相同x的东西。</li>
+<li>解码器可以用同样的技术，我们做编码器，目前它使用一个RELU CNN。</li>
+</ul>
+</li>
+<li>编码器是conv层，而解码器是deconv层！意思是先降后升。</li>
+<li>损失函数为L2损失函数:<ul>
+<li><code>L[i] = |y[i] - y&#39;[i]|^2</code><ul>
+<li>经过训练，我们把解码器拆掉了.<code># 现在我们有了我们需要的功能</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>我们可以用这个编码器我们要做一个有监督的模型<ul>
+<li>这一点的价值在于它可以学习到一个好的特征来表示你所拥有的输入</li>
+<li>很多时候我们会有少量的数据来解决问题。解决这个问题的一个方法是使用一个自动编码器来学习如何从图像中获取特征，并在模型上训练你的小数据集</li>
+</ul>
+</li>
+<li>问题是我们能从这个自动编码器生成数据（图像）吗</li>
+</ul>
+</li>
+<li><p>变分自动编码器<strong>Variational Autoencoders (VAE)</strong></p>
+<ul>
+<li>自动编码器上的概率自旋-将让我们从模型中取样生成数据</li>
+<li>我们将z作为使用编码器形成的特征向量。</li>
+<li>然后我们选择先验p（z）是简单的，例如高斯。<ul>
+<li>合理的隐藏属性：例如姿势，微笑的程度。</li>
+</ul>
+</li>
+<li>条件p（x | z）是复杂的（生成图像）=&gt;用神经网络表示</li>
+<li>但是我们不能用下面的方程来计算P（z）P（x | z）dz的积分:<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/25.png" alt></li>
+</ul>
+</li>
+<li>在解决了最后一个方程的所有方程之后，我们应该:<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/26.png" alt></li>
+</ul>
+</li>
+<li>变分自动编码器是生成模型的一种方法，但与最先进的（GANs）相比，样本更模糊，质量更低</li>
+<li>活跃的研究领域:<ul>
+<li>更灵活的近似，例如更丰富的后验近似，而不是对角高斯</li>
+<li>在潜在变量中加入结构</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>生成性对抗网络<strong>Generative Adversarial Networks (GANs)</strong></p>
+<ul>
+<li><p>GAN不适用于任何明确的密度函数</p>
+</li>
+<li><p>首先，采取博弈论的方法：通过两人博弈，从训练分配中学习生成。</p>
+</li>
+<li><p>在Facebook负责人工智能研究的Yann LeCun称GANs:</p>
+<ul>
+<li><blockquote>
+<p>近20年来深度学习中最酷的想法</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>问题：想从复杂的、高维的培训分布中取样。我们已经讨论过了，没有直接的方法！</p>
+</li>
+<li><p>解决方案：从简单分布中取样，例如随机噪声。学习向培训分配的转变。</p>
+</li>
+<li><p>因此，我们创建一个噪声图像，从简单的分布中提取出来，将其馈送给神经网络，我们将其称为一个发电机网络，应该学会将其转换成我们想要的分布。</p>
+</li>
+<li><p>Training GANs: Two-player game:</p>
+<ul>
+<li><strong>Generator network</strong>: 试图通过生成真实感图像来愚弄鉴别器</li>
+<li><strong>Discriminator network</strong>: 试着区分真假图像。</li>
+</ul>
+</li>
+<li><p>如果我们能够很好地训练鉴别器，那么我们就可以训练生成器生成正确的图像。</p>
+</li>
+<li><p>这里给出了GANs作为极小极大对策的损失函数</p>
+<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/27.png" alt></li>
+</ul>
+</li>
+<li><p>生成器网络的标签为0，实际图像为1。</p>
+</li>
+<li><p>为了训练我们的网络:</p>
+<ul>
+<li>鉴别器上的梯度上升。</li>
+<li>生成器上的梯度上升，但损耗不同。</li>
+</ul>
+</li>
+<li><p>你可以在这里阅读完整的算法和方程式</p>
+<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/28.png" alt></li>
+</ul>
+</li>
+<li><p>旁白：联合培养两个网络是有挑战性的，可以是不稳定的。选择具有更好损失景观的目标有助于培训是一个活跃的研究领域。</p>
+</li>
+<li><p>卷积结构(Convolutional Architectures):</p>
+<ul>
+<li>生成器是一个上采样网络的分数阶跃卷积鉴别器是一个卷积网络。</li>
+<li>稳定深部Conv-GANs指南:<ul>
+<li>用跨步卷积（鉴别器）替换任何池层，用（生成器）替换部分跨步卷积</li>
+<li>对两个网络使用批处理规范</li>
+<li>移除完全连接的隐藏层以获得更深层的架构。</li>
+<li>在生成器中对所有层使用RELU激活，除了使用Tanh的输出</li>
+<li>所有层在鉴别器中使用leaky RELU</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>2017年是GANS年！它爆炸了，有一些非常好的结果</p>
+</li>
+<li><p>研究的活跃领域也是GANs的各种应用领域。</p>
+</li>
+<li><p>可以在这里找到 GAN zoo: <a href="https://github.com/hindupuravinash/the-gan-zoo" target="_blank" rel="noopener">https://github.com/hindupuravinash/the-gan-zoo</a></p>
+</li>
+<li><p>使用GANs的提示和技巧: <a href="https://github.com/soumith/ganhacks" target="_blank" rel="noopener">https://github.com/soumith/ganhacks</a></p>
+</li>
+<li><p>NIPS 2016 GANS教程: <a href="https://www.youtube.com/watch?v=AJVyzd0rqdc" target="_blank" rel="noopener">https://www.youtube.com/watch?v=AJVyzd0rqdc</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="14-Deep-reinforcement-learning"><a href="#14-Deep-reinforcement-learning" class="headerlink" title="14. Deep reinforcement learning"></a>14. Deep reinforcement learning</h2><ul>
+<li>这一节包含了很多数学知识。</li>
+<li>强化学习问题涉及到一个智能体与一个环境的交互作用，它提供了数字奖励信号。</li>
+<li>步骤是:<ul>
+<li>Environment —&gt; State <code>s[t]</code> —&gt; Agent —&gt; Action <code>a[t]</code> —&gt; Environment —&gt; <code>Reward r[t]</code> + Next state <code>s[t+1]</code> —&gt; Agent —&gt; and so on..</li>
+</ul>
+</li>
+<li>我们的目标是学习如何采取行动以获得最大的回报。</li>
+<li>机器人移动就是一个例子:<ul>
+<li>目标：使机器人向前移动</li>
+<li>状态：关节的角度和位置</li>
+<li>行为：施加在接头上的扭矩</li>
+<li>每次1步直立+向前移动</li>
+</ul>
+</li>
+<li>另一个例子是Atari Games：<ul>
+<li>深度学习在这个问题上有着很好的研究现状。</li>
+<li>目标：以最高分数完成游戏。</li>
+<li>状态：游戏状态的原始像素输入。</li>
+<li>行为：游戏控制，如左、右、上、下</li>
+<li>奖励：每一个时间步增加/减少分数</li>
+</ul>
+</li>
+<li>围棋游戏是AlphaGo团队在去年（2016年）赢得的又一个例子，这对于人工智能和深度学习来说是一个巨大的成就，因为问题太难了。</li>
+<li>利用马尔可夫决策过程(<u><strong>Markov Decision Process</strong></u>)，我们可以在数学上表示强化学习</li>
+<li>马尔可夫决策过程(<strong>Markov Decision Process</strong>)<ul>
+<li>由（S，A，R，P，Y）定义，其中<ul>
+<li><code>S</code>: set of possible states.</li>
+<li><code>A</code>: set of possible actions</li>
+<li><code>R</code>: distribution of reward given (state, action) pair</li>
+<li><code>P</code>: 转移概率，即下一状态给定（状态，动作）对的分布</li>
+<li><code>Y</code>: discount factor    <code># 我们对即将到来的奖励有多重视，请稍后讨论</code></li>
+</ul>
+</li>
+<li>算法:<ul>
+<li>在时间步长t=0时，环境采样初始状态s[0]</li>
+<li>然后，t=0直到完成:<ul>
+<li>代理选择动作a[t]</li>
+<li>R的环境样品奖励（s[t]，a[t]）</li>
+<li>环境用（s[t]，a[t]）从P中采样下一个状态</li>
+<li>代理人获得奖励r[t]和下一状态s[t+1]</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>策略pi是从S到A的函数，它指定在每个状态下要执行的操作</li>
+<li>目标：找到使累计折扣奖励最大化的策略pi<em>: `Sum(Y^t </em> r[t], t&gt;0)`</li>
+<li>例子:<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/29.png" alt></li>
+</ul>
+</li>
+<li>解决方案是:<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/30.png" alt></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>状态s的值函数是从s状态遵循策略得到的预期累积回报:<ul>
+<li><code>V[pi](s) = Sum(Y^t * r[t], t&gt;0) given s0 = s, pi</code></li>
+</ul>
+</li>
+<li>状态s和行动a的Q值函数是在s状态下采取行动a，然后遵循策略所得到的预期累积回报:<ul>
+<li><code>Q[pi](s,a) = Sum(Y^t * r[t], t&gt;0) given s0 = s,a0 = a, pi</code></li>
+</ul>
+</li>
+<li>最优Q值函数Q*是给定（状态、动作）对所能达到的最大期望累积报酬:<ul>
+<li><code>Q*[s,a] = Max(for all of pi on (Sum(Y^t * r[t], t&gt;0) given s0 = s,a0 = a, pi))</code></li>
+</ul>
+</li>
+<li>贝尔曼方程(Bellman equation)<ul>
+<li>重要的是RL</li>
+<li>给定任何一个状态-动作对，这个对的值将是你将得到的回报r加上你结束的状态的值。</li>
+<li><code>Q*[s,a] = r + Y * max Q*(s&#39;,a&#39;) given s,a  # 提示等式中没有策略</code></li>
+<li>最优策略pi<em>对应于在Q指定的任何状态下采取最佳操作</em></li>
+</ul>
+</li>
+<li>利用Bellman方程作为迭代更新的值迭代算法，可以得到最优策略<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/31.png" alt></li>
+</ul>
+</li>
+<li>由于实际应用中空间维数巨大，我们将使用函数逼近器来估计Q（s，a）。E、 神经网络！这叫做Q学习(<strong>Q-learning</strong>)<ul>
+<li>任何时候我们有一个复杂的函数，我们不能代表我们使用神经网络！</li>
+</ul>
+</li>
+<li><strong>Q-learning</strong><ul>
+<li>第一个解决RL的深度学习算法</li>
+<li>使用函数逼近器估计动作值函数</li>
+<li>如果函数逼近器是深度神经网络=&gt;深度q-学习</li>
+<li>损失函数zh:<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/32.png" alt></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>现在让我们考虑一下“玩雅达利游戏”的问题:<ul>
+<li>我们的总奖励通常是我们在屏幕顶部看到的奖励。</li>
+<li>Q网络体系结构:<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/33.png" alt></li>
+</ul>
+</li>
+<li>从成批的连续样本中学习是一个问题。如果我们记录了一个训练数据，并设置了神经网络来处理它，如果数据不够，我们将走向高偏差误差。因此，我们应该使用“经验回放”而不是连续的样本，在这种情况下，神经网络将不断尝试游戏，直到它掌握了它。</li>
+<li>随着游戏（体验）情节的播放，不断更新转换（s[t]、a[t]、r[t]、s[t+1]）的回放记忆表。</li>
+<li>从重放存储器中随机训练Q网络，而不是连续的样本。</li>
+<li>完整算法:<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/34.png" alt></li>
+</ul>
+</li>
+<li>在这里可以找到演示Atari游戏算法的视频: “<a href="https://www.youtube.com/watch?v=V1eYniJ0Rnk" target="_blank" rel="noopener">https://www.youtube.com/watch?v=V1eYniJ0Rnk</a>“</li>
+</ul>
+</li>
+<li>政策梯度(<strong>Policy Gradients</strong>)<ul>
+<li>解决RL的第二个深度学习算法。</li>
+<li>Q函数的问题是Q函数可能非常复杂。<ul>
+<li>机器人抓取物体的状态非常高维。</li>
+<li>但政策可以简单得多：只需握紧你的手。</li>
+</ul>
+</li>
+<li>我们是否可以直接学习策略，例如从一组策略中找到最佳策略？</li>
+<li>政策梯度方程:<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/35.png" alt></li>
+</ul>
+</li>
+<li>收敛到J（ceta）的局部极小值，通常足够好</li>
+<li>强化算法是一种能够得到/预测最优策略的算法</li>
+<li>补强算法的方程与直观性:<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/36.png" alt></li>
+<li>问题是这个方程的高方差，我们能解决吗？</li>
+<li>方差缩减是一个活跃的研究领域！</li>
+</ul>
+</li>
+<li>递归注意模型（RAM）是一种基于增强算法的图像分类算法:<ul>
+<li>采取一系列的“瞥见”选择性地聚焦在图像的区域，以预测类<ul>
+<li>灵感来自人类的感知和眼球运动。</li>
+<li>节省计算资源=&gt;可伸缩性<ul>
+<li>如果一个高分辨率的图像可以节省大量的计算</li>
+</ul>
+</li>
+<li>能够忽略图像的杂乱/不相关部分</li>
+</ul>
+</li>
+<li>RAM在许多任务中得到了广泛的应用：包括细粒度的图像识别、图像字幕和可视问答</li>
+</ul>
+</li>
+<li>AlphaGo使用了监督学习和强化学习的混合，它也使用了策略梯度。</li>
+</ul>
+</li>
+<li>斯坦福德关于深度强化学习的好课程<ul>
+<li><a href="http://web.stanford.edu/class/cs234/index.html" target="_blank" rel="noopener">http://web.stanford.edu/class/cs234/index.html</a></li>
+<li><a href="https://www.youtube.com/playlist?list=PLkFD6_40KJIwTmSbCv9OVJB3YaO4sFwkX" target="_blank" rel="noopener">https://www.youtube.com/playlist?list=PLkFD6_40KJIwTmSbCv9OVJB3YaO4sFwkX</a></li>
+</ul>
+</li>
+<li>深度强化学习好课程（2017）<ul>
+<li><a href="http://rll.berkeley.edu/deeprlcourse/" target="_blank" rel="noopener">http://rll.berkeley.edu/deeprlcourse/</a></li>
+<li><a href="https://www.youtube.com/playlist?list=PLkFD6_40KJIznC9CDbVTjAF2oyt8_VAe3" target="_blank" rel="noopener">https://www.youtube.com/playlist?list=PLkFD6_40KJIznC9CDbVTjAF2oyt8_VAe3</a></li>
+</ul>
+</li>
+<li>一篇好文章<ul>
+<li><a href="https://www.kdnuggets.com/2017/09/5-ways-get-started-reinforcement-learning.html" target="_blank" rel="noopener">https://www.kdnuggets.com/2017/09/5-ways-get-started-reinforcement-learning.html</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="15-Efficient-Methods-and-Hardware-for-Deep-Learning"><a href="#15-Efficient-Methods-and-Hardware-for-Deep-Learning" class="headerlink" title="15. Efficient Methods and Hardware for Deep Learning"></a>15. Efficient Methods and Hardware for Deep Learning</h2><ul>
+<li>最初的讲座是由斯坦福大学的博士生宋晗做的。The original lecture was given by Song Han a PhD Candidate at standford.</li>
+<li>深度转换网络、递归网络和深度强化学习正在形成许多应用程序，并改变了我们的生活。<ul>
+<li>比如自动驾驶汽车，机器翻译，alphaGo等等。</li>
+</ul>
+</li>
+<li>但现在的趋势是，如果我们想要高精度，我们需要更大（更深）的模型。<ul>
+<li>2012年至2015年，ImageNet Competition的模型尺寸增加了16倍，以达到较高的精确度。</li>
+<li>Deep speech 2的训练操作是Deep speech 1的10倍，而且这只需要一年！#在百度</li>
+</ul>
+</li>
+<li>我们从中得到了三个挑战<ul>
+<li><strong>模型尺寸(Model Size)</strong><ul>
+<li>很难在我们的个人电脑、手机或汽车上部署更大的型号</li>
+</ul>
+</li>
+<li><strong>速度(Speed)</strong><ul>
+<li>ResNet152训练耗时1.5周，准确率为6.16%</li>
+<li>长时间的培训限制了研究人员的生产力</li>
+</ul>
+</li>
+<li><strong>能源效率(Energy Efficiency)</strong><ul>
+<li>AlphaGo:1920个CPU和280个GPU。每场3000每元电费</li>
+<li>如果我们在手机上使用它，它会耗尽电池电量。</li>
+<li>谷歌在他们的博客中提到如果所有的用户使用谷歌语音3分钟，他们必须加倍他们的数据中心</li>
+<li>能源消耗在哪里?<ul>
+<li>更大的模型=&gt;更多的内存引用=&gt;更多的能量</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>通过算法硬件协同设计，可以提高深度学习的效率。<ul>
+<li>从硬件和算法的角度。</li>
+</ul>
+</li>
+<li>Hardware 101: the Family<ul>
+<li>General Purpose # Used for any hardware<ul>
+<li>CPU                <code># 面向延迟，单一强线程，就像一个元素</code></li>
+<li>GPU            <code># 面向吞吐量，所以很多小线程就像很多蚂蚁</code></li>
+<li>GPGPU<ul>
+<li>专业硬件(<strong>Specialized HW</strong>)        <code>#针对应用程序领域进行了调整</code><ul>
+<li>现场可编程门阵列（field-programmable gate array）FPGA  <code>#可编程逻辑，它便宜但效率低</code></li>
+<li>特定用途集成电路（Application Specific Integrated Circuit）ASIC <code># 固定逻辑，为特定应用而设计（可用于深度学习应用程序）</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Hardware 101: 数字表示法（Number Representation）<ul>
+<li>计算机中的数字用离散存储器表示。</li>
+<li>在浮点运算中，硬件从32位变为16位是非常好和节能的。</li>
+</ul>
+</li>
+<li>Part 1: 有效推理算法（<strong><u>Algorithms for Efficient Inference</u></strong>）<ul>
+<li>修剪神经网络（<strong>Pruning neural networks</strong>）<ul>
+<li>我们的想法是，我们可以去掉一些权重/神经元，而神经网络的行为仍然是一样的吗?</li>
+<li>2015年，将AlexNet参数从6000万到600万！用修剪的方法。</li>
+<li>剪枝可以应用于CNN和RNN中，迭代地达到与原始剪枝相同的精度。</li>
+<li>修剪实际上发生在人类身上:<ul>
+<li>新生儿（50万亿突触）==&gt; 1岁（1000万亿突触）==&gt; 青少年（500万亿突触）</li>
+</ul>
+</li>
+<li>算法:<ol>
+<li>得到训练的网络。</li>
+<li>评估神经元的重要性</li>
+<li>移除最不重要的神经元。</li>
+<li>微调网络。</li>
+<li>如果我们需要继续修剪，我们再次进入第2步，否则我们停止。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>权重分担(<strong>Weight Sharing</strong>)<ul>
+<li>我们的想法是，我们想让我们的模型数量更少。</li>
+<li>训练量子化:<ul>
+<li>示例：2.09、2.12、1.92、1.87的所有权重值将替换为2</li>
+<li>为了做到这一点，我们可以使k均值聚类在一个过滤器上，并减少它的数目。通过使用此方法，我们还可以减少计算坡度所需的操作数。</li>
+<li>经过训练的量化后，权重是离散的。</li>
+<li>经过训练的量化可以显著减少每层数字所需的比特数。</li>
+</ul>
+</li>
+<li>剪枝+训练量化可以共同减小模型的大小</li>
+<li>哈夫曼编码(Huffman Coding)<ul>
+<li>我们可以使用哈夫曼编码来减少/压缩权重的位数。</li>
+<li>不频繁权重：使用更多的位来表示。</li>
+<li>频繁权重：使用较少的位来表示。</li>
+</ul>
+</li>
+<li>使用剪枝+训练量化+霍夫曼编码被称为深度压缩<ul>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/37.png" alt></li>
+<li><img src="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/38.png" alt></li>
+<li><strong>SqueezeNet</strong><ul>
+<li>到目前为止，我们讨论的所有模型都是使用预先训练过的模型。我们能做一个新的节省内存和计算的程序吗?</li>
+<li>SqueezeNet获得了alexnet的精确度，参数减少了50倍，模型尺寸为0.5倍.</li>
+</ul>
+</li>
+<li>挤压网甚至可以进一步压缩通过应用深度压缩他们</li>
+<li>现在的模型更节能，速度也快了很多。</li>
+<li>深度压缩通过facebook和百度应用于行业</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Quantization</strong><ul>
+<li>算法（量化权重和激活）:<ul>
+<li>用浮点数训练</li>
+<li>量化重量和激活:<ul>
+<li>收集体重和活动的统计数据。</li>
+<li>选择合适的基点位置。</li>
+</ul>
+</li>
+<li>微调浮动格式。</li>
+<li>转换为定点格式。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Low Rank Approximation</strong><ul>
+<li>是CNN使用的另一种大小缩减算法。</li>
+<li>想法是分解conv层，然后尝试两个组合层。</li>
+</ul>
+</li>
+<li><strong>Binary / Ternary Net</strong><ul>
+<li>我们能只用三个数字来表示神经网络中的权重吗？</li>
+<li>如果只有-1，0，1，大小就会小得多</li>
+<li>这是2017年发表的一个新观点”Zhu, Han, Mao, Dally. Trained Ternary Quantization, ICLR’17”</li>
+<li>Works after training.</li>
+<li>他们已经在AlexNet上尝试过了，它几乎达到了与AlexNet相同的错误</li>
+<li>每个寄存器的操作数将增加: <a href="https://xnor.ai/" target="_blank" rel="noopener">https://xnor.ai/</a></li>
+</ul>
+</li>
+<li><strong>Winograd Transformation</strong><ul>
+<li>基于3x3 WINOGRAD卷积，比普通的卷积运算更少</li>
+<li>cuDNN 5使用了WINOGRAD卷积，提高了速度</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Part 2:有效的硬件推理(<strong><u>Hardware for Efficient Inference</u></strong>)<ul>
+<li>我们为深入学习开发了许多ASIC。所有这些都有一个相同的目标，即最小化内存访问。<ul>
+<li>麻省理工学院(Eyeriss MIT)</li>
+<li>DaDiannao</li>
+<li>TPU Google (Tensor processing unit)<ul>
+<li>它可以用来替换服务器中的磁盘。</li>
+<li>每台服务器最多4张卡</li>
+<li>这种硬件所消耗的功率比GPU要小得多，芯片的尺寸也更小。</li>
+</ul>
+</li>
+<li>EIE Standford<ul>
+<li>By Han at 2016 [et al. ISCA’16]</li>
+<li>我们不会保存零权重，也不会对硬件中的数字进行量化。</li>
+<li>他说EIE有更好的吞吐量和能源效率。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Part 3: <strong><u>Algorithms for Efficient Training</u></strong><ul>
+<li><strong>Parallelization</strong><ul>
+<li><strong>Data Parallel</strong> – 并行运行多个输入<ul>
+<li>同时运行两个图像！</li>
+<li>并行运行多个培训示例</li>
+<li>受批量大小限制</li>
+<li>渐变必须由主节点应用</li>
+</ul>
+</li>
+<li><strong>Model Parallel</strong><ul>
+<li>拆分模型-即网络</li>
+<li>按层将模型拆分到多个处理器上</li>
+</ul>
+</li>
+<li>Hyper-Parameter Parallel<ul>
+<li>尝试多个并行的替代网络。</li>
+<li>易于获得16-64 GPU并行训练一个模型</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Mixed Precision</strong> with FP16 and FP32<ul>
+<li>我们已经讨论过，如果我们在整个模型中使用16位实数，那么能耗将减少4倍</li>
+<li>我们可以使用一个完全16位数字的模型吗？我们可以用混合的FP16和FP32来实现这一点。我们在任何地方都使用16位，但有些地方我们需要FP32</li>
+<li>以FP16乘以FP16为例，我们需要FP32</li>
+<li>在你训练模型后，你可以成为一个近乎精确的著名模型，如AlexNet和ResNet。</li>
+</ul>
+</li>
+<li><strong>Model Distillation</strong><ul>
+<li>问题是我们能否使用一个经过高级（良好）训练的神经网络，并使它们指导学生（新的）神经网络</li>
+<li>欲了解更多信息，请参阅Hinton等人。暗知识/神经网络中知识的提取</li>
+</ul>
+</li>
+<li>DSD: 密集稀疏密集训练(Dense-Sparse-Dense Training)<ul>
+<li>Han et al. “深度神经网络的密集稀疏密集训练(DSD: Dense-Sparse-Dense Training for Deep Neural Networks)”, ICLR 2017</li>
+<li>有更好的规则化</li>
+<li>我们的想法是训练模型，我们称之为稠密，然后对其应用修剪，让我们称之为稀疏</li>
+<li>DSD产生相同的模型结构，但能找到更好的优化解，达到更好的局部极小值，达到更高的预测精度。</li>
+<li>在以上两个步骤之后，我们去连接剩下的连接并再次学习它们（再次密集）。</li>
+<li>这大大提高了许多深度学习模型的性能。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Part 4: <strong><u>Hardware for Efficient Training</u></strong><ul>
+<li>GPUs for training:<ul>
+<li>Nvidia PASCAL GP100 (2016)</li>
+<li>Nvidia Volta GV100 (2017)<ul>
+<li>可以进行混合精确操作</li>
+<li>如此强大。</li>
+<li>新的内克尔炸弹(The new neclar bomb)!</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Google Announced “Google Cloud TPU” on May 2017!<ul>
+<li>云TPU提供高达180兆次的浮点运算来训练和运行机器学习模型.</li>
+<li>我们的一个新的大型翻译模型曾经需要一整天的时间来训练32个最好的商用gpu，现在它只需要一个TPU吊舱的八分之一就可以在一个下午训练到同样的精度</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>我们已经从PC时代==&gt;移动第一时代==&gt;人工智能第一时代</li>
+</ul>
+<h2 id="16-Adversarial-Examples-and-Adversarial-Training"><a href="#16-Adversarial-Examples-and-Adversarial-Training" class="headerlink" title="16. Adversarial Examples and Adversarial Training"></a>16. Adversarial Examples and Adversarial Training</h2><ul>
+<li>什么是对抗性的例子(<strong><u>What are adversarial examples?</u></strong>)<ul>
+<li>自2013年以来，深度神经网络已经在<ul>
+<li>人脸识别</li>
+<li>物体识别</li>
+<li>验证码识别<ul>
+<li>因为它的准确度比人类高，所以网站试图找到另一种解决方法，而不是验证码。</li>
+</ul>
+</li>
+<li>以及其他任务</li>
+</ul>
+</li>
+<li>2013年以前，如果看到电脑出错，没人会感到惊讶！但是现在存在深度学习，了解问题和原因是非常重要的。</li>
+<li>对抗性是深度学习所犯的问题和不寻常的错误。</li>
+<li>这个话题直到现在的深度学习能比人类做得越来越好时才成为热门话题</li>
+<li>对手方是一个被仔细计算后被错误分类的例子</li>
+<li>从人的角度看，在很多情况下，对手形象与原始形象相比并没有太大变化。</li>
+<li>近代论文史:<ul>
+<li>Biggio <a href="https://link.springer.com/chapter/10.1007/978-3-642-40994-3_25" target="_blank" rel="noopener">2013</a>: fool neural nets.</li>
+<li>Szegedy et al 2013: fool ImageNet classifiers imperceptibly</li>
+<li>Goodfellow et al <a href="https://arxiv.org/abs/1412.6572" target="_blank" rel="noopener">2014</a>: cheap, closed form attack.</li>
+</ul>
+</li>
+<li>所以第一个故事发生在2013年。当塞格迪有一个CNN可以很好的分类图像。<ul>
+<li>他想了解更多关于CNN如何改进它的工作。</li>
+<li>他给出了一个物体的图像，通过梯度上升，他试图更新图像，使之成为另一个物体。</li>
+<li>奇怪的是，他发现从人类的角度来看，结果图像并没有太大变化！</li>
+<li>如果你尝试了，你不会通知任何变化，你会认为这是一个错误！但这并不是说，如果你去追求形象，你会发现他们完全不同</li>
+</ul>
+</li>
+<li>这些错误几乎可以在我们研究过的任何深度学习算法中找到<ul>
+<li>结果表明，RBF（Radial Basis Network）可以抵抗这种情况</li>
+<li>用于密度估计的深层模型可以抵抗这种情况</li>
+</ul>
+</li>
+<li>不仅仅是因为神经网络可以被愚弄<ul>
+<li>Linear models<ul>
+<li>Logistic regression</li>
+<li>Softmax regression</li>
+<li>SVMs</li>
+</ul>
+</li>
+<li>Decision trees </li>
+<li>Nearest neighbors</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>为什么会发生敌对(<strong><u>Why do adversarial happen?</u></strong>)<ul>
+<li>在试图了解发生了什么的过程中，2016年，他们认为这是由于高维数据案例中的过度拟合模型造成的。<ul>
+<li>因为在如此高的维中，我们可以发现一些随机误差。</li>
+<li>所以如果我们用另一个参数训练一个模型，它不会犯同样的错误吗?</li>
+<li>他们发现那是不对的。模型也出现了同样的错误，所以这并不意味着它是过度拟合的。</li>
+</ul>
+</li>
+<li>在前面提到的实验中发现，问题是由系统性的东西引起的，而不是随机的。<ul>
+<li>如果他们给一个例子添加一些向量，它将被错误地分类为任何模型。</li>
+</ul>
+</li>
+<li>也许他们是因为不合身而不是过度合身。</li>
+<li>现代深网是非常分段线性的<ul>
+<li>Rectified linear unit</li>
+<li>Carefully tuned sigmoid  <code># 大多数时候我们都在线性曲线内</code></li>
+<li>Maxout</li>
+<li>LSTM</li>
+</ul>
+</li>
+<li>参数与输出之间的关系是非线性的，因为它是相乘的，这使得训练神经网络困难，而从输入和输出的线性映射是线性的，而且容易得多。</li>
+</ul>
+</li>
+<li>如何利用对抗性来破坏机器学习系统？(<strong><u>How can adversarial be used to compromise machine learning systems?</u></strong>)<ul>
+<li>如果我们正在试验一个NN有多容易被欺骗，我们要确保我们实际上是在愚弄它，而不仅仅是改变输出类，如果我们是攻击者，我们希望对NN（Get hole）采取这种行为。</li>
+<li>当我们建立对抗性的例子时，我们使用最大范数来约束扰动。</li>
+<li>快速梯度符号法:<ul>
+<li>这种方法来自于这样一个事实，即几乎所有的神经网络都使用线性激活（如RELU），这是我们之前说过的假设</li>
+<li>任何像素的变化都不能超过一定量的epsilon</li>
+<li>快速的方法是用你用来训练网络的代价的梯度，然后用这个梯度的符号乘以epsilon。</li>
+<li>Equation:<ul>
+<li><code>Xdash = x + epslion * (sign of the gradient)</code></li>
+<li>其中Xdash是对抗性示例，x是普通示例</li>
+</ul>
+</li>
+<li>所以只要用符号（方向）和一些epsilon就可以检测到。</li>
+</ul>
+</li>
+<li>一些攻击基于ADAM优化器。</li>
+<li>敌对的例子不是随机的噪音！</li>
+<li>神经网络训练在某个分布上，并且在该分布中表现良好。但是如果你改变这个分布，神经网络将不能回答正确的答案。他们很容易被愚弄。</li>
+<li>深RL也可以被愚弄。</li>
+<li>Attack of the weights:<ul>
+<li>在线性模型中，我们可以将学习到的权重图像取出来，取图像的符号并将其添加到任何一个例子中，以迫使权重类为真。Andrej Karpathy，“打破ImageNet上的线性分类器”</li>
+</ul>
+</li>
+<li>事实证明，有些利纳的型号表现很好（我们很难从他们那里得到广告）<ul>
+<li>特别是浅层RBFs网络采用快速梯度符号法抵抗对抗性扰动<ul>
+<li>问题是径向基函数在数据集上没有得到太多的精确性，因为它只是一个浅层模型，如果你试图让这个模型更深入，几乎所有层的梯度都将变为零。</li>
+<li>rbf神经网络即使在批处理范数下也很难训练。算法。</li>
+<li>伊恩认为，如果我们有一个更好的超参数或一个更好的梯度下降优化算法，我们将能够训练径向基函数，解决对抗性问题</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>我们也可以用另一个模型来愚弄当前的模型。例如使用支持向量机来愚弄深层神经网络。<ul>
+<li>欲了解更多详情，请参考该报：“Papernot 2016”</li>
+</ul>
+</li>
+<li>可转移攻击(Transferability Attack)<ol>
+<li>具有未知权重的目标模型、机器学习算法、训练集；可能不可微</li>
+<li>使用来自您的输入从这个模型中生成训练集，将它们发送到模型，然后从模型中获取输出</li>
+<li>训练你自己的模特。“遵循Papernot 2016的一些表格”</li>
+<li>在你的模型上创建一个对抗性的例子。</li>
+<li>针对目标模型使用这些示例。</li>
+<li>你几乎有可能得到好的结果并愚弄这个目标！</li>
+</ol>
+</li>
+<li>在可转移性攻击中，通过100%的概率增加你的欺骗网络，你可以使不止一个模型可能是五个模型，然后应用它们。 “(Liu et al, 2016)”</li>
+<li>对抗性的例子对人脑也是有用的！比如那些能骗过你眼睛的图像。他们在网上很多</li>
+<li>在实践中，一些研究愚弄了真实的模型(MetaMind, Amazon, Google)</li>
+<li>有人在facebook上上传了一些微扰，facebook被愚弄了</li>
+</ul>
+</li>
+<li>防御措施是什么(<strong><u>What are the defenses?</u></strong>)<ul>
+<li>伊恩尝试的很多防御措施都失败了，真的很糟糕！包括:<ul>
+<li>Ensembles</li>
+<li>Weight decay</li>
+<li>Dropout</li>
+<li>Adding noise at train time or at test time</li>
+<li>Removing perturbation with an autoencoder </li>
+<li>Generative modeling</li>
+</ul>
+</li>
+<li>通用逼近定理<ul>
+<li>无论我们希望我们的分类函数有一个足够大的神经网络可以使它成为任何形状。</li>
+<li>我们可以训练一个神经网络来探测敌方</li>
+</ul>
+</li>
+<li>线性模型和KNN比NN更容易被愚弄。神经网络实际上比其他模型更安全。在任何机器学习模型的对抗性例子中，对抗性训练的神经网络具有最佳的经验成功率<ul>
+<li>深层神经网络可以用非线性函数进行训练，但我们只需要一种好的优化技术或使用像“RELU”这样的线性激活器来解决问题</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>在没有对手的情况下，如何使用对抗性示例来改进机器学习(<strong><u>How to use adversarial examples to improve machine learning, even when there is no adversary?</u></strong>)<ul>
+<li>通用工程机械（基于模型的优化）        <code>#被伊恩称为通用工程机械</code><ul>
+<li>For example:<ul>
+<li>想象一下我们想要设计一辆速度快的汽车</li>
+<li>我们训练了一个神经网络来查看汽车的设计图，并告诉我们蓝图是否能使我们成为一辆快车。</li>
+<li>T这里的想法是优化网络的输入，使输出达到最大，这可以给我们一个最好的汽车蓝图！</li>
+</ul>
+</li>
+<li>通过寻找使模型的预测性能最大化的输入来进行新的发明</li>
+<li>现在，通过使用敌对的例子，我们只是得到了我们不喜欢的结果，但是如果我们解决了这个问题，我们就可以拥有最快的汽车、最好的GPU、最好的椅子、新药…。。</li>
+</ul>
+</li>
+<li>整个对抗是一个活跃的研究领域，尤其是网络防御</li>
+</ul>
+</li>
+<li>Conclusion<ul>
+<li>进攻很容易</li>
+<li>防守很难</li>
+<li>对抗训练提供正规化和半监督学习</li>
+<li>域外输入问题是基于模型优化的瓶颈问题</li>
+</ul>
+</li>
+<li>有一个Github代码可以让你通过代码（构建在tensorflow之上）来了解敌方的一切:<ul>
+<li>一个对抗性的示例库，用于构建攻击、构建防御和基准测试: <a href="https://github.com/tensorflow/cleverhans" target="_blank" rel="noopener">https://github.com/tensorflow/cleverhans</a></li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>CS231N</tag>
+        <tag>翻译</tag>
       </tags>
   </entry>
 </search>

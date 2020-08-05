@@ -141,7 +141,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/29/CS231N/37.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/29/CS231N/38.png">
 <meta property="article:published_time" content="2020-07-29T14:11:12.000Z">
-<meta property="article:modified_time" content="2020-07-29T14:21:35.852Z">
+<meta property="article:modified_time" content="2020-08-05T16:34:23.978Z">
 <meta property="article:author" content="Zhangshuai">
 <meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="CS231N">
@@ -626,7 +626,7 @@
 </ul>
 </li>
 <li><p>Consider this numerical problem when you are computing Softmax:</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">f = np.array([<span class="number">123</span>, <span class="number">456</span>, <span class="number">789</span>]) <span class="comment"># example with 3 classes and each having large scores</span></span><br><span class="line">p = np.exp(f) / np.sum(np.exp(f)) <span class="comment"># Bad: Numeric problem, potential blowup</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># instead: first shift the values of f so that the highest number is 0:</span></span><br><span class="line">f -= np.max(f) <span class="comment"># f becomes [-666, -333, 0]</span></span><br><span class="line">p = np.exp(f) / np.sum(np.exp(f)) <span class="comment"># safe to do, gives the correct answer</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># example with 3 classes and each having large scores</span></span><br><span class="line">f = np.array([<span class="number">123</span>, <span class="number">456</span>, <span class="number">789</span>]) </span><br><span class="line"><span class="comment"># Bad: Numeric problem, potential blowup</span></span><br><span class="line">p = np.exp(f) / np.sum(np.exp(f)) </span><br><span class="line"></span><br><span class="line"><span class="comment"># instead: first shift the values of f so that the highest number is 0:</span></span><br><span class="line">f -= np.max(f) <span class="comment"># f becomes [-666, -333, 0]</span></span><br><span class="line"><span class="comment"># safe to do, gives the correct answer</span></span><br><span class="line">p = np.exp(f) / np.sum(np.exp(f))</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -658,7 +658,7 @@
 </li>
 <li><p>stochastic gradient descent:</p>
 <ul>
-<li>Instead of using all the date, use a mini batch of examples (32/64/128 are commonly used) for faster results.</li>
+<li>Instead of using all the data, use a mini batch of examples (32/64/128 are commonly used) for faster results.</li>
 </ul>
 </li>
 </ul>
@@ -959,7 +959,7 @@
 </ul>
 </li>
 <li><p>Exponential linear units (ELU):</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ELU(x) &#x3D; &#123; x                                           if x &gt; 0</span><br><span class="line">		   alpah *(exp(x) -1)		                   if x &lt;&#x3D; 0</span><br><span class="line">           # alpah are a learning parameter</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ELU(x) &#x3D; &#123; x if x &gt; 0</span><br><span class="line">		   alpah *(exp(x) -1)	if x &lt;&#x3D; 0</span><br><span class="line">       # alpah are a learning parameter</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>It has all the benefits of RELU</p>
 </li>
@@ -978,7 +978,7 @@
 <li>Generalizes RELU and Leaky RELU</li>
 <li>Doesn’t die!</li>
 <li>Problems:<ul>
-<li>oubles the number of parameters per neuron</li>
+<li>doubles the number of parameters per neuron</li>
 </ul>
 </li>
 </ul>
@@ -996,7 +996,7 @@
 <li><p><strong>Data preprocessing</strong>:</p>
 <ul>
 <li><p>Normalize the data:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Zero centered data. (Calculate the mean for every input).</span></span><br><span class="line"><span class="comment"># On of the reasons we do this is because we need data to be between positive and negative and not all the be negative or positive. </span></span><br><span class="line">X -= np.mean(X, axis = <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Then apply the standard deviation. Hint: in images we don't do this.</span></span><br><span class="line">X /= np.std(X, axis = <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Zero centered data. (Calculate the mean for every input).</span></span><br><span class="line"><span class="comment"># On of the reasons we do this is because we need data to be between </span></span><br><span class="line"><span class="comment"># positive and negative and not all the be negative or positive. </span></span><br><span class="line">X -= np.mean(X, axis = <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Then apply the standard deviation. Hint: in images we don't do this.</span></span><br><span class="line">X /= np.std(X, axis = <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>To normalize images:</p>
 <ul>
@@ -1301,14 +1301,35 @@
 </ol>
 </li>
 <li><p>Guide to use transfer learning:</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Very Similar dataset</th>
+<th>very different dataset</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>very little dataset</strong></td>
+<td>Use Linear classifier on top layer</td>
+<td>You’re in trouble.. Try linear classifier from different stages</td>
+</tr>
+<tr>
+<td><strong>quite a lot of data</strong></td>
+<td>Finetune a few layers</td>
+<td>Finetune a large layers</td>
+</tr>
+</tbody>
+</table>
+</div>
 <ul>
-<li>|                         | Very Similar dataset               | very different dataset                   |<br>| ———————————- | ————————————————— | ———————————————————— |<br>| <strong>very little dataset</strong> | Use Linear classifier on top layer | You’re in trouble.. Try linear classifier from different stages |<br>| <strong>quite a lot of data</strong> | Finetune a few layers              | Finetune a large layers                  |</li>
-</ul>
-</li>
-<li><p>Transfer learning is the normal not an exception.</p>
-</li>
-</ul>
-</li>
+<li>Transfer learning is the normal not an exception.</li>
 </ul>
 <h2 id="08-Deep-learning-software"><a href="#08-Deep-learning-software" class="headerlink" title="08. Deep learning software"></a>08. Deep learning software</h2><ul>
 <li>This section changes a lot every year in CS231n due to rabid changes in the deep learning softwares.</li>
@@ -1342,7 +1363,7 @@
 </ul>
 </li>
 <li>There are a lot of courses for learning parallel programming.</li>
-<li>If you aren’t careful, training can bottleneck on reading dara and transferring to GPU. So the solutions are:<ul>
+<li>If you aren’t careful, training can bottleneck on reading data and transferring to GPU. So the solutions are:<ul>
 <li>Read all the data into RAM. # If possible</li>
 <li>Use SSD instead of HDD</li>
 <li>Use multiple CPU threads to prefetch data!<ul>
@@ -1452,13 +1473,9 @@
 <li><p>Serialization</p>
 <ul>
 <li><strong>Static</strong>: Once graph is built, can serialize it and run it without the code that built the graph. Ex use the graph in c++</li>
+<li><strong>Dynamic</strong>: Always need to keep the code around.</li>
 </ul>
 </li>
-</ul>
-</li>
-</ul>
-<pre><code>- **Dynamic**: Always need to keep the code around.
-</code></pre><ul>
 <li><p>Conditional</p>
 <ul>
 <li>Is easier in dynamic graphs. And more complicated in static graphs.</li>
@@ -1470,7 +1487,7 @@
 </ul>
 </li>
 </ul>
-<ul>
+</li>
 <li><p>Tensorflow fold make dynamic graphs easier in Tensorflow through dynamic batching.</p>
 </li>
 <li><p>Dynamic graph applications include: recurrent networks and recursive networks.</p>
@@ -1837,7 +1854,7 @@
 <li><p>The RNN block should return a vector.</p>
 </li>
 <li><p>We can process a sequence of vectors x by applying a recurrence formula at every time step:</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">h[t] = fw (h[t<span class="number">-1</span>], x[t])			<span class="comment"># Where fw is some function with parameters W</span></span><br></pre></td></tr></table></figure>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">h[t] = fw (h[t<span class="number">-1</span>], x[t])			</span><br><span class="line"><span class="comment"># Where fw is some function with parameters W</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>The same function and the same set of parameters are used at every time step.</li>
 </ul>
@@ -2303,10 +2320,42 @@
 <li><p>Generative models are type of Unsupervised learning.</p>
 </li>
 <li><p>Supervised vs Unsupervised Learning:</p>
-<ul>
-<li>|                | Supervised Learning                      | Unsupervised Learning                    |<br>| ——————— | ———————————————————— | ———————————————————— |<br>| Data structure | Data: (x, y), and x is data, y is label  | Data: x, Just data, no labels!           |<br>| Data price     | Training data is expensive in a lot of cases. | Training data are cheap!                 |<br>| Goal           | Learn a function to map x -&gt; y           | Learn some underlying hidden structure of the data |<br>| Examples       | Classification, regression, object detection, semantic segmentation, image captioning | Clustering, dimensionality reduction, feature learning, density estimation |</li>
-</ul>
 </li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Supervised Learning</th>
+<th>Unsupervised Learning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data structure</td>
+<td>Data: (x, y), and x is data, y is label</td>
+<td>Data: x, Just data, no labels!</td>
+</tr>
+<tr>
+<td>Data price</td>
+<td>Training data is expensive in a lot of cases.</td>
+<td>Training data are cheap!</td>
+</tr>
+<tr>
+<td>Goal</td>
+<td>Learn a function to map x -&gt; y</td>
+<td>Learn some underlying hidden structure of the data</td>
+</tr>
+<tr>
+<td>Examples</td>
+<td>Classification, regression, object detection, semantic segmentation, image captioning</td>
+<td>Clustering, dimensionality reduction, feature learning, density estimation</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
 <li><p>Autoencoders are a Feature learning technique.</p>
 <ul>
 <li><img src="/2020/07/29/CS231N/24.png" alt></li>
@@ -2532,10 +2581,8 @@
 <li><code>S</code>: set of possible states.</li>
 <li><code>A</code>: set of possible actions</li>
 <li><code>R</code>: distribution of reward given (state, action) pair</li>
-<li><code>P</code>: transition probability i.e. distribution over next state given (state, action) pair<ul>
+<li><code>P</code>: transition probability i.e. distribution over next state given (state, action) pair</li>
 <li><code>Y</code>: discount factor    <code># How much we value rewards coming up soon verses later on.</code></li>
-</ul>
-</li>
 </ul>
 </li>
 <li>Algorithm:<ul>
@@ -2704,14 +2751,12 @@
 </li>
 <li>Hardware 101: the Family<ul>
 <li><strong>General Purpose</strong>            <code># Used for any hardware</code><ul>
-<li>CPU                <code># Latency oriented, Single strong threaded like a single elepahnt</code><ul>
+<li>CPU                <code># Latency oriented, Single strong threaded like a single elepahnt</code></li>
 <li>GPU            <code># Throughput oriented, So many small threads like a lot of ants</code></li>
-</ul>
-</li>
 <li>GPGPU<ul>
 <li><strong>Specialized HW</strong>        <code>#Tuned for a domain of applications</code><ul>
-<li>FPGA# Programmable logic, Its cheaper but less effiecnet`</li>
-<li>ASIC<code># Fixed logic, Designed for a certian applications (Can be designed for deep learning applications)</code></li>
+<li>FPGA <code># Programmable logic, Its cheaper but less effiecnet</code></li>
+<li>ASIC <code># Fixed logic, Designed for a certian applications (Can be designed for deep learning applications)</code></li>
 </ul>
 </li>
 </ul>
@@ -3063,7 +3108,6 @@
 </ul>
 </li>
 </ul>
-<p><br><br><br><br><br><br>These Notes was made by <a href="mailto:mma18@fayoum.edu.eg">Mahmoud Badry</a> @2017</p>
 
       
     </div>
@@ -3218,7 +3262,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -3240,7 +3284,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

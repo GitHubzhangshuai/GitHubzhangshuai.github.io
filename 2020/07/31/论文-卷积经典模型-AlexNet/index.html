@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="卷积经典模型论文," />
+  <meta name="keywords" content="卷积经典模型论文,翻译," />
 
 
 
@@ -90,20 +90,21 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure1.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure2.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure3.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/table1.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/table2.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure4.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure1.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure2.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure3.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/table1.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/table2.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure4.png">
 <meta property="article:published_time" content="2020-07-31T03:36:06.000Z">
-<meta property="article:modified_time" content="2020-08-02T08:39:24.909Z">
+<meta property="article:modified_time" content="2020-08-03T06:53:32.761Z">
 <meta property="article:author" content="Zhangshuai">
 <meta property="article:tag" content="卷积经典模型论文">
+<meta property="article:tag" content="翻译">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure1.png">
 
@@ -460,7 +461,7 @@
 <script type="math/tex; mode=display">b^i_{x,y} = a^i_{x,y}/ (k+a\sum^{min(N-1,i+n/2)}_{j=max(0,i-n/2)} {a^i_{x,y}}^2)^\beta</script><p>where the sum runs over n “adjacent” kernel maps at the same spatial position, and N is the total number of kernels in the layer. The ordering of the kernel maps is of course arbitrary and determined before training begins. This sort of response normalization implements a form of lateral inhibition inspired by the type found in real neurons, creating competition for big activities amongst neuron outputs computed using different kernels. The constants k, n, α, and β are hyper-parameters whose values are determined using a validation set; we used k = 2, n = 5, α = $10^{-4}$, and β = 0.75. We applied this normalization after applying the ReLU nonlinearity in certain layers (see Section 3.5).</p>
 <p>This scheme bears some resemblance to the local contrast normalization scheme of Jarrett et al. [11], but ours would be more correctly termed “brightness normalization”, since we do not subtract the mean activity. Response normalization reduces our top-1 and top-5 error rates by 1.4% and 1.2%, respectively. We also verified the effectiveness of this scheme on the CIFAR-10 dataset: a four-layer CNN achieved a 13% test error rate without normalization and 11% with normalization $^3$.</p>
 <hr>
-<p>$^3$We cannot describe this network in detail due to space constraints, but it is specified precisely by the code<br>and parameter files provided here: <a href="http://code.google.com/p/cuda-convnet/" target="_blank" rel="noopener">http://code.google.com/p/cuda-convnet/</a></p>
+<p>$^3$We cannot describe this network in detail due to space constraints, but it is specified precisely by the code and parameter files provided here: <a href="http://code.google.com/p/cuda-convnet/" target="_blank" rel="noopener">http://code.google.com/p/cuda-convnet/</a></p>
 <h3 id="3-4Overlapping-Pooling"><a href="#3-4Overlapping-Pooling" class="headerlink" title="3.4Overlapping Pooling"></a>3.4Overlapping Pooling</h3><p>Pooling layers in CNNs summarize the outputs of neighboring groups of neurons in the same kernel map.  Traditionally, the neighborhoods summarized by adjacent pooling units do not overlap (e.g.,[17, 11, 4]). To be more precise, a pooling layer can be thought of as consisting of a grid of pooling units spaced s pixels apart, each summarizing a neighborhood of size z × z centered at the location of the pooling unit. If we set s = z, we obtain traditional local pooling as commonly employed in CNNs. If we set s &lt; z, we obtain overlapping pooling. This is what we use throughout our network, with s = 2 and z = 3. This scheme reduces the top-1 and top-5 error rates by 0.4% and 0.3%, respectively, as compared with the non-overlapping scheme s = 2, z = 2, which produces output of equivalent dimensions. We generally observe during training that models with overlapping pooling find it slightly more difficult to overfit.</p>
 <h3 id="3-5-Overall-Architecture"><a href="#3-5-Overall-Architecture" class="headerlink" title="3.5 Overall Architecture"></a>3.5 Overall Architecture</h3><p>Now we are ready to describe the overall architecture of our CNN. As depicted in Figure 2, the net contains eight layers with weights; the first five are convolutional and the remaining three are fullyconnected. The output of the last fully-connected layer is fed to a 1000-way softmax which produces a distribution over the 1000 class labels. Our network maximizes the multinomial logistic regression objective, which is equivalent to maximizing the average across training cases of the log-probability of the correct label under the prediction distribution. The kernels of the second, fourth, and fifth convolutional layers are connected only to those kernel maps in the previous layer which reside on the same GPU (see Figure 2). The kernels of the third convolutional layer are connected to all kernel maps in the second layer. The neurons in the fully-connected layers are connected to all neurons in the previous layer.Response-normalization layers follow the first and second convolutional layers. Max-poolinglayers, ofthekinddescribedinSection 3.4, follow both response-normalization layers as well as the fifth convolutional layer. The ReLU non-linearity is applied to the output of every convolutional and fully-connected layer. The first convolutional layer filters the 224×224×3 input image with 96 kernels of size 11×11×3 with a stride of 4 pixels (this is the distance between the receptive field centers of neighboring neurons in a kernel map). The second convolutional layer takes as input the (response-normalized and pooled) output of the first convolutional layer and filters it with 256 kernels of size 5 × 5 × 48. The third, fourth, and fifth convolutional layers are connected to one another without any intervening pooling or normalization layers. The third convolutional layer has 384 kernels of size 3 × 3 × 256 connected to the (normalized, pooled) outputs of the second convolutional layer. The fourth convolutional layer has 384 kernels of size 3 × 3 × 192 , and the fifth convolutional layer has 256 kernels of size 3 × 3 × 192. The fully-connected layers have 4096 neurons each.</p>
 <p><img src="/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure2.png" alt></p>
@@ -474,7 +475,7 @@
 <script type="math/tex; mode=display">[P1,P2,P3][\alpha1 \lambda1,\alpha2 \lambda2,\alpha3 \lambda3]^T</script><p>where pi and λi are ith eigenvector and eigenvalue of the 3 × 3 covariance matrix of RGB pixel values, respectively, and αiis the aforementioned random variable. Each αiis drawn only once for all the pixels of a particular training image until that image is used for training again, at which point it is re-drawn. This scheme approximately captures an important property of natural images, namely, that object identity is invariant to changes in the intensity and color of the illumination. This scheme reduces the top-1 error rate by over 1%.</p>
 <h3 id="4-2-Dropout"><a href="#4-2-Dropout" class="headerlink" title="4.2 Dropout"></a>4.2 Dropout</h3><p>Combining the predictions of many different models is a very successful way to reduce test errors [1, 3], but it appears to be too expensive for big neural networks that already take several days to train. There is, however, a very efficient version of model combination that only costs about a factor of two during training. The recently-introduced technique, called “dropout” [10], consists of setting to zero the output of each hidden neuron with probability 0.5. The neurons which are “dropped out” in this way do not contribute to the forward pass and do not participate in backpropagation. So every time an input is presented, the neural network samples a different architecture, but all these architectures share weights. This technique reduces complex co-adaptations of neurons, since a neuron cannot rely on the presence of particular other neurons. It is, therefore, forced to learn more robust features that are useful in conjunction with many different random subsets of the other neurons. At test time, we use all the neurons but multiply their outputs by 0.5, which is a reasonable approximation to taking the geometric mean of the predictive distributions produced by the exponentially-many dropout networks. We use dropout in the first two fully-connected layers of Figure 2. Without dropout, our network exhibits substantial overfitting. Dropout roughly doubles the number of iterations required to converge.</p>
 <h2 id="5-Details-of-learning"><a href="#5-Details-of-learning" class="headerlink" title="5 Details of learning"></a>5 Details of learning</h2><p>We trained our models using stochastic gradient descent with a batch size of 128 examples, momentum of 0.9, and weight decay of 0.0005. We found that this small amount of weight decay was important for the model to learn. In other words, weight decay here is not merely a regularizer: it reduces the model’s training error. The update rule for weight w was</p>
-<script type="math/tex; mode=display">v_{i+1}:=0.9v_{i}-0.0005\epsilon w_i-\epsilon \langle \frac{\delta L}{\delta W }|_{w_i}\rangle _{D_i}</script><script type="math/tex; mode=display">w_{i+1}:=w_i+v_{i+1}</script><p>where i is the iteration index,v is the momentum variable,$\epsilon $is the learning rate,$\langle \frac{\delta L}{\delta W }|_{w_i}\rangle _{D_i}$is the average over the ith batch Diof the derivative of the objective with respect to w, evaluated at wi.<br><img src="/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure.png" alt></p>
+<script type="math/tex; mode=display">v_{i+1}:=0.9v_{i}-0.0005\epsilon w_i-\epsilon \langle \frac{\delta L}{\delta W }|_{w_i}\rangle _{D_i}</script><script type="math/tex; mode=display">w_{i+1}:=w_i+v_{i+1}</script><p>where i is the iteration index,v is the momentum variable,$\epsilon $is the learning rate,$\langle \frac{\delta L}{\delta W }|_{w_i}\rangle _{D_i}$is the average over the ith batch Diof the derivative of the objective with respect to w, evaluated at wi.<br><img src="/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure3.png" alt></p>
 <p>Figure 3: 96 convolutional kernels of size 11×11×3learned by the first convolutional layer on the 224×224×3 input images. The top 48 kernels were learned on GPU 1 while the bottom 48 kernels were learned on GPU 2. See Section 6.1 for details.</p>
 <p>We initialized the weights in each layer from a zero-mean Gaussian distribution with standard deviation 0.01. We initialized the neuron biases in the second, fourth, and fifth convolutional layers, as well as in the fully-connected hidden layers, with the constant 1. This initialization accelerates the early stages of learning by providing the ReLUs with positive inputs. We initialized the neuron biases in the remaining layers with the constant 0.</p>
 <p>We used an equal learning rate for all layers, which we adjusted manually throughout training.<br>The heuristic which we followed was to divide the learning rate by 10 when the validation error rate stopped improving with the current learning rate. The learning rate was initialized at 0.01 and reduced three times prior to termination. We trained the network for roughly 90 cycles through the training set of 1.2 million images, which took five to six days on two NVIDIA GTX 580 3GB GPUs.</p>
@@ -535,7 +536,7 @@
 <h3 id="4-2-Dropout-1"><a href="#4-2-Dropout-1" class="headerlink" title="4.2 Dropout"></a>4.2 Dropout</h3><p>将许多不同模型的预测结合起来是减少测试误差的一种非常成功的方法[1,3]，但对于已经花费数天时间进行训练的大型神经网络来说，这似乎太贵了。然而，有一个非常有效的模型组合版本，在培训期间只需花费大约两倍的成本。最近引入的技术称为“dropout”[10]，包括将每个隐藏神经元的输出设为0，概率为0.5。 以这种方式“退出”的神经元不参与前向传递，也不参与反向传播。 所以每次输入被提出时，神经网络都会对不同的结构进行采样，但所有这些结构都共享权重。 这种技术减少了神经元复杂的共适应，因为一个神经元不能依赖于其他特定神经元的存在。 因此，它被迫学习更健壮的特征，这些特征与其他神经元的许多不同的随机子集结合起来是有用的。在测试时，我们使用所有的神经元，但将它们的输出乘以0.5，这是一个合理的近似值，取指数型多个丢失网络产生的预测分布的几何平均值。我们在图2中的前两个完全连接的层中使用dropout。在没有dropout的情况下，我们的网络表现出严重的过度适应。Dropout大约是收敛所需迭代次数的两倍。</p>
 <h2 id="5-学习细节"><a href="#5-学习细节" class="headerlink" title="5.学习细节"></a>5.学习细节</h2><p>我们使用随机梯度下降训练我们的模型，批量大小为128个例子，动量为0.9，权重衰减为0.0005。我们发现这个小的重量衰减对模型的学习很重要。换句话说，这里的权重衰减不仅仅是一个正则化器：它减少了模型的训练误差。权重w的更新规则是</p>
 <script type="math/tex; mode=display">v_{i+1}:=0.9v_{i}-0.0005\epsilon w_i-\epsilon \langle \frac{\delta L}{\delta W }|_{w_i}\rangle _{D_i}</script><script type="math/tex; mode=display">w_{i+1}:=w_i+v_{i+1}</script><p>其中i是迭代索引,v是动量变量，$\epsilon$ 是学习率，$\langle \frac{\delta L}{\delta W }|_{w_i}\rangle _{D_i}$是第i批中目标相对于w的导数的平均值，在wi处计算。</p>
-<p><img src="/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure.png" alt><br>图3:224×224×3输入图像第一卷积层学习的96个卷积核，大小为11×11×3。前48个内核在gpu1上学习，而后48个内核在gpu2上学习。详见第6.1节。</p>
+<p><img src="/2020/07/31/%E8%AE%BA%E6%96%87-%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B-AlexNet/figure3.png" alt><br>图3:224×224×3输入图像第一卷积层学习的96个卷积核，大小为11×11×3。前48个内核在gpu1上学习，而后48个内核在gpu2上学习。详见第6.1节。</p>
 <p>我们用标准差为0.01的零均值高斯分布初始化每个层的权重。我们用常数1初始化第二、第四和第五卷积层以及完全连接的隐藏层中的神经元偏差。这种初始化通过向ReLUs提供积极的输入加快了学习的早期阶段。我们用常数0初始化剩余层中的神经元偏差。</p>
 <p>我们对所有层使用相同的学习率，在整个培训过程中我们手动调整。我们遵循的启发式方法是，当验证错误率不再随当前学习率提高时，将学习率除以10。学习率初始化为0.01，终止前降低3倍。我们通过120万张图像的训练集训练了网络大约90个周期，在两个 NVIDIA GTX 5803 gb gpu上花了5到6天的时间。</p>
 <h2 id="6-Results-1"><a href="#6-Results-1" class="headerlink" title="6 Results"></a>6 Results</h2><p>表1总结了我们在ILSVRC-2010上的结果。我们的网络实现了前1名和前5名测试集错误率分别为37.5%和17.0% $^5$。</p>
@@ -616,6 +617,8 @@
           
             <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%BB%8F%E5%85%B8%E6%A8%A1%E5%9E%8B%E8%AE%BA%E6%96%87/" rel="tag"># 卷积经典模型论文</a>
           
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
         </div>
       
 
@@ -636,6 +639,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/08/03/CS231N%E7%BF%BB%E8%AF%91%E7%89%88/" rel="prev" title="CS231N翻译版">
+                CS231N翻译版 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -716,7 +723,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -738,7 +745,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
