@@ -81,54 +81,40 @@
 
 
 
-<meta name="description" content="上篇主要介绍了神经网络。首先从生物学神经元出发，引出了它的数学抽象模型—MP神经元以及由两层神经元组成的感知机模型，并基于梯度下降的方法描述了感知机模型的权值调整规则。由于简单的感知机不能处理线性不可分的情形，因此接着引入了含隐层的前馈型神经网络，BP神经网络则是其中最为成功的一种学习方法，它使用误差逆传播的方法来逐层调节连接权。最后简单介绍了局部&#x2F;全局最小以及目前十分火热的深度学习的概念。本篇围">
+<meta name="description" content="上篇主要介绍了概率图模型，首先从生成式模型与判别式模型的定义出发，引出了概率图模型的基本概念，即利用图结构来表达变量之间的依赖关系；接着分别介绍了隐马尔可夫模型、马尔可夫随机场、条件随机场、精确推断方法以及LDA话题模型：HMM主要围绕着评估&#x2F;解码&#x2F;学习这三个实际问题展开论述；MRF基于团和势函数的概念来定义联合概率分布；CRF引入两种特征函数对状态序列进行评价打分；变量消去与信念传播在给定联合概">
 <meta property="og:type" content="article">
-<meta property="og:title" content="周志华《Machine Learning》学习笔记(7)">
-<meta property="og:url" content="http://yoursite.com/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B07--%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/index.html">
+<meta property="og:title" content="周志华《Machine Learning》学习笔记(17)">
+<meta property="og:url" content="http://yoursite.com/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B017--%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="张帅的Blog">
-<meta property="og:description" content="上篇主要介绍了神经网络。首先从生物学神经元出发，引出了它的数学抽象模型—MP神经元以及由两层神经元组成的感知机模型，并基于梯度下降的方法描述了感知机模型的权值调整规则。由于简单的感知机不能处理线性不可分的情形，因此接着引入了含隐层的前馈型神经网络，BP神经网络则是其中最为成功的一种学习方法，它使用误差逆传播的方法来逐层调节连接权。最后简单介绍了局部&#x2F;全局最小以及目前十分火热的深度学习的概念。本篇围">
+<meta property="og:description" content="上篇主要介绍了概率图模型，首先从生成式模型与判别式模型的定义出发，引出了概率图模型的基本概念，即利用图结构来表达变量之间的依赖关系；接着分别介绍了隐马尔可夫模型、马尔可夫随机场、条件随机场、精确推断方法以及LDA话题模型：HMM主要围绕着评估&#x2F;解码&#x2F;学习这三个实际问题展开论述；MRF基于团和势函数的概念来定义联合概率分布；CRF引入两种特征函数对状态序列进行评价打分；变量消去与信念传播在给定联合概">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f6a2ec8a.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f6a06d5a.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f690a14b.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f690ac26.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f697d499.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f696fd10.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f69af163.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f697bb1d.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f6a838c4.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f6978cbb.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f9332be7.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f93321c5.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f9330967.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f9333e66.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f935ae21.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f9338a9d.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f93419ca.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f9353166.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f933c947.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc72f934303e.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730cc68b3b.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730cc1b673.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730cc49adc.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730cc173b2.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730cc05959.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730ccc468c.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730ccc541a.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730ccce68e.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730cc6c9fe.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc730cc5e5a9.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc7317aa3411.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc7317a4c96e.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc7317a6dff2.png">
-<meta property="og:image" content="https://i.loli.net/2018/10/17/5bc7317ab6646.png">
-<meta property="article:published_time" content="2020-07-26T23:20:38.000Z">
-<meta property="article:modified_time" content="2020-07-27T11:05:45.960Z">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYOud.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYH3D.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYzUP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYbge.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYqjH.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYjHI.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYXDA.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtS4f.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwYxEt.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwt9C8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwt3r9.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtm5V.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtZEq.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtEbn.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwteU0.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtuCT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwt1KJ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtK8U.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtM2F.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/18/iwtQv4.png">
+<meta property="article:published_time" content="2020-07-27T09:20:38.000Z">
+<meta property="article:modified_time" content="2020-07-27T11:03:36.468Z">
 <meta property="article:author" content="Zhangshuai">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="周志华《Machine Learning》学习笔记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2018/10/17/5bc72f6a2ec8a.png">
+<meta name="twitter:image" content="https://s1.ax1x.com/2018/10/18/iwYOud.png">
 
 
 
@@ -158,13 +144,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/07/27/周志华《Machine Learning》学习笔记7--支持向量机/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/07/27/周志华《Machine Learning》学习笔记17--强化学习/"/>
 
 
 
 
 
-  <title>周志华《Machine Learning》学习笔记(7) | 张帅的Blog</title>
+  <title>周志华《Machine Learning》学习笔记(17) | 张帅的Blog</title>
   
 
 
@@ -365,7 +351,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B07--%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B017--%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhangshuai">
@@ -382,7 +368,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">周志华《Machine Learning》学习笔记(7)</h1>
+          <h1 class="post-title" itemprop="name headline">周志华《Machine Learning》学习笔记(17)</h1>
         
 
         <div class="post-meta">
@@ -394,7 +380,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-27T07:20:38+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-27T17:20:38+08:00">
                 2020-07-27
               </time>
             
@@ -455,9 +441,8 @@
       
 
       
-        <p>上篇主要介绍了神经网络。首先从生物学神经元出发，引出了它的数学抽象模型—MP神经元以及由两层神经元组成的感知机模型，并基于梯度下降的方法描述了感知机模型的权值调整规则。由于简单的感知机不能处理线性不可分的情形，因此接着引入了含隐层的前馈型神经网络，BP神经网络则是其中最为成功的一种学习方法，它使用误差逆传播的方法来逐层调节连接权。最后简单介绍了局部/全局最小以及目前十分火热的深度学习的概念。本篇围绕的核心则是曾经一度取代过神经网络的另一种监督学习算法—<strong>支持向量机</strong>（Support Vector Machine），简称<strong>SVM</strong>。<br><a id="more"></a></p>
-<p>参考<a href="https://github.com/Vay-keen/Machine-learning-learning-notes" target="_blank" rel="noopener">此项目</a></p>
-<div style="text-align:center;font-size:25px">目录</div>
+        <p>上篇主要介绍了概率图模型，首先从生成式模型与判别式模型的定义出发，引出了概率图模型的基本概念，即利用图结构来表达变量之间的依赖关系；接着分别介绍了隐马尔可夫模型、马尔可夫随机场、条件随机场、精确推断方法以及LDA话题模型：HMM主要围绕着评估/解码/学习这三个实际问题展开论述；MRF基于团和势函数的概念来定义联合概率分布；CRF引入两种特征函数对状态序列进行评价打分；变量消去与信念传播在给定联合概率分布后计算特定变量的边际分布；LDA话题模型则试图去推断给定文档所蕴含的话题分布。本篇将介绍最后一种学习算法—强化学习。<br><a id="more"></a><br>参考<a href="https://github.com/Vay-keen/Machine-learning-learning-notes" target="_blank" rel="noopener">此项目</a></p>
+<div style="text-align:center;font-size:20px">目录</div>
 
 <ul>
 <li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01--%E7%BB%AA%E8%AE%BA/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(1)—绪论</a></li>
@@ -478,87 +463,75 @@
 <li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B016--%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(16)—概率图模型</a></li>
 <li><a href="https://githubzhangshuai.github.io/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B017--%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">周志华《Machine Learning》学习笔记(17)—强化学习</a></li>
 </ul>
-<h1 id="6、支持向量机"><a href="#6、支持向量机" class="headerlink" title="6、支持向量机"></a><strong>6、支持向量机</strong></h1><p>支持向量机是一种经典的二分类模型，基本模型定义为特征空间中最大间隔的线性分类器，其学习的优化目标便是间隔最大化，因此支持向量机本身可以转化为一个凸二次规划求解的问题。</p>
-<h2 id="6-1-函数间隔与几何间隔"><a href="#6-1-函数间隔与几何间隔" class="headerlink" title="6.1 函数间隔与几何间隔"></a><strong>6.1 函数间隔与几何间隔</strong></h2><p>对于二分类学习，假设现在的数据是线性可分的，这时分类学习最基本的想法就是找到一个合适的超平面，该超平面能够将不同类别的样本分开，类似二维平面使用ax+by+c=0来表示，超平面实际上表示的就是高维的平面，如下图所示：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f6a2ec8a.png" alt="1.png"></p>
-<p>对数据点进行划分时，易知：当超平面距离与它最近的数据点的间隔越大，分类的鲁棒性越好，即当新的数据点加入时，超平面对这些点的适应性最强，出错的可能性最小。因此需要让所选择的超平面能够最大化这个间隔Gap（如下图所示）， 常用的间隔定义有两种，一种称之为函数间隔，一种为几何间隔，下面将分别介绍这两种间隔，并对SVM为什么会选用几何间隔做了一些阐述。</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f6a06d5a.png" alt="2.png"></p>
-<h3 id="6-1-1-函数间隔"><a href="#6-1-1-函数间隔" class="headerlink" title="6.1.1 函数间隔"></a><strong>6.1.1 函数间隔</strong></h3><p>在超平面w’x+b=0确定的情况下，|w’x<em>+b|能够代表点x</em>距离超平面的远近，易知：当w’x<em>+b&gt;0时，表示x</em>在超平面的一侧（正类，类标为1），而当w’x<em>+b&lt;0时，则表示x</em>在超平面的另外一侧（负类，类别为-1），因此（w’x<em>+b）y</em> 的正负性恰能表示数据点x<em>是否被分类正确。于是便引出了<em>*函数间隔</em></em>的定义（functional margin）:</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f690a14b.png" alt="3.png"></p>
-<p>而超平面（w,b）关于所有样本点（Xi，Yi）的函数间隔最小值则为超平面在训练数据集T上的函数间隔：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f690ac26.png" alt="4.png"></p>
-<p>可以看出：这样定义的函数间隔在处理SVM上会有问题，当超平面的两个参数w和b同比例改变时，函数间隔也会跟着改变，但是实际上超平面还是原来的超平面，并没有变化。例如：w1x1+w2x2+w3x3+b=0其实等价于2w1x1+2w2x2+2w3x3+2b=0，但计算的函数间隔却翻了一倍。从而引出了能真正度量点到超平面距离的概念—几何间隔（geometrical margin）。</p>
-<h3 id="6-1-2-几何间隔"><a href="#6-1-2-几何间隔" class="headerlink" title="6.1.2 几何间隔"></a><strong>6.1.2 几何间隔</strong></h3><p><strong>几何间隔</strong>代表的则是数据点到超平面的真实距离，对于超平面w’x+b=0，w代表的是该超平面的法向量，设x<em>为超平面外一点x在法向量w方向上的投影点，x与超平面的距离为r，则有x</em>=x-r(w/||w||)，又x<em>在超平面上，即w’x</em>+b=0，代入即可得：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f697d499.png" alt="5.png"></p>
-<p>为了得到r的绝对值，令r呈上其对应的类别y，即可得到几何间隔的定义：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f696fd10.png" alt="6.png"></p>
-<p>从上述函数间隔与几何间隔的定义可以看出：实质上函数间隔就是|w’x+b|，而几何间隔就是点到超平面的距离。</p>
-<h2 id="6-2-最大间隔与支持向量"><a href="#6-2-最大间隔与支持向量" class="headerlink" title="6.2 最大间隔与支持向量"></a><strong>6.2 最大间隔与支持向量</strong></h2><p>通过前面的分析可知：函数间隔不适合用来最大化间隔，因此这里我们要找的最大间隔指的是几何间隔，于是最大间隔分类器的目标函数定义为：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f69af163.png" alt="7.png"></p>
-<p>一般地，我们令r^为1（这样做的目的是为了方便推导和目标函数的优化），从而上述目标函数转化为：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f697bb1d.png" alt="8.png"></p>
-<p>对于y(w’x+b)=1的数据点，即下图中位于w’x+b=1或w’x+b=-1上的数据点，我们称之为<strong>支持向量</strong>（support vector），易知：对于所有的支持向量，它们恰好满足y<em>(w’x</em>+b)=1，而所有不是支持向量的点，有y<em>(w’x</em>+b)&gt;1。</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f6a838c4.png" alt="9.png"></p>
-<h2 id="6-3-从原始优化问题到对偶问题"><a href="#6-3-从原始优化问题到对偶问题" class="headerlink" title="6.3 从原始优化问题到对偶问题"></a><strong>6.3 从原始优化问题到对偶问题</strong></h2><p>对于上述得到的目标函数，求1/||w||的最大值相当于求||w||^2的最小值，因此很容易将原来的目标函数转化为：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f6978cbb.png" alt="10.png"></p>
-<p>即变为了一个带约束的凸二次规划问题，按书上所说可以使用现成的优化计算包（QP优化包）求解，但由于SVM的特殊性，一般我们将原问题变换为它的<strong>对偶问题</strong>，接着再对其对偶问题进行求解。为什么通过对偶问题进行求解，有下面两个原因：</p>
-<pre><code>* 一是因为使用对偶问题更容易求解；
-* 二是因为通过对偶问题求解出现了向量内积的形式，从而能更加自然地引出核函数。
-</code></pre><p>对偶问题，顾名思义，可以理解成优化等价的问题，更一般地，是将一个原始目标函数的最小化转化为它的对偶函数最大化的问题。对于当前的优化问题，首先我们写出它的朗格朗日函数：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f9332be7.png" alt="11.png"></p>
-<p>上式很容易验证：当其中有一个约束条件不满足时，L的最大值为 ∞（只需令其对应的α为 ∞即可）；当所有约束条件都满足时，L的最大值为1/2||w||^2（此时令所有的α为0），因此实际上原问题等价于：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f93321c5.png" alt="12.png"></p>
-<p>由于这个的求解问题不好做，因此一般我们将最小和最大的位置交换一下（需满足KKT条件） ，变成原问题的对偶问题：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f9330967.png" alt="13.png"></p>
-<p>这样就将原问题的求最小变成了对偶问题求最大（用对偶这个词还是很形象），接下来便可以先求L对w和b的极小，再求L对α的极大。</p>
-<p>（1）首先求L对w和b的极小，分别求L关于w和b的偏导，可以得出：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f9333e66.png" alt="14.png"></p>
-<p>将上述结果代入L得到：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f935ae21.png" alt="15.png"></p>
-<p>（2）接着L关于α极大求解α（通过SMO算法求解，此处不做深入）。</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f9338a9d.png" alt="16.png"></p>
-<p>（3）最后便可以根据求解出的α，计算出w和b，从而得到分类超平面函数。</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f93419ca.png" alt="17.png"></p>
-<p>在对新的点进行预测时，实际上就是将数据点x*代入分类函数f(x)=w’x+b中，若f(x)&gt;0，则为正类，f(x)&lt;0，则为负类，根据前面推导得出的w与b，分类函数如下所示，此时便出现了上面所提到的内积形式。</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f9353166.png" alt="18.png"></p>
-<p>这里实际上只需计算新样本与支持向量的内积，因为对于非支持向量的数据点，其对应的拉格朗日乘子一定为0，根据最优化理论（K-T条件），对于不等式约束y(w’x+b)-1≥0，满足：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f933c947.png" alt="19.png">        </p>
-<h2 id="6-4-核函数"><a href="#6-4-核函数" class="headerlink" title="6.4 核函数"></a><strong>6.4 核函数</strong></h2><p>由于上述的超平面只能解决线性可分的问题，对于线性不可分的问题，例如：异或问题，我们需要使用核函数将其进行推广。一般地，解决线性不可分问题时，常常采用<strong>映射</strong>的方式，将低维原始空间映射到高维特征空间，使得数据集在高维空间中变得线性可分，从而再使用线性学习器分类。如果原始空间为有限维，即属性数有限，那么总是存在一个高维特征空间使得样本线性可分。若∅代表一个映射，则在特征空间中的划分函数变为：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc72f934303e.png" alt="20.png"></p>
-<p>按照同样的方法，先写出新目标函数的拉格朗日函数，接着写出其对偶问题，求L关于w和b的极大，最后运用SOM求解α。可以得出：</p>
-<p>（1）原对偶问题变为：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc730cc68b3b.png" alt="21.png"></p>
-<p>（2）原分类函数变为：<br>​    <img src="https://i.loli.net/2018/10/17/5bc730cc1b673.png" alt="22.png"></p>
-<p>求解的过程中，只涉及到了高维特征空间中的内积运算，由于特征空间的维数可能会非常大，例如：若原始空间为二维，映射后的特征空间为5维，若原始空间为三维，映射后的特征空间将是19维，之后甚至可能出现无穷维，根本无法进行内积运算了，此时便引出了<strong>核函数</strong>（Kernel）的概念。</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc730cc49adc.png" alt="23.png"></p>
-<p>因此，核函数可以直接计算隐式映射到高维特征空间后的向量内积，而不需要显式地写出映射后的结果，它虽然完成了将特征从低维到高维的转换，但最终却是在低维空间中完成向量内积计算，与高维特征空间中的计算等效<strong>（低维计算，高维表现）</strong>，从而避免了直接在高维空间无法计算的问题。引入核函数后，原来的对偶问题与分类函数则变为：</p>
-<p>（1）对偶问题：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc730cc173b2.png" alt="24.png"></p>
-<p>（2）分类函数：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc730cc05959.png" alt="25.png"></p>
-<p>因此，在线性不可分问题中，核函数的选择成了支持向量机的最大变数，若选择了不合适的核函数，则意味着将样本映射到了一个不合适的特征空间，则极可能导致性能不佳。同时，核函数需要满足以下这个必要条件：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc730ccc468c.png" alt="26.png"></p>
-<p>由于核函数的构造十分困难，通常我们都是从一些常用的核函数中选择，下面列出了几种常用的核函数：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc730ccc541a.png" alt="27.png"></p>
-<h2 id="6-5-软间隔支持向量机"><a href="#6-5-软间隔支持向量机" class="headerlink" title="6.5 软间隔支持向量机"></a><strong>6.5 软间隔支持向量机</strong></h2><p>前面的讨论中，我们主要解决了两个问题：当数据线性可分时，直接使用最大间隔的超平面划分；当数据线性不可分时，则通过核函数将数据映射到高维特征空间，使之线性可分。然而在现实问题中，对于某些情形还是很难处理，例如数据中有<strong>噪声</strong>的情形，噪声数据（<strong>outlier</strong>）本身就偏离了正常位置，但是在前面的SVM模型中，我们要求所有的样本数据都必须满足约束，如果不要这些噪声数据还好，当加入这些outlier后导致划分超平面被挤歪了，如下图所示，对支持向量机的泛化性能造成很大的影响。</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc730ccce68e.png" alt="28.png"></p>
-<p>为了解决这一问题，我们需要允许某一些数据点不满足约束，即可以在一定程度上偏移超平面，同时使得不满足约束的数据点尽可能少，这便引出了<strong>“软间隔”支持向量机</strong>的概念</p>
-<pre><code>* 允许某些数据点不满足约束y(w&#39;x+b)≥1；
-* 同时又使得不满足约束的样本尽可能少。
-</code></pre><p>这样优化目标变为：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc730cc6c9fe.png" alt="29.png"></p>
-<p>如同阶跃函数，0/1损失函数虽然表示效果最好，但是数学性质不佳。因此常用其它函数作为“替代损失函数”。</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc730cc5e5a9.png" alt="30.png"></p>
-<p>支持向量机中的损失函数为<strong>hinge损失</strong>，引入<strong>“松弛变量”</strong>，目标函数与约束条件可以写为：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc7317aa3411.png" alt="31.png"></p>
-<p>其中C为一个参数，控制着目标函数与新引入正则项之间的权重，这样显然每个样本数据都有一个对应的松弛变量，用以表示该样本不满足约束的程度，将新的目标函数转化为拉格朗日函数得到：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc7317a4c96e.png" alt="32.png"></p>
-<p>按照与之前相同的方法，先让L求关于w，b以及松弛变量的极小，再使用SMO求出α，有：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc7317a6dff2.png" alt="33.png"></p>
-<p>将w代入L化简，便得到其对偶问题：</p>
-<p><img src="https://i.loli.net/2018/10/17/5bc7317ab6646.png" alt="34.png"></p>
-<p>将“软间隔”下产生的对偶问题与原对偶问题对比可以发现：新的对偶问题只是约束条件中的α多出了一个上限C，其它的完全相同，因此在引入核函数处理线性不可分问题时，便能使用与“硬间隔”支持向量机完全相同的方法。</p>
-<p>——在此SVM就介绍完毕。</p>
+<h1 id="16、强化学习"><a href="#16、强化学习" class="headerlink" title="16、强化学习"></a><strong>16、强化学习</strong></h1><p><strong>强化学习</strong>（Reinforcement Learning，简称<strong>RL</strong>）是机器学习的一个重要分支，前段时间人机大战的主角AlphaGo正是以强化学习为核心技术。在强化学习中，包含两种基本的元素：<strong>状态</strong>与<strong>动作</strong>，<strong>在某个状态下执行某种动作，这便是一种策略</strong>，学习器要做的就是通过不断地探索学习，从而获得一个好的策略。例如：在围棋中，一种落棋的局面就是一种状态，若能知道每种局面下的最优落子动作，那就攻无不克/百战不殆了~</p>
+<p>若将状态看作为属性，动作看作为标记，易知：<strong>监督学习和强化学习都是在试图寻找一个映射，从已知属性/状态推断出标记/动作</strong>，这样强化学习中的策略相当于监督学习中的分类/回归器。但在实际问题中，<strong>强化学习并没有监督学习那样的标记信息</strong>，通常都是在<strong>尝试动作后才能获得结果</strong>，因此强化学习是通过反馈的结果信息不断调整之前的策略，从而算法能够学习到：在什么样的状态下选择什么样的动作可以获得最好的结果。</p>
+<h2 id="16-1-基本要素"><a href="#16-1-基本要素" class="headerlink" title="16.1 基本要素"></a><strong>16.1 基本要素</strong></h2><p>强化学习任务通常使用<strong>马尔可夫决策过程</strong>（Markov Decision Process，简称<strong>MDP</strong>）来描述，具体而言：机器处在一个环境中，每个状态为机器对当前环境的感知；机器只能通过动作来影响环境，当机器执行一个动作后，会使得环境按某种概率转移到另一个状态；同时，环境会根据潜在的奖赏函数反馈给机器一个奖赏。综合而言，强化学习主要包含四个要素：状态、动作、转移概率以及奖赏函数。</p>
+<blockquote>
+<p><strong>状态（X）</strong>：机器对环境的感知，所有可能的状态称为状态空间；<br><strong>动作（A）</strong>：机器所采取的动作，所有能采取的动作构成动作空间；<br><strong>转移概率（P）</strong>：当执行某个动作后，当前状态会以某种概率转移到另一个状态；<br><strong>奖赏函数（R）</strong>：在状态转移的同时，环境给反馈给机器一个奖赏。</p>
+</blockquote>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwYOud.png" alt="iwYOud.png"></p>
+<p>因此，<strong>强化学习的主要任务就是通过在环境中不断地尝试，根据尝试获得的反馈信息调整策略，最终生成一个较好的策略π，机器根据这个策略便能知道在什么状态下应该执行什么动作</strong>。常见的策略表示方法有以下两种：</p>
+<blockquote>
+<p><strong>确定性策略</strong>：π（x）=a，即在状态x下执行a动作；<br><strong>随机性策略</strong>：P=π（x,a），即在状态x下执行a动作的概率。</p>
+</blockquote>
+<p><strong>一个策略的优劣取决于长期执行这一策略后的累积奖赏</strong>，换句话说：可以使用累积奖赏来评估策略的好坏，最优策略则表示在初始状态下一直执行该策略后，最后的累积奖赏值最高。长期累积奖赏通常使用下述两种计算方法：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwYH3D.png" alt="iwYH3D.png"></p>
+<h2 id="16-2-K摇摆赌博机"><a href="#16-2-K摇摆赌博机" class="headerlink" title="16.2 K摇摆赌博机"></a><strong>16.2 K摇摆赌博机</strong></h2><p>首先我们考虑强化学习最简单的情形：仅考虑一步操作，即在状态x下只需执行一次动作a便能观察到奖赏结果。易知：欲最大化单步奖赏，我们需要知道每个动作带来的期望奖赏值，这样便能选择奖赏值最大的动作来执行。若每个动作的奖赏值为确定值，则只需要将每个动作尝试一遍即可，但大多数情形下，一个动作的奖赏值来源于一个概率分布，因此需要进行多次的尝试。</p>
+<p>单步强化学习实质上是<strong>K-摇臂赌博机</strong>（K-armed bandit）的原型，一般我们<strong>尝试动作的次数是有限的</strong>，那如何利用有限的次数进行有效地探索呢？这里有两种基本的想法：</p>
+<blockquote>
+<p><strong>仅探索法</strong>：将尝试的机会平均分给每一个动作，即轮流执行，最终将每个动作的平均奖赏作为期望奖赏的近似值。<br><strong>仅利用法</strong>：将尝试的机会分给当前平均奖赏值最大的动作，隐含着让一部分人先富起来的思想。</p>
+</blockquote>
+<p>可以看出：上述<strong>两种方法是相互矛盾的</strong>，仅探索法能较好地估算每个动作的期望奖赏，但是没能根据当前的反馈结果调整尝试策略；仅利用法在每次尝试之后都更新尝试策略，符合强化学习的思（tao）维（lu），但容易找不到最优动作。因此需要在这两者之间进行折中。</p>
+<h3 id="16-2-1-ε-贪心"><a href="#16-2-1-ε-贪心" class="headerlink" title="16.2.1 ε-贪心"></a><strong>16.2.1 ε-贪心</strong></h3><p><strong>ε-贪心法基于一个概率来对探索和利用进行折中</strong>，具体而言：在每次尝试时，以ε的概率进行探索，即以均匀概率随机选择一个动作；以1-ε的概率进行利用，即选择当前最优的动作。ε-贪心法只需记录每个动作的当前平均奖赏值与被选中的次数，便可以增量式更新。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwYzUP.png" alt="iwYzUP.png"></p>
+<h3 id="16-2-2-Softmax"><a href="#16-2-2-Softmax" class="headerlink" title="16.2.2 Softmax"></a><strong>16.2.2 Softmax</strong></h3><p><strong>Softmax算法则基于当前每个动作的平均奖赏值来对探索和利用进行折中，Softmax函数将一组值转化为一组概率</strong>，值越大对应的概率也越高，因此当前平均奖赏值越高的动作被选中的几率也越大。Softmax函数如下所示：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwYbge.png" alt="iwYbge.png"><br><img src="https://s1.ax1x.com/2018/10/18/iwYqjH.png" alt="iwYqjH.png"></p>
+<h2 id="16-3-有模型学习"><a href="#16-3-有模型学习" class="headerlink" title="16.3 有模型学习"></a><strong>16.3 有模型学习</strong></h2><p>若学习任务中的四个要素都已知，即状态空间、动作空间、转移概率以及奖赏函数都已经给出，这样的情形称为“<strong>有模型学习</strong>”。假设状态空间和动作空间均为有限，即均为离散值，这样我们不用通过尝试便可以对某个策略进行评估。</p>
+<h3 id="16-3-1-策略评估"><a href="#16-3-1-策略评估" class="headerlink" title="16.3.1 策略评估"></a><strong>16.3.1 策略评估</strong></h3><p>前面提到：<strong>在模型已知的前提下，我们可以对任意策略的进行评估</strong>（后续会给出演算过程）。一般常使用以下两种值函数来评估某个策略的优劣：</p>
+<blockquote>
+<p><strong>状态值函数（V）</strong>：V（x），即从状态x出发，使用π策略所带来的累积奖赏；<br><strong>状态-动作值函数（Q）</strong>：Q（x,a），即从状态x出发，执行动作a后再使用π策略所带来的累积奖赏。</p>
+</blockquote>
+<p>根据累积奖赏的定义，我们可以引入T步累积奖赏与r折扣累积奖赏：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwYjHI.png" alt="iwYjHI.png"><br><img src="https://s1.ax1x.com/2018/10/18/iwYXDA.png" alt="iwYXDA.png"></p>
+<p>由于MDP具有马尔可夫性，即现在决定未来，将来和过去无关，我们很容易找到值函数的递归关系：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwtS4f.png" alt="iwtS4f.png"></p>
+<p>类似地，对于r折扣累积奖赏可以得到：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwYxEt.png" alt="iwYxEt.png"></p>
+<p>易知：<strong>当模型已知时，策略的评估问题转化为一种动态规划问题</strong>，即以填表格的形式自底向上，先求解每个状态的单步累积奖赏，再求解每个状态的两步累积奖赏，一直迭代逐步求解出每个状态的T步累积奖赏。算法流程如下所示：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwt9C8.png" alt="iwt9C8.png"></p>
+<p>对于状态-动作值函数，只需通过简单的转化便可得到：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwt3r9.png" alt="iwt3r9.png"></p>
+<h3 id="16-3-2-策略改进"><a href="#16-3-2-策略改进" class="headerlink" title="16.3.2 策略改进"></a><strong>16.3.2 策略改进</strong></h3><p>理想的策略应能使得每个状态的累积奖赏之和最大，简单来理解就是：不管处于什么状态，只要通过该策略执行动作，总能得到较好的结果。因此对于给定的某个策略，我们需要对其进行改进，从而得到<strong>最优的值函数</strong>。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwtm5V.png" alt="iwtm5V.png"><br><img src="https://s1.ax1x.com/2018/10/18/iwtZEq.png" alt="iwtZEq.png"></p>
+<p>最优Bellman等式改进策略的方式为：<strong>将策略选择的动作改为当前最优的动作</strong>，而不是像之前那样对每种可能的动作进行求和。易知：选择当前最优动作相当于将所有的概率都赋给累积奖赏值最大的动作，因此每次改进都会使得值函数单调递增。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwtEbn.png" alt="iwtEbn.png"></p>
+<p>将策略评估与策略改进结合起来，我们便得到了生成最优策略的方法：先给定一个随机策略，现对该策略进行评估，然后再改进，接着再评估/改进一直到策略收敛、不再发生改变。这便是策略迭代算法，算法流程如下所示：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwteU0.png" alt="iwteU0.png"></p>
+<p>可以看出：策略迭代法在每次改进策略后都要对策略进行重新评估，因此比较耗时。若从最优化值函数的角度出发，即先迭代得到最优的值函数，再来计算如何改变策略，这便是值迭代算法，算法流程如下所示：</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwtuCT.png" alt="iwtuCT.png"></p>
+<h2 id="16-4-蒙特卡罗强化学习"><a href="#16-4-蒙特卡罗强化学习" class="headerlink" title="16.4 蒙特卡罗强化学习"></a><strong>16.4 蒙特卡罗强化学习</strong></h2><p>在现实的强化学习任务中，<strong>环境的转移函数与奖赏函数往往很难得知</strong>，因此我们需要考虑在不依赖于环境参数的条件下建立强化学习模型，这便是<strong>免模型学习</strong>。蒙特卡罗强化学习便是其中的一种经典方法。</p>
+<p>由于模型参数未知，状态值函数不能像之前那样进行全概率展开，从而运用动态规划法求解。一种直接的方法便是通过采样来对策略进行评估/估算其值函数，<strong>蒙特卡罗强化学习正是基于采样来估计状态-动作值函数</strong>：对采样轨迹中的每一对状态-动作，记录其后的奖赏值之和，作为该状态-动作的一次累积奖赏，通过多次采样后，使用累积奖赏的平均作为状态-动作值的估计，并<strong>引入ε-贪心策略保证采样的多样性</strong>。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwt1KJ.png" alt="iwt1KJ.png"></p>
+<p>在上面的算法流程中，被评估和被改进的都是同一个策略，因此称为<strong>同策略蒙特卡罗强化学习算法</strong>。引入ε-贪心仅是为了便于采样评估，而在使用策略时并不需要ε-贪心，那能否仅在评估时使用ε-贪心策略，而在改进时使用原始策略呢？这便是<strong>异策略蒙特卡罗强化学习算法</strong>。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwtK8U.png" alt="iwtK8U.png"></p>
+<h2 id="16-5-AlphaGo原理浅析"><a href="#16-5-AlphaGo原理浅析" class="headerlink" title="16.5 AlphaGo原理浅析"></a><strong>16.5 AlphaGo原理浅析</strong></h2><p>本篇一开始便提到强化学习是AlphaGo的核心技术之一，刚好借着这个东风将AlphaGo的工作原理了解一番。正如人类下棋那般“<strong>手下一步棋，心想三步棋</strong>”，Alphago也正是这个思想，<strong>当处于一个状态时，机器会暗地里进行多次的尝试/采样，并基于反馈回来的结果信息改进估值函数，从而最终通过增强版的估值函数来选择最优的落子动作。</strong></p>
+<p>其中便涉及到了三个主要的问题：<strong>（1）如何确定估值函数（2）如何进行采样（3）如何基于反馈信息改进估值函数</strong>，这正对应着AlphaGo的三大核心模块：<strong>深度学习</strong>、<strong>蒙特卡罗搜索树</strong>、<strong>强化学习</strong>。</p>
+<blockquote>
+<p><strong>1.深度学习（拟合估值函数）</strong></p>
+</blockquote>
+<p>由于围棋的状态空间巨大，像蒙特卡罗强化学习那样通过采样来确定值函数就行不通了。在围棋中，<strong>状态值函数可以看作为一种局面函数，状态-动作值函数可以看作一种策略函数</strong>，若我们能获得这两个估值函数，便可以根据这两个函数来完成：(1)衡量当前局面的价值；(2)选择当前最优的动作。那如何精确地估计这两个估值函数呢？<strong>这就用到了深度学习，通过大量的对弈数据自动学习出特征，从而拟合出估值函数。</strong></p>
+<blockquote>
+<p><strong>2.蒙特卡罗搜索树（采样）</strong></p>
+</blockquote>
+<p>蒙特卡罗树是一种经典的搜索框架，它通过反复地采样模拟对局来探索状态空间。具体表现在：从当前状态开始，利用策略函数尽可能选择当前最优的动作，同时也引入随机性来减小估值错误带来的负面影响，从而模拟棋局运行，使得棋盘达到终局或一定步数后停止。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwtM2F.png" alt="iwtM2F.png"></p>
+<blockquote>
+<p><strong>3.强化学习（调整估值函数）</strong></p>
+</blockquote>
+<p>在使用蒙特卡罗搜索树进行多次采样后，每次采样都会反馈后续的局面信息（利用局面函数进行评价），根据反馈回来的结果信息自动调整两个估值函数的参数，这便是强化学习的核心思想，最后基于改进后的策略函数选择出当前最优的落子动作。</p>
+<p><img src="https://s1.ax1x.com/2018/10/18/iwtQv4.png" alt="iwtQv4.png"></p>
+<p>在此，强化学习就介绍完毕。同时也意味着大口小口地啃完了这个西瓜，十分记得去年双11之后立下这个Flag，现在回想起来，大半年的时间里在嚼瓜上还是花费了不少功夫。有人说：当你阐述的能让别人看懂才算是真的理解，有人说：在写的过程中能发现那些只看书发现不了的东西，自己最初的想法十分简单：当健忘症发作的时候，如果能看到之前按照自己思路写下的文字，回忆便会汹涌澎湃一些~</p>
+<p>最后，感谢自己这大半年以来的坚持~Get busy living, or get busy dying!</p>
 
       
     </div>
@@ -620,8 +593,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B06--%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="next" title="周志华《Machine Learning》学习笔记(6)">
-                <i class="fa fa-chevron-left"></i> 周志华《Machine Learning》学习笔记(6)
+              <a href="/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B016--%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" rel="next" title="周志华《Machine Learning》学习笔记(16)">
+                <i class="fa fa-chevron-left"></i> 周志华《Machine Learning》学习笔记(16)
               </a>
             
           </div>
@@ -630,8 +603,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/07/27/%E5%91%A8%E5%BF%97%E5%8D%8E%E3%80%8AMachine%20Learning%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B08--%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8/" rel="prev" title="周志华《Machine Learning》学习笔记(8)">
-                周志华《Machine Learning》学习笔记(8) <i class="fa fa-chevron-right"></i>
+              <a href="/2020/07/29/deep-learning-from-scratch%E7%AC%94%E8%AE%B0/" rel="prev" title="deep-learning-from-scratch笔记">
+                deep-learning-from-scratch笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -810,7 +783,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#6、支持向量机"><span class="nav-number">1.</span> <span class="nav-text">6、支持向量机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-函数间隔与几何间隔"><span class="nav-number">1.1.</span> <span class="nav-text">6.1 函数间隔与几何间隔</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-1-函数间隔"><span class="nav-number">1.1.1.</span> <span class="nav-text">6.1.1 函数间隔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-2-几何间隔"><span class="nav-number">1.1.2.</span> <span class="nav-text">6.1.2 几何间隔</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-最大间隔与支持向量"><span class="nav-number">1.2.</span> <span class="nav-text">6.2 最大间隔与支持向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-从原始优化问题到对偶问题"><span class="nav-number">1.3.</span> <span class="nav-text">6.3 从原始优化问题到对偶问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-核函数"><span class="nav-number">1.4.</span> <span class="nav-text">6.4 核函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5-软间隔支持向量机"><span class="nav-number">1.5.</span> <span class="nav-text">6.5 软间隔支持向量机</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#16、强化学习"><span class="nav-number">1.</span> <span class="nav-text">16、强化学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#16-1-基本要素"><span class="nav-number">1.1.</span> <span class="nav-text">16.1 基本要素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-2-K摇摆赌博机"><span class="nav-number">1.2.</span> <span class="nav-text">16.2 K摇摆赌博机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#16-2-1-ε-贪心"><span class="nav-number">1.2.1.</span> <span class="nav-text">16.2.1 ε-贪心</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-2-2-Softmax"><span class="nav-number">1.2.2.</span> <span class="nav-text">16.2.2 Softmax</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-3-有模型学习"><span class="nav-number">1.3.</span> <span class="nav-text">16.3 有模型学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#16-3-1-策略评估"><span class="nav-number">1.3.1.</span> <span class="nav-text">16.3.1 策略评估</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-3-2-策略改进"><span class="nav-number">1.3.2.</span> <span class="nav-text">16.3.2 策略改进</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-4-蒙特卡罗强化学习"><span class="nav-number">1.4.</span> <span class="nav-text">16.4 蒙特卡罗强化学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-5-AlphaGo原理浅析"><span class="nav-number">1.5.</span> <span class="nav-text">16.5 AlphaGo原理浅析</span></a></li></ol></li></ol></div>
             
 
           </div>
