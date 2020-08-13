@@ -18347,7 +18347,7 @@ Iou
 <h1 id="学习观08：我知道很多人容易迷失，所以来谈谈为什么要学习科学"><a href="#学习观08：我知道很多人容易迷失，所以来谈谈为什么要学习科学" class="headerlink" title="学习观08：我知道很多人容易迷失，所以来谈谈为什么要学习科学"></a><span id="header8">学习观08：我知道很多人容易迷失，所以来谈谈为什么要学习科学</span></h1><h2 id="感知源于模型，尽管不是真实，却是生存唯一"><a href="#感知源于模型，尽管不是真实，却是生存唯一" class="headerlink" title="感知源于模型，尽管不是真实，却是生存唯一"></a>感知源于模型，尽管不是真实，却是生存唯一</h2><p>随着科学的发展，我们会看到更多生理和物理现象，对于自身和世界的认识会不断被颠覆，很容易产生经常悲观和虚无的情绪。</p>
 <p>而最容易产生的情绪就是：“如果感知不是真的，那还有什么意义”</p>
 <p>但当你学会思考 “为什么会产生这种现象” 时，你就会发现，不是不想求真，是因为从原理上就做不到。而且，允许我们存活到现在的恰恰是 “非真” 的模型，而不是真实。</p>
-<p>如果我们真的进化出感知真实的生理器官，恐怕我们早就不存在了。比如下面的图片里， A 和 B 看似不同,<br><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0kj7rxsFq0nJkT3ia2Y54jIg3WXAvbJubmhZEryKcCkHxH5q7KTJt9cHnibSarq26SG270GYib8FV7CgQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt><br>实际上 A 和 B 是相同颜色<br><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0kj7rxsFq0nJkT3ia2Y54jIg3ckE46cMshcE4Lvjib7bEeUKmtmcKMMPlgSKIYVRrX2mXpqLeZ6ucgbQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt><br>因为周边的颜色环境造成 “相对的” 感知到 B 亮于 A。</p>
+<p>如果我们真的进化出感知真实的生理器官，恐怕我们早就不存在了。比如下面的图片里， A 和 B 看似不同,<br><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/1.png" alt><br>实际上 A 和 B 是相同颜色<br><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/2.png" alt><br>因为周边的颜色环境造成 “相对的” 感知到 B 亮于 A。</p>
 <p>为什么会这样？我们假设 B 是藏在阴影里的猎豹，如果真的进化出感知真实的视觉的话，那很多情况下 “该看不到的内容” 就是看不到，而我们存活到今天的原因正是因为演化出的感知系统不是求真，而是求存。所以进化出的感知系统一定是“相对感知”而不是“绝对感知”。</p>
 <p>关于很多人觉得 “不真实就没有意义了” 的问题，实际上，我们脑中的 “求真” 想法并不是追求 “真实”，而是追求 “可坚信感”，因为我们依赖模型而活，如果不坚信自己的模型，就无法做出决策，无法生存。</p>
 <p>也就解释了为什么网上的戾气那么重，评论的人那么不实事求是，固执己见。因为他们根本不是来 “求真” 的，所有人都是希望得到 “我的模型是可以坚信的” 感觉。我们是进化成的“本能”的偏袒自己的模型。</p>
@@ -18549,8 +18549,8 @@ Iou
 <p>很多的教程，甚至教材都把熵介绍为：熵是描述无序或混乱的。</p>
 <p>这种描述对于没有物理背景和数学背景的人极其具有误导性。因为日常生活中的无序（disorder）和混乱（chaos）两词多用于描述一个事物（微观态）的具体排列方式，会错误的让新人认为排列的越乱，熵就大，偏离了这个伟大的概念的精髓。现在科学界都开始抛弃这种描述。</p>
 <p>这也就是为什么下图在解释熵时并不妥的原因。当然已经明白熵的人，可以强行的增加额外信息来解释这张图，</p>
-<p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/gpXsM9TH0khMt0G0zU1e5qfRnFHSicF1ciayCBpI0pChKJvWZicZwluxrfichKpCKbJLk5Z2XgNMk8HzyfNZpJJlLw/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
-<p>但对于新人而言，下图图来理解热力学熵的效果更好：灰色表示宏观态（共五种），带数字的球表示微观态（每种宏观态对应不同数量的微观态）。中间这个两球都在中间的宏观态的熵最大（因为这个宏观态是最难确定对应 6 个微观态中哪一个的）。<br><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0kjRTgpfxibFPxqFiatV1Pen3jCUjtUkVBPJwwyicsVxnkoXFTeZoicYTYg0EedeJLBrCC8JDY973uwXbw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
+<p><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/3.png" alt></p>
+<p>但对于新人而言，下图图来理解热力学熵的效果更好：灰色表示宏观态（共五种），带数字的球表示微观态（每种宏观态对应不同数量的微观态）。中间这个两球都在中间的宏观态的熵最大（因为这个宏观态是最难确定对应 6 个微观态中哪一个的）。<br><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/4.png" alt></p>
 <p>这段内容不做要求，不用掌握</p>
 <p>在物理层面，我们观察到的物体都是大量无规则运动粒子在宏观层面的表现，比如温度。由于中间这种宏观态的微观态个数最多，所以从概率上会更有可能向这种状态发展，而由熵推出的这种发展趋势便是热力学第二定律。</p>
 <p>当一个物体的宏观态改变时，对我们而言才算是状态的改变，而物体的能量分布当达到中间的宏观态时，就很难再改变它的宏观状态，它自发做功的能力就最弱。</p>
@@ -18669,7 +18669,7 @@ Iou
 <p>不过，怎么测量每种情况的信息量呢？ 怎么知道概率为 1/6 的情况的不确定性相当于抛掷多少次硬币所产生的不确定性呢？ </p>
 <p>我们确实没法再用 log m 这个公式了，但我们知道 1% 会发生的情况，相当于从100个等概率情况中确定实际情况， 概率的倒数等于等概率情况的个数，m = 1/p。 </p>
 <p>用 1/p 替换 m 后，我们就可以计算每种情况的信息量了， 再用每个情况的信息量乘以对应发生的概率，再相加后，就能算总信息量了。 </p>
-<p><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0kjPySvsDo285mr8QNRuficM8hC25o11BRAd38mj1nZgOcfE8bWl0CshEOiaSYlpJLbZHNic3fjmoYsSw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
+<p><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/5.png" alt></p>
 <blockquote>
 <p>i: 用于指定第几个具体情况<br>$p_i$：第 i 个具体情况的概率<br>Σ：表示 i 个情况计算出的 p log p 累加起来<br>之所以前面有负号是因为 </p>
 <p>log 1/p = log p^-1 = -log p<br>概率的倒数变成了负号被拿到前面了</p>
@@ -18678,8 +18678,7 @@ Iou
 <p>$log_2 \frac{1}{p} = log_2 \frac{1}{\frac{1}{4}} = 2$</p>
 <p>当被告知 C 有 50%概率是正确答案时，小明对答案的不确定性是：</p>
 <blockquote>
-<p> $\frac{1}{6} <em> log_2 (\frac{1}{6})^{-1} + \frac{1}{6} </em> log_2 (\frac{1}{6})^{-1} + \frac{1}{2} <em> log_2 (\frac{1}{2})^{-1} + \frac{1}{6} </em> log_2 (\frac{1}{6})^{-1}$<br>= $\frac{1}{6} <em> log_2 6 + \frac{1}{6} </em> log_2 6 + \frac{1}{2} <em> log_2 2 + \frac{1}{6} </em> log_2 6 $<br>= $1.79$</p>
-</blockquote>
+<script type="math/tex; mode=display">\frac{1}{6} * log_2 (\frac{1}{6})^{-1} + \frac{1}{6} * log_2 (\frac{1}{6})^{-1} + \frac{1}{2} * log_2 (\frac{1}{2})^{-1} + \frac{1}{6} * log_2 (\frac{1}{6})^{-1}</script><script type="math/tex; mode=display">= \frac{1}{6} * log_2 6 + \frac{1}{6} * log_2 6 + \frac{1}{2} * log_2 2 + \frac{1}{6} * log_2 6</script><script type="math/tex; mode=display">=1.79</script></blockquote>
 <p>2-1.79=0.21 bits， 也就是小红告诉小明”C 的概率是 50%“时提供的信息。</p>
 <p>可以思考一下：</p>
 <ul>
@@ -18688,7 +18687,7 @@ Iou
 </ul>
 <p>再次描述一遍信息与熵的关系：</p>
 <p>某人对某物的熵（不确定性）相当于水杯，信息相当于水，新填充的水（新信息）要看杯子原来有多少水（已有信息），但水无法溢过杯子（能接收到的最大信息就是该人目前的剩余不确定性）。</p>
-<h2 id="我不相信天才，可我找不出其他词来形容他们"><a href="#我不相信天才，可我找不出其他词来形容他们" class="headerlink" title="我不相信天才，可我找不出其他词来形容他们"></a>我不相信天才，可我找不出其他词来形容他们</h2><p>作者有很多偶像，以往的视频里多次提到过理查德·费曼（Richard Phillips Feynman），而这几期信息的视频，希望大家记住这位伟大的数学家：克劳德·香农（Claude Elwood Shannon），信息公式的发明者。<br><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0kjPySvsDo285mr8QNRuficM8gH8SwBVvib52kNg6jhLI9RyjdGctIobRHciaf73ic4C6kDg0Mk6XPxqRw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
+<h2 id="我不相信天才，可我找不出其他词来形容他们"><a href="#我不相信天才，可我找不出其他词来形容他们" class="headerlink" title="我不相信天才，可我找不出其他词来形容他们"></a>我不相信天才，可我找不出其他词来形容他们</h2><p>作者有很多偶像，以往的视频里多次提到过理查德·费曼（Richard Phillips Feynman），而这几期信息的视频，希望大家记住这位伟大的数学家：克劳德·香农（Claude Elwood Shannon），信息公式的发明者。<br><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/6.png" alt></p>
 <h1 id="学习观12：理论上人类可以永生，那导致现实死亡的原因是？"><a href="#学习观12：理论上人类可以永生，那导致现实死亡的原因是？" class="headerlink" title="学习观12：理论上人类可以永生，那导致现实死亡的原因是？"></a><span id="header12">学习观12：理论上人类可以永生，那导致现实死亡的原因是？</span></h1><p>生命是什么？生命的敌人是什么？人类的未来会怎样？为什么时间有方向？若想造出人工智能生命，需要具备什么能力？信息究竟有多重要？</p>
 <p>标题有点噱头，但请仔细体会“信息”在其中充当的角色。</p>
 <p>若一个理论没有用处，不管它多么高雅，我也不会去讲它。而我也不想剧透，不想苍白的告诉大家某个东西有多么重要。但随着视频的制作，但随着视频的制作，我会慢慢给你很多这些内容在生活中的应用，相信你一定会惊呼。</p>
@@ -19036,7 +19035,7 @@ Iou
 <p>这里将通过一个简单的例子，来比较两种不同的记忆方式。</p>
 <p>输入：假设有两个输入，都可为0或1。</p>
 <p>输出：当两个输入不一样时，就输出1，否则输出0。</p>
-<p>一共有四种情况。<br><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0kia6ISCP0ayDyqvbVSyiaM6V2jsPUdTBUib99IGxBJ18mG0AHicnickykPLQhicBxiadUz7jeiaS5CiaovvsibA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
+<p>一共有四种情况。<br><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/7.png" alt></p>
 <p>5.1. 查找记忆</p>
 <p>第一种记忆方式与九九乘法表一样，就是将所有情况都记录下来，随后根据输入去查找对应的输出。</p>
 <p>特点是：</p>
@@ -19051,12 +19050,12 @@ Iou
 <p>这里的输入和输出都是一种状态。</p>
 <p>输入状态由两个因素（dimension）所表达（represent），好比一个物体的长和宽，因此也叫二维向量。</p>
 <p>而输出状态是一维向量。</p>
-<p>如果只记忆这种情况：<br><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0kia6ISCP0ayDyqvbVSyiaM6V2aMqsFnxrSKLtKiaIz3nIcWnibc0wsClPz69G6Ard0ClicquXuYeBwQ46Q/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt><br>那可以忽略第一个维度，只取第二个维度的原值。</p>
+<p>如果只记忆这种情况：<br><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/8.png" alt><br>那可以忽略第一个维度，只取第二个维度的原值。</p>
 <p>圆圈中的数值表示每个维度的状态，这些控制着取多少状态的连接表示权重（weights）。</p>
-<p>而若是只记忆这种情况：<br><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0kia6ISCP0ayDyqvbVSyiaM6V2xHCYMGWgonyN7riaRAuiaInCFKkQ2AwZXq4UZBCjbHpDwzO8kfamnPLg/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt><br>那可以让第一个维度乘以负一，与第二个维度的原值相加。</p>
+<p>而若是只记忆这种情况：<br><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/9.png" alt><br>那可以让第一个维度乘以负一，与第二个维度的原值相加。</p>
 <p>5.2.1. 网络记忆的位置</p>
 <p>不同于第一种记忆，网络的记忆并不是存储在某个特定位置，而是由所有权重共同存储的，无法直接查看，只能根据输入计算输出。</p>
-<p>不过若要同时记忆这四种情况：<br><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0kia6ISCP0ayDyqvbVSyiaM6V2jsPUdTBUib99IGxBJ18mG0AHicnickykPLQhicBxiadUz7jeiaS5CiaovvsibA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt><br>那之前任何一种直接从输入状态变换到输出状态的方式都不行。</p>
+<p>不过若要同时记忆这四种情况：<br><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/10.png" alt><br>那之前任何一种直接从输入状态变换到输出状态的方式都不行。</p>
 <p>但可以先变换到一个非线性（意为变化速率是常量）的中间状态，再从中间状态变到输出状态。</p>
 <p>5.2.2. 网络记忆的保证</p>
 <p>但如果要记忆的情况特别多怎么办？</p>
@@ -19114,7 +19113,7 @@ Iou
 <h2 id="异或门例子"><a href="#异或门例子" class="headerlink" title="异或门例子"></a>异或门例子</h2><p>我们还是先从最简单的异或门例子开始，</p>
 <p>虽然涉及很多数字，但请耐心体会。</p>
 <p>1.1. 异或门描述</p>
-<p>假设需要这样一个功能：根据两个输入，要求得到对应的输出，一共有4种情况：<br><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0kia6ISCP0ayDyqvbVSyiaM6V2jsPUdTBUib99IGxBJ18mG0AHicnickykPLQhicBxiadUz7jeiaS5CiaovvsibA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
+<p>假设需要这样一个功能：根据两个输入，要求得到对应的输出，一共有4种情况：<br><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/11.png" alt></p>
 <ul>
 <li>当第一个输入是1，第二个输入是1时，就输出0。</li>
 <li>当第一个输入是1，第二个输入是0时，就输出1。</li>
@@ -19285,7 +19284,7 @@ Iou
 <p>重复上述过程直到记住所有演讲内容。</p>
 <p>下面是一个图示：「演讲的第二句话」的输入是「演讲的第一句话」 + 「ppt图2」。</p>
 <p>这个就是最基本的循环神经网络图。我们在用AI生成语言或声音时，多数都使用这类网络。</p>
-<p><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0kjVCQJG2kxEZNLSab5DaL0BrnXWxxpIO2EO5y2uI0rjDGUVjl1ibibjAC73PkVdZfvWic4ShcgRmm3Iw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
+<p><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/12.png" alt></p>
 <p>剩下的还是一个很小的应用，大家都知道。</p>
 <p>涉及的知识还是：</p>
 <ol>
@@ -19522,7 +19521,7 @@ Iou
 <p>AI vs 生物：2012 ~ 2017 年就相当于人工智能的寒武纪大爆发。计算机首次获得了感知等级（Perception）的智能；语音，画面等感知都不再是问题了。</p>
 <p>AI少了什么：但如果你认为这样我们就会被机器所统治，那你也太小瞧生命在随后 5 亿年中的演化了。因为在寒武纪，生命除了感知，还演化出了一个更重要的功能…</p>
 <h1 id="学习观18-5：高考导致了“高分低能”？素质教育改革可能出现什么问题？"><a href="#学习观18-5：高考导致了“高分低能”？素质教育改革可能出现什么问题？" class="headerlink" title="学习观18.5：高考导致了“高分低能”？素质教育改革可能出现什么问题？"></a><span id="header18.5">学习观18.5：高考导致了“高分低能”？素质教育改革可能出现什么问题？</span></h1><p>1.聪明的马</p>
-<p>为了解释为什么，让我们回到1900年初的德国。<br><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0khUvHN1icicGqFWU0xUNia3bA1sZyQU23Itdibm36CNA6knMZKI5mWzr7H6fCAOfGicKc5nneegbY6zWww/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt><br>照片里的这个人叫做 威廉 奥斯汀，曾是一名数学老师。一般大胡子的数学老师们都不太安分，而奥斯汀就觉得动物的智力被低估了，于是就开始教名为汉斯的一匹马学算数。<br><img src="https://mmbiz.qpic.cn/mmbiz_jpg/gpXsM9TH0khUvHN1icicGqFWU0xUNia3bA1tzg1mY0jBxHZW70qqC6BuFCEqJnGxhaUKMbetruic9z0lwUcffAkvibg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt><br>经过一段时间的训练后，奥斯汀便把汉斯带到众人面前来展示。当问到二加二等于几时，汉斯踏了四下蹄子。而问到“若今天是星期一，再过多少天是星期六”时，汉斯竟仍然可以正确的踏五下蹄子。<br><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0khUvHN1icicGqFWU0xUNia3bA1q7gEWwIzdqAHibTfEia1ruG8hRMcRthj7bdWgAicicIhI65mjZkiaaKQ2lw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt><br>德国人可是一个很严谨的民族，专门成立了一个委员会来调查此事，带头的是另一个大胡子，叫做卡尔 斯坦普夫。<br><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0khUvHN1icicGqFWU0xUNia3bA1TCkDQXg7xBoPesEFpnPCYJxlbicxOIU4wdeSyVmAYvvkMjv92piatRRA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt><br>经过严格的调查后，他们并没有在奥斯汀身上发现任何欺诈或作弊行为。甚至用别人替代奥斯汀来提问，汉斯仍然可以正确回答。<br><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0khUvHN1icicGqFWU0xUNia3bA1Yyj0bTek5WJQNyPGDR8QwJR6zY7vW3JO2zX2MaialXuUkpD1kAoe27Q/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt><br>可问题出现在，当提问者远离汉斯的视线，或提问者自己也不知道答案时，汉斯便无法回答了。</p>
+<p>为了解释为什么，让我们回到1900年初的德国。<br><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/13.png" alt><br>照片里的这个人叫做 威廉 奥斯汀，曾是一名数学老师。一般大胡子的数学老师们都不太安分，而奥斯汀就觉得动物的智力被低估了，于是就开始教名为汉斯的一匹马学算数。<br><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/14.png" alt><br>经过一段时间的训练后，奥斯汀便把汉斯带到众人面前来展示。当问到二加二等于几时，汉斯踏了四下蹄子。而问到“若今天是星期一，再过多少天是星期六”时，汉斯竟仍然可以正确的踏五下蹄子。<br><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/15.png" alt><br>德国人可是一个很严谨的民族，专门成立了一个委员会来调查此事，带头的是另一个大胡子，叫做卡尔 斯坦普夫。<br><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/16.png" alt><br>经过严格的调查后，他们并没有在奥斯汀身上发现任何欺诈或作弊行为。甚至用别人替代奥斯汀来提问，汉斯仍然可以正确回答。<br><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/17.png" alt><br>可问题出现在，当提问者远离汉斯的视线，或提问者自己也不知道答案时，汉斯便无法回答了。</p>
 <ol>
 <li>建模偏差</li>
 </ol>
@@ -19585,13 +19584,13 @@ Iou
 <p>预测：那么系统最终也一定会根据素质教育的奖励机制演化成另一套偏离教育目标的应试教育系统。</p>
 <p>应试成本：唯一不同的是，这套新的教育系统会使学生获得分数的成本变高，让人才筛选变得不再公平。</p>
 </blockquote>
-<p><img src="https://mmbiz.qpic.cn/mmbiz_png/gpXsM9TH0khUvHN1icicGqFWU0xUNia3bA1ZU1k1OsVooSE7G50BLyrwUZJzw9d6GOVbSek7RM2boZgOdk3czqkiaA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
+<p><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/18.png" alt></p>
 <blockquote>
 <p>例子：比如富人的得分上限是900，而穷人的上限只能是600（分数只是升学条件的数字化，不一定真的是数）。</p>
 <p>类比：这种“素质教育”就如同一款宣称大家可以打神装的网络游戏。但实际上必须要先充钱才有可能打得过BOSS，那么充不起钱的玩家和充的起钱的玩家的差距将会越来越大。</p>
 </blockquote>
 <p>美国素质教育：最好的例子就在美国。美国素质教育的评分机制涉及各种才艺特长（主观评判），很多只有富人的子女才能享受到的提分渠道。</p>
-<p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/gpXsM9TH0khUvHN1icicGqFWU0xUNia3bA1G6o70fQicGEXp0W1ZY5HAqjQiaD6g1es2rUTCFU3GwJ0Wb3APfzIibhsg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
+<p><img src="/2020/08/10/%E5%AD%A6%E4%B9%A0%E8%A7%82/19.png" alt></p>
 <p>例子：在2019年爆出的“美国高校招生丑闻”，更是揭露了美国富人是如何利用“素质教育”的评分机制，让自己的子女获得更高的分数，从而进入名牌大学。</p>
 <blockquote>
 <p>应对思路：如果当前无法保证能设计出使“得分目标”等价于“能力目标”的奖励机制，那么最合理的解决方案恰恰不是推行德、体、艺等提高评分条件的“素质教育”，反而是降低学生得分成本的“应试教育”，让每个学生都有机会仅靠历年真题便能获得所有分数。而这个“应试教育”就是高考。</p>
