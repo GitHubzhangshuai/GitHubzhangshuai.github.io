@@ -427,19 +427,15 @@
       
 
       
-        <p>非线性逻辑回归代码演示<br>数据下载<a href="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/data/LR-testSet2.txt" target="_blank" rel="noopener">LR-testSet2.txt</a></p>
-<a id="more"></a>
-
+        <p>非线性逻辑回归代码演示<br>数据下载<a href="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/data/LR-testSet2.txt" target="_blank" rel="noopener">LR-testSet2.txt</a><br><a id="more"></a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> PolynomialFeatures</span><br><span class="line">scale = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>np.newaxis的功能——插入新维度</li>
 </ul>
 <hr>
 <p>举个简单的例子介绍一下吧。</p>
 <ul>
-<li><p>栗子1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a&#x3D;np.array([1,2,3,4,5])</span><br><span class="line">print(a.shape)</span><br><span class="line">print (a)</span><br></pre></td></tr></table></figure></li>
+<li>栗子1：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a&#x3D;np.array([1,2,3,4,5])</span><br><span class="line">print(a.shape)</span><br><span class="line">print (a)</span><br></pre></td></tr></table></figure></li>
 <li><p>输出：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(5,)</span><br><span class="line">[1 2 3 4 5]</span><br></pre></td></tr></table></figure>
 </li>
@@ -451,9 +447,7 @@
 </li>
 <li><p>栗子3：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">a&#x3D;np.array([1,2,3,4,5])</span><br><span class="line">aa&#x3D;a[np.newaxis,:]</span><br><span class="line">print(aa.shape)</span><br><span class="line">print (aa)</span><br></pre></td></tr></table></figure></li>
-<li><p>输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1, 5)</span><br><span class="line">[[1 2 3 4 5]]</span><br></pre></td></tr></table></figure>
-
+<li>输出<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1, 5)</span><br><span class="line">[[1 2 3 4 5]]</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <hr>
@@ -461,8 +455,6 @@
 <p>对于[: , np.newaxis] 和 [np.newaxis，：]<br>是在np.newaxis这里增加1维。</p>
 <p>这样改变维度的作用往往是将一维的数据转变成一个矩阵</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">data = np.genfromtxt(<span class="string">'./data/LR-testSet2.txt'</span>,delimiter=<span class="string">','</span>)</span><br><span class="line">x_data = data[:,:<span class="number">-1</span>] <span class="comment">#shape(118, 2)</span></span><br><span class="line">y_data = data[:,<span class="number">-1</span>,np.newaxis] <span class="comment">#shape(118, 1)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot</span><span class="params">()</span>:</span></span><br><span class="line">    x0 = []</span><br><span class="line">    x1 = []</span><br><span class="line">    y0 = []</span><br><span class="line">    y1 = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(x_data)):</span><br><span class="line">        <span class="keyword">if</span> y_data[i]==<span class="number">0</span>:</span><br><span class="line">            x0.append(x_data[i,<span class="number">0</span>])</span><br><span class="line">            y0.append(x_data[i,<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            x1.append(x_data[i,<span class="number">0</span>])</span><br><span class="line">            y1.append(x_data[i,<span class="number">1</span>])</span><br><span class="line">    scatter0 = plt.scatter(x0,y0,c=<span class="string">'b'</span>,marker=<span class="string">'o'</span>)</span><br><span class="line">    scatter1 = plt.scatter(x1,y1,c=<span class="string">'r'</span>,marker=<span class="string">'x'</span>)</span><br><span class="line">    plt.legend(handles=[scatter0,scatter1],labels=[<span class="string">'labell0'</span>,<span class="string">'label1'</span>],loc=<span class="string">'best'</span>)</span><br><span class="line"></span><br><span class="line">plot()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-
 <p><img src="/2020/07/09/%E9%9D%9E%E7%BA%BF%E6%80%A7%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/output_2_0.png" alt="png"></p>
 <p>使用sklearn.preprocessing.PolynomialFeatures来进行特征的构造。</p>
 <p>它是使用多项式的方法来进行的，如果有a，b两个特征，那么它的2次多项式为（1,a,b,a^2,ab, b^2），这个多项式的形式是使用poly的效果。</p>
@@ -472,22 +464,9 @@
 <li>interaction_only： 默认为False，如果指定为True，那么就不会有特征自己和自己结合的项，上面的二次项中没有a^2和b^2。</li>
 <li>include_bias：默认为True。如果为True的话，那么就会有上面的 1那一项。</li>
 </ul>
-<p>例子1，interaction_only为默认的False时</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">c&#x3D;[[5,10]]    #c&#x3D;[[a,b]],这里要注意a的shape，如果是list形式，则将a.shape&#x3D;-1,1</span><br><span class="line">pl&#x3D;PolynomialFeatures()</span><br><span class="line">b&#x3D;pl.fit_transform(c)</span><br><span class="line">b</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[  1.,   5.,  10.,  25.,  50., 100.]]) </span><br><span class="line">#符合（1,a,b,a^2,ab, b^2）</span><br></pre></td></tr></table></figure>
-
-<p>例子2，interaction_only=True时</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">c&#x3D;[[5,10]]</span><br><span class="line">pl&#x3D;PolynomialFeatures(interaction_only&#x3D;True)</span><br><span class="line">b&#x3D;pl.fit_transform(c)</span><br><span class="line">b</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[ 1.,  5., 10., 50.]])   </span><br><span class="line">#输出中不包含a^2和b^2项</span><br></pre></td></tr></table></figure>
-
-
+<p>例子1，interaction_only为默认的False时<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">c&#x3D;[[5,10]]    #c&#x3D;[[a,b]],这里要注意a的shape，如果是list形式，则将a.shape&#x3D;-1,1</span><br><span class="line">pl&#x3D;PolynomialFeatures()</span><br><span class="line">b&#x3D;pl.fit_transform(c)</span><br><span class="line">b</span><br></pre></td></tr></table></figure><br>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[  1.,   5.,  10.,  25.,  50., 100.]]) </span><br><span class="line">#符合（1,a,b,a^2,ab, b^2）</span><br></pre></td></tr></table></figure></p>
+<p>例子2，interaction_only=True时<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">c&#x3D;[[5,10]]</span><br><span class="line">pl&#x3D;PolynomialFeatures(interaction_only&#x3D;True)</span><br><span class="line">b&#x3D;pl.fit_transform(c)</span><br><span class="line">b</span><br></pre></td></tr></table></figure><br>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[ 1.,  5., 10., 50.]])   </span><br><span class="line">#输出中不包含a^2和b^2项</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">poly_reg = PolynomialFeatures(degree=<span class="number">3</span>)</span><br><span class="line">x_poly = poly_reg.fit_transform(x_data)</span><br><span class="line">x_poly</span><br></pre></td></tr></table></figure>
-
-
-
-
 <pre><code>array([[ 1.00000000e+00,  5.12670000e-02,  6.99560000e-01, ...,
          1.83865725e-03,  2.50892595e-02,  3.42353606e-01],
        [ 1.00000000e+00, -9.27420000e-02,  6.84940000e-01, ...,
@@ -500,12 +479,10 @@
        [ 1.00000000e+00, -6.33640000e-03,  9.99270000e-01, ...,
          4.01206555e-05, -6.32715223e-03,  9.97811598e-01],
        [ 1.00000000e+00,  6.32650000e-01, -3.06120000e-02, ...,
-        -1.22523312e-02,  5.92852863e-04, -2.86863382e-05]])</code></pre><p><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%921.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%922.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%923.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%924.png" alt></p>
+        -1.22523312e-02,  5.92852863e-04, -2.86863382e-05]])
+</code></pre><p><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%921.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%922.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%923.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%924.png" alt></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.0</span>/(<span class="number">1</span>+np.exp(-x))</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cost</span><span class="params">(xMat,yMat,ws)</span>:</span></span><br><span class="line">    left = np.multiply(yMat,np.log(sigmoid(xMat*ws)))</span><br><span class="line">    right = np.multiply(<span class="number">1</span>-yMat,np.log(<span class="number">1</span>-sigmoid(xMat*ws)))</span><br><span class="line">    <span class="keyword">return</span> np.sum(left+right)/-(len(xMat))</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradAscent</span><span class="params">(xArr,yArr)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> scale == <span class="literal">True</span>:</span><br><span class="line">        xArr = preprocessing.scale(xArr)</span><br><span class="line">    xMat = np.mat(xArr)</span><br><span class="line">    yMat = np.mat(yArr)</span><br><span class="line">    lr = <span class="number">0.03</span></span><br><span class="line">    epochs = <span class="number">50000</span></span><br><span class="line">    costList = []</span><br><span class="line">    m,n = np.shape(xMat)</span><br><span class="line">    ws = np.mat(np.ones((n,<span class="number">1</span>)))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(epochs+<span class="number">1</span>):</span><br><span class="line">        h = sigmoid(xMat*ws)</span><br><span class="line">        ws_grad = xMat.T*(h-yMat)/m</span><br><span class="line">        ws = ws - lr*ws_grad</span><br><span class="line">        <span class="keyword">if</span> i %<span class="number">50</span> == <span class="number">0</span>:</span><br><span class="line">            costList.append(cost(xMat,yMat,ws))</span><br><span class="line">    <span class="keyword">return</span> ws,costList</span><br></pre></td></tr></table></figure>
-
-
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ws, costList = gradAscent(x_poly,y_data)</span><br><span class="line">print(ws)</span><br></pre></td></tr></table></figure>
-
 <pre><code>[[ 4.16787292]
  [ 2.72213524]
  [ 4.55120018]
@@ -515,30 +492,16 @@
  [-0.55950401]
  [-1.55418165]
  [-0.75929829]
- [-2.88573877]]</code></pre><p>np.c_是按行连接两个矩阵，就是把两矩阵左右相加，要求行数相等。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a &#x3D; np.array([[1, 2, 3],[7,8,9]])</span><br><span class="line"> </span><br><span class="line">b&#x3D;np.array([[4,5,6],[1,2,3]])</span><br><span class="line"> </span><br><span class="line">a</span><br></pre></td></tr></table></figure>
-<p>Out[4]: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[1, 2, 3],</span><br><span class="line">       [7, 8, 9]])</span><br></pre></td></tr></table></figure>
-
-<p>b<br>Out[5]: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[4, 5, 6],</span><br><span class="line">       [1, 2, 3]])</span><br></pre></td></tr></table></figure>
-
+ [-2.88573877]]
+</code></pre><p>np.c_是按行连接两个矩阵，就是把两矩阵左右相加，要求行数相等。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a &#x3D; np.array([[1, 2, 3],[7,8,9]])</span><br><span class="line"> </span><br><span class="line">b&#x3D;np.array([[4,5,6],[1,2,3]])</span><br><span class="line"> </span><br><span class="line">a</span><br></pre></td></tr></table></figure><br>Out[4]:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[1, 2, 3],</span><br><span class="line">       [7, 8, 9]])</span><br></pre></td></tr></table></figure></p>
+<p>b<br>Out[5]:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[4, 5, 6],</span><br><span class="line">       [1, 2, 3]])</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">c&#x3D;np.c_[a,b]</span><br><span class="line"> </span><br><span class="line">c</span><br></pre></td></tr></table></figure>
-<p>Out[7]: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[1, 2, 3, 4, 5, 6],</span><br><span class="line">       [7, 8, 9, 1, 2, 3]])</span><br></pre></td></tr></table></figure>
-
-
+<p>Out[7]:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array([[1, 2, 3, 4, 5, 6],</span><br><span class="line">       [7, 8, 9, 1, 2, 3]])</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">d&#x3D; np.array([7,8,9])</span><br><span class="line"> </span><br><span class="line">e&#x3D;np.array([1, 2, 3])</span><br><span class="line"> </span><br><span class="line">f&#x3D;np.c_[d,e]</span><br><span class="line"> </span><br><span class="line">f</span><br></pre></td></tr></table></figure>
-<p>Out[12]: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array([[7, 1],</span><br><span class="line">       [8, 2],</span><br><span class="line">       [9, 3]])</span><br></pre></td></tr></table></figure>
-
-
+<p>Out[12]:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array([[7, 1],</span><br><span class="line">       [8, 2],</span><br><span class="line">       [9, 3]])</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">x_min,x_max = x_data[:,<span class="number">0</span>].min()<span class="number">-1</span>,x_data[:,<span class="number">0</span>].max()+<span class="number">1</span></span><br><span class="line">y_min,y_max = x_data[:,<span class="number">1</span>].min()<span class="number">-1</span>,x_data[:,<span class="number">1</span>].max()+<span class="number">1</span></span><br><span class="line"></span><br><span class="line">xx,yy = np.meshgrid(np.arange(x_min,y_max,<span class="number">0.02</span>),</span><br><span class="line">                   np.arange(y_min,y_max,<span class="number">0.02</span>))</span><br><span class="line"><span class="comment"># raval多维转一维</span></span><br><span class="line"><span class="comment"># dot矩阵乘积</span></span><br><span class="line"><span class="comment"># np.c_左右拼接两个矩阵</span></span><br><span class="line">z = sigmoid(poly_reg.fit_transform(np.c_[xx.ravel(),yy.ravel()]).dot(np.array(ws)))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(z)):</span><br><span class="line">    <span class="keyword">if</span> z[i]&gt;<span class="number">0.5</span>:</span><br><span class="line">        z[i]=<span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        z[i]=<span class="number">0</span></span><br><span class="line">z=z.reshape(xx.shape)</span><br><span class="line"></span><br><span class="line">cs = plt.contourf(xx,yy,z)</span><br><span class="line">plot()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-
 <p><img src="/2020/07/09/%E9%9D%9E%E7%BA%BF%E6%80%A7%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/output_9_0.png" alt="png"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(x_data,ws)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> scale == <span class="literal">True</span>:</span><br><span class="line">        x_data = preprocessing.scale(x_data)</span><br><span class="line">    xMat = np.mat(x_data)</span><br><span class="line">    ws = np.mat(ws)</span><br><span class="line">    <span class="keyword">return</span> [<span class="number">1</span> <span class="keyword">if</span> x&gt;=<span class="number">0.5</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">for</span> x <span class="keyword">in</span> sigmoid(xMat*ws)] </span><br><span class="line"></span><br><span class="line">predictions = predict(x_poly,ws)</span><br><span class="line">print(classification_report(y_data,predictions))</span><br></pre></td></tr></table></figure>
-
 <pre><code>              precision    recall  f1-score   support
 
          0.0       0.86      0.83      0.85        60
@@ -546,7 +509,8 @@
 
     accuracy                           0.85       118
    macro avg       0.85      0.85      0.85       118
-weighted avg       0.85      0.85      0.85       118</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+weighted avg       0.85      0.85      0.85       118
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -692,7 +656,7 @@ weighted avg       0.85      0.85      0.85       118</code></pre><figure class=
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -714,7 +678,7 @@ weighted avg       0.85      0.85      0.85       118</code></pre><figure class=
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -1347,8 +1311,8 @@ document.getElementById('busuanzi_container_site_uv').style.display='inline-bloc
 
    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
-   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>

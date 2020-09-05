@@ -89,7 +89,6 @@
 <meta property="og:description" content="5.形态转换 6.图像梯度 7.Canny边缘检测 8.图像金字塔">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/07/13/opencv%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%862/output_9_0.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/13/opencv%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%862/output_1_0.png">
 <meta property="og:image" content="http://qiniu.aihubs.net/nms.jpg">
 <meta property="og:image" content="http://qiniu.aihubs.net/hysteresis.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/07/13/opencv%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%862/output_2_0.png">
@@ -435,8 +434,6 @@
 <li>6.<a href="#header2">图像梯度</a></li>
 <li>7.<a href="#header3">Canny边缘检测</a></li>
 <li>8.<a href="#header4">图像金字塔</a><a id="more"></a>
-
-
 </li>
 </ul>
 <h1 id="形态学转换"><a href="#形态学转换" class="headerlink" title="形态学转换"></a><span id="header1">形态学转换</span></h1><h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>在这一章当中， 我们将学习不同的形态学操作，例如侵蚀，膨胀，开运算，闭运算等。<br>我们将看到不同的功能，</p>
@@ -465,61 +462,67 @@
 <h2 id="6-顶帽"><a href="#6-顶帽" class="headerlink" title="6. 顶帽"></a>6. 顶帽</h2><p>它是输入图像和图像开运算之差。下面的示例针对9x9内核完成。</p>
 <h2 id="7-黑帽"><a href="#7-黑帽" class="headerlink" title="7. 黑帽"></a>7. 黑帽</h2><p>这是输入图像和图像闭运算之差。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> pylab <span class="keyword">import</span> mpl </span><br><span class="line">mpl.rcParams[<span class="string">'font.sans-serif'</span>] = [<span class="string">'FangSong'</span>] <span class="comment"># 指定默认字体 </span></span><br><span class="line">mpl.rcParams[<span class="string">'axes.unicode_minus'</span>] = <span class="literal">False</span> <span class="comment"># 解决保存图像是负号'-'显示为方块的问题</span></span><br><span class="line">img = cv.imread(<span class="string">'j.png'</span>,<span class="number">0</span>)</span><br><span class="line">kernel = np.ones((<span class="number">5</span>,<span class="number">5</span>),np.uint8)</span><br><span class="line">erosion = cv.erode(img,kernel,iterations = <span class="number">1</span>)</span><br><span class="line">dilation = cv.dilate(img,kernel,iterations = <span class="number">1</span>) </span><br><span class="line">opening = cv.morphologyEx(img, cv.MORPH_OPEN, kernel) </span><br><span class="line">closing = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel) </span><br><span class="line">gradient = cv.morphologyEx(img, cv.MORPH_GRADIENT, kernel) </span><br><span class="line">tophat = cv.morphologyEx(img, cv.MORPH_TOPHAT, kernel) </span><br><span class="line">blackhat = cv.morphologyEx(img, cv.MORPH_BLACKHAT, kernel) </span><br><span class="line">imgs = [img,erosion,dilation,opening,closing,gradient,tophat,blackhat]</span><br><span class="line">titles = [<span class="string">'原图'</span>,<span class="string">'侵蚀'</span>,<span class="string">'膨胀'</span>,<span class="string">'开运算'</span>,<span class="string">'闭运算'</span>,<span class="string">'形态学梯度'</span>,<span class="string">'顶帽'</span>,<span class="string">'黑帽'</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(imgs)):</span><br><span class="line">    plt.subplot(<span class="number">2</span>,<span class="number">4</span>,i+<span class="number">1</span>)</span><br><span class="line">    plt.imshow(imgs[i])</span><br><span class="line">    plt.title(titles[i])</span><br><span class="line">    plt.xticks([])</span><br><span class="line">    plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-
 <p><img src="/2020/07/13/opencv%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%862/output_9_0.png" alt="png"></p>
 <h2 id="结构元素"><a href="#结构元素" class="headerlink" title="结构元素"></a>结构元素</h2><p>在Numpy的帮助下，我们在前面的示例中手动创建了一个结构元素。</p>
 <p>它是矩形。但是在某些情况下，您可能需要椭圆形/圆形的内核。</p>
 <p>因此，为此，OpenCV具有一个函数<strong>cv.getStructuringElement</strong>()。</p>
 <p>您只需传递内核的形状和大小，即可获得所需的内核</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 矩形</span></span><br><span class="line">cv.getStructuringElement(cv.MORPH_RECT,(<span class="number">5</span>,<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
-
-
-
-
 <pre><code>array([[1, 1, 1, 1, 1],
        [1, 1, 1, 1, 1],
        [1, 1, 1, 1, 1],
        [1, 1, 1, 1, 1],
-       [1, 1, 1, 1, 1]], dtype=uint8)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 椭圆内核</span></span><br><span class="line">cv.getStructuringElement(cv.MORPH_ELLIPSE,(<span class="number">5</span>,<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
-
-
-
-
+       [1, 1, 1, 1, 1]], dtype=uint8)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 椭圆内核</span></span><br><span class="line">cv.getStructuringElement(cv.MORPH_ELLIPSE,(<span class="number">5</span>,<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
 <pre><code>array([[0, 0, 1, 0, 0],
        [1, 1, 1, 1, 1],
        [1, 1, 1, 1, 1],
        [1, 1, 1, 1, 1],
-       [0, 0, 1, 0, 0]], dtype=uint8)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 十字内核</span></span><br><span class="line">cv.getStructuringElement(cv.MORPH_CROSS,(<span class="number">5</span>,<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
-
-
-
-
+       [0, 0, 1, 0, 0]], dtype=uint8)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 十字内核</span></span><br><span class="line">cv.getStructuringElement(cv.MORPH_CROSS,(<span class="number">5</span>,<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
 <pre><code>array([[0, 0, 1, 0, 0],
        [0, 0, 1, 0, 0],
        [1, 1, 1, 1, 1],
        [0, 0, 1, 0, 0],
-       [0, 0, 1, 0, 0]], dtype=uint8)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+       [0, 0, 1, 0, 0]], dtype=uint8)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h1 id="图像梯度"><a href="#图像梯度" class="headerlink" title="图像梯度"></a><span id="header2">图像梯度</span></h1><h2 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h2><p>在本章中，我们将学习： - 查找图像梯度，边缘等 - </p>
 <p>我们将看到以下函数：cv.Sobel()，cv.Scharr()，cv.Laplacian()等</p>
 <h2 id="理论-1"><a href="#理论-1" class="headerlink" title="理论"></a>理论</h2><p>OpenCV提供三种类型的梯度滤波器或高通滤波器，即Sobel，Scharr和Laplacian。我们将看到他们每一种。</p>
 <h2 id="1-Sobel-和-Scharr-算子"><a href="#1-Sobel-和-Scharr-算子" class="headerlink" title="1. Sobel 和 Scharr 算子"></a>1. Sobel 和 Scharr 算子</h2><p>Sobel算子是高斯平滑加微分运算的联合运算，因此它更抗噪声。逆可以指定要采用的导数方向，垂直或水平（分别通过参数yorder和xorder）。逆还可以通过参数ksize指定内核的大小。如果ksize = -1，则使用3x3 Scharr滤波器，比3x3 Sobel滤波器具有更好的结果。请参阅文档以了解所使用的内核。</p>
 <h2 id="2-Laplacian-算子"><a href="#2-Laplacian-算子" class="headerlink" title="2. Laplacian 算子"></a>2. Laplacian 算子</h2><p>它计算了由关系Δsrc=$\frac{\delta^2 src}{\delta x^2}+\frac{\delta^2 src}{\delta y^2}$给出的图像的拉普拉斯图,它是每一阶导数通过Sobel算子计算。如果ksize = 1,然后使用以下内核用于过滤:</p>
-<p>kernel=$$<br> \left[<br> \begin{matrix}<br>   0 &amp; 1 &amp; 0 \<br>   1 &amp; -4 &amp; 1 \<br>   0 &amp; 1 &amp; 0<br>  \end{matrix}<br>  \right] <br>$$<br>代码<br>下面的代码显示了单个图表中的所有算子。所有内核都是5x5大小。输出图像的深度通过-1得到结果的np.uint8型。</p>
+<p>kernel=$$<br> \left[<br> \begin{matrix}<br>   0 &amp; 1 &amp; 0 \\<br>   1 &amp; -4 &amp; 1 \\<br>   0 &amp; 1 &amp; 0<br>  \end{matrix}<br>  \right] \</p>
+<script type="math/tex; mode=display">
+代码
+下面的代码显示了单个图表中的所有算子。所有内核都是5x5大小。输出图像的深度通过-1得到结果的np.uint8型。
+
+
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">img = cv.imread(<span class="string">'dave.png'</span>,<span class="number">0</span>)</span><br><span class="line">laplacian = cv.Laplacian(img,cv.CV_64F)</span><br><span class="line">sobelx = cv.Sobel(img,cv.CV_64F,<span class="number">1</span>,<span class="number">0</span>,ksize=<span class="number">5</span>)</span><br><span class="line">sobely = cv.Sobel(img,cv.CV_64F,<span class="number">0</span>,<span class="number">1</span>,ksize=<span class="number">5</span>)</span><br><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>),plt.imshow(img,cmap = <span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'Original'</span>), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>),plt.imshow(laplacian,cmap = <span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'Laplacian'</span>), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>),plt.imshow(sobelx,cmap = <span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'Sobel X'</span>), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>),plt.imshow(sobely,cmap = <span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'Sobel Y'</span>), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 
 
-<p><img src="/2020/07/13/opencv%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%862/output_1_0.png" alt="png"></p>
+![png](output_1_0.png)
+
+
+
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
-<h1 id="Canny边缘检测"><a href="#Canny边缘检测" class="headerlink" title="Canny边缘检测"></a><span id="header3">Canny边缘检测</span></h1><h2 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h2><p>在本章中，我们将学习 - Canny边缘检测的概念 - OpenCV函数: cv.Canny()</p>
-<h2 id="理论-2"><a href="#理论-2" class="headerlink" title="理论"></a>理论</h2><p>Canny Edge Detection是一种流行的边缘检测算法。它由John F. Canny发明</p>
-<p>这是一个多阶段算法，我们将经历每个阶段。</p>
-<h2 id="降噪"><a href="#降噪" class="headerlink" title="降噪"></a>降噪</h2><p>由于边缘检测容易受到图像中噪声的影响，因此第一步是使用5x5高斯滤波器消除图像中的噪声。我们已经在前面的章节中看到了这一点。</p>
-<p>查找图像的强度梯度<br>然后使用Sobel核在水平和垂直方向上对平滑的图像进行滤波，以在水平方向(Gx)和垂直方向(Gy)上获得一阶导数。从这两张图片中，我们可以找到每个像素的边缘渐变和方向，如下所示：</p>
-<p>$$<br>Edge_Gradient ; (G) = \sqrt{G_x^2 + G_y^2} \ Angle ; (\theta) = \tan^{-1} \bigg(\frac{G_y}{G_x}\bigg)<br>$$<br>渐变方向始终垂直于边缘。将其舍入为代表垂直，水平和两个对角线方向的四个角度之一。</p>
+# <span id="header3">Canny边缘检测</span>
+## 目标
+在本章中，我们将学习 - Canny边缘检测的概念 - OpenCV函数: cv.Canny()
+
+## 理论
+Canny Edge Detection是一种流行的边缘检测算法。它由John F. Canny发明
+
+这是一个多阶段算法，我们将经历每个阶段。
+
+## 降噪
+
+由于边缘检测容易受到图像中噪声的影响，因此第一步是使用5x5高斯滤波器消除图像中的噪声。我们已经在前面的章节中看到了这一点。
+
+查找图像的强度梯度
+然后使用Sobel核在水平和垂直方向上对平滑的图像进行滤波，以在水平方向(Gx)和垂直方向(Gy)上获得一阶导数。从这两张图片中，我们可以找到每个像素的边缘渐变和方向，如下所示：</script><p>Edge_Gradient \; (G) = \sqrt{G_x^2 + G_y^2} \\ Angle \; (\theta) = \tan^{-1} \bigg(\frac{G_y}{G_x}\bigg)</p>
+<p>$$<br>渐变方向始终垂直于边缘。将其舍入为代表垂直，水平和两个对角线方向的四个角度之一。</p>
 <p>非极大值抑制 在获得梯度大小和方向后，将对图像进行全面扫描，以去除可能不构成边缘的所有不需要的像素。</p>
 <p>为此，在每个像素处，检查像素是否是其在梯度方向上附近的局部最大值。查看下面的图片：<br><img src="http://qiniu.aihubs.net/nms.jpg" alt></p>
 <p>点A在边缘（垂直方向）上。渐变方向垂直于边缘。点B和C在梯度方向上。因此，将A点与B点和C点进行检查，看是否形成局部最大值。如果是这样，则考虑将其用于下一阶段，否则将其抑制（置为零）。 简而言之，你得到的结果是带有“细边”的二进制图像。</p>
@@ -534,14 +537,11 @@
 <p>最后一个参数是L2gradient，它指定用于查找梯度幅度的方程式。</p>
 <p>如果为True，则使用上面提到的更精确的公式，否则使用以下函数：Edge_Gradient(G)=|Gx|+|Gy|。默认情况下，它为False。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">img = cv.imread(<span class="string">'avatar1.jpg'</span>,<span class="number">0</span>)</span><br><span class="line">edges = cv.Canny(img,<span class="number">100</span>,<span class="number">200</span>)</span><br><span class="line">plt.subplot(<span class="number">121</span>),plt.imshow(img,cmap = <span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'Original Image'</span>), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">122</span>),plt.imshow(edges,cmap = <span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'Edge Image'</span>), plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-
 <p><img src="/2020/07/13/opencv%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%862/output_2_0.png" alt="png"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="图像金字塔"><a href="#图像金字塔" class="headerlink" title="图像金字塔"></a><span id="header4">图像金字塔</span></h1><h1 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h1><p>在本章中， - 我们将学习图像金字塔 - 我们将使用图像金字塔创建一个新的水果“Orapple” - </p>
+<h1 id="图像金字塔"><a href="#图像金字塔" class="headerlink" title="图像金字塔"></a><span id="header4">图像金字塔</span></h1><h1 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h1><p>在本章中， - 我们将学习图像金字塔 - 我们将使用图像金字塔创建一个新的水果“Orapple” - </p>
 <p>我们将看到以下功能：cv.pyrUp()，cv.pyrDown()</p>
-<h2 id="理论-3"><a href="#理论-3" class="headerlink" title="理论"></a>理论</h2><p>通常，我们过去使用的是恒定大小的图像。但是在某些情况下，我们需要使用不同分辨率的（相同）图像。</p>
+<h2 id="理论-2"><a href="#理论-2" class="headerlink" title="理论"></a>理论</h2><p>通常，我们过去使用的是恒定大小的图像。但是在某些情况下，我们需要使用不同分辨率的（相同）图像。</p>
 <p>例如，当在图像中搜索某些东西（例如人脸）时，我们不确定对象将以多大的尺寸显示在图像中。</p>
 <p>在这种情况下，我们将需要创建一组具有不同分辨率的相同图像，并在所有图像中搜索对象。</p>
 <p>这些具有不同分辨率的图像集称为“图像金字塔”（因为当它们堆叠在底部时，最高分辨率的图像位于底部，最低分辨率的图像位于顶部时，看起来像金字塔）。</p>
@@ -552,9 +552,7 @@
 <p>它称为Octave。当我们在金字塔中越靠上时（即分辨率下降），这种模式就会继续。</p>
 <p>同样，在扩展时，每个级别的面积变为4倍。</p>
 <p>我们可以使用<strong>cv.pyrDown</strong>()和<strong>cv.pyrUp</strong>()函数找到高斯金字塔</p>
-<p>以下是图像金字塔中的4个级别。<br><img src="http://qiniu.aihubs.net/messipyr.jpg" alt><br>现在，您可以使用<strong>cv.pyrUp</strong>()函数查看图像金字塔。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">higher_reso2 &#x3D; cv.pyrUp(lower_reso)</span><br></pre></td></tr></table></figure>
-<p>记住，higher_reso2不等于higher_reso，因为一旦降低了分辨率，就会丢失信息。下面的图像是3层的金字塔从最小的图像在前面的情况下创建。与原图对比:<br><img src="http://qiniu.aihubs.net/messiup.jpg" alt></p>
+<p>以下是图像金字塔中的4个级别。<br><img src="http://qiniu.aihubs.net/messipyr.jpg" alt><br>现在，您可以使用<strong>cv.pyrUp</strong>()函数查看图像金字塔。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">higher_reso2 &#x3D; cv.pyrUp(lower_reso)</span><br></pre></td></tr></table></figure><br>记住，higher_reso2不等于higher_reso，因为一旦降低了分辨率，就会丢失信息。下面的图像是3层的金字塔从最小的图像在前面的情况下创建。与原图对比:<br><img src="http://qiniu.aihubs.net/messiup.jpg" alt></p>
 <p>拉普拉斯金字塔由高斯金字塔形成。没有专用功能。</p>
 <p>拉普拉斯金字塔图像仅像边缘图像。它的大多数元素为零。它们用于图像压缩。</p>
 <p>拉普拉斯金字塔的层由高斯金字塔的层与高斯金字塔的高层的扩展版本之间的差形成。</p>
@@ -572,8 +570,6 @@
 <li>最后从此联合图像金字塔中重建原始图像。<br><img src="http://qiniu.aihubs.net/orapple.jpg" alt></li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np,sys</span><br><span class="line">A = cv.imread(<span class="string">'apple.png'</span>)</span><br><span class="line">B = cv.imread(<span class="string">'orange.png'</span>)</span><br><span class="line"><span class="comment"># 生成A的高斯金字塔</span></span><br><span class="line">G = A.copy()</span><br><span class="line">gpA = [G]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">6</span>):</span><br><span class="line">    G = cv.pyrDown(G)</span><br><span class="line">    gpA.append(G)</span><br><span class="line"><span class="comment"># 生成B的高斯金字塔</span></span><br><span class="line">G = B.copy()</span><br><span class="line">gpB = [G]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">6</span>):</span><br><span class="line">    G = cv.pyrDown(G)</span><br><span class="line">    gpB.append(G)</span><br><span class="line"><span class="comment"># 生成A的拉普拉斯金字塔</span></span><br><span class="line">lpA = [gpA[<span class="number">5</span>]]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>,<span class="number">0</span>,<span class="number">-1</span>):</span><br><span class="line">    GE = cv.pyrUp(gpA[i])</span><br><span class="line">    L = cv.subtract(gpA[i<span class="number">-1</span>],GE)</span><br><span class="line">    lpA.append(L)</span><br><span class="line"><span class="comment"># 生成B的拉普拉斯金字塔</span></span><br><span class="line">lpB = [gpB[<span class="number">5</span>]]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>,<span class="number">0</span>,<span class="number">-1</span>):</span><br><span class="line">    GE = cv.pyrUp(gpB[i])</span><br><span class="line">    L = cv.subtract(gpB[i<span class="number">-1</span>],GE)</span><br><span class="line">    lpB.append(L)</span><br><span class="line"><span class="comment"># 现在在每个级别中添加左右两半图像 </span></span><br><span class="line">LS = []</span><br><span class="line"><span class="keyword">for</span> la,lb <span class="keyword">in</span> zip(lpA,lpB):</span><br><span class="line">    rows,cols,dpt = la.shape</span><br><span class="line">    ls = np.hstack((la[:,<span class="number">0</span>:cols/<span class="number">2</span>], lb[:,cols/<span class="number">2</span>:]))</span><br><span class="line">    LS.append(ls)</span><br><span class="line"><span class="comment"># 现在重建</span></span><br><span class="line">ls_ = LS[<span class="number">0</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">6</span>):</span><br><span class="line">    ls_ = cv.pyrUp(ls_)</span><br><span class="line">    ls_ = cv.add(ls_, LS[i])</span><br><span class="line"><span class="comment"># 图像与直接连接的每一半</span></span><br><span class="line">real = np.hstack((A[:,:cols/<span class="number">2</span>],B[:,cols/<span class="number">2</span>:]))</span><br><span class="line">cv.imwrite(<span class="string">'Pyramid_blending2.jpg'</span>,ls_)</span><br><span class="line">cv.imwrite(<span class="string">'Direct_blending.jpg'</span>,real)</span><br><span class="line"><span class="comment">##</span></span><br></pre></td></tr></table></figure>
-
-
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
@@ -729,7 +725,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -751,7 +747,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -826,7 +822,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#形态学转换"><span class="nav-number">1.</span> <span class="nav-text">形态学转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标"><span class="nav-number">1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理论"><span class="nav-number">1.2.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-侵蚀"><span class="nav-number">1.3.</span> <span class="nav-text">1. 侵蚀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-扩张"><span class="nav-number">1.4.</span> <span class="nav-text">2. 扩张</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-开运算"><span class="nav-number">1.5.</span> <span class="nav-text">3. 开运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-闭运算"><span class="nav-number">1.6.</span> <span class="nav-text">4. 闭运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-形态学梯度"><span class="nav-number">1.7.</span> <span class="nav-text">5. 形态学梯度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-顶帽"><span class="nav-number">1.8.</span> <span class="nav-text">6. 顶帽</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-黑帽"><span class="nav-number">1.9.</span> <span class="nav-text">7. 黑帽</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构元素"><span class="nav-number">1.10.</span> <span class="nav-text">结构元素</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像梯度"><span class="nav-number">2.</span> <span class="nav-text">图像梯度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标-1"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理论-1"><span class="nav-number">2.2.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Sobel-和-Scharr-算子"><span class="nav-number">2.3.</span> <span class="nav-text">1. Sobel 和 Scharr 算子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Laplacian-算子"><span class="nav-number">2.4.</span> <span class="nav-text">2. Laplacian 算子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Canny边缘检测"><span class="nav-number">3.</span> <span class="nav-text">Canny边缘检测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标-2"><span class="nav-number">3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理论-2"><span class="nav-number">3.2.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#降噪"><span class="nav-number">3.3.</span> <span class="nav-text">降噪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#磁滞阈值"><span class="nav-number">3.4.</span> <span class="nav-text">磁滞阈值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenCV中的Canny-Edge检测"><span class="nav-number">3.5.</span> <span class="nav-text">OpenCV中的Canny Edge检测</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像金字塔"><span class="nav-number">4.</span> <span class="nav-text">图像金字塔</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标-3"><span class="nav-number">5.</span> <span class="nav-text">目标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#理论-3"><span class="nav-number">5.1.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用金字塔进行图像融合"><span class="nav-number">5.2.</span> <span class="nav-text">使用金字塔进行图像融合</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#形态学转换"><span class="nav-number">1.</span> <span class="nav-text">形态学转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标"><span class="nav-number">1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理论"><span class="nav-number">1.2.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-侵蚀"><span class="nav-number">1.3.</span> <span class="nav-text">1. 侵蚀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-扩张"><span class="nav-number">1.4.</span> <span class="nav-text">2. 扩张</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-开运算"><span class="nav-number">1.5.</span> <span class="nav-text">3. 开运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-闭运算"><span class="nav-number">1.6.</span> <span class="nav-text">4. 闭运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-形态学梯度"><span class="nav-number">1.7.</span> <span class="nav-text">5. 形态学梯度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-顶帽"><span class="nav-number">1.8.</span> <span class="nav-text">6. 顶帽</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-黑帽"><span class="nav-number">1.9.</span> <span class="nav-text">7. 黑帽</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构元素"><span class="nav-number">1.10.</span> <span class="nav-text">结构元素</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像梯度"><span class="nav-number">2.</span> <span class="nav-text">图像梯度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标-1"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理论-1"><span class="nav-number">2.2.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Sobel-和-Scharr-算子"><span class="nav-number">2.3.</span> <span class="nav-text">1. Sobel 和 Scharr 算子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Laplacian-算子"><span class="nav-number">2.4.</span> <span class="nav-text">2. Laplacian 算子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#磁滞阈值"><span class="nav-number">2.5.</span> <span class="nav-text">磁滞阈值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenCV中的Canny-Edge检测"><span class="nav-number">2.6.</span> <span class="nav-text">OpenCV中的Canny Edge检测</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像金字塔"><span class="nav-number">3.</span> <span class="nav-text">图像金字塔</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标-2"><span class="nav-number">4.</span> <span class="nav-text">目标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#理论-2"><span class="nav-number">4.1.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用金字塔进行图像融合"><span class="nav-number">4.2.</span> <span class="nav-text">使用金字塔进行图像融合</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1400,8 +1396,8 @@ document.getElementById('busuanzi_container_site_uv').style.display='inline-bloc
 
    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
-   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>

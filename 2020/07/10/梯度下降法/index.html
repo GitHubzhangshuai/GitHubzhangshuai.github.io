@@ -446,45 +446,34 @@
 
       
         <p>线性回归梯度下降代码简单演示</p>
-<p>数据集下载:<a href="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/data/data.csv" target="_blank" rel="noopener">data.csv</a></p>
-<a id="more"></a>
-<p><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%951.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%952.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%953.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%954.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%955.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%956.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%957.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%958.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%959.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9510.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9511.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9512.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9513.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9514.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9515.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9516.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9517.png" alt></p>
+<p>数据集下载:<a href="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/data/data.csv" target="_blank" rel="noopener">data.csv</a><br><a id="more"></a><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%951.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%952.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%953.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%954.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%955.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%956.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%957.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%958.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%959.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9510.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9511.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9512.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9513.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9514.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9515.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9516.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%9517.png" alt></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
-
-
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">data = np.genfromtxt(<span class="string">'./data/data.csv'</span>,delimiter=<span class="string">","</span>)</span><br><span class="line">x_data = data[:,<span class="number">0</span>]</span><br><span class="line">y_data = data[:,<span class="number">1</span>]</span><br><span class="line">plt.scatter(x_data,y_data)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-
 <p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/output_2_0.png" alt="png"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">lr = <span class="number">0.0001</span></span><br><span class="line">b = <span class="number">0</span></span><br><span class="line">k = <span class="number">0</span></span><br><span class="line">epochs = <span class="number">50</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_error</span><span class="params">(b,k,x_data,y_data)</span>:</span></span><br><span class="line">    totalError = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(x_data)):</span><br><span class="line">        totalError += (y_data[i]-(k*x_data[i]+b))**<span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> totalError/float(len(x_data))/<span class="number">2.0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradient_descent_runner</span><span class="params">(x_data,y_data,b,k,lr,epochs)</span>:</span></span><br><span class="line">    m = float(len(x_data))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(epochs):</span><br><span class="line">        b_grad = <span class="number">0</span></span><br><span class="line">        k_grad = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,len(x_data)):</span><br><span class="line">            b_grad += (<span class="number">1</span>/m)*(((k*x_data[j])+b)-y_data[j])</span><br><span class="line">            k_grad += (<span class="number">1</span>/m)*x_data[j]*(((k*x_data[j])+b)-y_data[j])</span><br><span class="line">        b = b-(lr*b_grad)</span><br><span class="line">        k = k-(lr*k_grad)</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">10</span>==<span class="number">0</span>:</span><br><span class="line">            print(<span class="string">"epochs:"</span>,i)</span><br><span class="line">            plt.plot(x_data,y_data,<span class="string">'b.'</span>)</span><br><span class="line">            plt.plot(x_data, k*x_data+b, <span class="string">'r'</span>)</span><br><span class="line">            plt.show()</span><br><span class="line">    <span class="keyword">return</span> b,k</span><br></pre></td></tr></table></figure>
-
-
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"Starting b = &#123;0&#125;, k = &#123;1&#125;, error = &#123;2&#125;"</span>.format(b, k, compute_error(b, k, x_data, y_data)))</span><br><span class="line">print(<span class="string">"Running..."</span>)</span><br><span class="line">b, k = gradient_descent_runner(x_data, y_data, b, k, lr, epochs)</span><br><span class="line">print(<span class="string">"After &#123;0&#125; iterations b = &#123;1&#125;, k = &#123;2&#125;, error = &#123;3&#125;"</span>.format(epochs, b, k, compute_error(b, k, x_data, y_data)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 画图</span></span><br><span class="line">plt.plot(x_data, y_data, <span class="string">'b.'</span>)</span><br><span class="line">plt.plot(x_data, k*x_data + b, <span class="string">'r'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
 <pre><code>Starting b = 0, k = 0, error = 2782.5539172416056
 Running...
-epochs: 0</code></pre><p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/output_4_1.png" alt="png"></p>
-<pre><code>epochs: 10</code></pre><p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/output_4_3.png" alt="png"></p>
-<pre><code>epochs: 20</code></pre><p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/output_4_5.png" alt="png"></p>
-<pre><code>epochs: 30</code></pre><p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/output_4_7.png" alt="png"></p>
-<pre><code>epochs: 40</code></pre><p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/output_4_9.png" alt="png"></p>
-<pre><code>After 50 iterations b = 0.030569950649287983, k = 1.4788903781318357, error = 56.32488184238028</code></pre><p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/output_4_11.png" alt="png"></p>
+epochs: 0
+</code></pre><p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/output_4_1.png" alt="png"></p>
+<pre><code>epochs: 10
+</code></pre><p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/output_4_3.png" alt="png"></p>
+<pre><code>epochs: 20
+</code></pre><p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/output_4_5.png" alt="png"></p>
+<pre><code>epochs: 30
+</code></pre><p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/output_4_7.png" alt="png"></p>
+<pre><code>epochs: 40
+</code></pre><p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/output_4_9.png" alt="png"></p>
+<pre><code>After 50 iterations b = 0.030569950649287983, k = 1.4788903781318357, error = 56.32488184238028
+</code></pre><p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/output_4_11.png" alt="png"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">x0,x1 = np.meshgrid([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],[<span class="number">4</span>,<span class="number">5</span>])</span><br></pre></td></tr></table></figure>
-
-
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x0</span><br></pre></td></tr></table></figure>
-
-
-
-
 <pre><code>array([[1, 2, 3, 4],
-       [1, 2, 3, 4]])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x1</span><br></pre></td></tr></table></figure>
-
-
-
-
+       [1, 2, 3, 4]])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x1</span><br></pre></td></tr></table></figure>
 <pre><code>array([[4, 4, 4, 4],
-       [5, 5, 5, 5]])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+       [5, 5, 5, 5]])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -630,7 +619,7 @@ epochs: 0</code></pre><p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -652,7 +641,7 @@ epochs: 0</code></pre><p><img src="/2020/07/10/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -1285,8 +1274,8 @@ document.getElementById('busuanzi_container_site_uv').style.display='inline-bloc
 
    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
-   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>

@@ -409,26 +409,13 @@
 <li>3.<a href="#header3">添加内核</a></li>
 </ul>
 <a id="more"></a>
-
-<h1 id="主题修改参考"><a href="#主题修改参考" class="headerlink" title="主题修改参考"></a><span id="header1">主题修改<a href="https://blog.csdn.net/wh8514/article/details/81532286/" target="_blank" rel="noopener">参考</a></span></h1><p>安装Jupyter主题：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install  jupyterthemes</span><br></pre></td></tr></table></figure>
-<p>更新Jupyter主题：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install --upgrade jupyterthemes</span><br></pre></td></tr></table></figure>
-<p>装和更新成功以后，可以查看可用主题：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jt -l</span><br></pre></td></tr></table></figure>
-<p>如图<img src="/2020/07/08/notebook%E4%BD%BF%E7%94%A8/2.jpg" alt="x"><br>参数含义如下<br><img src="/2020/07/08/notebook%E4%BD%BF%E7%94%A8/3.png" alt="x"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jt -t monokai -f fira -fs 13 -cellw 90% -ofs 11 -dfs 11 -T -N</span><br><span class="line">-f(字体)  -fs(字体大小) -cellw(占屏比或宽度)  -ofs(输出段的字号)  -T(显示工具栏)  -N(显示自己主机名)</span><br></pre></td></tr></table></figure>
-<p>解决输出显示不全的问题<br><br>在C:\Users\XXX.jupyter\custom\custom.css里,找到div.output_area</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">div.output_area&#123;</span><br><span class="line">    display:-webkit-box;</span><br><span class="line">&#125;</span><br><span class="line">改为</span><br><span class="line">div.output_area&#123;</span><br><span class="line">    display:-webkit-box;</span><br><span class="line">    padding:13px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="密码修改"><a href="#密码修改" class="headerlink" title="密码修改"></a><span id="header2">密码修改</span></h1><p>终端运行，输入新的密码即可<a href="https://blog.csdn.net/qq_36950604/article/details/103848631" target="_blank" rel="noopener">参考</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook password</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/07/08/notebook%E4%BD%BF%E7%94%A8/1.jpg" alt="x"></p>
+<h1 id="主题修改参考"><a href="#主题修改参考" class="headerlink" title="主题修改参考"></a><span id="header1">主题修改<a href="https://blog.csdn.net/wh8514/article/details/81532286/" target="_blank" rel="noopener">参考</a></span></h1><p>安装Jupyter主题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install  jupyterthemes</span><br></pre></td></tr></table></figure><br>更新Jupyter主题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install --upgrade jupyterthemes</span><br></pre></td></tr></table></figure><br>装和更新成功以后，可以查看可用主题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jt -l</span><br></pre></td></tr></table></figure><br>如图<img src="/2020/07/08/notebook%E4%BD%BF%E7%94%A8/2.jpg" alt="x"><br>参数含义如下<br><img src="/2020/07/08/notebook%E4%BD%BF%E7%94%A8/3.png" alt="x"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jt -t monokai -f fira -fs 13 -cellw 90% -ofs 11 -dfs 11 -T -N</span><br><span class="line">-f(字体)  -fs(字体大小) -cellw(占屏比或宽度)  -ofs(输出段的字号)  -T(显示工具栏)  -N(显示自己主机名)</span><br></pre></td></tr></table></figure><br>解决输出显示不全的问题<br><br>在C:\Users\XXX.jupyter\custom\custom.css里,找到div.output_area<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">div.output_area&#123;</span><br><span class="line">    display:-webkit-box;</span><br><span class="line">&#125;</span><br><span class="line">改为</span><br><span class="line">div.output_area&#123;</span><br><span class="line">    display:-webkit-box;</span><br><span class="line">    padding:13px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="密码修改"><a href="#密码修改" class="headerlink" title="密码修改"></a><span id="header2">密码修改</span></h1><p>终端运行，输入新的密码即可<a href="https://blog.csdn.net/qq_36950604/article/details/103848631" target="_blank" rel="noopener">参考</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook password</span><br></pre></td></tr></table></figure><br><img src="/2020/07/08/notebook%E4%BD%BF%E7%94%A8/1.jpg" alt="x"></p>
 <h1 id="添加内核"><a href="#添加内核" class="headerlink" title="添加内核"></a><span id="header3">添加内核</span></h1><ul>
 <li>首先添加虚拟环境,比如我要添加py版本为2.7,环境名为py2的环境<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n py2 python&#x3D;2.7</span><br></pre></td></tr></table></figure></li>
 <li>然后进入当前虚拟环境下<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">activate py2</span><br></pre></td></tr></table></figure></li>
 <li>在虚拟环境中安装ipykernel<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install ipykernel</span><br></pre></td></tr></table></figure></li>
-<li>添加内核到jupyter里:python -m ipykernel install –user –name 环境名称 –display-name “在jupyter中显示的环境名称”，注意不要忘记了双引号<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m ipykernel install --user --name py2 --display-name &quot;py2&quot;</span><br></pre></td></tr></table></figure>
+<li>添加内核到jupyter里:python -m ipykernel install —user —name 环境名称 —display-name “在jupyter中显示的环境名称”，注意不要忘记了双引号<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m ipykernel install --user --name py2 --display-name &quot;py2&quot;</span><br></pre></td></tr></table></figure>
 成功<br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/py2-1.png" alt><br><img src="http://zs-hexo-blog.oss-cn-beijing.aliyuncs.com/py2.png" alt></li>
 </ul>
 
@@ -583,7 +570,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -605,7 +592,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -1254,8 +1241,8 @@ document.getElementById('busuanzi_container_site_uv').style.display='inline-bloc
 
    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
-   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>

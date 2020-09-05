@@ -420,45 +420,40 @@
       
 
       
-        <p>voting代码简单演示</p>
-<a id="more"></a>
-
-
+        <p>voting代码简单演示<br><a id="more"></a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> model_selection</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> VotingClassifier</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
-
-
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">iris = datasets.load_iris()</span><br><span class="line">x_data,y_data = iris.data[:,<span class="number">1</span>:<span class="number">3</span>],iris.target</span><br><span class="line">clf1 = KNeighborsClassifier(n_neighbors=<span class="number">1</span>)</span><br><span class="line">clf2 = DecisionTreeClassifier()</span><br><span class="line">clf3 = LogisticRegression()</span><br><span class="line"></span><br><span class="line">sclf = VotingClassifier([(<span class="string">'knn'</span>,clf1),(<span class="string">'dtree'</span>,clf2),(<span class="string">'lr'</span>,clf3)])</span><br><span class="line"><span class="keyword">for</span> clf,label <span class="keyword">in</span> zip([clf1,clf2,clf3,sclf],</span><br><span class="line">                    [<span class="string">'KNN'</span>,<span class="string">'Decistion Tree'</span>,<span class="string">'LogisticRegression'</span>,<span class="string">'VotingClassifier'</span>]):</span><br><span class="line">    scores = model_selection.cross_val_score(clf,x_data,y_data,cv=<span class="number">3</span>,scoring=<span class="string">'accuracy'</span>)</span><br><span class="line">    print(<span class="string">'Accuracy: %0.2f[%s]'</span> %(scores.mean(),label))</span><br></pre></td></tr></table></figure>
-
 <pre><code>Accuracy: 0.91[KNN]
 Accuracy: 0.90[Decistion Tree]
 Accuracy: 0.91[LogisticRegression]
 Accuracy: 0.92[VotingClassifier]
 
 
-C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:433: FutureWarning: Default solver will be changed to &apos;lbfgs&apos; in 0.22. Specify a solver to silence this warning.
+C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:433: FutureWarning: Default solver will be changed to &#39;lbfgs&#39; in 0.22. Specify a solver to silence this warning.
   FutureWarning)
-C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:460: FutureWarning: Default multi_class will be changed to &apos;auto&apos; in 0.22. Specify the multi_class option to silence this warning.
+C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:460: FutureWarning: Default multi_class will be changed to &#39;auto&#39; in 0.22. Specify the multi_class option to silence this warning.
   &quot;this warning.&quot;, FutureWarning)
-C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:433: FutureWarning: Default solver will be changed to &apos;lbfgs&apos; in 0.22. Specify a solver to silence this warning.
+C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:433: FutureWarning: Default solver will be changed to &#39;lbfgs&#39; in 0.22. Specify a solver to silence this warning.
   FutureWarning)
-C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:460: FutureWarning: Default multi_class will be changed to &apos;auto&apos; in 0.22. Specify the multi_class option to silence this warning.
+C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:460: FutureWarning: Default multi_class will be changed to &#39;auto&#39; in 0.22. Specify the multi_class option to silence this warning.
   &quot;this warning.&quot;, FutureWarning)
-C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:433: FutureWarning: Default solver will be changed to &apos;lbfgs&apos; in 0.22. Specify a solver to silence this warning.
+C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:433: FutureWarning: Default solver will be changed to &#39;lbfgs&#39; in 0.22. Specify a solver to silence this warning.
   FutureWarning)
-C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:460: FutureWarning: Default multi_class will be changed to &apos;auto&apos; in 0.22. Specify the multi_class option to silence this warning.
+C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:460: FutureWarning: Default multi_class will be changed to &#39;auto&#39; in 0.22. Specify the multi_class option to silence this warning.
   &quot;this warning.&quot;, FutureWarning)
-C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:433: FutureWarning: Default solver will be changed to &apos;lbfgs&apos; in 0.22. Specify a solver to silence this warning.
+C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:433: FutureWarning: Default solver will be changed to &#39;lbfgs&#39; in 0.22. Specify a solver to silence this warning.
   FutureWarning)
-C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:460: FutureWarning: Default multi_class will be changed to &apos;auto&apos; in 0.22. Specify the multi_class option to silence this warning.
+C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:460: FutureWarning: Default multi_class will be changed to &#39;auto&#39; in 0.22. Specify the multi_class option to silence this warning.
   &quot;this warning.&quot;, FutureWarning)
-C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:433: FutureWarning: Default solver will be changed to &apos;lbfgs&apos; in 0.22. Specify a solver to silence this warning.
+C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:433: FutureWarning: Default solver will be changed to &#39;lbfgs&#39; in 0.22. Specify a solver to silence this warning.
   FutureWarning)
-C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:460: FutureWarning: Default multi_class will be changed to &apos;auto&apos; in 0.22. Specify the multi_class option to silence this warning.
+C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:460: FutureWarning: Default multi_class will be changed to &#39;auto&#39; in 0.22. Specify the multi_class option to silence this warning.
   &quot;this warning.&quot;, FutureWarning)
-C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:433: FutureWarning: Default solver will be changed to &apos;lbfgs&apos; in 0.22. Specify a solver to silence this warning.
+C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:433: FutureWarning: Default solver will be changed to &#39;lbfgs&#39; in 0.22. Specify a solver to silence this warning.
   FutureWarning)
-C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:460: FutureWarning: Default multi_class will be changed to &apos;auto&apos; in 0.22. Specify the multi_class option to silence this warning.
-  &quot;this warning.&quot;, FutureWarning)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_model\logistic.py:460: FutureWarning: Default multi_class will be changed to &#39;auto&#39; in 0.22. Specify the multi_class option to silence this warning.
+  &quot;this warning.&quot;, FutureWarning)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -604,7 +599,7 @@ C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_mod
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -626,7 +621,7 @@ C:\Users\张帅\AppData\Roaming\Python\Python36\site-packages\sklearn\linear_mod
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -1259,8 +1254,8 @@ document.getElementById('busuanzi_container_site_uv').style.display='inline-bloc
 
    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
-   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 </html>
